@@ -33,6 +33,7 @@
     var currentUser = function() {
       if(isLoggedIn()){
         var token = getToken();
+        console.log(token);
         var payload = token.split('.')[1];
         payload = $window.atob(payload);
         payload = JSON.parse(payload);
@@ -42,7 +43,20 @@
         };
       }
     };
+		
+		var isAdmin = function(){
+			if(isLoggedIn()){
+        var token = getToken();
 
+        var payload = token.split('.')[1];
+        payload = $window.atob(payload);
+        payload = JSON.parse(payload);
+        console.log(payload);
+        var roles = payload.permissions;
+				return roles.indexOf('admin') !== -1;
+      }
+
+		}
     register = function(user) {
       return $http.post('/api/register', user).success(function(data){
         saveToken(data.token);
@@ -60,6 +74,7 @@
     };
 
     return {
+	    isAdmin : isAdmin,
       currentUser : currentUser,
       saveToken : saveToken,
       getToken : getToken,

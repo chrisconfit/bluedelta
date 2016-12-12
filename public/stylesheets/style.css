@@ -1,8 +1,603 @@
+/* Theme colors */
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+/* Button colors */
+/* Text link colors */
+/* Text colors */
+/* Helper colors */
+/* Typography */
+/*Sass Media Query Break Points*/
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/** * html5doctor.com Reset Stylesheet v1.6.1 (http://html5doctor.com/html-5-reset-stylesheet/) * Richard Clark (http://richclarkdesign.com) * http://cssreset.com */
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  line-height: 1;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+nav ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none;
 }
 
 a {
-  color: #00B7FF;
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+
+/* change colours to suit your needs */
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* change border colour to suit your needs */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #cccccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+input, select {
+  vertical-align: middle;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.cft-g {
+  margin-left: -30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.cft-g > .cft-gi {
+  padding-left: 30px;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body,
+input,
+textarea,
+button,
+select {
+  font-size: 18px;
+  line-height: 24px;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  font-family: "Open Sans", sans-serif;
+  color: #1d1d1d;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  display: block;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
+.h1 a, .h2 a, .h3 a, .h4 a, .h5 a, .h6 a {
+  text-decoration: none;
+}
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover,
+.h1 a:hover, .h2 a:hover, .h3 a:hover, .h4 a:hover, .h5 a:hover, .h6 a:hover {
+  text-decoration: underline;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
+.h1 a, .h2 a, .h3 a, .h4 a, .h5 a, .h6 a {
+  font-weight: inherit;
+}
+
+h1, .h1 {
+  font-size: 30px;
+  line-height: 38px;
+  font-size: 3rem;
+  line-height: 3.8rem;
+}
+
+h2, .h2 {
+  font-size: 26px;
+  line-height: 34px;
+  font-size: 2.6rem;
+  line-height: 3.4rem;
+}
+
+h3, .h3 {
+  font-size: 24px;
+  line-height: 32px;
+  font-size: 2.4rem;
+  line-height: 3.2rem;
+}
+
+h4, .h4 {
+  font-size: 20px;
+  line-height: 28px;
+  font-size: 2rem;
+  line-height: 2.8rem;
+}
+
+h5, .h5 {
+  font-size: 16px;
+  line-height: 24px;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+}
+
+h6, .h6 {
+  font-size: 16px;
+  line-height: 24px;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+}
+
+p {
+  margin: 0 0 20px 0;
+}
+
+p img {
+  margin: 0;
+}
+
+a {
+  color: #5298a0;
+  text-decoration: none;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+a:hover {
+  color: #38686d;
+}
+
+em {
+  font-style: italic;
+}
+
+strong {
+  font-weight: bold;
+}
+
+small {
+  font-size: 80%;
+}
+
+blockquote {
+  font-size: 20px;
+  line-height: 28px;
+  font-size: 2rem;
+  line-height: 2.8rem;
+  color: #777;
+  font-style: italic;
+  margin: 0 0 30px;
+  padding: 15px 30px;
+  border-left: 1px solid #ebebeb;
+}
+blockquote p {
+  margin-bottom: 0;
+}
+blockquote p + cite {
+  margin-top: 15px;
+}
+blockquote cite {
+  display: block;
+  font-size: 14px;
+  line-height: 21px;
+  font-size: 1.4rem;
+  line-height: 2.1rem;
+  color: #777;
+}
+blockquote cite:before {
+  content: "\2014 \0020";
+}
+
+hr {
+  clear: both;
+  border-top: solid #ebebeb;
+  border-width: 1px 0 0;
+  margin: 60px 0;
+}
+hr.hr-small {
+  margin: 30px 0;
+}
+hr.hr-clear {
+  border-top: 0 none;
+}
+
+.btn, .btn-secondary,
+a.btn-secondary,
+a.btn,
+a.btn-secondary {
+  display: inline-block;
+  padding: 8px 10px;
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: pointer;
+  color: #fff;
+  border: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-appearance: none;
+  -moz-transition: 0.2s all ease-in;
+  -webkit-transition: 0.2s all ease-in;
+  transition: 0.2s all ease-in;
+  text-transform: uppercase;
+  background-color: #004964;
+}
+.btn.small, .small.btn-secondary,
+a.btn.small,
+a.small.btn-secondary {
+  padding: 4px 5px;
+  font-size: 13px;
+  line-height: 24px;
+  font-size: 1.3rem;
+  line-height: 2.4rem;
+}
+.btn.full, .full.btn-secondary,
+a.btn.full,
+a.full.btn-secondary {
+  width: 100%;
+}
+.btn:hover, .btn-secondary:hover,
+a.btn:hover,
+a.btn-secondary:hover {
+  background-color: #002431;
+  color: #fff;
+}
+.btn:active, .btn-secondary:active,
+a.btn:active,
+a.btn-secondary:active {
+  background-color: black;
+  color: #fff;
+}
+.btn[disabled], [disabled].btn-secondary, .btn.disabled, .disabled.btn-secondary,
+a.btn[disabled],
+a[disabled].btn-secondary,
+a.btn.disabled,
+a.disabled.btn-secondary {
+  cursor: default;
+  color: #ababab;
+  background-color: #dfdfdf;
+}
+
+.btn.ghost, .ghost.btn-secondary {
+  width: 100%;
+  border: 2px solid;
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.9);
+  background: none;
+}
+.btn.ghost:hover, .ghost.btn-secondary:hover {
+  border-color: white;
+  color: white;
+  background: none;
+}
+
+.btn-secondary,
+a.btn-secondary {
+  background-color: #424242;
+}
+.btn-secondary:hover,
+a.btn-secondary:hover {
+  background-color: #292929;
+  color: #fff;
+  text-decoration: none;
+}
+.btn-secondary:active,
+a.btn-secondary:active {
+  background-color: #0f0f0f;
+  color: #fff;
+}
+
+.text-link {
+  display: inline;
+  border: 0 none;
+  background: none;
+  text-decoration: underline;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+}
+
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  display: block;
+  margin: auto;
+  position: relative;
+}
+.container.thin {
+  max-width: 800px;
+}
+
+.main-navigation {
+  background: #004964;
+  height: 78px;
+  display: block;
+  position: relative;
+}
+.main-navigation:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.main-navigation #home-link {
+  width: 200px;
+  position: absolute;
+  left: 50%;
+  margin: 0 0 0 -50px;
+  top: 10px;
+}
+.main-navigation #home-link img {
+  width: 100%;
+}
+.main-navigation nav {
+  position: relative;
+}
+.main-navigation nav .btn, .main-navigation nav .btn-secondary {
+  background: #002f40;
+}
+.main-navigation nav .btn:hover, .main-navigation nav .btn-secondary:hover {
+  background: #001118;
+}
+.main-navigation nav.nav-left {
+  float: left;
+}
+.main-navigation nav.nav-right {
+  float: right;
+}
+.main-navigation nav.nav-right ul li {
+  display: inline-block;
+  margin-right: 15px;
+}
+.main-navigation nav.nav-right ul li:last-child {
+  margin-right: 0;
+}
+.main-navigation nav.nav-right ul li a {
+  font-size: 18px;
+  line-height: 22px;
+  font-size: 1.8rem;
+  line-height: 2.2rem;
+  color: #fff;
+}
+.main-navigation nav.nav-right ul li a:hover {
+  color: #cccccc;
+}
+.main-navigation nav.nav-right .btn.logout, .main-navigation nav.nav-right .logout.btn-secondary, .main-navigation nav.nav-right .btn.sign-in, .main-navigation nav.nav-right .sign-in.btn-secondary {
+  background: #40778b;
+}
+.main-navigation nav.nav-right .btn.logout:hover, .main-navigation nav.nav-right .logout.btn-secondary:hover, .main-navigation nav.nav-right .btn.sign-in:hover, .main-navigation nav.nav-right .sign-in.btn-secondary:hover {
+  background: #2b687e;
+}
+
+.hero {
+  background: url("../images/denim.jpg") repeat repeat;
+  background-size: 20%;
+}
+.hero h1 {
+  padding: 150px;
+  color: #fff;
+  font-size: 80px;
+  line-height: 100px;
+  font-size: 8rem;
+  line-height: 10rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.intro-text {
+  text-align: center;
+}
+.intro-text .callouts {
+  max-width: 600px;
+  margin: 30px auto;
+}
+.intro-text .callouts a {
+  background: #40778b;
+  padding: 20px;
+  font-size: 30px;
+  line-height: 35px;
+  font-size: 3rem;
+  line-height: 3.5rem;
+  display: block;
+  width: 48%;
+  float: left;
+}
+.intro-text .callouts a:hover {
+  background: #2b687e;
+}
+.intro-text .callouts a.secondary {
+  float: right;
+  background: #acacac;
+}
+.intro-text .callouts a.secondary:hover {
+  background: #939393;
+}
+
+form.login-form, form.register-form {
+  max-width: 500px;
+}
+form.login-form .form-group, form.register-form .form-group {
+  margin-bottom: 15px;
+}
+form.login-form .form-group label, form.register-form .form-group label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 5px;
+  line-height: 15px;
+  font-weight: 700;
+  color: #6a6a6a;
+}
+form.login-form .form-group input, form.register-form .form-group input {
+  display: block;
+  width: 100%;
+}
+form.login-form button.btn, form.login-form button.btn-secondary, form.register-form button.btn, form.register-form button.btn-secondary {
+  margin-top: 10px;
+  padding: 8px 20px;
+}
+
+h1.page-title {
+  color: #004964;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.customizer-page-content {
+  margin-bottom: 80px;
+}
+
+.button-container {
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+}
+
+.step-buttons {
+  position: absolute;
+  width: 106%;
+  margin-left: -3%;
+}
+.step-buttons a.btn, .step-buttons a.btn-secondary {
+  -ms-transform: skewX(-20deg);
+  /* IE 9 */
+  -webkit-transform: skewX(-20deg);
+  /* Safari */
+  transform: skewX(-20deg);
+  display: inline-block;
+  width: 33.333%;
+  text-align: center;
+}
+.step-buttons a.btn p, .step-buttons a.btn-secondary p {
+  margin: 0;
+  -ms-transform: skewX(20deg) !important;
+  /* IE 9 */
+  -webkit-transform: skewX(20deg) !important;
+  /* Safari */
+  transform: skewX(20deg) !important;
+}
+.step-buttons a.btn.inactive, .step-buttons a.inactive.btn-secondary {
+  background: #a5a5a5;
+  color: #3f3f3f;
+}
+
+.cft-g.gender-grid > .cft-gi {
+  width: 100%;
+}
+@media screen and (min-width: 450px) {
+  .cft-g.gender-grid > .cft-gi {
+    width: 50%;
+  }
+}
+
+.customizer-page .gender-grid img {
+  width: 100%;
+}
+
+.cft-g.style-grid > .cft-gi {
+  width: 100%;
+}
+@media screen and (min-width: 450px) {
+  .cft-g.style-grid > .cft-gi {
+    width: 33.333%;
+  }
+}
+
+.customizer-page .style-grid img {
+  width: 100%;
 }

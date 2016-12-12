@@ -1,0 +1,157 @@
+@import "components/variables";
+@import "components/mixins";
+@import "components/reset";
+@import "components/grid";
+@import "components/typography";
+@import "components/buttons";
+
+body{
+	position:relative;
+	min-height:100vh
+}
+//Site Setup
+.container{
+	padding:20px;
+	max-width:1200px;
+	display:block;
+	margin:auto;
+	position:relative;
+	&.thin{
+		max-width:800px;
+	}
+}
+
+//Navigation
+.main-navigation{
+	background: $blue;
+	height:78px;
+	display:block;
+	position:relative;
+	&:after{
+		content:"";
+		display:block;
+		clear:both;
+	}
+	#home-link{
+		width:200px;
+		position:absolute;
+		left:50%;
+		margin: 0 0 0 -50px;
+		top:10px;
+		img{
+			width:100%;
+		}
+	}
+	
+	nav{
+		position:relative;
+		.btn{
+			background:darken($blue, 7%);
+			&:hover{
+				background:darken($blue,15%);
+			}
+		}
+		//Left Nav
+		&.nav-left{
+			float:left;
+		}
+		
+		//Right Nav
+		&.nav-right{
+			float:right;
+			ul{
+				li{
+					display:inline-block;
+					margin-right:15px;
+					&:last-child{
+						margin-right:0;
+					}
+					a{
+						@include font-size(18, 22);
+						color:#fff;
+						&:hover{
+							color:darken(#fff,20%);
+						}
+					}
+				}
+			}
+			.btn.logout, .btn.sign-in{
+				background:tint($blue, 25%);
+				&:hover{
+					background: tint($blue, 17%);
+				}
+			}
+		}
+		
+		
+	}
+}
+
+
+
+//Home
+.hero{
+	background:url('../images/denim.jpg') repeat repeat;
+	background-size:20%;
+	h1{
+		padding:150px;
+		color:#fff;
+		@include font-size(80,100);
+		text-transform: uppercase;
+		text-align: center;
+	}
+}
+
+.intro-text{
+	text-align:center;
+	.callouts{
+		max-width:600px;
+		margin:30px auto;
+		a{
+				background:tint($blue, 25%);
+			&:hover{
+				background: tint($blue, 17%);
+			}
+			padding:20px;
+			@include font-size(30, 35);
+			display:block;
+			width:48%;
+			float:left;
+			&.secondary{
+				float:right;
+					background:#acacac;
+				&:hover{
+					background: darken(#acacac, 10%);
+				}
+			}
+		}
+	}
+}
+	
+	
+//Login/Register
+form.login-form, form.register-form{
+	max-width:500px;
+	.form-group{
+		margin-bottom:15px;
+		label{
+			display:block;
+			font-size:12px;
+			margin-bottom:5px;
+			line-height:15px;
+			font-weight:700;
+			color:lighten($colorText,30%);
+		}
+		input{
+			display:block;
+			width:100%;
+		}
+	}
+	button.btn{
+		margin-top:10px;
+		padding: 8px 20px;
+	}
+}
+
+
+@import "customizer";

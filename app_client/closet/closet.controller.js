@@ -2,10 +2,10 @@
   
   angular
     .module('meanApp')
-    .controller('profileCtrl', profileCtrl);
+    .controller('closetCtrl', closetCtrl);
 
-  profileCtrl.$inject = ['$location', 'meanData'];
-  function profileCtrl($location, meanData) {
+  closetCtrl.$inject = ['$location', 'meanData'];
+  function closetCtrl($location, meanData) {
     var vm = this;
 
     vm.user = {};

@@ -1,13 +1,19 @@
-<div class="navbar navbar-default">
-  <div class="container">
-    <div id="navbar-main">
-      <ul class="nav navbar-nav">
-        <li><a href="/">Home</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li ng-hide="navvm.isLoggedIn"><a href="login">Sign in</a></li>
-        <li ng-show="navvm.isLoggedIn"><a href="profile">{{ navvm.currentUser.name }}</a></li>
-      </ul>
-    </div>
-  </div>
+<div class="main-navigation">
+	<div class="container">
+		<nav class="main-nav nav-left">
+		  <ul>
+		    <li><a class="btn" href="https://bluedeltajeans.com/">Main Site</a></li>
+		  </ul>
+		</nav>
+		<a id="home-link" href="/"><img src="/images/bluedelta-logo.png" alt="Blue Delta Jeans"></a>
+		<nav class="main-nav nav-right">
+		  <ul>
+		    <li ng-hide="navvm.isLoggedIn"><a class="btn sign-in" href="login">Sign in</a></li>
+		    <li ng-show="navvm.isLoggedIn"><a href="closet">Closet</a></li>
+		    <li ng-show="navvm.isLoggedIn"><a href="customizer">Customizer</a></li>
+		    <li ng-show="navvm.isLoggedIn && navvm.isAdmin"><a href="admin">Admin</a></li>
+		    <li ng-show="navvm.isLoggedIn"><a class="btn logout" ng-click="navvm.logout()" href="/">Log Out</a></li>
+		  </ul>
+		</nav>
+	</div>
 </div>

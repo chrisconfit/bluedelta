@@ -14,9 +14,18 @@
         }
       });
     };
+    
+    var getOptions = function () {	    
+      return $http.get('/api/options', {
+        headers: {
+          Authorization: 'Bearer '+ authentication.getToken()
+        }
+      });
+    };
 
     return {
-      getProfile : getProfile
+      getProfile : getProfile,
+      getOptions : getOptions,
     };
   }
 

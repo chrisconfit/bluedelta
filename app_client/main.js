@@ -19,9 +19,19 @@
         controller: 'loginCtrl',
         controllerAs: 'vm'
       })
-      .when('/profile', {
-        templateUrl: '/profile/profile.view.html',
-        controller: 'profileCtrl',
+      .when('/closet', {
+        templateUrl: '/closet/closet.view.html',
+        controller: 'closetCtrl',
+        controllerAs: 'vm'
+      })
+      .when('/customizer', {
+        templateUrl: '/customizer/customizer.view.html',
+        controller: 'customizerCtrl',
+        controllerAs: 'vm'
+      })
+      .when('/admin', {
+        templateUrl: '/admin/admin.view.html',
+        controller: 'adminCtrl',
         controllerAs: 'vm'
       })
       .otherwise({redirectTo: '/'});
@@ -32,8 +42,12 @@
 
   function run($rootScope, $location, authentication) {
     $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
-      if ($location.path() === '/profile' && !authentication.isLoggedIn()) {
-        $location.path('/');
+	    var locked = [
+		    '/closet'
+	    ];
+	    
+	    if (locked.indexOf($location.path()) >= 0  && !authentication.isLoggedIn()) {
+       // $location.path('/login');
       }
     });
   }

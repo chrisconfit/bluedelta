@@ -1,9 +1,15 @@
 <navigation></navigation>
-
-<div class="container">
-  
-  <h1>Hello there</h1>
-
-  <p>Won't you please <a href="login">sign in</a> or <a href="register">register</a>?</p>
-
+<div class="hero">
+	<h1>Blue Delta<br>Denim Customizer</h1>
+</div>
+	<div class="intro-text">
+		<div class="container">
+			<p>Welcome to the customizer. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
+			<div class="callouts">
+				<a href="customizer" class="btn callout">Get Started</a>
+				<a ng-hide="navvm.isLoggedIn" href="login" class="btn secondary callout">Sign In</a>
+				<a ng-show="navvm.isLoggedIn" href="closet" class="btn secondary callout">My Closet</a>
+			</div>
+		</div>
+	</div>
 </div>

@@ -5,6 +5,8 @@
 
  */
 
+process.env.secret = "MY_SECRET"; //GET RID OF THIS LATER!!!
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -13,6 +15,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 // [SH] Require Passport
 var passport = require('passport');
+var guard = require('express-jwt-permissions')();
 
 // [SH] Bring in the data model
 require('./app_api/models/db');
@@ -29,9 +32,14 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+
+ 
+
+
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -91,5 +99,11 @@ app.use(function(err, req, res, next) {
     });
 });
 
+//User Role Error handling
+app.use(function (err, req, res, next) {
+  if (err.code === 'permission_denied') {
+    res.status(401).send('insufficient permissions');
+  }
+});
 
 module.exports = app;
