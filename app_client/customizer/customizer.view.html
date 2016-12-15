@@ -1,27 +1,29 @@
 <navigation></navigation>
 
 <div class="container">
-	Jean: {{vm.jean}}
-		
-  <h1 class="page-title">{{vm.form.steps[vm.form.currentStep].title}}</h1>
+	Jean: {{vm.jean.data}}
+	<br>Step:{{vm.jean.step}}
+  <h1 class="page-title">{{vm.form.steps[vm.jean.step].title}}</h1>
   <div class="customizer-page-content">
-		<ng-include src="vm.form.steps[vm.form.currentStep].template"></ng-include>
+			<ng-include src="vm.form.steps[vm.jean.step].template"></ng-include>
   </div>
 </div>
+
+
 
 <div class="button-container">
 	<div class="step-buttons">
 		<a class="btn"
-		ng-class="vm.form.currentStep=='1' ? 'acitve' : 'inactive'" 
-		ng-click="vm.form.currentStep = 1"
+		ng-class="vm.jean.step=='1' ? 'acitve' : 'inactive'" 
+		ng-click="vm.jean.step = 1"
 		href=""><p>{{vm.form.steps[1].title}}</p></a><!--
 		--><a class="btn"
-		ng-class="vm.form.currentStep=='2' ? 'acitve' : (vm.jean.gender ? 'inactive' : 'disabled')" 
-		ng-click="vm.form.currentStep = 2"
+		ng-class="vm.jean.step=='2' ? 'acitve' : (vm.jean.data.gender ? 'inactive' : 'disabled')" 
+		ng-click="vm.jean.step = 2"
 		href=""><p>{{vm.form.steps[2].title}}</p></a><!--
 		--><a class="btn"
-		ng-class="vm.form.currentStep=='3' ? 'acitve' : (vm.jean.gender && vm.jean.style ? 'inactive' : 'disabled')" 
-		ng-click="vm.form.currentStep = 3"
+		ng-class="vm.jean.step=='3' ? 'acitve' : (vm.jean.data.gender && vm.jean.style ? 'inactive' : 'disabled')" 
+		ng-click="vm.jean.step = 3"
 		href=""><p>{{vm.form.steps[3].title}}</p></a>
 	</div>
 </div>

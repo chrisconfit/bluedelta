@@ -1,19 +1,19 @@
 <div class="customizer-page">
 	<!--Male Styles-->
-	<div ng-if="vm.jean.gender =='male'">
+	<div ng-if="vm.jean.data.gender =='male'">
 		<div class="cft-g style-grid">
 			<div class="cft-gi">
-				<a href="" ng-click="vm.jean.style = 1; vm.form.nextStep();">
+				<a href="" ng-click="vm.jean.set('style',1); vm.form.nextStep();">
 					<img src="/images/male.jpg">
 				</a>
 			</div><!--
 			--><div class="cft-gi">
-				<a href="" ng-click="vm.jean.style = 2; vm.form.nextStep();">
+				<a href="" ng-click="vm.jean.set('style',2); vm.form.nextStep();">
 					<img src="/images/male.jpg">
 				</a>
 			</div><!--
 			--><div class="cft-gi">
-				<a href="" ng-click="vm.jean.style = 3; vm.form.nextStep();">
+				<a href="" ng-click="vm.jean.set('style',3); vm.form.nextStep();">
 					<img src="/images/male.jpg">
 				</a>
 			</div>
@@ -21,20 +21,20 @@
 	</div>
 	
 	<!--Female Styles-->
-	<div ng-if="vm.jean.gender =='female'">
+	<div ng-if="vm.jean.data.gender =='female'">
 		<div class="cft-g style-grid">
 			<div class="cft-gi">
-				<a href="" ng-click="vm.jean.style = 1; vm.form.nextStep();">
+				<a href="" ng-click="vm.jean.set('style',1); vm.form.nextStep();">
 					<img src="/images/female.jpg">
 				</a>
 			</div><!--
 			--><div class="cft-gi">
-				<a href="" ng-click="vm.jean.style = 2; vm.form.nextStep();">
+				<a href="" ng-click="vm.jean.set('style',2); vm.form.nextStep();">
 					<img src="/images/female.jpg">
 				</a>
 			</div><!--
 			--><div class="cft-gi">
-				<a href="" ng-click="vm.jean.style = 3; vm.form.nextStep();">
+				<a href="" ng-click="vm.jean.set('style',3); vm.form.nextStep();">
 					<img src="/images/female.jpg">
 				</a>
 			</div>

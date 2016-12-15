@@ -2,7 +2,7 @@
   
   angular
     .module('meanApp')
-    .controller('customizerCtrl', customizerCtrl);
+    .controller('builderCtrl', customizerCtrl);
 
   customizerCtrl.$inject = ['$location', 'meanData', 'jean'];
   function customizerCtrl($location, meanData, jean) {
