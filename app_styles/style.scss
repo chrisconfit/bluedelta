@@ -5,6 +5,23 @@
 @import "components/typography";
 @import "components/buttons";
 
+
+
+.repeat-item.ng-enter,
+.repeat-item.ng-leave {
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
+}
+
+.repeat-item.ng-enter,
+.repeat-item.ng-leave.ng-leave-active {
+  opacity:0;
+}
+.repeat-item.ng-leave,
+.repeat-item.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
 body{
 	position:relative;
 	min-height:100vh
@@ -40,6 +57,7 @@ body{
 		top:10px;
 		img{
 			width:100%;
+			-webkit-backface-visibility: hidden;
 		}
 	}
 	

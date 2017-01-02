@@ -1,7 +1,8 @@
 (function () {
 
-  angular.module('meanApp', ['ngRoute']);
-
+  angular.module('meanApp', ['ngRoute', 'ngAnimate']);
+  
+  
   function config ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
@@ -55,6 +56,6 @@
   angular
     .module('meanApp')
     .config(['$routeProvider', '$locationProvider', config])
-    .run(['$rootScope', '$location', 'authentication', run]);
+    .run(['$rootScope', '$location', 'authentication', run]);    
 
 })();
