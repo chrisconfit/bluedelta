@@ -56,6 +56,14 @@
   angular
     .module('meanApp')
     .config(['$routeProvider', '$locationProvider', config])
-    .run(['$rootScope', '$location', 'authentication', run]);    
-
+    .run(['$rootScope', '$location', 'authentication', run])
+		.filter('spaceless',function() {
+    return function(input) {
+        if (input) {
+            return input.replace(/\s+/g, '-');    
+        }
+    }
+		});
+		
+		
 })();

@@ -1,0 +1,39 @@
+{
+	"1" : {
+		"name":"Green Denim",
+		"layer": "/images/components/_0006_denim-green.png",
+		"thumb": "/images/controls/fabric-green-denim.jpg",
+		"description":"This is our green denim"
+	},
+	"2" :{
+		"name":"Blue Denim",
+		"layer": "/images/components/_0005_denim-blue.png",
+		"thumb": "/images/controls/fabric-blue-denim.jpg",
+		"description":"This is our blue denim"
+	},
+	"3" :{
+		"name":"Light Blue Denim",
+		"layer": "/images/components/_0004_denim-light-blue.png",
+		"thumb": "/images/controls/fabric-light-blue-denim.jpg",
+		"description":"This is our light denim"
+	},
+	"4" :{
+		"name":"White Denim",
+		"layer": "/images/components/_0003_denim-grey.png",
+		"thumb": "/images/controls/fabric-white-denim.jpg",
+		"description":"This is our white denim"
+	},
+	"5" :{
+		"name":"Charcoal",
+		"layer": "/images/components/_0002_denim-charcoal.png",
+		"thumb": "/images/controls/fabric-charcoal.jpg",
+		"description":"This is our charcoal denim"
+	},
+	"6" :{
+		"name":"Brown Canvas",
+		"layer": "/images/components/_0001_denim-borwn.png",
+		"thumb": "/images/controls/fabric-brown-canvas.jpg",
+		"description":"This is our brown denim"
+	}
+}
+

@@ -22,10 +22,42 @@
         }
       });
     };
-
+		
+		
+		
+		
+		
+		
+		//Placeholders
+		var getStyles = function(){
+			return $http.get('/data/styles.json');
+		};
+		
+		var getThreads = function(){
+			return $http.get('/data/threads.json');
+		};
+		
+		var getHardware = function(){
+			return $http.get('/data/buttons.json');
+		};
+		
+		var getFabrics = function(){
+			return $http.get('/data/fabrics.json');
+		};
+		
+		
+		
+		
+		
+		
+		
     return {
       getProfile : getProfile,
       getOptions : getOptions,
+      getStyles : getStyles,
+      getThreads : getThreads,
+      getHardware: getHardware,
+      getFabrics: getFabrics
     };
   }
 

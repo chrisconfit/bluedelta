@@ -8,11 +8,13 @@
   function customizerCtrl($location, meanData, jean) {
     var vm = this;
 		vm.jean = jean;
-		
-		vm.form = {};
+		vm.jean.step = (jean.step ? jean.step : 1);
+	
     
-    vm.jean.step = (jean.step ? jean.step : 1);
-
+    
+		
+		
+		vm.form = {};		
 		vm.form.steps = [];
     vm.form.steps[1] = {
 	    "template": "/customizer/form-templates/gender.html",
@@ -27,6 +29,8 @@
 	    "title" : "Build"
     };
 
+
+		
     vm.form.nextStep = function(){
 	    vm.jean.step =	vm.jean.step + 1;  
     }
@@ -36,69 +40,70 @@
 	    vm.form.nextStep();
     }    
     
-    //Styles
-    vm.styles = {
-	    "male" : [],
-	    "female" : []
-    }
     
-    vm.styles.male = [
-	    {
-		    "title":"Straight",
-		    "id" : 1,
-		    "images" : [
-					"/images/straight-1.jpg",
-					"/images/straight-2.jpg",
-					"/images/straight-3.jpg"
-		    ]
-	    },
-	    {
-				"title":"Bootcut",
-				"id" : 2,
-		    "images" : [
-					"/images/bootcut-1.jpg",
-					"/images/bootcut-2.jpg",
-					"/images/bootcut-3.jpg"
-		    ]
-	    },
-	    {
-		    "title":"Skinny",
-		    "id":3,
-		    "images" : [
-					"/images/skinny-1.jpg",
-					"/images/skinny-2.jpg",
-					"/images/skinny-3.jpg"
-		    ]
-	    }
-    ];
-    
-    vm.styles.female = [
-	    {
-		    "title":"Skinny",
-		    "images" : [
-					"http://placehold.it/300x500",
-					"http://placehold.it/301x501",
-					"http://placehold.it/302x502"
-		    ]
-	    },
-	    {
-		    "title":"Boot-Cut",
-		    "images" : [
-					"http://placehold.it/300x500",
-					"http://placehold.it/301x501",
-					"http://placehold.it/302x502"
-		    ]
-	    },
-	    {
-		    "title":"Straight",
-		    "images" : [
-					"http://placehold.it/300x500",
-					"http://placehold.it/301x501",
-					"http://placehold.it/302x502"
-		    ]
-	    }
-    ];
-    
+		//vm.jean.data.gender="male";
+	//	vm.jean.data.style=1;
+//		vm.jean.step=3;
+		
+		
+		vm.builder = {};
+		
+		vm.builder.controlPanel = [];
+		vm.builder.controlPanel[1]="Fabric";
+		vm.builder.controlPanel[2]="Hardware";
+		vm.builder.controlPanel[3]="Thread";
+
+	
+		
+		vm.builder.step = 1;
+		vm.builder.changeStep = function(step){
+			if (!step) return false;
+			else vm.builder.step = step; 
+		}
+		
+		vm.builder.selectAttr = function($event, id, attr, selector){
+			var selector = angular.element(document.querySelector("#"+attr+"-selector"));
+			var top = angular.element($event.target).prop('offsetTop');
+			var left = angular.element($event.target).prop('offsetLeft');
+			selector.css({'top':top+'px', 'left':left+'px'});
+			vm.jean.data[attr] =	id;
+
+		}
+		
+	
+		vm.builder.jeanSet = function(attr, val){
+			 vm.jean.data[attr] =	val;
+		}
+		
+  //Styles
+  meanData.getStyles()
+  .then(function(res){
+    vm.styles=res.data;
+	});
+	
+	//Threads
+  meanData.getThreads()
+  .then(function(res){
+    vm.builder.threads=res.data;
+	});
+	
+	
+	//Hardware
+  meanData.getHardware()
+  .then(function(res){
+    vm.builder.hardware=res.data;
+	});
+	
+	//Fabrics
+  meanData.getFabrics()
+  .then(function(res){
+    vm.builder.fabrics=res.data;
+    console.log(vm.builder.fabrics);
+	});
+	
+		
+		
+		
   }
 
 })();

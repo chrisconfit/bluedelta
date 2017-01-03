@@ -1,0 +1,60 @@
+{
+ "male" : [
+		{
+		  "title":"Straight",
+		  "id" : 1,
+		  "images" : [
+				"/images/straight-1.jpg",
+				"/images/straight-2.jpg",
+				"/images/straight-3.jpg"
+		  ]
+		},
+    {
+			"title":"Bootcut",
+			"id" : 2,
+	    "images" : [
+				"/images/bootcut-1.jpg",
+				"/images/bootcut-2.jpg",
+				"/images/bootcut-3.jpg"
+	    ]
+    },
+    {
+	    "title":"Skinny",
+	    "id":3,
+	    "images" : [
+				"/images/skinny-1.jpg",
+				"/images/skinny-2.jpg",
+				"/images/skinny-3.jpg"
+	    ]
+    }
+  ],
+	"female" : [
+    {
+	    "title":"Cigarette",
+	    "id":1,
+	    "images" : [
+				"/images/cig-1.jpg",
+				"/images/cig-2.jpg",
+				"/images/cig-3.jpg"
+	    ]
+    },
+    {
+	    "title":"Boot-Cut",
+	    "id":2,
+	    "images" : [
+				"/images/f-boot-1.jpg",
+				"/images/f-boot-2.jpg",
+				"/images/f-boot-3.jpg"
+	    ]
+    },
+    {
+	    "title":"Straight",
+	    "id":3,
+	    "images" : [
+				"/images/f-straight-1.jpg",
+				"/images/f-straight-2.jpg",
+				"/images/f-straight-3.jpg"
+	    ]
+    }
+  ]
+}

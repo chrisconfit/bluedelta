@@ -2,7 +2,6 @@
 	<!--Male Styles-->
 	<div ng-if="vm.jean.data.gender =='male'">
 		<div class="cft-g style-grid">
-			
 			<div ng-repeat="style in vm.styles.male" class="cft-gi">
 				{{style.title}}
 				<slider image-click="vm.form.selectStyle(style.id)" slides="style.images"></slider>
@@ -13,20 +12,9 @@
 	<!--Female Styles-->
 	<div ng-if="vm.jean.data.gender =='female'">
 		<div class="cft-g style-grid">
-			<div class="cft-gi">
-				<a href="" ng-click="vm.jean.set('style',1); vm.form.nextStep();">
-					<slider></slider>
-				</a>
-			</div><!--
-			--><div class="cft-gi">
-				<a href="" ng-click="vm.jean.set('style',2); vm.form.nextStep();">
-					<slider></slider>
-				</a>
-			</div><!--
-			--><div class="cft-gi">
-				<a href="" ng-click="vm.jean.set('style',3); vm.form.nextStep();">
-					<slider></slider>
-				</a>
+			<div ng-repeat="style in vm.styles.female" class="cft-gi">
+				{{style.title}}
+				<slider image-click="vm.form.selectStyle(style.id)" slides="style.images"></slider>
 			</div>
 		</div>
 	</div>

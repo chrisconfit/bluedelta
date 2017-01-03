@@ -1,26 +1,78 @@
-<div class="cft-g" ng-ctrl="builder">
-	
-	
-	<div class="cft-gi">
+
+
+
 		<div class="builder__stage">
-			
+
+			<img ng-if="vm.jean.data.fabric"
+			src="{{vm.builder.fabrics[vm.jean.data.fabric].layer}}">
+			<img ng-if="vm.jean.data.thread"
+			src="{{vm.builder.threads[vm.jean.data.thread].layer}}">
+			<img class="stage-button" ng-if="vm.jean.data.hardware"
+			src="{{vm.builder.hardware[vm.jean.data.hardware].layer}}">
 		</div>
-	</div><!--
-		
-	--><div class="cft-gi">
-		
+
 		<div class="builder__control-panel">
 			
-			<div class="switch">
-				<ul>
-					<li ng-repeat="(key, val) in steps">{{key}}</li>
+
+			
+			<div class="control-panel-inner">
+				
+				<h3 class="control-title">{{vm.builder.controlPanel[vm.builder.step]}}</h3>
+				<div class="switch">					
+					<ul>
+						<li ng-repeat="(key, val) in vm.builder.controlPanel" ng-if="$index > 0" ng-class="{ active: vm.builder.step==key }">
+							<a ng-click="vm.builder.changeStep(key)" href="">{{key}}</a>
+						</li>
+					</ul>
+				</div>
+				
+				<div class="build-step-stage">
 					
-				</ul>
+				
+					<div class="fabric chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Fabric'">
+						<span ng-class="{ live: vm.jean.data.fabric }" class="chooser-select" id="fabric-selector"></span>
+						<div class="cft-g chooser-grid">
+							<div class="cft-gi" ng-repeat="(id, fabric) in vm.builder.fabrics">
+								<a ng-class="{ active: vm.jean.data.fabric==id }" id="fabric_{{id}}" 
+								href="" ng-click="vm.builder.selectAttr($event, id, 'fabric')">
+									<img src="{{fabric.thumb}}">
+								</a>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="thread chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Thread'">
+						<span ng-class="{ live: vm.jean.data.thread }" class="chooser-select" id="thread-selector"></span>
+						<div class="cft-g chooser-grid">
+							<div class="cft-gi" ng-repeat="(id, thread) in vm.builder.threads">
+								<a ng-class="{ active: vm.jean.data.thread==id }" id="thread_{{id}}" 
+								href="" ng-click="vm.builder.selectAttr($event, id, 'thread')">
+									<img src="{{thread.thumb}}">
+								</a>
+							</div>
+						</div>
+					</div>
+						
+					
+					<div class="hardware chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Hardware'">
+						<span ng-class="{ live: vm.jean.data.hardware }" class="chooser-select" id="hardware-selector"></span>
+						<div class="cft-g chooser-grid">
+							<div class="cft-gi" ng-repeat="(id, button) in vm.builder.hardware">
+								<a ng-class="{ active: vm.jean.data.hardware==id }" id="hardware_{{id}}" 
+								href="" ng-click="vm.builder.selectAttr($event, id, 'hardware')">
+									<img src="{{button.thumb}}">
+								</a>
+							</div>
+						</div>
+					</div>
+
+					
+				
+				</div>
+				
+				
 			</div>
-			
-			
-			
 		</div>
 		
-	</div>
-</div>
+

@@ -2,35 +2,25 @@
   
   angular
     .module('meanApp')
-    .controller('builderCtrl', customizerCtrl);
+    .controller('builderCtrl', builderCtrl);
 
-  customizerCtrl.$inject = ['$location', 'meanData', 'jean'];
-  function customizerCtrl($location, meanData, jean) {
+  builderCtrl.$inject = ['$location', 'meanData', 'jean'];
+  function builderCtrl($location, meanData, jean) {
     var vm = this;
 		vm.jean = jean;
 		
-		vm.form = {};
+		console.log('starting');
+		
+		vm.build = {};
+		vm.build.steps = [];
+		vm.build.steps.push("Fabric");
+		vm.build.steps.push("Hardware");
+		vm.build.steps.push("Thread");
+		vm.build.steps.push("Length");
+		
+		console.log(vm.build.steps);
+		vm.vari = "THIS VAR";
     
-    vm.jean.step = (jean.step ? jean.step : 1);
-
-		vm.form.steps = [];
-    vm.form.steps[1] = {
-	    "template": "/customizer/form-templates/gender.html",
-	    "title" : "Gender"
-    };
-    vm.form.steps[2] = {
-	    "template": "/customizer/form-templates/style.html",
-	    "title" : "Style"
-    };
-    vm.form.steps[3] = {
-	    "template": "/customizer/form-templates/build.html",
-	    "title" : "Build"
-    };
-
-    vm.form.nextStep = function(){
-	    vm.jean.step =	vm.jean.step + 1;
-	    
-    }
     
   }
 
