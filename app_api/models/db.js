@@ -3,7 +3,7 @@ var gracefulShutdown;
 var dbURI = 'mongodb://localhost/meanAuth';
 
 if (process.env.NODE_ENV === 'production') {
-  dbURI = process.env.MONGOLAB_URI;
+  dbURI = process.env.MONGOLAB_URI || process.env.MONGODB_URI;
 }
 
 mongoose.connect(dbURI);
