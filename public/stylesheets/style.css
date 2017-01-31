@@ -783,6 +783,44 @@ h1.page-title {
 .builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select.live {
   opacity: 1;
 }
+.builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadTop-selector:before, .builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadBottom-selector:before, .builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadAccent-selector:before {
+  content: "T";
+  background: red;
+  color: #fff;
+  display: block;
+  width: 20px;
+  height: 20px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 20px;
+  position: absolute;
+  left: -2px;
+  top: -2px;
+}
+.builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadBottom-selector {
+  border-color: #cc0000;
+}
+.builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadBottom-selector:before {
+  background: #cc0000;
+  content: "B";
+  left: 18px;
+}
+.builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadAccent-selector {
+  border-color: #990000;
+}
+.builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadAccent-selector:before {
+  background: #990000;
+  content: "A";
+  left: 38px;
+}
+.builder__control-panel .control-panel-inner .build-step-stage .chooser .sub-chooser li {
+  list-style-type: none;
+  display: inline-block;
+  margin-right: 15px;
+}
+.builder__control-panel .control-panel-inner .build-step-stage .chooser .sub-chooser li label {
+  font-size: 10px;
+}
 .builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-grid {
   margin-left: -15px;
 }

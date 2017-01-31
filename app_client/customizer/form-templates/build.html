@@ -43,11 +43,23 @@
 					
 					
 					<div class="thread chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Thread'">
-						<span ng-class="{ live: vm.jean.data.thread }" class="chooser-select" id="thread-selector"></span>
+						
+						<div class="sub-chooser">
+							<ul>
+								<li><input type="radio" name="theads_sub" ng-model="vm.builder.threadSubSelect" value="Top"><label>TOP</label></li>
+								<li><input type="radio" name="theads_sub" ng-model="vm.builder.threadSubSelect" value="Bottom"><label>BOTTOM</label></li>
+								<li><input type="radio" name="theads_sub" ng-model="vm.builder.threadSubSelect"  value="Accent"><label>ACCENT</label></li>
+							</ul>
+						</div>
+						
+						<span ng-class="{ live: vm.jean.data.threadTop }" class="chooser-select" id="threadTop-selector"></span>
+						<span ng-class="{ live: vm.jean.data.threadBottom }" class="chooser-select" id="threadBottom-selector"></span>
+						<span ng-class="{ live: vm.jean.data.threadAccent }" class="chooser-select" id="threadAccent-selector"></span>
+						
 						<div class="cft-g chooser-grid">
 							<div class="cft-gi" ng-repeat="(id, thread) in vm.builder.threads">
 								<a ng-class="{ active: vm.jean.data.thread==id }" id="thread_{{id}}" 
-								href="" ng-click="vm.builder.selectAttr($event, id, 'thread')">
+								href="" ng-click="vm.builder.selectAttr($event, id, 'thread'+vm.builder.threadSubSelect)">
 									<img src="{{thread.thumb}}">
 								</a>
 							</div>
