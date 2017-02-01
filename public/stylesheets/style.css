@@ -132,7 +132,7 @@ select {
   line-height: 24px;
   font-size: 1.8rem;
   line-height: 2.4rem;
-  font-family: "Open Sans", sans-serif;
+  font-family: "proxima-nova", "Open Sans", sans-serif;
   color: #1d1d1d;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
@@ -142,9 +142,12 @@ select {
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   display: block;
-  font-family: "Open Sans", sans-serif;
+  font-family: "proxima-nova", "Open Sans", sans-serif;
   font-weight: 500;
   margin-bottom: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #004964;
 }
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
 .h1 a, .h2 a, .h3 a, .h4 a, .h5 a, .h6 a {
@@ -211,7 +214,7 @@ p img {
 }
 
 a {
-  color: #5298a0;
+  color: #004964;
   text-decoration: none;
   -webkit-transition: all 200ms ease;
   -moz-transition: all 200ms ease;
@@ -220,7 +223,7 @@ a {
   transition: all 200ms ease;
 }
 a:hover {
-  color: #38686d;
+  color: #001118;
 }
 
 em {
@@ -282,7 +285,7 @@ a.btn-secondary,
 a.btn,
 a.btn-secondary {
   display: inline-block;
-  padding: 8px 10px;
+  padding: 8px 26px;
   margin: 0;
   font-size: 16px;
   line-height: 24px;
@@ -309,6 +312,8 @@ a.btn-secondary {
   -webkit-transition: 0.2s all ease-in;
   transition: 0.2s all ease-in;
   text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   background-color: #004964;
 }
 .btn.small, .small.btn-secondary,
@@ -421,25 +426,39 @@ body {
 
 .main-navigation {
   background: #004964;
-  height: 78px;
+  height: 69px;
   display: block;
   position: relative;
+  padding-top: 16px;
 }
 .main-navigation:after {
   content: "";
   display: block;
   clear: both;
 }
-.main-navigation #home-link {
-  width: 200px;
-  position: absolute;
-  left: 50%;
-  margin: 0 0 0 -50px;
-  top: 10px;
+.main-navigation .container {
+  padding: 0 20px;
 }
-.main-navigation #home-link img {
+.main-navigation .head-left {
+  float: left;
+}
+.main-navigation .head-left #home-link {
+  width: 200px;
+  margin-top: -10px;
+  display: inline-block;
+}
+.main-navigation .head-left #home-link img {
   width: 100%;
   -webkit-backface-visibility: hidden;
+}
+.main-navigation .head-left .title {
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  vertical-align: top;
+  margin-top: 6px;
+  display: inline-block;
 }
 .main-navigation nav {
   position: relative;
@@ -450,49 +469,66 @@ body {
 .main-navigation nav .btn:hover, .main-navigation nav .btn-secondary:hover {
   background: #001118;
 }
-.main-navigation nav.nav-left {
-  float: left;
-}
 .main-navigation nav.nav-right {
   float: right;
 }
 .main-navigation nav.nav-right ul li {
   display: inline-block;
-  margin-right: 15px;
+  margin-left: 40px;
+  vertical-align: middle;
 }
 .main-navigation nav.nav-right ul li:last-child {
   margin-right: 0;
 }
 .main-navigation nav.nav-right ul li a {
   font-size: 18px;
-  line-height: 22px;
+  line-height: 26px;
   font-size: 1.8rem;
-  line-height: 2.2rem;
+  line-height: 2.6rem;
   color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 .main-navigation nav.nav-right ul li a:hover {
   color: #cccccc;
 }
 .main-navigation nav.nav-right .btn.logout, .main-navigation nav.nav-right .logout.btn-secondary, .main-navigation nav.nav-right .btn.sign-in, .main-navigation nav.nav-right .sign-in.btn-secondary {
   background: #40778b;
+  font-size: 18px;
+  line-height: 22px;
+  font-size: 1.8rem;
+  line-height: 2.2rem;
 }
 .main-navigation nav.nav-right .btn.logout:hover, .main-navigation nav.nav-right .logout.btn-secondary:hover, .main-navigation nav.nav-right .btn.sign-in:hover, .main-navigation nav.nav-right .sign-in.btn-secondary:hover {
   background: #2b687e;
 }
 
 .hero {
-  background: url("../images/denim.jpg") repeat repeat;
-  background-size: 20%;
+  background: url("../images/denim-1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  height: 100vh;
+  margin-top: -69px;
+  text-align: center;
+  color: #ffffff;
 }
 .hero h1 {
-  padding: 150px;
+  padding-top: 150px;
   color: #fff;
-  font-size: 80px;
-  line-height: 100px;
-  font-size: 8rem;
-  line-height: 10rem;
+  font-size: 50px;
+  line-height: 60px;
+  font-size: 5rem;
+  line-height: 6rem;
   text-transform: uppercase;
   text-align: center;
+}
+.hero h3 {
+  font-size: 28px;
+  line-height: 36px;
+  font-size: 2.8rem;
+  line-height: 3.6rem;
+  margin-bottom: 60px;
 }
 
 .intro-text {
@@ -503,7 +539,7 @@ body {
   margin: 30px auto;
 }
 .intro-text .callouts a {
-  background: #40778b;
+  background: #004964;
   padding: 20px;
   font-size: 30px;
   line-height: 35px;
@@ -511,13 +547,12 @@ body {
   line-height: 3.5rem;
   display: block;
   width: 48%;
-  float: left;
+  margin: 0 auto 20px;
 }
 .intro-text .callouts a:hover {
   background: #2b687e;
 }
 .intro-text .callouts a.secondary {
-  float: right;
   background: #acacac;
 }
 .intro-text .callouts a.secondary:hover {
@@ -551,6 +586,7 @@ h1.page-title {
   color: #004964;
   text-transform: uppercase;
   text-align: center;
+  margin-bottom: 30px;
 }
 
 .customizer-page-content {
@@ -577,7 +613,8 @@ h1.page-title {
   /* Safari */
   transform: skewX(-20deg);
   display: inline-block;
-  width: 33.333%;
+  width: 33.083%;
+  margin-right: 0.25%;
   text-align: center;
 }
 .step-buttons a.btn p, .step-buttons a.btn-secondary p {
@@ -593,11 +630,15 @@ h1.page-title {
   color: #3f3f3f;
 }
 
-.cft-g.gender-grid > .cft-gi {
+.gender-grid {
+  width: 800px;
+  margin: 0 auto;
+}
+.gender-grid .cft-g > .cft-gi {
   width: 100%;
 }
 @media screen and (min-width: 450px) {
-  .cft-g.gender-grid > .cft-gi {
+  .gender-grid .cft-g > .cft-gi {
     width: 50%;
   }
 }
@@ -613,6 +654,9 @@ h1.page-title {
   .cft-g.style-grid > .cft-gi {
     width: 33.333%;
   }
+}
+.cft-g.style-grid h3 {
+  text-align: center;
 }
 
 .fade {
@@ -667,7 +711,7 @@ h1.page-title {
   margin-top: -10px;
   height: 36px;
   width: 36px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.5);
   border: 2px solid #004964;
   border-radius: 50%;
   -moz-border-radius: 50%;
@@ -694,10 +738,10 @@ h1.page-title {
   left: 8px;
 }
 .image-slider .slider-controls.left-arrow {
-  left: -10px;
+  left: 5px;
 }
 .image-slider .slider-controls.right-arrow {
-  right: -10px;
+  right: 5px;
 }
 .image-slider .slider-controls.right-arrow:before {
   top: 19px;

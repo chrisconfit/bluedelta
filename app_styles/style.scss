@@ -28,7 +28,7 @@ body{
 }
 //Site Setup
 .container{
-	padding:20px;
+	padding: 20px;
 	max-width:1200px;
 	display:block;
 	margin:auto;
@@ -41,23 +41,37 @@ body{
 //Navigation
 .main-navigation{
 	background: $blue;
-	height:78px;
+	height:69px;
 	display:block;
 	position:relative;
+	padding-top: 16px;
 	&:after{
 		content:"";
 		display:block;
 		clear:both;
 	}
-	#home-link{
-		width:200px;
-		position:absolute;
-		left:50%;
-		margin: 0 0 0 -50px;
-		top:10px;
-		img{
-			width:100%;
-			-webkit-backface-visibility: hidden;
+	.container {
+		padding: 0 20px;
+	}
+	.head-left{
+		float:left;
+		#home-link{
+			width:200px;
+			margin-top: -10px;
+			display: inline-block;
+			img{
+				width:100%;
+				-webkit-backface-visibility: hidden;
+			}
+		}
+		.title {
+			color: #ffffff;
+			text-transform: uppercase;
+			font-weight: 600;
+			letter-spacing: 2px;
+			vertical-align: top;
+			margin-top: 6px;
+			display: inline-block;
 		}
 	}
 	
@@ -69,10 +83,6 @@ body{
 				background:darken($blue,15%);
 			}
 		}
-		//Left Nav
-		&.nav-left{
-			float:left;
-		}
 		
 		//Right Nav
 		&.nav-right{
@@ -80,13 +90,16 @@ body{
 			ul{
 				li{
 					display:inline-block;
-					margin-right:15px;
+					margin-left:40px;
+					vertical-align: middle;
 					&:last-child{
 						margin-right:0;
 					}
 					a{
-						@include font-size(18, 22);
+						@include font-size(18, 26);
 						color:#fff;
+						text-transform: uppercase;
+						letter-spacing: 2px;
 						&:hover{
 							color:darken(#fff,20%);
 						}
@@ -95,6 +108,7 @@ body{
 			}
 			.btn.logout, .btn.sign-in{
 				background:tint($blue, 25%);
+				@include font-size(18, 22);
 				&:hover{
 					background: tint($blue, 17%);
 				}
@@ -109,14 +123,24 @@ body{
 
 //Home
 .hero{
-	background:url('../images/denim.jpg') repeat repeat;
-	background-size:20%;
+	background:url('../images/denim-1.jpg');
+	background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  height: 100vh;
+  margin-top: -69px;
+  text-align: center;
+  color: #ffffff;
 	h1{
-		padding:150px;
+		padding-top: 150px;
 		color:#fff;
-		@include font-size(80,100);
+		@include font-size(50,60);
 		text-transform: uppercase;
 		text-align: center;
+	}
+	h3 {
+		@include font-size(28,36);
+		margin-bottom: 60px;
 	}
 }
 
@@ -126,7 +150,7 @@ body{
 		max-width:600px;
 		margin:30px auto;
 		a{
-			background:tint($blue, 25%);
+			background:$blue;
 			&:hover{
 				background: tint($blue, 17%);
 			}
@@ -134,9 +158,8 @@ body{
 			@include font-size(30, 35);
 			display:block;
 			width:48%;
-			float:left;
+			margin: 0 auto 20px;
 			&.secondary{
-				float:right;
 					background:#acacac;
 				&:hover{
 					background: darken(#acacac, 10%);
