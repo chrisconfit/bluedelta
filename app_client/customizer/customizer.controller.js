@@ -64,6 +64,12 @@
 			else vm.builder.step = step; 
 		}
 		
+		vm.builder.zoomLevel = 1;
+		vm.builder.toggleZoom = function(){
+			vm.builder.zoomLevel = vm.builder.zoomLevel + 1
+			if (vm.builder.zoomLevel > 3) vm.builder.zoomLevel=1;
+		}
+	
 		vm.builder.selectAttr = function($event, id, attr, selector){
 			var selector = angular.element(document.querySelector("#"+attr+"-selector"));
 			var top = angular.element($event.target).prop('offsetTop');

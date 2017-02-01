@@ -1,17 +1,17 @@
 		<div class="builder__stage">
-
-			<img ng-if="vm.jean.data.fabric"
-			src="/images/components/fabric/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_f{{vm.jean.data.fabric}}.png">
-			
-			<img ng-if="vm.jean.data.threadBottom"
-			src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tb{{vm.jean.data.threadBottom}}.png">
-			<img ng-if="vm.jean.data.threadTop"
-			src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tt{{vm.jean.data.threadTop}}.png">
-			<img ng-if="vm.jean.data.threadAccent"
-			src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_ta{{vm.jean.data.threadAccent}}.png">
-			
-			<img class="stage-button" ng-if="vm.jean.data.hardware"
-			src="{{vm.builder.hardware[vm.jean.data.hardware].layer}}">
+			<div class="images">
+				<img ng-if="vm.jean.data.fabric" ng-class="'zoom-'+vm.builder.zoomLevel"
+				src="/images/components/fabric/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_f{{vm.jean.data.fabric}}.jpg">		
+				<img ng-if="vm.jean.data.threadBottom" ng-class="'zoom-'+vm.builder.zoomLevel"
+				src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tb{{vm.jean.data.threadBottom}}.png">
+				<img ng-if="vm.jean.data.threadTop" ng-class="'zoom-'+vm.builder.zoomLevel"
+				src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tt{{vm.jean.data.threadTop}}.png">
+				<img ng-if="vm.jean.data.threadAccent" ng-class="'zoom-'+vm.builder.zoomLevel"
+				src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_ta{{vm.jean.data.threadAccent}}.png">
+				<img class="stage-button" ng-if="vm.jean.data.hardware"
+				src="{{vm.builder.hardware[vm.jean.data.hardware].layer}}">
+			</div>
+			<a ng-click="vm.builder.toggleZoom()" href="">Z</a>
 		</div>
 
 		<div class="builder__control-panel">
