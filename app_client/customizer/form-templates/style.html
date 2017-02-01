@@ -3,8 +3,8 @@
 	<div ng-if="vm.jean.data.gender =='1'">
 		<div class="cft-g style-grid">
 			<div ng-repeat="style in vm.styles.male" class="cft-gi">
-				{{style.title}}
 				<slider image-click="vm.form.selectStyle(style.id)" slides="style.images"></slider>
+				<h3>{{style.title}}</h3>
 			</div>
 		</div>
 	</div>
@@ -13,8 +13,8 @@
 	<div ng-if="vm.jean.data.gender =='2'">
 		<div class="cft-g style-grid">
 			<div ng-repeat="style in vm.styles.female" class="cft-gi">
-				{{style.title}}
 				<slider image-click="vm.form.selectStyle(style.id)" slides="style.images"></slider>
+				<h3>{{style.title}}</h3>
 			</div>
 		</div>
 	</div>

@@ -9,7 +9,7 @@ $lightBlue: #d8e7ea;
 $lightGrey:#f1f1f1;
 $darkerBlue: #4f7e84;
 $peach:#f3ece2;
-$darkBlue: #5298a0;
+$darkBlue: #004964;
 
 /* Button colors */
 $colorBtnPrimary: $blue; // boring grey
@@ -39,7 +39,7 @@ $errorRedBg: lighten($blue, 55%);
 $successGreen: #0a942a;
 
 /* Typography */
-$openSans:'Open Sans', sans-serif;
+$openSans: "proxima-nova",'Open Sans', sans-serif;
 $headerFontStack:$openSans;
 $bodyFontStack:$openSans;
 
