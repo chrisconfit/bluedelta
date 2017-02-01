@@ -43,7 +43,7 @@
     
 
 		//Set Defaults
-		vm.jean.data.fabric = vm.jean.data.fabric || "1201";
+		vm.jean.data.fabric = vm.jean.data.fabric || "1000";
 		vm.jean.data.threadAccent = vm.jean.data.threadAccent || "1";
 		vm.jean.data.threadTop = vm.jean.data.threadTop || "1";
 		vm.jean.data.threadBottom = vm.jean.data.threadBottom || "1";

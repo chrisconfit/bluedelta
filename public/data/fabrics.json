@@ -1,4 +1,8 @@
-{
+{	
+	"1000" : {
+		"name":"Classic Indigo",
+		"description":"Blue Delta's Classic..."
+	},
 	"1101" : {
 		"name":"Linen Grey",
 		"description":"Linen Grey Fabric"
