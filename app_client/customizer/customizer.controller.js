@@ -41,9 +41,12 @@
     }    
     
     
-		//vm.jean.data.gender="male";
-	//	vm.jean.data.style=1;
-//		vm.jean.step=3;
+
+		//Set Defaults
+		vm.jean.data.fabric = vm.jean.data.fabric || "1201";
+		vm.jean.data.threadAccent = vm.jean.data.threadAccent || "1";
+		vm.jean.data.threadTop = vm.jean.data.threadTop || "1";
+		vm.jean.data.threadBottom = vm.jean.data.threadBottom || "1";
 		
 		
 		vm.builder = {};
@@ -53,7 +56,7 @@
 		vm.builder.controlPanel[2]="Hardware";
 		vm.builder.controlPanel[3]="Thread";
 
-	
+		vm.builder.threadSubSelect = vm.builder.threadSubSelect || "Top";
 		
 		vm.builder.step = 1;
 		vm.builder.changeStep = function(step){

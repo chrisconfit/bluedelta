@@ -1,6 +1,6 @@
 <div class="customizer-page">
 	<!--Male Styles-->
-	<div ng-if="vm.jean.data.gender =='male'">
+	<div ng-if="vm.jean.data.gender =='1'">
 		<div class="cft-g style-grid">
 			<div ng-repeat="style in vm.styles.male" class="cft-gi">
 				{{style.title}}
@@ -10,7 +10,7 @@
 	</div>
 	
 	<!--Female Styles-->
-	<div ng-if="vm.jean.data.gender =='female'">
+	<div ng-if="vm.jean.data.gender =='2'">
 		<div class="cft-g style-grid">
 			<div ng-repeat="style in vm.styles.female" class="cft-gi">
 				{{style.title}}

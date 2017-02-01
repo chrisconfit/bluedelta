@@ -1,12 +1,15 @@
-
-
-
 		<div class="builder__stage">
 
 			<img ng-if="vm.jean.data.fabric"
-			src="{{vm.builder.fabrics[vm.jean.data.fabric].layer}}">
-			<img ng-if="vm.jean.data.thread"
-			src="{{vm.builder.threads[vm.jean.data.thread].layer}}">
+			src="/images/components/fabric/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_f{{vm.jean.data.fabric}}.png">
+			
+			<img ng-if="vm.jean.data.threadBottom"
+			src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tb{{vm.jean.data.threadBottom}}.png">
+			<img ng-if="vm.jean.data.threadTop"
+			src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tt{{vm.jean.data.threadTop}}.png">
+			<img ng-if="vm.jean.data.threadAccent"
+			src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_ta{{vm.jean.data.threadAccent}}.png">
+			
 			<img class="stage-button" ng-if="vm.jean.data.hardware"
 			src="{{vm.builder.hardware[vm.jean.data.hardware].layer}}">
 		</div>
@@ -30,12 +33,12 @@
 					
 				
 					<div class="fabric chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Fabric'">
-						<span ng-class="{ live: vm.jean.data.fabric }" class="chooser-select" id="fabric-selector"></span>
+						<span style="top: 15px; left: 15px;" ng-class="{ live: vm.jean.data.fabric }" class="chooser-select" id="fabric-selector"></span>
 						<div class="cft-g chooser-grid">
 							<div class="cft-gi" ng-repeat="(id, fabric) in vm.builder.fabrics">
 								<a ng-class="{ active: vm.jean.data.fabric==id }" id="fabric_{{id}}" 
 								href="" ng-click="vm.builder.selectAttr($event, id, 'fabric')">
-									<img src="{{fabric.thumb}}">
+									<img src="/images/components/fabric/thumb_f{{id}}.jpg">
 								</a>
 							</div>
 						</div>
@@ -52,9 +55,12 @@
 							</ul>
 						</div>
 						
-						<span ng-class="{ live: vm.jean.data.threadTop }" class="chooser-select" id="threadTop-selector"></span>
-						<span ng-class="{ live: vm.jean.data.threadBottom }" class="chooser-select" id="threadBottom-selector"></span>
-						<span ng-class="{ live: vm.jean.data.threadAccent }" class="chooser-select" id="threadAccent-selector"></span>
+						<span style="top:42px;left:15px;" ng-class="{ live: vm.jean.data.threadTop }" 
+						class="chooser-select" id="threadTop-selector"></span>
+						<span style="top:42px;left:15px;" ng-class="{ live: vm.jean.data.threadBottom }" 
+						class="chooser-select" id="threadBottom-selector"></span>
+						<span style="top:42px;left:15px;" ng-class="{ live: vm.jean.data.threadAccent }" 
+						class="chooser-select" id="threadAccent-selector"></span>
 						
 						<div class="cft-g chooser-grid">
 							<div class="cft-gi" ng-repeat="(id, thread) in vm.builder.threads">
