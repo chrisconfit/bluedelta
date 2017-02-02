@@ -339,20 +339,30 @@ h1.page-title{
 
 
 //Zoom
-.builder__stage .images{
-	width:300px;
-	height:350px;
-	margin:auto;
-	display:block;
-	overflow:hidden;
-	position:relative;
-	img{
-		@include transition(all,300ms,ease);
-		&.zoom-2{
-			@include transform(scale(2));
+.builder__stage{
+	a.zoom-icon{
+		width:20px;
+		display:block;
+		margin:10px auto;
+	}
+		
+ .images{
+		width:300px;
+		height:350px;
+		margin:auto;
+		display:block;
+		overflow:hidden;
+		position:relative;
+	
+		img{
+			transition:transform 400ms ease,transform-origin 100ms ease,;
+			&.zoom-2{
+				@include transform(scale(2));
+			}
+			&.zoom-3{
+				@include transform(scale(3.5));
+			}
 		}
-		&.zoom-3{
-			@include transform(scale(3.5));
-		}
+		
 	}
 }

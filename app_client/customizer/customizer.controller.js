@@ -4,8 +4,8 @@
     .module('meanApp')
     .controller('customizerCtrl', customizerCtrl);
 
-  customizerCtrl.$inject = ['$location', 'meanData', 'jean'];
-  function customizerCtrl($location, meanData, jean) {
+  customizerCtrl.$inject = ['$location', '$window', 'meanData', 'jean'];
+  function customizerCtrl($location, $window, meanData, jean) {
     var vm = this;
 		vm.jean = jean;
 		vm.jean.step = (jean.step ? jean.step : 1);
@@ -69,7 +69,43 @@
 			vm.builder.zoomLevel = vm.builder.zoomLevel + 1
 			if (vm.builder.zoomLevel > 3) vm.builder.zoomLevel=1;
 		}
+		
+		//zoomlvl = (scope.zoomlvl === undefined) ? "2.5" : scope.zoomlvl
+
+		//
+		
+		vm.builder.pan = "50%,50%";
+		vm.builder.trackMouse = function($event){
+			frame = angular.element(document.querySelector("#zoom-frame"))[0];
+			fWidth = frame.clientWidth;
+			fHeight = frame.clientHeight;
+			rect = frame.getBoundingClientRect();
+			rootDoc = frame.ownerDocument.documentElement;
+			
+			//calculate the offset of the frame from the top and left of the document
+			offsetT = rect.top + $window.pageYOffset - rootDoc.clientTop
+			offsetL = rect.left + $window.pageXOffset - rootDoc.clientLeft
+
+			//calculate current cursor position inside the frame, as a percentage
+			xPosition = (($event.pageX - offsetL) / fWidth) * 100
+			yPosition = (($event.pageY - offsetT) / fHeight) * 100
+
+			pan = xPosition + "% " + yPosition + "% 0";
+			vm.builder.pan=pan;
+			images = angular.element(document.querySelectorAll(".z-img"));
+			images.css({"transform-origin":pan});
 	
+		}
+		
+		vm.builder.resetPan = function(){
+			pan = "50% 50% 0";
+			vm.builder.pan=pan;
+			images = angular.element(document.querySelectorAll(".z-img"));
+			images.css({"transform-origin":pan});
+		}
+	
+
+		
 		vm.builder.selectAttr = function($event, id, attr, selector){
 			var selector = angular.element(document.querySelector("#"+attr+"-selector"));
 			var top = angular.element($event.target).prop('offsetTop');
