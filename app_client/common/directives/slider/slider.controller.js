@@ -11,11 +11,9 @@
 
 			
 			$scope.imagesLoaded = false;
-			console.log($scope.slides);
 			
 			preloader.preloadImages( $scope.slides )
 			.then(function() {
-				console.log("images loaded!!!");
 				$scope.imagesLoaded = true;
 			},
 			function() {

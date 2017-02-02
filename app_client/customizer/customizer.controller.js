@@ -181,7 +181,6 @@
   meanData.getFabrics()
   .then(function(res){
     vm.builder.fabrics=res.data;
-    console.log(vm.builder.fabrics);
 	});
 	
 		

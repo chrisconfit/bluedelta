@@ -8,16 +8,9 @@
 
 		
     function homeCtrl ($scope, jean, $animate) {
-	    
-			$scope.lions = false;
-			$scope.cranes = false;
-			
-	    
-	    
 	    	    	    
 	    $scope.jean = jean.data;
 	    	
-      console.log('Home controller is running');
     }
 
 })();
