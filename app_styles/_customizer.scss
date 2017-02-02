@@ -6,7 +6,8 @@ h1.page-title{
 	margin-bottom: 30px;
 }
 .customizer-page-content{
-	margin-bottom:80px;
+	margin-bottom: 0px;
+	position:relative;
 }
 .button-container{
 	overflow:hidden;
@@ -189,7 +190,7 @@ h1.page-title{
 	position:absolute;
 	right:0;
 	width:360px;
-	top:15%;
+	top:0;
 	height:60vh;
 	.control-panel-inner{
 		position:relative;
@@ -197,12 +198,16 @@ h1.page-title{
 			text-transform: uppercase;
 			color:$blue;
 			margin-bottom:5px;
-			font-weight:700;
-			@include font-size(16,16);
+			background: #004964;
+			color: #ffffff;
+			margin-bottom: 0;
+			padding: 15px;
+			font-weight:600;
+			@include font-size(18,18);
 		}
 		.switch{
 			position:absolute;
-			top:21px;
+			top: 48px;
 			right:100%;
 			ul{
 				list-style-type:none;
@@ -217,7 +222,7 @@ h1.page-title{
 						color:#fff;
 					}
 					&.active{
-						background:$lightGrey;
+						background:#ffffff;
 						a{color:$blue;}
 					}
 				}
@@ -229,7 +234,7 @@ h1.page-title{
 			padding:15px;
 			padding-bottom:0;
 			position:relative;
-			background:$lightGrey;
+			background:#ffffff;
 			.chooser{
 				.chooser-select{
 					pointer-events: none;
@@ -241,13 +246,28 @@ h1.page-title{
 					}
 					width:100px;
 					height:100px;
-					border:2px solid red;
+					border:3px solid #91b6c3;
 					position:absolute;
+					display: block;
+					&::after {
+						width: 40px;
+						height: 40px;
+						margin: auto;
+						border-radius: 50%;
+						margin: 26px auto 0;
+						background: rgba(255,255,255,0.5);
+						border: 3px solid #004964;
+						display: block;
+						font-family: FontAwesome;
+						content: "\f00c";
+						text-align: center;
+						color: $blue;
+						line-height: 34px;
+					}
 					@include transition(all,300ms,ease);
 					&#threadTop-selector,&#threadBottom-selector,&#threadAccent-selector{
 						&:before{
 							content: "T";
-							background: red;
 							color: #fff;
 							display: block;
 							width: 20px;
@@ -256,34 +276,51 @@ h1.page-title{
 							text-align: center;
 							line-height: 20px;
 							position: absolute;
-							left:-2px;
-							top:-2px;
+							left:-3px;
+							top:-3px;
+							background: $blue;
+							z-index: 100;
 						}
 					}
 					&#threadBottom-selector{
-						border-color:darken(red,10%);
+						border-color:#cccccc;
 						&:before{
-							background:darken(red,10%);
+							background:#cccccc;
 							content: "B";
 							left: 18px;
+							z-index: 50;
+						}
+						&::after {
+					    background: rgba(255, 255, 255, 0.5);
+					    border: 3px solid #cccccc;
+					    color: #cccccc;
 						}
 					}
 					&#threadAccent-selector{
-						border-color:darken(red,20%);
+						border-color:#cccccc;
 						&:before{
-							background:darken(red,20%);
+							background:#cccccc;
 							content: "A";
 							left: 38px;
+							z-index: 10;
+						}
+						&::after {
+					    background: rgba(255, 255, 255, 0.5);
+					    border: 3px solid #cccccc;
+
+					    color: #cccccc;
 						}
 					}
 				}	
 				.sub-chooser{
+					margin-bottom: 15px;
 					li{
 						list-style-type: none;
 						display:inline-block;
 						margin-right:15px;
 						label{
-							font-size:10px;
+							font-size: 15px;
+							vertical-align: middle;
 						}
 					}
 				}
@@ -316,43 +353,77 @@ h1.page-title{
 
 
 .builder__stage{
-	width:600px;
-	position:relative;
-	height:400px;
+	width: 100%;
+  position: relative;
+  min-height: 600px;
+  background: #ebebeb;
 	display:block;
 	img{
 		position:absolute;
-		left:50%;
-		margin-left:-150px;
-		width:300px;
+		left: 35%;
+    margin-left: -150px;
+    height: 600px;
 		display:inline-block;
+		@media screen and (min-width: 1200px) {
+			height: 700px;
+		}
 		&.stage-button{
 	    right: 150px;
-	    width: 50px;
-	    top: 0;
+	    width: 84px;
+	    height: auto;
+      top: 45px;
 	    margin-left: 0;
 	    left: auto;
 		}
 	}
 }
 
+.action {
+	background: #cccccc;
+	padding: 15px;
+	.cft-g {
+		margin-left: -10px;
+	}
+	.cft-gi {
+		width: 49.3%;
+		padding-left: 10px;
+		margin-bottom: 10px;
+		.btn {
+			background: #7198a7;
+			i {
+				display: inline-block;
+				margin-left: 6px;
+			}
+		}
+	}
+	.btn {		
+		width: 100%;
+	}
 
+}
 
 //Zoom
 .builder__stage{
 	a.zoom-icon{
-		width:20px;
-		display:block;
-		margin:10px auto;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    @include font-size(30,30);
+    padding: 10px;
+    background: rgba(255,255,255,0.5);
 	}
 		
  .images{
-		width:300px;
-		height:350px;
-		margin:auto;
+		width: 70%;
+    height: 600px;
 		display:block;
 		overflow:hidden;
 		position:relative;
+		@media screen and (min-width: 1200px) {
+			height: 700px;
+		}
 	
 		img{
 			transition:transform 400ms ease,transform-origin 100ms ease,;

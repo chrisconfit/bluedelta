@@ -11,7 +11,7 @@
 				<img class="stage-button" ng-if="vm.jean.data.hardware"
 				src="{{vm.builder.hardware[vm.jean.data.hardware].layer}}">
 			</div>
-			<a class="zoom-icon" ng-click="vm.builder.toggleZoom()" href="">Z</a>
+			<a class="zoom-icon" ng-click="vm.builder.toggleZoom()" href=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
 		</div>
 
 		<div class="builder__control-panel">
@@ -50,11 +50,11 @@
 							</ul>
 						</div>
 						
-						<span style="top:42px;left:15px;" ng-class="{ live: vm.jean.data.threadTop }" 
+						<span style="top:56px;left:15px;" ng-class="{ live: vm.jean.data.threadTop }" 
 						class="chooser-select" id="threadTop-selector"></span>
-						<span style="top:42px;left:15px;" ng-class="{ live: vm.jean.data.threadBottom }" 
+						<span style="top:56px;left:15px;" ng-class="{ live: vm.jean.data.threadBottom }" 
 						class="chooser-select" id="threadBottom-selector"></span>
-						<span style="top:42px;left:15px;" ng-class="{ live: vm.jean.data.threadAccent }" 
+						<span style="top:56px;left:15px;" ng-class="{ live: vm.jean.data.threadAccent }" 
 						class="chooser-select" id="threadAccent-selector"></span>
 						
 						<div class="cft-g chooser-grid">
@@ -84,6 +84,24 @@
 				
 				</div>
 				
+				
+			</div>
+			<div class="action">
+				<div class="cft-g action-grid">
+					<div class="cft-gi">
+						<a class="btn" href="#">
+							Share <i class="fa fa-share" aria-hidden="true"></i>
+						</a>
+				  </div>
+					<div class="cft-gi">
+						<a class="btn" href="#">
+							Save <i class="fa fa-floppy-o" aria-hidden="true"></i>
+						</a>
+				  </div>
+				</div>
+				<a class="btn order" href="#">
+					Order
+				</a>
 				
 			</div>
 		</div>
