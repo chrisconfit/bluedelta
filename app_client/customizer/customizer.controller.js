@@ -52,14 +52,45 @@
 		vm.builder = {};
 		
 		vm.builder.controlPanel = [];
-		vm.builder.controlPanel[1]="Fabric";
-		vm.builder.controlPanel[2]="Top Thread";
-		vm.builder.controlPanel[3]="Bottom Thread";
-		vm.builder.controlPanel[4]="Accent Thread";
-		vm.builder.controlPanel[5]="Hardware";
+		vm.builder.controlPanel[1]={
+			"dataKey":"fabrics",
+			"title":"Fabric",
+			"jeanKey":"fabric",
+			"thumbPrefix":"f"
+		};
+		vm.builder.controlPanel[2]={
+			"dataKey":"threads",
+			"title":"Top Thread",
+			"jeanKey":"threadTop",
+			"thumbPrefix":"f"
+		};
+		vm.builder.controlPanel[3]={
+			"dataKey":"threads",
+			"title":"Bottom Thread",
+			"jeanKey":"threadBottom",
+			"thumbPrefix":"f"
+		};
+		vm.builder.controlPanel[4]={
+			"dataKey":"threads",
+			"title":"Accent Thread",
+			"jeanKey":"threadAccent",
+			"thumbPrefix":"f"
+		};
+		vm.builder.controlPanel[5]={
+			"dataKey":"hardware",
+			"title":"Hardware",
+			"jeanKey":"hardware",
+			"thumbPrefix":"f"
+		};
 		
 //		vm.builder.threadSubSelect = vm.builder.threadSubSelect || "Top";
 		
+		
+		vm.builder.getActiveItemName = function(){
+			var data = vm.builder[vm.builder.controlPanel[vm.builder.step].dataKey];
+			var key = vm.jean.data[vm.builder.controlPanel[vm.builder.step].jeanKey];
+			return data[key].name;
+		}
 		vm.builder.step = 1;
 		vm.builder.changeStep = function(step){
 			if (!step) return false;

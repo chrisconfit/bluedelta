@@ -2,15 +2,15 @@
 			<div class="images" id="zoom-frame" ng-class="{'zoomed': vm.builder.zoom }" 
 				ng-click="vm.builder.zoom = !vm.builder.zoom" ng-mousemove="vm.builder.trackMouse($event)">
 				<img ng-if="vm.jean.data.fabric" ng-class="{'zoom': vm.builder.zoom }"
-				src="/images/components/fabric/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_f{{vm.jean.data.fabric}}.jpg">		
+				src="/images/components/fabrics/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_f{{vm.jean.data.fabric}}.jpg">		
 				<img ng-if="vm.jean.data.threadBottom" ng-class="{'zoom': vm.builder.zoom }"
-				src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tb{{vm.jean.data.threadBottom}}.png">
+				src="/images/components/threads/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tb{{vm.jean.data.threadBottom}}.png">
 				<img ng-if="vm.jean.data.threadTop" ng-class="{'zoom': vm.builder.zoom }"
-				src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tt{{vm.jean.data.threadTop}}.png">
+				src="/images/components/threads/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tt{{vm.jean.data.threadTop}}.png">
 				<img ng-if="vm.jean.data.threadAccent" ng-class="{'zoom': vm.builder.zoom }"
-				src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_ta{{vm.jean.data.threadAccent}}.png">
+				src="/images/components/threads/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_ta{{vm.jean.data.threadAccent}}.png">
 				<img class="stage-button" ng-if="vm.jean.data.hardware"
-				src="{{vm.builder.hardware[vm.jean.data.hardware].layer}}">
+				src="/images/components/hardware/thumb_{{vm.jean.data.hardware}}.jpg">
 			</div>
 			<a class="zoom-icon" ng-click="vm.builder.toggleZoom()" href=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
 		</div>
@@ -18,7 +18,11 @@
 		<div class="builder__control-panel">
 			
 			<div class="control-panel-inner">
-				<h3 class="control-title">{{vm.builder.controlPanel[vm.builder.step]}}</h3>
+				<h3 class="control-title">
+					{{vm.builder.controlPanel[vm.builder.step].title}} 
+					<span class="item-title">{{ vm.builder.getActiveItemName() }}</span>
+				</h3>
+				
 				
 				<div class="switch">					
 					<ul>
@@ -28,70 +32,21 @@
 					</ul>
 				</div>
 				
+				
 				<div class="build-step-stage">
 									
-					<div class="fabric chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Fabric'">
-						<span style="top: 15px; left: 15px;" ng-class="{ live: vm.jean.data.fabric }" class="chooser-select" id="fabric-selector"></span>
+					<div class="fabric chooser" ng-repeat="step in vm.builder.controlPanel" ng-show="vm.builder.controlPanel[vm.builder.step] == step">
+						<span style="top: 15px; left: 15px;" ng-class="{ live: vm.jean.data[step.jeanKey] }" class="chooser-select" id="{{step.jeanKey}}-selector"></span>
 						<div class="cft-g chooser-grid">
-							<div class="cft-gi" ng-repeat="(id, fabric) in vm.builder.fabrics">
-								<a ng-class="{ active: vm.jean.data.fabric==id }" id="fabric_{{id}}" 
-								href="" ng-click="vm.builder.selectAttr($event, id, 'fabric')">
-									<img src="/images/components/fabric/thumb_f{{id}}.jpg">
+							<div class="cft-gi" ng-repeat="(id, data) in vm.builder[step.dataKey]">
+								<a ng-class="{ active: vm.jean.data[step.jeanKey]==id }" id="{{step.jeanKey}}_{{id}}" 
+								href="" ng-click="vm.builder.selectAttr($event, id, step.jeanKey)">
+									<img src="/images/components/{{step.dataKey}}/thumb_{{id}}.jpg">
 								</a>
 							</div>
 						</div>
 					</div>
-										
-					<div class="thread chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Top Thread'">
-						<span style="top:15px;left:15px;" ng-class="{ live: vm.jean.data.threadTop }" 
-						class="chooser-select" id="threadTop-selector"></span>
-						<div class="cft-g chooser-grid">
-							<div class="cft-gi" ng-repeat="(id, thread) in vm.builder.threads">
-								<a ng-class="{ active: vm.jean.data.thread==id }" id="thread_{{id}}" 
-								href="" ng-click="vm.builder.selectAttr($event, id, 'threadTop')">
-									<img src="{{thread.thumb}}">
-								</a>
-							</div>
-						</div>
-					</div>
-					
-					<div class="thread chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Bottom Thread'">
-						<span style="top:15px;left:15px;" ng-class="{ live: vm.jean.data.threadBottom }" 
-						class="chooser-select" id="threadBottom-selector"></span>
-						<div class="cft-g chooser-grid">
-							<div class="cft-gi" ng-repeat="(id, thread) in vm.builder.threads">
-								<a ng-class="{ active: vm.jean.data.thread==id }" id="thread_{{id}}" 
-								href="" ng-click="vm.builder.selectAttr($event, id, 'threadBottom')">
-									<img src="{{thread.thumb}}">
-								</a>
-							</div>
-						</div>
-					</div>
-					
-					<div class="thread chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Accent Thread'">
-						<span style="top:15px;left:15px;" ng-class="{ live: vm.jean.data.threadAccent }" 
-						class="chooser-select" id="threadAccent-selector"></span>
-						<div class="cft-g chooser-grid">
-							<div class="cft-gi" ng-repeat="(id, thread) in vm.builder.threads">
-								<a ng-class="{ active: vm.jean.data.thread==id }" id="thread_{{id}}" 
-								href="" ng-click="vm.builder.selectAttr($event, id, 'threadAccent')">
-									<img src="{{thread.thumb}}">
-								</a>
-							</div>
-						</div>
-					</div>
-		
-					<div class="hardware chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Hardware'">
-						<span ng-class="{ live: vm.jean.data.hardware }" class="chooser-select" id="hardware-selector"></span>
-						<div class="cft-g chooser-grid">
-							<div class="cft-gi" ng-repeat="(id, button) in vm.builder.hardware">
-								<a ng-class="{ active: vm.jean.data.hardware==id }" id="hardware_{{id}}" 
-								href="" ng-click="vm.builder.selectAttr($event, id, 'hardware')">
-									<img src="{{button.thumb}}">
-								</a>
-							</div>
-						</div>
-					</div>
+				
 
 				</div><!--/.build-step-stage-->				
 			</div><!--/.control-panel-inner-->	

@@ -794,6 +794,18 @@ h1.page-title {
   line-height: 18px;
   font-size: 1.8rem;
   line-height: 1.8rem;
+  position: relative;
+}
+.builder__control-panel .control-panel-inner .control-title .item-title {
+  position: absolute;
+  top: 16px;
+  right: 15px;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 18px;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
 }
 .builder__control-panel .control-panel-inner .switch {
   position: absolute;

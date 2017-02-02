@@ -220,6 +220,15 @@ h1.page-title{
 			padding: 15px;
 			font-weight:600;
 			@include font-size(18,18);
+			position:relative;
+			.item-title{
+				position: absolute;
+				top: 16px;
+				right: 15px;
+				color: #fff;
+				text-transform: uppercase;
+				@include font-size(14, 18);
+			}
 		}
 		.switch{
 			position:absolute;
