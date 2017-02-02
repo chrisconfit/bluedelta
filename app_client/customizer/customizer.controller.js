@@ -53,10 +53,12 @@
 		
 		vm.builder.controlPanel = [];
 		vm.builder.controlPanel[1]="Fabric";
-		vm.builder.controlPanel[2]="Hardware";
-		vm.builder.controlPanel[3]="Thread";
-
-		vm.builder.threadSubSelect = vm.builder.threadSubSelect || "Top";
+		vm.builder.controlPanel[2]="Top Thread";
+		vm.builder.controlPanel[3]="Bottom Thread";
+		vm.builder.controlPanel[4]="Accent Thread";
+		vm.builder.controlPanel[5]="Hardware";
+		
+//		vm.builder.threadSubSelect = vm.builder.threadSubSelect || "Top";
 		
 		vm.builder.step = 1;
 		vm.builder.changeStep = function(step){
@@ -64,12 +66,16 @@
 			else vm.builder.step = step; 
 		}
 		
+		
+		
+	vm.builder.zoom = false;
+		/*
 		vm.builder.zoomLevel = 1;
 		vm.builder.toggleZoom = function(){
 			vm.builder.zoomLevel = vm.builder.zoomLevel + 1
 			if (vm.builder.zoomLevel > 3) vm.builder.zoomLevel=1;
 		}
-		
+		*/
 		//zoomlvl = (scope.zoomlvl === undefined) ? "2.5" : scope.zoomlvl
 
 		//
@@ -92,18 +98,19 @@
 
 			pan = xPosition + "% " + yPosition + "% 0";
 			vm.builder.pan=pan;
-			images = angular.element(document.querySelectorAll(".z-img"));
+			images = angular.element(document.querySelectorAll("#zoom-frame img"));
 			images.css({"transform-origin":pan});
 	
 		}
 		
+		/*
 		vm.builder.resetPan = function(){
 			pan = "50% 50% 0";
 			vm.builder.pan=pan;
 			images = angular.element(document.querySelectorAll(".z-img"));
 			images.css({"transform-origin":pan});
 		}
-	
+		*/
 
 		
 		vm.builder.selectAttr = function($event, id, attr, selector){

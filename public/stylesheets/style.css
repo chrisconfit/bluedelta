@@ -849,61 +849,6 @@ h1.page-title {
   color: #004964;
   line-height: 34px;
 }
-.builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadTop-selector:before, .builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadBottom-selector:before, .builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadAccent-selector:before {
-  content: "T";
-  color: #fff;
-  display: block;
-  width: 20px;
-  height: 20px;
-  font-weight: 700;
-  text-align: center;
-  line-height: 20px;
-  position: absolute;
-  left: -3px;
-  top: -3px;
-  background: #004964;
-  z-index: 100;
-}
-.builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadBottom-selector {
-  border-color: #cccccc;
-}
-.builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadBottom-selector:before {
-  background: #cccccc;
-  content: "B";
-  left: 18px;
-  z-index: 50;
-}
-.builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadBottom-selector::after {
-  background: rgba(255, 255, 255, 0.5);
-  border: 3px solid #cccccc;
-  color: #cccccc;
-}
-.builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadAccent-selector {
-  border-color: #cccccc;
-}
-.builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadAccent-selector:before {
-  background: #cccccc;
-  content: "A";
-  left: 38px;
-  z-index: 10;
-}
-.builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-select#threadAccent-selector::after {
-  background: rgba(255, 255, 255, 0.5);
-  border: 3px solid #cccccc;
-  color: #cccccc;
-}
-.builder__control-panel .control-panel-inner .build-step-stage .chooser .sub-chooser {
-  margin-bottom: 15px;
-}
-.builder__control-panel .control-panel-inner .build-step-stage .chooser .sub-chooser li {
-  list-style-type: none;
-  display: inline-block;
-  margin-right: 15px;
-}
-.builder__control-panel .control-panel-inner .build-step-stage .chooser .sub-chooser li label {
-  font-size: 15px;
-  vertical-align: middle;
-}
 .builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-grid {
   margin-left: -15px;
 }
@@ -977,45 +922,56 @@ h1.page-title {
   width: 100%;
 }
 
-.builder__stage a.zoom-icon {
-  display: block;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  font-size: 30px;
-  line-height: 30px;
-  font-size: 3rem;
-  line-height: 3rem;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.5);
+.builder__stage {
+  overflow: hidden;
 }
-.builder__stage .images {
+.builder__stage a.zoom-icon {
+  display: none;
+  		/*
+      display: block;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      @include font-size(30,30);
+      padding: 10px;
+      background: rgba(255,255,255,0.5);
+      */
+}
+.builder__stage #zoom-frame {
   width: 70%;
   height: 600px;
   display: block;
-  overflow: hidden;
   position: relative;
 }
+.builder__stage #zoom-frame:hover {
+  cursor: url(../images/search-plus.png), zoom-in;
+}
+.builder__stage #zoom-frame.zoomed:hover {
+  cursor: url(../images/search-minus.png), zoom-out;
+}
+.builder__stage #zoom-frame.zoomed img:hover {
+  cursor: url(../images/search-minus.png), zoom-out;
+}
 @media screen and (min-width: 1200px) {
-  .builder__stage .images {
+  .builder__stage #zoom-frame {
     height: 700px;
   }
 }
-.builder__stage .images img {
-  transition: transform 400ms ease, transform-origin 100ms ease;
+.builder__stage #zoom-frame img {
+  -webkit-transition: transform 400ms ease;
+  -moz-transition: transform 400ms ease;
+  -ms-transition: transform 400ms ease;
+  -o-transition: transform 400ms ease;
+  transition: transform 400ms ease;
 }
-.builder__stage .images img.zoom-2 {
-  -moz-transform: scale(2);
-  -o-transform: scale(2);
-  -ms-transform: scale(2);
-  -webkit-transform: scale(2);
-  transform: scale(2);
+.builder__stage #zoom-frame img:hover {
+  cursor: url(../images/search-plus.png), zoom-in;
 }
-.builder__stage .images img.zoom-3 {
-  -moz-transform: scale(3.5);
-  -o-transform: scale(3.5);
-  -ms-transform: scale(3.5);
-  -webkit-transform: scale(3.5);
-  transform: scale(3.5);
+.builder__stage #zoom-frame img.zoom {
+  -moz-transform: scale(3);
+  -o-transform: scale(3);
+  -ms-transform: scale(3);
+  -webkit-transform: scale(3);
+  transform: scale(3);
 }

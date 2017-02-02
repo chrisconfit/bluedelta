@@ -1,12 +1,13 @@
 		<div class="builder__stage">
-			<div class="images" id="zoom-frame" ng-mouseout="vm.builder.resetPan()" ng-mousemove="vm.builder.trackMouse($event)">
-				<img ng-if="vm.jean.data.fabric" ng-class="'z-img zoom-'+vm.builder.zoomLevel"
+			<div class="images" id="zoom-frame" ng-class="{'zoomed': vm.builder.zoom }" 
+				ng-click="vm.builder.zoom = !vm.builder.zoom" ng-mousemove="vm.builder.trackMouse($event)">
+				<img ng-if="vm.jean.data.fabric" ng-class="{'zoom': vm.builder.zoom }"
 				src="/images/components/fabric/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_f{{vm.jean.data.fabric}}.jpg">		
-				<img ng-if="vm.jean.data.threadBottom" ng-class="'z-img zoom-'+vm.builder.zoomLevel"
+				<img ng-if="vm.jean.data.threadBottom" ng-class="{'zoom': vm.builder.zoom }"
 				src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tb{{vm.jean.data.threadBottom}}.png">
-				<img ng-if="vm.jean.data.threadTop" ng-class="'z-img zoom-'+vm.builder.zoomLevel"
+				<img ng-if="vm.jean.data.threadTop" ng-class="{'zoom': vm.builder.zoom }"
 				src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tt{{vm.jean.data.threadTop}}.png">
-				<img ng-if="vm.jean.data.threadAccent" ng-class="'z-img zoom-'+vm.builder.zoomLevel" 
+				<img ng-if="vm.jean.data.threadAccent" ng-class="{'zoom': vm.builder.zoom }"
 				src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_ta{{vm.jean.data.threadAccent}}.png">
 				<img class="stage-button" ng-if="vm.jean.data.hardware"
 				src="{{vm.builder.hardware[vm.jean.data.hardware].layer}}">
@@ -18,6 +19,7 @@
 			
 			<div class="control-panel-inner">
 				<h3 class="control-title">{{vm.builder.controlPanel[vm.builder.step]}}</h3>
+				
 				<div class="switch">					
 					<ul>
 						<li ng-repeat="(key, val) in vm.builder.controlPanel" ng-if="$index > 0" ng-class="{ active: vm.builder.step==key }">
@@ -39,35 +41,46 @@
 							</div>
 						</div>
 					</div>
-					
-					
-					<div class="thread chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Thread'">
-						<div class="sub-chooser">
-							<ul>
-								<li><input type="radio" name="theads_sub" ng-model="vm.builder.threadSubSelect" value="Top"><label>TOP</label></li>
-								<li><input type="radio" name="theads_sub" ng-model="vm.builder.threadSubSelect" value="Bottom"><label>BOTTOM</label></li>
-								<li><input type="radio" name="theads_sub" ng-model="vm.builder.threadSubSelect"  value="Accent"><label>ACCENT</label></li>
-							</ul>
-						</div>
-						
-						<span style="top:56px;left:15px;" ng-class="{ live: vm.jean.data.threadTop }" 
+										
+					<div class="thread chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Top Thread'">
+						<span style="top:15px;left:15px;" ng-class="{ live: vm.jean.data.threadTop }" 
 						class="chooser-select" id="threadTop-selector"></span>
-						<span style="top:56px;left:15px;" ng-class="{ live: vm.jean.data.threadBottom }" 
-						class="chooser-select" id="threadBottom-selector"></span>
-						<span style="top:56px;left:15px;" ng-class="{ live: vm.jean.data.threadAccent }" 
-						class="chooser-select" id="threadAccent-selector"></span>
-						
 						<div class="cft-g chooser-grid">
 							<div class="cft-gi" ng-repeat="(id, thread) in vm.builder.threads">
 								<a ng-class="{ active: vm.jean.data.thread==id }" id="thread_{{id}}" 
-								href="" ng-click="vm.builder.selectAttr($event, id, 'thread'+vm.builder.threadSubSelect)">
+								href="" ng-click="vm.builder.selectAttr($event, id, 'threadTop')">
 									<img src="{{thread.thumb}}">
 								</a>
 							</div>
 						</div>
 					</div>
-						
 					
+					<div class="thread chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Bottom Thread'">
+						<span style="top:15px;left:15px;" ng-class="{ live: vm.jean.data.threadBottom }" 
+						class="chooser-select" id="threadBottom-selector"></span>
+						<div class="cft-g chooser-grid">
+							<div class="cft-gi" ng-repeat="(id, thread) in vm.builder.threads">
+								<a ng-class="{ active: vm.jean.data.thread==id }" id="thread_{{id}}" 
+								href="" ng-click="vm.builder.selectAttr($event, id, 'threadBottom')">
+									<img src="{{thread.thumb}}">
+								</a>
+							</div>
+						</div>
+					</div>
+					
+					<div class="thread chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Accent Thread'">
+						<span style="top:15px;left:15px;" ng-class="{ live: vm.jean.data.threadAccent }" 
+						class="chooser-select" id="threadAccent-selector"></span>
+						<div class="cft-g chooser-grid">
+							<div class="cft-gi" ng-repeat="(id, thread) in vm.builder.threads">
+								<a ng-class="{ active: vm.jean.data.thread==id }" id="thread_{{id}}" 
+								href="" ng-click="vm.builder.selectAttr($event, id, 'threadAccent')">
+									<img src="{{thread.thumb}}">
+								</a>
+							</div>
+						</div>
+					</div>
+		
 					<div class="hardware chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Hardware'">
 						<span ng-class="{ live: vm.jean.data.hardware }" class="chooser-select" id="hardware-selector"></span>
 						<div class="cft-g chooser-grid">
@@ -80,12 +93,9 @@
 						</div>
 					</div>
 
-					
-				
-				</div>
-				
-				
-			</div>
+				</div><!--/.build-step-stage-->				
+			</div><!--/.control-panel-inner-->	
+			
 			<div class="action">
 				<div class="cft-g action-grid">
 					<div class="cft-gi">
