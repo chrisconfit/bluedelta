@@ -1,25 +1,22 @@
 		<div class="builder__stage">
-
-			<img ng-if="vm.jean.data.fabric"
-			src="/images/components/fabric/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_f{{vm.jean.data.fabric}}.png">
-			
-			<img ng-if="vm.jean.data.threadBottom"
-			src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tb{{vm.jean.data.threadBottom}}.png">
-			<img ng-if="vm.jean.data.threadTop"
-			src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tt{{vm.jean.data.threadTop}}.png">
-			<img ng-if="vm.jean.data.threadAccent"
-			src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_ta{{vm.jean.data.threadAccent}}.png">
-			
-			<img class="stage-button" ng-if="vm.jean.data.hardware"
-			src="{{vm.builder.hardware[vm.jean.data.hardware].layer}}">
+			<div class="images" id="zoom-frame" ng-mouseout="vm.builder.resetPan()" ng-mousemove="vm.builder.trackMouse($event)">
+				<img ng-if="vm.jean.data.fabric" ng-class="'z-img zoom-'+vm.builder.zoomLevel"
+				src="/images/components/fabric/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_f{{vm.jean.data.fabric}}.jpg">		
+				<img ng-if="vm.jean.data.threadBottom" ng-class="'z-img zoom-'+vm.builder.zoomLevel"
+				src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tb{{vm.jean.data.threadBottom}}.png">
+				<img ng-if="vm.jean.data.threadTop" ng-class="'z-img zoom-'+vm.builder.zoomLevel"
+				src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tt{{vm.jean.data.threadTop}}.png">
+				<img ng-if="vm.jean.data.threadAccent" ng-class="'z-img zoom-'+vm.builder.zoomLevel" 
+				src="/images/components/thread/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_ta{{vm.jean.data.threadAccent}}.png">
+				<img class="stage-button" ng-if="vm.jean.data.hardware"
+				src="{{vm.builder.hardware[vm.jean.data.hardware].layer}}">
+			</div>
+			<a class="zoom-icon" ng-click="vm.builder.toggleZoom()" href="">Z</a>
 		</div>
 
 		<div class="builder__control-panel">
 			
-
-			
 			<div class="control-panel-inner">
-				
 				<h3 class="control-title">{{vm.builder.controlPanel[vm.builder.step]}}</h3>
 				<div class="switch">					
 					<ul>
@@ -30,8 +27,7 @@
 				</div>
 				
 				<div class="build-step-stage">
-					
-				
+									
 					<div class="fabric chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Fabric'">
 						<span style="top: 15px; left: 15px;" ng-class="{ live: vm.jean.data.fabric }" class="chooser-select" id="fabric-selector"></span>
 						<div class="cft-g chooser-grid">
@@ -46,7 +42,6 @@
 					
 					
 					<div class="thread chooser" ng-show="vm.builder.controlPanel[vm.builder.step] == 'Thread'">
-						
 						<div class="sub-chooser">
 							<ul>
 								<li><input type="radio" name="theads_sub" ng-model="vm.builder.threadSubSelect" value="Top"><label>TOP</label></li>
