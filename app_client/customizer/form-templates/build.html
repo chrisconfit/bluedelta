@@ -36,8 +36,12 @@
 				<div class="build-step-stage">
 									
 					<div class="fabric chooser" ng-repeat="step in vm.builder.controlPanel" ng-show="vm.builder.controlPanel[vm.builder.step] == step">
-						<span style="top: 15px; left: 15px;" ng-class="{ live: vm.jean.data[step.jeanKey] }" class="chooser-select" id="{{step.jeanKey}}-selector"></span>
+
+					<!--this will only appear on the fabric screen for now... still trying to think of the best way to include this content.-->
+						<div class="description" ng-if="step.jeanKey == 'fabric'"><p>Lorem Ipsum Doler sit</p></div>
+						
 						<div class="cft-g chooser-grid">
+							<span style="top: 0; left: 15px;" ng-class="{ live: vm.jean.data[step.jeanKey] }" class="chooser-select" id="{{step.jeanKey}}-selector"></span>
 							<div class="cft-gi" ng-repeat="(id, data) in vm.builder[step.dataKey]">
 								<a ng-class="{ active: vm.jean.data[step.jeanKey]==id }" id="{{step.jeanKey}}_{{id}}" 
 								href="" ng-click="vm.builder.selectAttr($event, id, step.jeanKey)">

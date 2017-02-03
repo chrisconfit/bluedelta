@@ -587,7 +587,7 @@ h1.page-title {
   color: #004964;
   text-transform: uppercase;
   text-align: center;
-  margin-bottom: 30px;
+  margin: 30px 0 0 0;
 }
 
 .customizer-page-content {
@@ -595,7 +595,7 @@ h1.page-title {
   position: relative;
 }
 .customizer-page-content .customizer-page {
-  height: calc(100vh - 113px);
+  height: calc(100vh - 210px);
   position: relative;
 }
 .customizer-page-content .customizer-page .gender-grid, .customizer-page-content .customizer-page .style-grid {
@@ -874,6 +874,7 @@ h1.page-title {
   line-height: 34px;
 }
 .builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-grid {
+  position: relative;
   margin-left: -15px;
 }
 .builder__control-panel .control-panel-inner .build-step-stage .chooser .chooser-grid img {

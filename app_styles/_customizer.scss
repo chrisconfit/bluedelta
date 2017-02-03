@@ -1,11 +1,13 @@
-$vpHeight : calc(100vh - 113px);
+$vpHeight : calc(100vh - 210px);
+$vpHeight2 : calc(100vh - 113px);
 
 //Customizer
 h1.page-title{
 	color:$blue;
 	text-transform: uppercase;
 	text-align: center;
-	margin-bottom: 30px;
+	margin: 30px 0 0 0;
+	
 }
 
 .customizer-page-content{
@@ -293,6 +295,7 @@ h1.page-title{
 					
 				
 				.chooser-grid{
+					position:relative;
 					margin-left:-15px;
 					img{
 						width:100%;
@@ -324,10 +327,10 @@ h1.page-title{
 	width: 100%;
   position: relative;
   height: 600px;
-  height:$vpHeight;
+  height:$vpHeight2;
 	@media screen and (min-width: 1200px) {
 		height: 700px;
-		height:$vpHeight;
+		height:$vpHeight2;
 	}
   background: #ebebeb;
 	display:block;
@@ -338,10 +341,10 @@ h1.page-title{
     margin-left: -150px;
 		display:inline-block;
 	  height: 600px;
-	  height:$vpHeight;
+	  height:$vpHeight2;
 		@media screen and (min-width: 1200px) {
 			height: 700px;
-			height:$vpHeight;
+			height:$vpHeight2;
 		}
 		&.stage-button{
 	    right: 150px;
@@ -401,10 +404,10 @@ h1.page-title{
 		display:block;
 		position:relative;
 		height: 600px;
-	  height:$vpHeight;
+	  height:$vpHeight2;
 		@media screen and (min-width: 1200px) {
 			height: 700px;
-			height:$vpHeight;
+			height:$vpHeight2;
 		}
 		
 		&:hover{
