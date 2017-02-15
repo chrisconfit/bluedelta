@@ -4,8 +4,8 @@
     .module('meanApp')
     .controller('customizerCtrl', customizerCtrl);
 
-  customizerCtrl.$inject = ['$location', '$window', 'meanData', 'jean'];
-  function customizerCtrl($location, $window, meanData, jean) {
+  customizerCtrl.$inject = ['$timeout','$location', '$window', 'meanData', 'jean'];
+  function customizerCtrl($timeout, $location, $window, meanData, jean) {
     var vm = this;
 		vm.jean = jean;
 		vm.jean.step = (jean.step ? jean.step : 1);
@@ -99,6 +99,7 @@
 		
 		
 		
+		
 	vm.builder.zoom = false;
 		/*
 		vm.builder.zoomLevel = 1;
@@ -148,8 +149,15 @@
 			var selector = angular.element(document.querySelector("#"+attr+"-selector"));
 			var top = angular.element($event.target).prop('offsetTop');
 			var left = angular.element($event.target).prop('offsetLeft');
+			var text = angular.element(document.querySelectorAll('#item-title'));
+			
+			text.css({'right':'-400px', 'opacity':0});
 			selector.css({'top':top+'px', 'left':left+'px'});
-			vm.jean.data[attr] =	id;
+			$timeout(function(){
+				text.css({'right':'15px', 'opacity':1});				
+				vm.jean.data[attr] =	id;	
+			}, 200);
+			
 
 		}
 		

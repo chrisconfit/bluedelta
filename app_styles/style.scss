@@ -195,5 +195,116 @@ form.login-form, form.register-form{
 	}
 }
 
+//Popups
+.popup-window{
+	position:fixed;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background:rgba(darken($blue,15%),.7);
+	z-index:9999;
+	.popup-title{
+		margin-bottom:60px;
+		text-align: center;
+		@include font-size(30,36);
+		&.section{
+			margin:20px auto 40px auto;
+		}
+	}
+	.popup-closer{
+		position:absolute;
+		top:0;
+		right:0;
+		z-index:10;
+		background:#ebebeb;
+		display:block;
+		width:50px;
+		height:50px;
+		&:before, &:after{
+			width:40px;
+			height:3px;
+			background:$blue;
+			position:absolute;
+			display:block;
+			content:"";
+			top:43px;
+			left:25px;
+			margin-top:-20px;
+			margin-left:-20px;
+		}
+		&:before{
+			@include transform(rotate(-45deg));
+		}
+		&:after{
+			@include transform(rotate(45deg));
+		}
+		
+	}
 
+	.popup-content{
+		text-algin:center;
+		position:absolute;
+		left:0;
+		right:0;
+		background:#fff;
+		top:10%;
+		width:90%;
+		margin:auto;
+		max-width:1050px;
+		.popup-content-inner{
+			max-height:80vh;
+			overflow: auto;
+			padding:20px 30px;
+			@include at-query($min,650px){			
+				padding:40px 60px;
+			}
+			position:relative;
+		}
+	}
+}
+
+.hiw-popup-grid{
+	margin-left:-115px;
+	&>.cft-gi{
+		padding-left:115px;
+		width:100%;
+		position: relative;
+		.box-content{
+			background:#f1f1f1;
+			padding:20px;
+		}
+		&:first-child{
+			margin-bottom:115px;
+			&:after{
+				content:"OR";
+				display:block;
+				position:absolute;
+				left:0;
+				right:0;
+				bottom:-70px;
+				padding-left:113px;
+				font-weight:500;
+				text-align: center;
+				color:$blue;
+				@include font-size(24,32);
+			}
+		}
+		@include at-query($min, 700px){
+			width:50%;
+			&:first-child{
+				margin-bottom:0;
+				&:after{
+					bottom:auto;
+					top:50%;
+					right: -82px;
+					left: auto;
+					width: 50px;
+					display: inline-block;
+					padding: 0;
+				}
+			}
+		}
+	}
+}
 @import "customizer";

@@ -1,3 +1,33 @@
+
+<div ng-show="navvm.hiwPop" ng-click="navvm.hiwPop = false" id="how-it-works" class="popup-window">
+	<div class="popup-content" ng-click="$event.stopPropagation()">
+		<a class="popup-closer" href="" ng-click="navvm.hiwPop = false"></a>
+		<div class="popup-content-inner">
+				<h3 class="popup-title">How it works</h3>
+					<p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed posuere consectetur est at lobortis. Etiam porta sem malesuada magna mollis euismod. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+				
+				<h3 class="popup-title section">Ordering</h3>
+				<div class="cft-g hiw-popup-grid">
+					<div class="cft-gi">
+						<div class="box-content">
+							<h3 class="box-title">Clone Jeans</h3>
+							<p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Nullam id dolor id nibh ultricies vehicula ut id elit. Sed posuere consectetur est at lobortis.</p>
+						</div>	
+					</div><!--
+					--><div class="cft-gi">
+						<div class="box-content">
+							<h3 class="box-title">Clone Jeans</h3>
+							<p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Nullam id dolor id nibh ultricies vehicula ut id elit. Sed posuere consectetur est at lobortis.</p>
+						</div>
+					</div>
+				</div>
+
+		</div><!--./popup-content-inner-->
+	</div>
+</div>
+
+
+
 <div class="main-navigation">
 	<div class="container">
 		<div class="head-left">
@@ -7,7 +37,7 @@
 		<nav class="main-nav nav-right">
 		  <ul>
 			  <li><a href="https://bluedeltajeans.com/">Main Site</a></li>
-			  <li><a href="#">How it Works</a></li>
+			  <li><a ng-click="navvm.hiwPop = !navvm.hiwPop"href="#">How it Works</a></li>
 		    <li ng-hide="navvm.isLoggedIn"><a class="btn sign-in" href="login">Sign in</a></li>
 		    <li ng-show="navvm.isLoggedIn"><a href="closet">Closet</a></li>
 		    <li ng-show="navvm.isLoggedIn"><a href="customizer">Customizer</a></li>
