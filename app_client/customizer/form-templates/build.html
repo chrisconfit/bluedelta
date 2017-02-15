@@ -4,17 +4,15 @@
 	<div class="popup-content fabric-popup" ng-click="$event.stopPropagation()">
 		<a class="popup-closer" href="" ng-click="vm.builder.infoPop = false"></a>
 		<div class="popup-content-inner">
-				<h3 class="popup-title">{{vm.builder.fabrics[vm.jean.data.fabric].name}}</h3>
-				<h4 class="popup-sub-title">{{vm.builder.fabrics[vm.jean.data.fabric].materials}}</h4>
-				<h4 class="popup-sub-title">{{vm.builder.fabrics[vm.jean.data.fabric].supplier}}</h4>
-				<p class="fabric-description">{{vm.builder.fabrics[vm.jean.data.fabric].description}}</p>
+				<h3 class="popup-title">{{vm.builder.activeItem().name}}</h3>
+				<h4 class="popup-sub-title">{{vm.builder.activeItem().materials}}</h4>
+				<h4 class="popup-sub-title">{{vm.builder.activeItem().supplier}}</h4>
+				<p class="fabric-description">{{vm.builder.activeItem().description}}</p>
 				<div class="fabric-preveiw" style="background: url(/images/components/fabrics/preview_{{vm.jean.data.fabric}}.jpg) no-repeat center center; 
 				-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;"></div>
 		</div><!--./popup-content-inner-->
 	</div>
 </div>
-
-
 
 <!--Denim Weight Popup-->
 <div ng-show="vm.builder.denimPop"	ng-click="vm.builder.denimPop = false" id="how-it-works" class="popup-window">
@@ -48,7 +46,7 @@
 
 
 
-
+<!--Pant Rendering-->
 <div class="builder__stage">
 	<div class="images" id="zoom-frame" ng-class="{'zoomed': vm.builder.zoom }" 
 		ng-click="vm.builder.zoom = !vm.builder.zoom" ng-mousemove="vm.builder.trackMouse($event)">
@@ -66,54 +64,79 @@
 	<a class="zoom-icon" ng-click="vm.builder.toggleZoom()" href=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
 </div>
 
+
+<!--Controls Panel-->
 <div class="builder__control-panel">
-	   
 	<div class="control-panel-inner">
+
+		<!--Title / Choice indicator-->
 		<h3 class="control-title">
-			{{vm.builder.controlPanel[vm.builder.step].title}}
-		
+			{{vm.builder.panel[vm.builder.step].title}}
 			<a href="#" id="item-title" class="item-title"
-				ng-click="vm.builder.controlPanel[vm.builder.step].jeanKey != 'fabric' || (vm.builder.infoPop=!vm.builder.infoPop)">
-				{{vm.builder [vm.builder.controlPanel[vm.builder.step].dataKey][vm.jean.data[vm.builder.controlPanel[vm.builder.step].jeanKey]].name}}
+				ng-click="vm.builder.panel[vm.builder.step].jeanKey != 'fabric' || (vm.builder.infoPop=!vm.builder.infoPop)">
+					{{ vm.builder.getActiveItemName() }}
 			</a>
 		</h3>
 		
-		
+		<!--Numerical Controls-->
 		<div class="switch">					
 			<ul>
-				<li ng-repeat="(key, val) in vm.builder.controlPanel" ng-if="$index > 0" ng-class="{ active: vm.builder.step==key }">
+				<li ng-repeat="(key, val) in vm.builder.panel" ng-if="$index > 0" ng-class="{ active: vm.builder.step==key }">
 					<a ng-click="vm.builder.changeStep(key)" href="">{{key}}</a>
 				</li>
 			</ul>
 		</div>
-		
-
-		
-		<div class="build-step-stage">
-							
-			<div class="fabric chooser" ng-repeat="step in vm.builder.controlPanel" ng-show="vm.builder.controlPanel[vm.builder.step] == step">
-
-				<!--this will only appear on the fabric screen for now... still trying to think of the best way to include this content.-->
-				<div class="description" ng-if="step.jeanKey == 'fabric'"><p>We have a range of fabrics in different weights from lightweight raw denim to heavyweight duck canvas. <a href="" ng-click="vm.builder.denimPop = !denimPop">Learn More.</a></p></div>
 				
+				
+		<!--Choosers-->		
+		<div class="build-step-stage">					
+			<div class="fabric chooser" ng-repeat="step in vm.builder.panel" ng-show="vm.builder.panel[vm.builder.step] == step">
+
+				<div class="description" ng-if="step.jeanKey == 'fabric'"><p>We have a range of fabrics in different weights from lightweight raw denim to heavyweight duck canvas. <a href="" ng-click="vm.builder.denimPop = !denimPop">Learn More.</a></p></div>
+			
 				<!--Fabric Chooser-->
-				<div ng-if="step.jeanKey == 'fabric'" class="cft-g chooser-grid">
-					<span style="top: 0; left: 15px;" ng-class="{ live: vm.jean.data[step.jeanKey] }" class="chooser-select" id="{{step.jeanKey}}-selector"></span>
-					<div class="cft-gi" ng-repeat="(id, data) in vm.builder[step.dataKey]">
-						<a ng-class="{ active: vm.jean.data[step.jeanKey]==id }" id="{{step.jeanKey}}_{{id}}" 
-						href="" ng-click="vm.builder.selectAttr($event, id, step.jeanKey)">
-							<img src="/images/components/{{step.dataKey}}/thumb_{{id}}.jpg">
-						</a>
+				<div class='chooser-group' style="position:relative" ng-if="step.jeanKey == 'fabric'">
+					<span style="top: 47px; left: 0px;" ng-class="{ live: vm.jean.data[step.jeanKey] }" class="chooser-select" id="{{step.jeanKey}}-selector"></span>
+					
+					<h3>Lightweight <a href="" class="info-pop" ng-click="vm.builder.denimPop = !vm.builder.denimPop"><i class="fa fa-question-circle"></i></a></h3>
+					<div class="cft-g chooser-grid">
+						<div class="cft-gi" ng-repeat="fabric in vm.builder.fabrics | filter:vm.builder.weightFilter(null,12)">
+							<a ng-class="{ active: vm.jean.data[step.jeanKey]==fabric.id }" id="{{step.jeanKey}}_{{fabric.id}}" 
+							href="" ng-click="vm.builder.selectAttr($event, fabric.id, step.jeanKey)">
+								<img src="/images/components/{{step.dataKey}}/thumb_{{fabric.id}}.jpg">
+							</a>
+						</div>
 					</div>
+					
+					<h3>Mediumweight <a href="" class="info-pop" ng-click="vm.builder.denimPop = !vm.builder.denimPop"><i class="fa fa-question-circle"></i></a></h3>
+					<div class="cft-g chooser-grid">
+						<div class="cft-gi" ng-repeat="fabric in vm.builder[step.dataKey] | filter:vm.builder.weightFilter(12.001,16)">
+							<a ng-class="{ active: vm.jean.data[step.jeanKey]==fabric.id }" id="{{step.jeanKey}}_{{fabric.id}}" 
+							href="" ng-click="vm.builder.selectAttr($event, fabric.id, step.jeanKey)">
+								<img src="/images/components/{{step.dataKey}}/thumb_{{fabric.id}}.jpg">
+							</a>
+						</div>
+					</div>
+					
+					<h3>Heavyweight <a href="" class="info-pop" ng-click="vm.builder.denimPop = !vm.builder.denimPop"><i class="fa fa-question-circle"></i></a></h3>
+					<div class="cft-g chooser-grid">
+						<div class="cft-gi" ng-repeat="fabric in vm.builder[step.dataKey] | filter:vm.builder.weightFilter(16.001,null)">
+							<a ng-class="{ active: vm.jean.data[step.jeanKey]==fabric.id }" id="{{step.jeanKey}}_{{fabric.id}}" 
+							href="" ng-click="vm.builder.selectAttr($event, fabric.id, step.jeanKey)">
+								<img src="/images/components/{{step.dataKey}}/thumb_{{fabric.id}}.jpg">
+							</a>
+						</div>
+					</div>
+					
 				</div>
 				
 				<!--All other choosers-->
 				<div ng-if="step.jeanKey != 'fabric'" class="cft-g chooser-grid">
 					<span style="top: 0; left: 15px;" ng-class="{ live: vm.jean.data[step.jeanKey] }" class="chooser-select" id="{{step.jeanKey}}-selector"></span>
-					<div class="cft-gi" ng-repeat="(id, data) in vm.builder[step.dataKey]">
-						<a ng-class="{ active: vm.jean.data[step.jeanKey]==id }" id="{{step.jeanKey}}_{{id}}" 
-						href="" ng-click="vm.builder.selectAttr($event, id, step.jeanKey)">
-							<img src="/images/components/{{step.dataKey}}/thumb_{{id}}.jpg">
+					<div class="cft-gi" ng-repeat="data in vm.builder[step.dataKey]">
+						<a ng-class="{ active: vm.jean.data[step.jeanKey]==data.id }" id="{{step.jeanKey}}_{{data.id}}" 
+						href="" ng-click="vm.builder.selectAttr($event, data.id, step.jeanKey)">
+							<img src="/images/components/{{step.dataKey}}/thumb_{{data.id}}.jpg">
 						</a>
 					</div>
 				</div>
@@ -126,7 +149,7 @@
 				<span class="arrow-controls left-arrow"></span>
 				<span class="builder-nav-control-text">PREV</span>
 			</a>
-			<a href="" class="builder-control-arrow" ng-show="vm.builder.step < vm.builder.controlPanel.length-1" ng-click="vm.builder.changeStep(vm.builder.step+1)">
+			<a href="" class="builder-control-arrow" ng-show="vm.builder.step < vm.builder.panel.length-1" ng-click="vm.builder.changeStep(vm.builder.step+1)">
 				<span class="arrow-controls right-arrow"></span>
 				<span class="builder-nav-control-text">NEXT</span>
 			</a>

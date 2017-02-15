@@ -63,6 +63,17 @@
             return input.replace(/\s+/g, '-');    
         }
     }
+		.filter('weightFilter', function() {
+			return function( items ) {
+				console.log("this one");
+			  return items.filter(function(element){
+			    if ( 10 >= element.weight ) {
+			      return true;
+			    }
+			  });
+			}
+		})
+		
 		});
 		
 		

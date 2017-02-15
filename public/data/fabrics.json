@@ -1,21 +1,59 @@
-{	
-	"1000" : {
-		"name":"Classic Indigo",
+[	
+	{
+		"id":1000,
+		"name":" 14oz Raw Denim Classic Indigo",
+		"weight":14,
 		"description":"Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Donec ullamcorper nulla non metus auctor fringilla.",
 		"materials":"Cotton/Poly/Spandex",
 		"supplier":"USA Milled by Cone"
 	},
-	"9999" : {
+	{
+		"id":1001,
+		"name":" 12oz Raw Denim Classic Indigo",
+		"weight":12,
+		"description":"Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Donec ullamcorper nulla non metus auctor fringilla.",
+		"materials":"Cotton/Poly/Spandex",
+		"supplier":"USA Milled by Cone"
+	},
+	{
+		"id":1002,
+		"name":" 10oz Raw Denim Classic Indigo",
+		"weight":10,
+		"description":"Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Donec ullamcorper nulla non metus auctor fringilla.",
+		"materials":"Cotton/Poly/Spandex",
+		"supplier":"USA Milled by Cone"
+	},
+	{
+		"id":1003,
+		"name":" 9.5oz Raw Denim Classic Indigo",
+		"weight":9.5,
+		"description":"Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Donec ullamcorper nulla non metus auctor fringilla.",
+		"materials":"Cotton/Poly/Spandex",
+		"supplier":"USA Milled by Cone"
+	},
+	{
+		"id":1004,
+		"name":" 8oz Raw Denim Classic Indigo",
+		"weight":8,
+		"description":"Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Donec ullamcorper nulla non metus auctor fringilla.",
+		"materials":"Cotton/Poly/Spandex",
+		"supplier":"USA Milled by Cone"
+	},
+	{
+		"id":9999,
 		"name":"Brown Duck Canvas",
+		"weight":20,
 		"description":"Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas sed diam eget risus varius blandit sit amet non magna. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec ullamcorper nulla non metus auctor fringilla.",
 		"materials":"Cotton/Poly/Spandex",
 		"supplier":"USA Milled by Cone"
 	},
-	"1201" : {
+	{
+		"id":1201,
 		"name":"Navy Duck Canvas",
+		"weight":12,
 		"description":"Curabitur blandit tempus porttitor. Sed posuere consectetur est at lobortis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 		"materials":"Cotton/Poly/Spandex",
 		"supplier":"USA Milled by Cone"
 	}
-}
+]
 

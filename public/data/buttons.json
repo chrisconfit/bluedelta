@@ -1,13 +1,15 @@
-{
-	"1" : {
+[
+	{
+		"id":1,
 		"name":"Silver",
 		"thumb":"/images/controls/button-silver.jpg",
 		"layer":"/images/controls/button-silver.jpg"
 	},
-	"2" :{
+	{
+		"id":2,
 		"name":"Copper",
 		"thumb":"/images/controls/button-copper.jpg",
 		"layer":"/images/controls/button-copper.jpg"
 	}
-}
+]
 

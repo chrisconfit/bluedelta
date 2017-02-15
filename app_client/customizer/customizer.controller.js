@@ -4,16 +4,10 @@
     .module('meanApp')
     .controller('customizerCtrl', customizerCtrl);
 
-  customizerCtrl.$inject = ['$timeout','$location', '$window', 'meanData', 'jean'];
-  function customizerCtrl($timeout, $location, $window, meanData, jean) {
+  customizerCtrl.$inject = ['$filter','$timeout','$location', '$window', 'meanData', 'jean'];
+  function customizerCtrl($filter, $timeout, $location, $window, meanData, jean) {
     var vm = this;
-		vm.jean = jean;
-		vm.jean.step = (jean.step ? jean.step : 1);
-	
-    
-    
-		
-		
+
 		vm.form = {};		
 		vm.form.steps = [];
     vm.form.steps[1] = {
@@ -29,7 +23,12 @@
 	    "title" : "Build"
     };
 
+		vm.jean = jean;
+		vm.jean.step = (jean.step ? jean.step : 1);
 
+		vm.jean.data.gender=1;
+		vm.jean.data.style=2;
+		vm.jean.step = 3;
 		
     vm.form.nextStep = function(){
 	    vm.jean.step =	vm.jean.step + 1;  
@@ -39,57 +38,67 @@
 	    vm.jean.data.style =	id;
 	    vm.form.nextStep();
     }    
-    
-    
 
 		//Set Defaults
 		vm.jean.data.fabric = vm.jean.data.fabric || "1000";
 		vm.jean.data.threadAccent = vm.jean.data.threadAccent || "1";
 		vm.jean.data.threadTop = vm.jean.data.threadTop || "1";
 		vm.jean.data.threadBottom = vm.jean.data.threadBottom || "1";
-		
+	
 		
 		vm.builder = {};
 		
-		vm.builder.controlPanel = [];
-		vm.builder.controlPanel[1]={
+		vm.builder.weightFilter = function(min, max){
+			return function(fabric){
+				if (min && fabric.weight < min) return false;
+				if (max && fabric.weight > max) return false;
+		    return true;
+		  }
+		};
+		
+		vm.builder.panel = [];
+		vm.builder.panel[1]={
 			"dataKey":"fabrics",
 			"title":"Fabric",
 			"jeanKey":"fabric",
 			"thumbPrefix":"f"
 		};
-		vm.builder.controlPanel[2]={
+		vm.builder.panel[2]={
 			"dataKey":"threads",
 			"title":"Top Thread",
 			"jeanKey":"threadTop",
 			"thumbPrefix":"f"
 		};
-		vm.builder.controlPanel[3]={
+		vm.builder.panel[3]={
 			"dataKey":"threads",
 			"title":"Bottom Thread",
 			"jeanKey":"threadBottom",
 			"thumbPrefix":"f"
 		};
-		vm.builder.controlPanel[4]={
+		vm.builder.panel[4]={
 			"dataKey":"threads",
 			"title":"Accent Thread",
 			"jeanKey":"threadAccent",
 			"thumbPrefix":"f"
 		};
-		vm.builder.controlPanel[5]={
+		vm.builder.panel[5]={
 			"dataKey":"hardware",
 			"title":"Hardware",
 			"jeanKey":"hardware",
 			"thumbPrefix":"f"
 		};
 		
-//		vm.builder.threadSubSelect = vm.builder.threadSubSelect || "Top";
+		vm.builder.activeItem = function(){
+			var data = vm.builder[vm.builder.panel[vm.builder.step].dataKey];
+			var key = vm.jean.data[vm.builder.panel[vm.builder.step].jeanKey];
+			return $filter('filter')(data, {id: key})[0];
+		}
 		
-		
+	
 		vm.builder.getActiveItemName = function(){
-			var data = vm.builder[vm.builder.controlPanel[vm.builder.step].dataKey];
-			var key = vm.jean.data[vm.builder.controlPanel[vm.builder.step].jeanKey];
-			return data[key].name;
+			var name = vm.builder.activeItem().name;
+			name = name.replace(/Raw Denim/g, "");
+			return name;
 		}
 		vm.builder.step = 1;
 		vm.builder.changeStep = function(step){
@@ -101,16 +110,6 @@
 		
 		
 	vm.builder.zoom = false;
-		/*
-		vm.builder.zoomLevel = 1;
-		vm.builder.toggleZoom = function(){
-			vm.builder.zoomLevel = vm.builder.zoomLevel + 1
-			if (vm.builder.zoomLevel > 3) vm.builder.zoomLevel=1;
-		}
-		*/
-		//zoomlvl = (scope.zoomlvl === undefined) ? "2.5" : scope.zoomlvl
-
-		//
 		
 		vm.builder.pan = "50%,50%";
 		vm.builder.trackMouse = function($event){
@@ -134,17 +133,7 @@
 			images.css({"transform-origin":pan});
 	
 		}
-		
-		/*
-		vm.builder.resetPan = function(){
-			pan = "50% 50% 0";
-			vm.builder.pan=pan;
-			images = angular.element(document.querySelectorAll(".z-img"));
-			images.css({"transform-origin":pan});
-		}
-		*/
-
-		
+				
 		vm.builder.selectAttr = function($event, id, attr, selector){
 			var selector = angular.element(document.querySelector("#"+attr+"-selector"));
 			var top = angular.element($event.target).prop('offsetTop');
@@ -165,6 +154,17 @@
 		vm.builder.jeanSet = function(attr, val){
 			 vm.jean.data[attr] =	val;
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
   //Styles
   meanData.getStyles()

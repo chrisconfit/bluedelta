@@ -1,58 +1,69 @@
-{
-	"1" : {
+[
+	{
+		"id":1,
 		"name":"Gold",
 		"layer": "/images/components/thread-gold.png",
 		"thumb": "/images/controls/thread-gold.jpg"
 	},
-	"2" :{
+	{
+		"id":2,
 		"name":"Rust",
 		"layer": "/images/components/thread-rust.png",
 		"thumb": "/images/controls/thread-rust.jpg"
 	},
-	"3" :{
+	{
+		"id":3,
 		"name":"Navy",
 		"layer": "/images/components/thread-navy-blue.png",
 		"thumb": "/images/controls/thread-navy.jpg"
 	},
-	"4" :{
+	{
+		"id":4,
 		"name":"Baby Blue",
 		"layer": "/images/components/thread-baby-blue.png",
 		"thumb": "/images/controls/thread-baby-blue.jpg"
 	},
-	"5" :{
+	{
+		"id":5,
 		"name":"Snow White",
 		"layer": "/images/components/thread-white.png",
 		"thumb": "/images/controls/thread-snow-white.jpg"
 	},
-	"6" :{
+	{
+		"id":6,
 		"name":"Red",
 		"layer": "/images/components/thread-red.png",
 		"thumb": "/images/controls/thread-red.jpg"
 	},
-	"7" :{
+	{
+		"id":7,
 		"name":"Brown",
 		"layer": "/images/components/thread-brown.png",
 		"thumb": "/images/controls/thread-brown.jpg"
 	},
-	"8" :{
+	{
+		"id":8,
 		"name":"Yellow",
 		"layer": "/images/components/thread-yellow.png",
 		"thumb": "/images/controls/thread-yellow.jpg"
 	},
-	"9" :{
+	{
+		"id":9,
 		"name":"Black",
 		"layer": "/images/components/thread-black.png",
 		"thumb": "/images/controls/thread-black.jpg"
 	},
-	"10" :{
+	{
+		"id":10,
 		"name":"Grey",
 		"layer": "/images/components/thread-grey.png",
 		"thumb": "/images/controls/thread-grey.jpg"
 	},
-	"11" :{
+	{
+		"id":11,
 		"name":"Green",
 		"layer": "/images/components/thread-green.png",
 		"thumb": "/images/controls/thread-green.jpg"
 	}
-}
+]
 
