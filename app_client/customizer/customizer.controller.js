@@ -35,12 +35,11 @@
     }
     
 	  vm.form.selectStyle = function(id){
-	    vm.jean.data.style =	id;
-	    vm.form.nextStep();
+	    vm.jean.data.style =	id;	    vm.form.nextStep();
     }    
 
 		//Set Defaults
-		vm.jean.data.fabric = vm.jean.data.fabric || "1000";
+		vm.jean.data.fabric = vm.jean.data.fabric || "1004";
 		vm.jean.data.threadAccent = vm.jean.data.threadAccent || "1";
 		vm.jean.data.threadTop = vm.jean.data.threadTop || "1";
 		vm.jean.data.threadBottom = vm.jean.data.threadBottom || "1";
