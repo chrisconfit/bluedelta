@@ -272,6 +272,8 @@ h1.page-title{
 					top:0;
 					left:0;
 					opacity:0;
+					z-index:9;
+					position:absolute;
 					&.live{
 						opacity:1;
 					}
@@ -306,10 +308,28 @@ h1.page-title{
 						width:100%;
 						margin-bottom:0;
 						display:block;
+						pointer-events: none;
 					}
 					a{
 						display:block;
 						transition:all 300ms ease;
+						position:relative;
+						span.fabric-weight{
+							pointer-events:none;
+							font-weight: 700;
+							color:rgba($teal,.8);						
+							position: absolute;
+							font-size: 30px;
+							background: transparent;
+							text-align: right;
+							color: rgba(113, 152, 167, 0.8);				
+							right: 8px;
+							bottom: 2px;
+							.oz{
+								font-size:20px;
+							}
+							
+						}
 					}
 				}
 				.chooser-group{
@@ -476,7 +496,7 @@ h1.page-title{
 		padding-left: 10px;
 		margin-bottom: 10px;
 		.btn {
-			background: #7198a7;
+			background: $teal;
 			i {
 				display: inline-block;
 				margin-left: 6px;
@@ -536,7 +556,7 @@ h1.page-title{
 			}
 			@include transition(transform, 400ms, ease);
 			&.zoom{
-				@include transform(scale(3));
+				@include transform(scale(2));
 			}
 		}
 		

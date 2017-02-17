@@ -100,30 +100,33 @@
 					
 					<h3>Lightweight <a href="" class="info-pop" ng-click="vm.builder.denimPop = !vm.builder.denimPop"><i class="fa fa-question-circle"></i></a></h3>
 					<div class="cft-g chooser-grid">
-						<div class="cft-gi" ng-repeat="fabric in vm.builder.fabrics | filter:vm.builder.weightFilter(null,12)">
+						<div class="cft-gi" ng-repeat="fabric in vm.builder.fabrics | filter:vm.builder.weightFilter(null,12) | orderBy:'weight'">
 							<a ng-class="{ active: vm.jean.data[step.jeanKey]==fabric.id }" id="{{step.jeanKey}}_{{fabric.id}}" 
 							href="" ng-click="vm.builder.selectAttr($event, fabric.id, step.jeanKey)">
 								<img src="/images/components/{{step.dataKey}}/thumb_{{fabric.id}}.jpg">
+								<span class="fabric-weight">{{fabric.weight}}<span class="oz">oz</span></span>
 							</a>
 						</div>
 					</div>
 					
 					<h3>Mediumweight <a href="" class="info-pop" ng-click="vm.builder.denimPop = !vm.builder.denimPop"><i class="fa fa-question-circle"></i></a></h3>
 					<div class="cft-g chooser-grid">
-						<div class="cft-gi" ng-repeat="fabric in vm.builder[step.dataKey] | filter:vm.builder.weightFilter(12.001,16)">
+						<div class="cft-gi" ng-repeat="fabric in vm.builder[step.dataKey] | filter:vm.builder.weightFilter(12.001,16) | orderBy:'weight'">
 							<a ng-class="{ active: vm.jean.data[step.jeanKey]==fabric.id }" id="{{step.jeanKey}}_{{fabric.id}}" 
 							href="" ng-click="vm.builder.selectAttr($event, fabric.id, step.jeanKey)">
 								<img src="/images/components/{{step.dataKey}}/thumb_{{fabric.id}}.jpg">
+								<span class="fabric-weight">{{fabric.weight}}<span class="oz">oz</span></span>
 							</a>
 						</div>
 					</div>
 					
 					<h3>Heavyweight <a href="" class="info-pop" ng-click="vm.builder.denimPop = !vm.builder.denimPop"><i class="fa fa-question-circle"></i></a></h3>
 					<div class="cft-g chooser-grid">
-						<div class="cft-gi" ng-repeat="fabric in vm.builder[step.dataKey] | filter:vm.builder.weightFilter(16.001,null)">
+						<div class="cft-gi" ng-repeat="fabric in vm.builder[step.dataKey] | filter:vm.builder.weightFilter(16.001,null) | orderBy:'weight'">
 							<a ng-class="{ active: vm.jean.data[step.jeanKey]==fabric.id }" id="{{step.jeanKey}}_{{fabric.id}}" 
 							href="" ng-click="vm.builder.selectAttr($event, fabric.id, step.jeanKey)">
 								<img src="/images/components/{{step.dataKey}}/thumb_{{fabric.id}}.jpg">
+								<span class="fabric-weight">{{fabric.weight}}<span class="oz">oz</span></span>
 							</a>
 						</div>
 					</div>
