@@ -942,6 +942,10 @@ h1.page-title {
   -o-transition: all 300ms ease;
   transition: all 300ms ease;
 }
+.builder__control-panel .control-panel-inner .control-title .item-title a {
+  font-size: 14px;
+  margin-right: 8px;
+}
 .builder__control-panel .control-panel-inner .switch {
   position: absolute;
   top: 48px;
