@@ -229,6 +229,9 @@ h1.page-title{
 					font-size:14px;
 					margin-right:8px;
 				}
+				i {
+					margin-left: 8px; 
+				}
 				position: absolute;
 				top: 16px;
 				right: 15px;
@@ -323,10 +326,10 @@ h1.page-title{
 							font-weight: 700;
 							color:rgba($teal,.8);						
 							position: absolute;
-							font-size: 30px;
+							font-size: 21px;
 							background: transparent;
 							text-align: right;
-							color: rgba(113, 152, 167, 0.8);				
+							color: rgba(255, 255, 255, 0.6);				
 							right: 8px;
 							bottom: 2px;
 							.oz{

@@ -459,6 +459,18 @@ body {
   vertical-align: top;
   margin-top: 6px;
   display: inline-block;
+  font-size: 14px;
+  line-height: 26px;
+  font-size: 1.4rem;
+  line-height: 2.6rem;
+}
+@media screen and (min-width: 1200px) {
+  .main-navigation .head-left .title {
+    font-size: 18px;
+    line-height: 26px;
+    font-size: 1.8rem;
+    line-height: 2.6rem;
+  }
 }
 .main-navigation nav {
   position: relative;
@@ -474,20 +486,33 @@ body {
 }
 .main-navigation nav.nav-right ul li {
   display: inline-block;
-  margin-left: 40px;
+  margin-left: 15px;
   vertical-align: middle;
+}
+@media screen and (min-width: 1200px) {
+  .main-navigation nav.nav-right ul li {
+    margin-left: 40px;
+  }
 }
 .main-navigation nav.nav-right ul li:last-child {
   margin-right: 0;
 }
 .main-navigation nav.nav-right ul li a {
-  font-size: 18px;
+  font-size: 14px;
   line-height: 26px;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   line-height: 2.6rem;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 2px;
+}
+@media screen and (min-width: 1200px) {
+  .main-navigation nav.nav-right ul li a {
+    font-size: 18px;
+    line-height: 26px;
+    font-size: 1.8rem;
+    line-height: 2.6rem;
+  }
 }
 .main-navigation nav.nav-right ul li a:hover {
   color: #cccccc;
@@ -946,6 +971,9 @@ h1.page-title {
   font-size: 14px;
   margin-right: 8px;
 }
+.builder__control-panel .control-panel-inner .control-title .item-title i {
+  margin-left: 8px;
+}
 .builder__control-panel .control-panel-inner .switch {
   position: absolute;
   top: 48px;
@@ -1035,10 +1063,10 @@ h1.page-title {
   font-weight: 700;
   color: rgba(113, 152, 167, 0.8);
   position: absolute;
-  font-size: 30px;
+  font-size: 21px;
   background: transparent;
   text-align: right;
-  color: rgba(113, 152, 167, 0.8);
+  color: rgba(255, 255, 255, 0.6);
   right: 8px;
   bottom: 2px;
 }
