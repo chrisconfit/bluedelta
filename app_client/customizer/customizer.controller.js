@@ -26,9 +26,9 @@
 		vm.jean = jean;
 		vm.jean.step = (jean.step ? jean.step : 1);
 
-		vm.jean.data.gender=1;
-		vm.jean.data.style=2;
-		vm.jean.step = 3;
+		//vm.jean.data.gender=1;
+		//vm.jean.data.style=2;
+		//vm.jean.step = 3;
 		
     vm.form.nextStep = function(){
 	    vm.jean.step =	vm.jean.step + 1;  
