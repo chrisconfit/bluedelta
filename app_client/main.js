@@ -1,6 +1,6 @@
 (function () {
 
-  angular.module('meanApp', ['ngRoute', 'ngAnimate']); 
+  angular.module('meanApp', ['ngRoute', 'ngAnimate','ngTouch']); 
   
   
   function config ($routeProvider, $locationProvider) {
