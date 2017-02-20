@@ -74,7 +74,7 @@
 			{{vm.builder.panel[vm.builder.step].title}}
 			<a href="#" id="item-title" class="item-title"
 				ng-click="vm.builder.panel[vm.builder.step].jeanKey != 'fabric' || (vm.builder.infoPop=!vm.builder.infoPop)">
-					{{ vm.builder.getActiveItemName() }}
+        {{ vm.builder.getActiveItemName() }}<i class="fa fa-question-circle"> </i>
 			</a>
 		</h3>
 		
@@ -92,7 +92,7 @@
 		<div class="build-step-stage">					
 			<div class="fabric chooser" ng-repeat="step in vm.builder.panel" ng-show="vm.builder.panel[vm.builder.step] == step">
 
-				<div class="description" ng-if="step.jeanKey == 'fabric'"><p>We have a range of fabrics in different weights from lightweight raw denim to heavyweight duck canvas. <a href="" ng-click="vm.builder.denimPop = !denimPop">Learn More.</a></p></div>
+				<div class="description" ng-if="step.jeanKey == 'fabric'"><p>We have a range of fabrics in different weights from lightweight linen to heavyweight raw denim. <a href="" ng-click="vm.builder.denimPop = !denimPop"><strong>Learn More.</strong></a></p></div>
 			
 				<!--Fabric Chooser-->
 				<div class='chooser-group' style="position:relative" ng-if="step.jeanKey == 'fabric'">

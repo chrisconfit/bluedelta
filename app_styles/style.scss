@@ -72,6 +72,10 @@ body{
 			vertical-align: top;
 			margin-top: 6px;
 			display: inline-block;
+			@include font-size(14, 26);
+			@media screen and (min-width: 1200px) {
+				@include font-size(18, 26);
+			}
 		}
 	}
 	
@@ -90,13 +94,19 @@ body{
 			ul{
 				li{
 					display:inline-block;
-					margin-left:40px;
+					margin-left:15px;
+					@media screen and (min-width: 1200px) {
+						margin-left:40px;
+					}
 					vertical-align: middle;
 					&:last-child{
 						margin-right:0;
 					}
 					a{
-						@include font-size(18, 26);
+						@include font-size(14, 26);
+						@media screen and (min-width: 1200px) {
+							@include font-size(18, 26);
+						}
 						color:#fff;
 						text-transform: uppercase;
 						letter-spacing: 2px;
