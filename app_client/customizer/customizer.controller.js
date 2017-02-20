@@ -43,6 +43,7 @@
 		vm.jean.data.threadAccent = vm.jean.data.threadAccent || "1";
 		vm.jean.data.threadTop = vm.jean.data.threadTop || "1";
 		vm.jean.data.threadBottom = vm.jean.data.threadBottom || "1";
+		vm.jean.data.hardware = vm.jean.data.hardware || "1";
 	
 		
 		vm.builder = {};

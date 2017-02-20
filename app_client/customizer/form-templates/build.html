@@ -45,7 +45,6 @@
 </div>
 
 
-
 <!--Pant Rendering-->
 <div class="builder__stage">
 	<div class="images" id="zoom-frame" ng-class="{'zoomed': vm.builder.zoom }" 
@@ -58,9 +57,10 @@
 		src="/images/components/threads/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_tt{{vm.jean.data.threadTop}}.png">
 		<img ng-if="vm.jean.data.threadAccent" ng-class="{'zoom': vm.builder.zoom }"
 		src="/images/components/threads/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_ta{{vm.jean.data.threadAccent}}.png">
-		<img class="stage-button" ng-if="vm.jean.data.hardware"
+		<img class="stage-button" ng-if="vm.jean.data.hardware != 1"
 		src="/images/components/hardware/thumb_{{vm.jean.data.hardware}}.jpg">
 	</div>
+	
 	<a class="zoom-icon" ng-click="vm.builder.toggleZoom()" href=""><i class="fa fa-search-plus" aria-hidden="true"></i></a>
 </div>
 
@@ -72,7 +72,7 @@
 		<!--Title / Choice indicator-->
 		<h3 class="control-title">
 			{{vm.builder.panel[vm.builder.step].title}}
-			<a href="#" id="item-title" class="item-title"
+			<a href="#" id="item-title" class="item-title {{vm.builder.panel[vm.builder.step].jeanKey}}"
 				ng-click="vm.builder.panel[vm.builder.step].jeanKey != 'fabric' || (vm.builder.infoPop=!vm.builder.infoPop)">
         {{ vm.builder.getActiveItemName() }}<i class="fa fa-question-circle"> </i>
 			</a>
@@ -149,11 +149,13 @@
 		
 		<div class="builder-control-container">		
 			<a href="" class="builder-control-arrow" ng-show="vm.builder.step > 1" ng-click="vm.builder.changeStep(vm.builder.step-1)">
-				<span class="arrow-controls left-arrow"></span>
+				<!--<span class="arrow-controls left-arrow"></span>-->
+				<i class="fa fa-angle-left"></i>
 				<span class="builder-nav-control-text">PREV</span>
 			</a>
 			<a href="" class="builder-control-arrow" ng-show="vm.builder.step < vm.builder.panel.length-1" ng-click="vm.builder.changeStep(vm.builder.step+1)">
-				<span class="arrow-controls right-arrow"></span>
+				<!--<span class="arrow-controls right-arrow"></span>-->
+				<i class="fa fa-angle-right"></i>
 				<span class="builder-nav-control-text">NEXT</span>
 			</a>
 		</div>

@@ -885,25 +885,37 @@ h1.page-title {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   -o-border-radius: 50%;
+  /*&:before, &:after{
+  	display:block;
+  	width:12px;
+  	height:2px;
+  	background:$blue;
+  	content:"";
+  }
+  &:before{
+  	transform:rotate(-45deg);
+  	top: 11px;
+  	position: absolute;
+  	left: 8px;
+  }
+  &:after{
+  	transform: rotate(45deg);
+  	top: 19px;
+  	position: absolute;
+  	left: 8px;
+  }*/
 }
-.arrow-controls:before, .arrow-controls:after {
-  display: block;
-  width: 12px;
-  height: 2px;
-  background: #004964;
-  content: "";
-}
-.arrow-controls:before {
-  transform: rotate(-45deg);
-  top: 11px;
+.arrow-controls i {
   position: absolute;
-  left: 8px;
+  top: 50%;
+  left: 50%;
+  font-size: 24px;
+  color: #004964;
+  margin-top: -12px;
+  margin-left: -5px;
 }
-.arrow-controls:after {
-  transform: rotate(45deg);
-  top: 19px;
-  position: absolute;
-  left: 8px;
+.arrow-controls i.fa-angle-right {
+  margin-left: -3px;
 }
 .arrow-controls.left-arrow {
   left: 5px;
@@ -967,16 +979,20 @@ h1.page-title {
   -o-transition: all 300ms ease;
   transition: all 300ms ease;
 }
-<<<<<<< HEAD
-=======
 .builder__control-panel .control-panel-inner .control-title .item-title a {
   font-size: 14px;
   margin-right: 8px;
 }
+.builder__control-panel .control-panel-inner .control-title .item-title:not(.fabric) {
+  pointer-events: none;
+  text-decoration: none;
+}
+.builder__control-panel .control-panel-inner .control-title .item-title:not(.fabric) i {
+  display: none;
+}
 .builder__control-panel .control-panel-inner .control-title .item-title i {
   margin-left: 8px;
 }
->>>>>>> 3b8da19c044cb0499d82971e01218876e274deaa
 .builder__control-panel .control-panel-inner .switch {
   position: absolute;
   top: 48px;
@@ -1164,6 +1180,22 @@ h1.page-title {
 .builder-control-arrow:last-of-type:hover .builder-nav-control-text {
   left: auto;
   right: 36px;
+}
+.builder-control-arrow i {
+  padding: 10px;
+  font-size: 20px;
+  z-index: 10;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #004964;
+  padding: 3px 12px 6px;
+  font-size: 24px;
+  line-height: 27px;
+}
+.builder-control-arrow i.fa-angle-right {
+  left: auto;
+  right: 0;
 }
 .builder-control-arrow .arrow-controls {
   border-radius: 0;

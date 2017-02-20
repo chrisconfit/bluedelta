@@ -159,7 +159,8 @@ h1.page-title{
 	-moz-border-radius:50%;
 	-webkit-border-radius:50%;
 	-o-border-radius:50%;
-	&:before, &:after{
+	
+	/*&:before, &:after{
 		display:block;
 		width:12px;
 		height:2px;
@@ -177,6 +178,18 @@ h1.page-title{
 		top: 19px;
 		position: absolute;
 		left: 8px;
+	}*/
+	i{
+		position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 24px;
+		color: $blue;
+		margin-top: -12px;
+		margin-left: -5px;
+		&.fa-angle-right{
+			margin-left:-3px;
+		}
 	}
 	&.left-arrow{
 		left: 5px;
@@ -228,6 +241,14 @@ h1.page-title{
 				a{
 					font-size:14px;
 					margin-right:8px;
+				}
+				
+				&:not(.fabric){
+					pointer-events: none;
+					text-decoration: none;
+					i{
+						display:none;
+					}
 				}
 				i {
 					margin-left: 8px; 
@@ -379,6 +400,7 @@ h1.page-title{
 	pointer-events: none;
 }
 
+
 .builder-control-arrow{
 	pointer-events:all;
 	display:block;
@@ -426,7 +448,22 @@ h1.page-title{
 			}
 		}
 	}
-	
+	i{
+		padding:10px;
+		font-size:20px;
+		z-index:10;
+		position:absolute;
+		left:0;
+		top:0;
+    background:$blue;
+    padding: 3px 12px 6px;
+    font-size: 24px;
+    line-height: 27px;
+		&.fa-angle-right{
+			left:auto;
+			right:0;
+		}
+	}
 	.arrow-controls{
 		border-radius:0;
 		-moz-border-radius:0;
