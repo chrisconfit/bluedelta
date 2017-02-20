@@ -22,21 +22,21 @@
 			<h3 class="popup-title">Raw Denim Weights</h3>		
 			<div class="denim-weight">
 				<h3>Lightweight</h3>
-				<h4>(Up to 10 oz)</h4>
+				<h4>(Under 12 oz)</h4>
 				<p>Lightweight raw denim is the first, and easiest to wear category. A raw denim under 12 Oz. is  easy to break in as it won’t require anywhere near as much wearing time as a heavier fabric to attain a pleasant level of comfort.</p>
 				<p>A lightweight raw denim is much more comfortable from the beginning, and is lighter on your legs. There will be much fewer sweaty experiences caused from claustrophobia around your legs. The only drawback is that the fades achieved with this level of denim won’t look quite as spectacular as a heavier weight of denim.</p>
 			</div>
 			
 			<div class="denim-weight">
 				<h3>Mediumweight</h3>
-				<h4>(Between 10 Oz. and 14 Oz.)</h4>
+				<h4>(Between 12 Oz. – 16 Oz.)</h4>
 				<p>Second is the mid-weight denim, which is probably the most common of the raw denims in the market today. These are getting to the point where the denim starts off quite stiff, and are potentially quite heavy and hard to the touch.</p>
 				<p>The positives include the potential for a much better fade, a slightly warmer jean come winter and fall, and a longer lasting jean that is much harder to wear through. You will, however, take a longer break in time, and will have a little bit of lost flexibility upfront.</p>
 			</div>
 			
 			<div class="denim-weight">
 				<h3>Heavyweight</h3>
-				<h4>(14oz and over)</h4>
+				<h4>(Over 16 oz)</h4>
 				<p>Finally are the heavyweight jeans, the over 16 Oz. jeans, which can run up to a 32 Oz. These jeans take a real commitment, they’re going to take time and effort and honestly won’t feel great at first.</p>
 				<p>You’d have to be slightly self-loathing to want to stick your legs into a jean that can stand up on their own, but if lorem ipsum doler sit</p>
 			</div>
@@ -74,7 +74,6 @@
 			{{vm.builder.panel[vm.builder.step].title}}
 			<a href="#" id="item-title" class="item-title"
 				ng-click="vm.builder.panel[vm.builder.step].jeanKey != 'fabric' || (vm.builder.infoPop=!vm.builder.infoPop)">
-					<i class="fa fa-question-circle"></i>
 					{{ vm.builder.getActiveItemName() }}
 			</a>
 		</h3>
@@ -101,7 +100,7 @@
 					
 					<h3>Lightweight <a href="" class="info-pop" ng-click="vm.builder.denimPop = !vm.builder.denimPop"><i class="fa fa-question-circle"></i></a></h3>
 					<div class="cft-g chooser-grid">
-						<div class="cft-gi" ng-repeat="fabric in vm.builder.fabrics | filter:vm.builder.weightFilter(null,10) | orderBy:'weight'">
+						<div class="cft-gi" ng-repeat="fabric in vm.builder.fabrics | filter:vm.builder.weightFilter(null,12) | orderBy:'weight'">
 							<a ng-class="{ active: vm.jean.data[step.jeanKey]==fabric.id }" id="{{step.jeanKey}}_{{fabric.id}}" 
 							href="" ng-click="vm.builder.selectAttr($event, fabric.id, step.jeanKey)">
 								<img src="/images/components/{{step.dataKey}}/thumb_{{fabric.id}}.jpg">
@@ -112,7 +111,7 @@
 					
 					<h3>Mediumweight <a href="" class="info-pop" ng-click="vm.builder.denimPop = !vm.builder.denimPop"><i class="fa fa-question-circle"></i></a></h3>
 					<div class="cft-g chooser-grid">
-						<div class="cft-gi" ng-repeat="fabric in vm.builder[step.dataKey] | filter:vm.builder.weightFilter(10.001,13.999) | orderBy:'weight'">
+						<div class="cft-gi" ng-repeat="fabric in vm.builder[step.dataKey] | filter:vm.builder.weightFilter(12.001,16) | orderBy:'weight'">
 							<a ng-class="{ active: vm.jean.data[step.jeanKey]==fabric.id }" id="{{step.jeanKey}}_{{fabric.id}}" 
 							href="" ng-click="vm.builder.selectAttr($event, fabric.id, step.jeanKey)">
 								<img src="/images/components/{{step.dataKey}}/thumb_{{fabric.id}}.jpg">
@@ -123,7 +122,7 @@
 					
 					<h3>Heavyweight <a href="" class="info-pop" ng-click="vm.builder.denimPop = !vm.builder.denimPop"><i class="fa fa-question-circle"></i></a></h3>
 					<div class="cft-g chooser-grid">
-						<div class="cft-gi" ng-repeat="fabric in vm.builder[step.dataKey] | filter:vm.builder.weightFilter(14,null) | orderBy:'weight'">
+						<div class="cft-gi" ng-repeat="fabric in vm.builder[step.dataKey] | filter:vm.builder.weightFilter(16.001,null) | orderBy:'weight'">
 							<a ng-class="{ active: vm.jean.data[step.jeanKey]==fabric.id }" id="{{step.jeanKey}}_{{fabric.id}}" 
 							href="" ng-click="vm.builder.selectAttr($event, fabric.id, step.jeanKey)">
 								<img src="/images/components/{{step.dataKey}}/thumb_{{fabric.id}}.jpg">

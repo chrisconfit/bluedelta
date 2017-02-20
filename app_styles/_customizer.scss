@@ -225,10 +225,6 @@ h1.page-title{
 			@include font-size(18,18);
 			position:relative;
 			.item-title{
-				a{
-					font-size:14px;
-					margin-right:8px;
-				}
 				position: absolute;
 				top: 16px;
 				right: 15px;
