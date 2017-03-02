@@ -268,6 +268,14 @@ h1.page-title{
 	.control-panel-inner{		
 		position:relative;
 		.build-step-stage{
+			&.chooser{
+				min-height:112px;
+			}
+			.step-container{
+				position:absolute;
+				bottom:0;
+				width:100%;
+			}
 			.description{
 				display:none;
 			}
@@ -892,6 +900,9 @@ a.overview-trigger{
 	@include at-query($min, $deskMin){
 		display:none;
 	}
+}
+.jean-overview{
+	background:#fff;
 }
 .jean-list{
 	max-height:0;
