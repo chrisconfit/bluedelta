@@ -308,6 +308,17 @@ h1.page-title{
 		
 }
 
+
+.animate-show-hide.ng-hide {
+  opacity: 0;
+}
+
+.animate-show-hide.ng-hide-add,
+.animate-show-hide.ng-hide-remove {
+  transition: all linear 0.2s;
+}
+
+
 //Control Title
 .control-title{
 	text-transform: uppercase;

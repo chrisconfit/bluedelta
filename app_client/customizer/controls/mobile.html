@@ -1,7 +1,7 @@
 <div class="control-panel-inner">
 	
 		<div class="build-step-stage {{vm.builder.panel[vm.builder.step].panelTemplate}}">			
-			<div class="step-container" ng-repeat="step in vm.builder.panel" ng-show="vm.builder.panel[vm.builder.step] == step">		
+			<div class="step-container animate-show-hide" ng-repeat="step in vm.builder.panel" ng-show="vm.builder.panel[vm.builder.step] == step">		
 				
 				<!--Choosers-->
 				<div ng-if="step.panelTemplate=='chooser'" class="chooser" >
