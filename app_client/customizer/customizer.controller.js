@@ -150,6 +150,10 @@
 		
 		vm.builder.pan = "50%,50%";
 		vm.builder.trackMouse = function($event){
+			console.log("tracking...");
+			console.log($event);
+			
+			
 			frame = angular.element(document.querySelector("#zoom-frame"))[0];
 			fWidth = frame.clientWidth;
 			fHeight = frame.clientHeight;
