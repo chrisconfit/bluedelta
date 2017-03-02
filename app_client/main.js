@@ -58,23 +58,21 @@
     .config(['$routeProvider', '$locationProvider', config])
     .run(['$rootScope', '$location', 'authentication', run])
 		.filter('spaceless',function() {
-    return function(input) {
-        if (input) {
-            return input.replace(/\s+/g, '-');    
-        }
-    }
-		.filter('weightFilter', function() {
-			return function( items ) {
-				console.log("this one");
-			  return items.filter(function(element){
-			    if ( 10 >= element.weight ) {
-			      return true;
-			    }
-			  });
-			}
+	    return function(input) {
+	      if (input) {
+	      	return input.replace(/\s+/g, '-');    
+	      }
+	    }
+		})
+		.filter('scoreToSpace',function() {
+	    return function(input) {
+	      if (input) {
+	      	return input.replace(/_+/g, ' ');    
+	      }
+	    }
 		})
 		
-		});
+
 		
 		
 })();

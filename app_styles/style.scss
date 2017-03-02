@@ -53,11 +53,32 @@ body{
 	.container {
 		padding: 0 20px;
 	}
+	a.mobile-info-button{
+		position: absolute;
+		top: 63px;
+		display: block;
+		width: 40px;
+		height: 40px;
+		background: #cfcfcf;
+		text-align: center;
+		line-height: 32px;
+		color: #909090;
+		font-size: 26px;
+		line-height:40px;
+		z-index:2;
+		@include at-query($min, 650px){
+			display:none;
+		}
+	}
 	.head-left{
 		float:left;
 		#home-link{
-			width:200px;
-			margin-top: -10px;
+			width:150px;
+			margin-top:0;
+			@include at-query($min, 425px){
+				width:200px;
+				margin-top: -10px;
+			}
 			display: inline-block;
 			img{
 				width:100%;
@@ -65,13 +86,16 @@ body{
 			}
 		}
 		.title {
+			display:none;
+			@include at-query($min, 950px){
+				display:inline-block;
+			}
 			color: #ffffff;
 			text-transform: uppercase;
 			font-weight: 600;
 			letter-spacing: 2px;
 			vertical-align: top;
 			margin-top: 6px;
-			display: inline-block;
 			@include font-size(14, 26);
 			@media screen and (min-width: 1200px) {
 				@include font-size(18, 26);
@@ -80,7 +104,6 @@ body{
 	}
 	
 	nav{
-		position:relative;
 		.btn{
 			background:darken($blue, 7%);
 			&:hover{
@@ -92,29 +115,55 @@ body{
 		&.nav-right{
 			float:right;
 			ul{
+				visibility: hidden;
+				opacity: 0;
+				@include transition(all,300ms,ease);
+				position:absolute;
+				left:0;
+				right:0;
+				top:0; 
+				top: 53px;
+				background: rgba(darken($blue,10%),.9);
+				z-index:9999;
+				&.mobileOpen{
+					visibility: visible;
+					opacity: 1;
+				}
 				li{
-					display:inline-block;
-					margin-left:15px;
-					@media screen and (min-width: 1200px) {
-						margin-left:40px;
-					}
+					display:block;
+					position:relative;
+					margin:0;
+					border-bottom:1px solid darken($blue,10%);
+
 					vertical-align: middle;
 					&:last-child{
-						margin-right:0;
+						//margin-right:0;
+						border-bottom:0;
 					}
 					a{
-						@include font-size(14, 26);
-						@media screen and (min-width: 1200px) {
-							@include font-size(18, 26);
-						}
+						display:block;
+						@include font-size(18, 26);
 						color:#fff;
 						text-transform: uppercase;
 						letter-spacing: 2px;
 						&:hover{
 							color:darken(#fff,20%);
 						}
+						&:not(.btn){
+							padding:15px;
+						}
+						&.drop-trigger{
+							display:none
+						}
 					}
 				}
+			}
+			ul.dropdown{
+				//position:absolute;
+				display:block;
+				position:relative;
+				background:transparent;
+				top:0;
 			}
 			.btn.logout, .btn.sign-in{
 				background:tint($blue, 25%);
@@ -123,6 +172,39 @@ body{
 					background: tint($blue, 17%);
 				}
 			}
+			
+			//Big Nav
+			@include at-query($min, $deskMin){
+				a.mobile-menu-trigger{display:none;}
+				position:relative;
+				ul{
+					top:auto;
+					visibility:visible;
+					opacity: 1;
+					position: relative;
+					background:transparent;
+					li{
+						display:inline-block;
+						margin-left:15px;
+						border-bottom:none;
+						a:not(.btn){
+							padding:0;
+						}
+					}
+				}
+			}
+			
+			
+			//XL Nav
+			@include at-query($min, 1200px){
+				ul{
+					li{
+						margin-left:40px;
+					}
+				}
+			}
+			
+			
 		}
 		
 		
@@ -317,4 +399,6 @@ form.login-form, form.register-form{
 		}
 	}
 }
+
 @import "customizer";
+

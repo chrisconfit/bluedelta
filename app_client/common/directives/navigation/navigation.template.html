@@ -29,20 +29,35 @@
 
 
 <div class="main-navigation">
-	<div class="container">
+	<div class="container">	
 		<div class="head-left">
+			<a class="mobile-info-button" ng-click="navvm.hiwPop = !navvm.hiwPop"><i class="fa fa-question"></i></a>
 			<a id="home-link" href="/"><img src="/images/bluedelta-logo.png" alt="Blue Delta Jeans"></a>
 			<span class="title">Custom Jean Builder - Beta</span>
 		</div>
 		<nav class="main-nav nav-right">
-		  <ul>
-			  <li><a href="https://bluedeltajeans.com/">Main Site</a></li>
-			  <li><a ng-click="navvm.hiwPop = !navvm.hiwPop"href="#">How it Works</a></li>
-		    <li ng-hide="navvm.isLoggedIn"><a class="btn sign-in" href="login">Sign in</a></li>
-		    <li ng-show="navvm.isLoggedIn"><a href="closet">Closet</a></li>
-		    <li ng-show="navvm.isLoggedIn"><a href="customizer">Customizer</a></li>
-		    <li ng-show="navvm.isLoggedIn && navvm.isAdmin"><a href="admin">Admin</a></li>
-		    <li ng-show="navvm.isLoggedIn"><a class="btn logout" ng-click="navvm.logout()" href="/">Log Out</a></li>
+			
+			<a href="" class="mobile-menu-trigger btn" ng-click="navvm.mobileMenu=!navvm.mobileMenu">{{navvm.mobileMenu ? "Close" : "Menu"}}</a>
+			
+		  <ul ng-class="(navvm.mobileMenu ? 'mobileOpen' : 'mobileClosed')" ng-init="">
+			  <!--All views-->
+			  <li class="main-site"><a href="https://bluedeltajeans.com/">Main Site</a></li>
+			  <li class="how-it-works" i><a ng-click="navvm.hiwPop = !navvm.hiwPop; navvm.mobileMenu=false"href="#">How it Works</a></li>
+			  
+			  <!--Not Logged In-->
+				<li class="sign-in" ng-if="!navvm.isLoggedIn"><a class="btn sign-in" href="login">Sign in</a></li>
+				<!--<li class="sign-in" ng-if="!navvm.isLoggedIn"><a class="btn register" href="register">Register</a></li>-->
+				
+				<!--Logged In-->
+				<li class="my-account" ng-if="navvm.isLoggedIn"><a class="btn drop-trigger account" ng-click="navvm.drops.account=!navvm.drops.account" href="">My Account</a>
+					<ul ng-class="(navvm.drops.account ? 'dropped' : '')" class="dropdown">
+						<li class="closet" ng-if="navvm.isLoggedIn"><a href="closet">Closet</a></li>
+						<li class="log-out" ng-if="navvm.isLoggedIn"><a class="btn logout" ng-click="navvm.logout()" href="/">Log Out</a></li>
+					</ul>
+				</li>	
+				
+				<!--Admin-->
+		    <li ng-if="navvm.isLoggedIn && navvm.isAdmin"><a class="btn admin" href="admin">Admin</a></li>
 		  </ul>
 		</nav>
 	</div>

@@ -1,0 +1,83 @@
+<div class="control-panel-inner">
+	
+		<div class="build-step-stage {{vm.builder.panel[vm.builder.step].panelTemplate}}">			
+			<div class="step-container" ng-repeat="step in vm.builder.panel" ng-show="vm.builder.panel[vm.builder.step] == step">		
+				
+				<!--Choosers-->
+				<div ng-if="step.panelTemplate=='chooser'" class="chooser" >
+					<div class="description" ng-if="step.jeanKey == 'fabric'">
+						<p>We have a range of fabrics in different weights from lightweight linen to heavyweight raw denim. <a href="" ng-click="vm.builder.denimPop = !denimPop"><strong>Learn More.</strong></a></p>
+					</div>
+					<div class="cft-g chooser-grid">
+						<span ng-class="{ live: vm.jean.data[step.jeanKey] }" class="chooser-select" id="{{step.jeanKey}}-selector"></span>
+						<div class="cft-gi" ng-repeat="data in vm.builder[step.dataKey]">
+							<a ng-class="{ active: vm.jean.data[step.jeanKey]==data.id }" id="{{step.jeanKey}}_{{data.id}}" 
+							href="" ng-click="vm.builder.selectAttr($event, data.id, step.jeanKey)">
+								<img src="/images/components/{{step.dataKey}}/thumb_{{data.id}}.jpg">
+							</a>
+						</div>
+					</div>
+				</div>
+				
+				<!--Overview-->
+				<div ng-if="step.panelTemplate=='list'" class="overview" >
+					<div class="jean-overview" ng-init="vm.builder.overveiewOn = false">
+						<a class="overview-trigger" ng-click="vm.builder.overviewOn=!vm.builder.overviewOn" href="">
+							Overview <i ng-class="(vm.builder.overviewOn ? 'fa-angle-down' : 'fa-angle-up')" class="fa"></i>
+						</a>
+						<div class="jean-list" ng-class="(vm.builder.overviewOn ? 'show' :'hide')">
+							<dl>
+								<dt ng-repeat-start="(key, value) in vm.jean.data">{{key | scoreToSpace}}:</dt><!--
+								--><dd ng-repeat-end>{{vm.dataLookup(key,value,"name")}}</dd>
+							</dl>
+						</div>
+					</div>
+					<div class="action">
+						<div class="cft-g action-grid">
+							<div class="cft-gi">
+								<a class="btn" href="#">
+									Share <i class="fa fa-share" aria-hidden="true"></i>
+								</a>
+						  </div><!--
+							--><div class="cft-gi">
+								<a class="btn" href="#">
+									Save <i class="fa fa-floppy-o" aria-hidden="true"></i>
+								</a>
+						  </div>
+						</div>
+						<a class="btn order" href="#">
+							Order
+						</a>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		
+		
+		<div ng-show="vm.builder.panel[vm.builder.step].panelTemplate=='chooser'" class="active-item">
+			<a href="#" id="item-title" class="item-title {{vm.builder.panel[vm.builder.step].jeanKey}}"
+				ng-click="vm.builder.panel[vm.builder.step].jeanKey != 'fabric' || (vm.builder.infoPop=!vm.builder.infoPop)">
+        {{ vm.builder.getActiveItemName() }}<i class="fa fa-question-circle"> </i>
+			</a>
+		</div>
+		
+		<h3 class="control-title">
+			<div class="builder-control-container">		
+				<a href="" class="builder-control-arrow" ng-show="vm.builder.step > 1" ng-click="vm.builder.changeStep(vm.builder.step-1)">
+					<i class="fa fa-angle-left"></i>
+				</a>
+				<a href="" class="builder-control-arrow" ng-show="vm.builder.step < vm.builder.panel.length-1" 
+					ng-click="vm.builder.changeStep(vm.builder.step+1)">
+					<i class="fa fa-angle-right"></i>
+				</a>
+			</div>
+			{{vm.builder.panel[vm.builder.step].title}}
+		</h3>
+		
+
+	</div><!--/.control-panel-inner-->
+	
+
+	

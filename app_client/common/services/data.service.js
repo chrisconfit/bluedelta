@@ -46,7 +46,9 @@
 		};
 		
 		
-		
+		var getGenders = function(){
+			return $http.get('/data/genders.json');
+		};
 		
 		
 		
@@ -57,7 +59,8 @@
       getStyles : getStyles,
       getThreads : getThreads,
       getHardware: getHardware,
-      getFabrics: getFabrics
+      getFabrics: getFabrics,
+      getGenders: getGenders
     };
   }
 
