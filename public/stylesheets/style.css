@@ -1111,6 +1111,12 @@ h1.page-title {
     padding-top: 88px;
     height: 400px;
     overflow: auto;
+    min-height: 0;
+  }
+  .builder__control-panel-mobile .control-panel-inner .build-step-stage .step-container {
+    position: relative;
+    bottom: auto;
+    width: 100%;
   }
   .builder__control-panel-mobile .control-panel-inner .build-step-stage .description {
     display: block;

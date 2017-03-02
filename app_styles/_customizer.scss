@@ -300,7 +300,12 @@ h1.page-title{
 					padding-top:88px;
 					height:400px;
 					overflow:auto;
-					//margin-top:44px;
+					min-height:0;
+				}
+				.step-container{
+					position:relative;
+					bottom:auto;
+					width:100%;
 				}
 				.description{
 					display:block;
