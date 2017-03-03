@@ -987,6 +987,7 @@ a.overview-trigger{
 	}
 	dl{
 		width:100%;
+		max-height: calc(100vh - 284px);
 		dt{
 			padding:10px 15px;
 			padding-right:0;
