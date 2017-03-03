@@ -1068,7 +1068,7 @@ h1.page-title {
 }
 
 .builder__control-panel-mobile {
-  position: absolute;
+  position: fixed;
   right: 0;
   width: 100%;
   bottom: 0;
