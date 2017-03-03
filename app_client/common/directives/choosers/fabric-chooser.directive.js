@@ -16,7 +16,7 @@
 	      
 	      link: function($scope){
 		      
-		      $scope.breakPoint = 768;
+		      $scope.breakPoint = 800;
 		      
 		      //Template on window resize
 		      $window.onresize = function() {

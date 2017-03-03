@@ -297,11 +297,18 @@ form.login-form, form.register-form{
 	background:rgba(darken($blue,15%),.7);
 	z-index:9999;
 	.popup-title{
-		margin-bottom:60px;
 		text-align: center;
-		@include font-size(30,36);
+		@include font-size(24,29);
+		margin-bottom:20px;
+		@include at-query($min, $deskMin){
+			@include font-size(30,36);	
+			margin-bottom:60px;
+		}
 		&.section{
-			margin:20px auto 40px auto;
+			margin:20px auto;
+			@include at-query($min, $deskMin){
+				margin:20px auto 40px auto;
+			}
 		}
 	}
 	.popup-closer{
@@ -311,16 +318,16 @@ form.login-form, form.register-form{
 		z-index:10;
 		background:#ebebeb;
 		display:block;
-		width:50px;
-		height:50px;
+		width:30px;
+		height:30px;
 		&:before, &:after{
-			width:40px;
-			height:3px;
+			width:20px;
+			height:2px;
 			background:$blue;
 			position:absolute;
 			display:block;
 			content:"";
-			top:43px;
+			top:34px;
 			left:25px;
 			margin-top:-20px;
 			margin-left:-20px;
@@ -330,6 +337,16 @@ form.login-form, form.register-form{
 		}
 		&:after{
 			@include transform(rotate(45deg));
+		}
+		
+		@include at-query($min,$deskMin){	
+			height:50px;
+			width:50px;
+			&:before, &:after{
+				top:43px;
+				width:40px;
+				height:3px;
+			}
 		}
 		
 	}
@@ -347,7 +364,7 @@ form.login-form, form.register-form{
 		.popup-content-inner{
 			max-height:80vh;
 			overflow: auto;
-			padding:20px 30px;
+			padding:30px 20px;
 			@include at-query($min,650px){			
 				padding:40px 60px;
 			}
@@ -366,15 +383,18 @@ form.login-form, form.register-form{
 			background:#f1f1f1;
 			padding:20px;
 		}
+		.box-title{
+			@include font-size(22, 26);
+		}
 		&:first-child{
-			margin-bottom:115px;
+			margin-bottom:80px;
 			&:after{
 				content:"OR";
 				display:block;
 				position:absolute;
 				left:0;
 				right:0;
-				bottom:-70px;
+				bottom:-56px;
 				padding-left:113px;
 				font-weight:500;
 				text-align: center;
@@ -382,7 +402,10 @@ form.login-form, form.register-form{
 				@include font-size(24,32);
 			}
 		}
-		@include at-query($min, 700px){
+		@include at-query($min, $deskMin){
+			.box-title{
+				@include font-size(28, 34);
+			}
 			width:50%;
 			&:first-child{
 				margin-bottom:0;

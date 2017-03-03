@@ -695,15 +695,29 @@ form.login-form button.btn, form.login-form button.btn-secondary, form.register-
   z-index: 9999;
 }
 .popup-window .popup-title {
-  margin-bottom: 60px;
   text-align: center;
-  font-size: 30px;
-  line-height: 36px;
-  font-size: 3rem;
-  line-height: 3.6rem;
+  font-size: 24px;
+  line-height: 29px;
+  font-size: 2.4rem;
+  line-height: 2.9rem;
+  margin-bottom: 20px;
+}
+@media screen and (min-width: 800px) {
+  .popup-window .popup-title {
+    font-size: 30px;
+    line-height: 36px;
+    font-size: 3rem;
+    line-height: 3.6rem;
+    margin-bottom: 60px;
+  }
 }
 .popup-window .popup-title.section {
-  margin: 20px auto 40px auto;
+  margin: 20px auto;
+}
+@media screen and (min-width: 800px) {
+  .popup-window .popup-title.section {
+    margin: 20px auto 40px auto;
+  }
 }
 .popup-window .popup-closer {
   position: absolute;
@@ -712,17 +726,17 @@ form.login-form button.btn, form.login-form button.btn-secondary, form.register-
   z-index: 10;
   background: #ebebeb;
   display: block;
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
 }
 .popup-window .popup-closer:before, .popup-window .popup-closer:after {
-  width: 40px;
-  height: 3px;
+  width: 20px;
+  height: 2px;
   background: #004964;
   position: absolute;
   display: block;
   content: "";
-  top: 43px;
+  top: 34px;
   left: 25px;
   margin-top: -20px;
   margin-left: -20px;
@@ -741,6 +755,17 @@ form.login-form button.btn, form.login-form button.btn-secondary, form.register-
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+@media screen and (min-width: 800px) {
+  .popup-window .popup-closer {
+    height: 50px;
+    width: 50px;
+  }
+  .popup-window .popup-closer:before, .popup-window .popup-closer:after {
+    top: 43px;
+    width: 40px;
+    height: 3px;
+  }
+}
 .popup-window .popup-content {
   text-algin: center;
   position: absolute;
@@ -755,7 +780,7 @@ form.login-form button.btn, form.login-form button.btn-secondary, form.register-
 .popup-window .popup-content .popup-content-inner {
   max-height: 80vh;
   overflow: auto;
-  padding: 20px 30px;
+  padding: 30px 20px;
   position: relative;
 }
 @media screen and (min-width: 650px) {
@@ -776,8 +801,14 @@ form.login-form button.btn, form.login-form button.btn-secondary, form.register-
   background: #f1f1f1;
   padding: 20px;
 }
+.hiw-popup-grid > .cft-gi .box-title {
+  font-size: 22px;
+  line-height: 26px;
+  font-size: 2.2rem;
+  line-height: 2.6rem;
+}
 .hiw-popup-grid > .cft-gi:first-child {
-  margin-bottom: 115px;
+  margin-bottom: 80px;
 }
 .hiw-popup-grid > .cft-gi:first-child:after {
   content: "OR";
@@ -785,7 +816,7 @@ form.login-form button.btn, form.login-form button.btn-secondary, form.register-
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -70px;
+  bottom: -56px;
   padding-left: 113px;
   font-weight: 500;
   text-align: center;
@@ -795,9 +826,15 @@ form.login-form button.btn, form.login-form button.btn-secondary, form.register-
   font-size: 2.4rem;
   line-height: 3.2rem;
 }
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 800px) {
   .hiw-popup-grid > .cft-gi {
     width: 50%;
+  }
+  .hiw-popup-grid > .cft-gi .box-title {
+    font-size: 28px;
+    line-height: 34px;
+    font-size: 2.8rem;
+    line-height: 3.4rem;
   }
   .hiw-popup-grid > .cft-gi:first-child {
     margin-bottom: 0;
@@ -1738,7 +1775,7 @@ h1.page-title {
 }
 
 .popup-window .popup-content.fabric-popup .popup-content-inner {
-  padding-bottom: 485px;
+  padding-bottom: 190px;
 }
 .popup-window .popup-content.fabric-popup .popup-content-inner h3.popup-title {
   margin-bottom: 10px;
@@ -1764,7 +1801,15 @@ h1.page-title {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 445px;
+  height: 150px;
+}
+@media screen and (min-width: 800px) {
+  .popup-window .popup-content.fabric-popup .popup-content-inner {
+    padding-bottom: 485px;
+  }
+  .popup-window .popup-content.fabric-popup .popup-content-inner .fabric-preveiw {
+    height: 445px;
+  }
 }
 
 a.overview-trigger {
