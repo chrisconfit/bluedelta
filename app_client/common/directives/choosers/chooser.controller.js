@@ -50,7 +50,7 @@
 				text.css({'right':'-400px', 'opacity':0});
 				selector.css({'top':top+'px', 'left':left+'px'});
 				
-				if ($window.innerWidth < $scope.breakPoint) scrollToLeft(chooser, left, 400);
+				if ($window.innerWidth < $scope.breakPoint) scrollToLeft(chooser, left, 200);
 				
 				$timeout(function(){
 					text.css({'right':'15px', 'opacity':1});				
