@@ -48,19 +48,13 @@
 		
 		vm.builder = {};
 		
-		vm.builder.weightFilter = function(min, max){
-			return function(fabric){
-				if (min && fabric.weight < min) return false;
-				if (max && fabric.weight > max) return false;
-		    return true;
-		  }
-		};
+		
 		
 
 		
 		vm.builder.panel = [];
 		vm.builder.panel[1]={
-			"panelTemplate":"chooser",
+			"panelTemplate":"fabric-chooser",
 			"dataKey":"fabrics",
 			"title":"Fabric",
 			"jeanKey":"fabric",
@@ -122,7 +116,6 @@
 			if (!attr) return selected;
 			else return selected[attr];
 			
-			console.log("E");
 		}
 		vm.builder.getActiveItemName = function(){
 			var name = vm.builder.activeItem().name;
@@ -150,9 +143,6 @@
 		
 		vm.builder.pan = "50%,50%";
 		vm.builder.trackMouse = function($event){
-			console.log("tracking...");
-			console.log($event);
-			
 			
 			frame = angular.element(document.querySelector("#zoom-frame"))[0];
 			fWidth = frame.clientWidth;

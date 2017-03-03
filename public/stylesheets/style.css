@@ -928,63 +928,31 @@ h1.page-title {
   text-align: center;
 }
 
-.fade {
-  opacity: 1;
-  -webkit-backface-visibility: hidden;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-}
-
-.fade.ng-hide {
-  opacity: 0;
-  -webkit-backface-visibility: hidden;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-}
-
-.fade.active {
-  position: relative !important;
-}
-
-.fade.ng-hide-add,
-.fade.ng-hide-remove {
-  position: absolute;
-  left: 0;
-  top: 0;
-  -webkit-transition: 300ms linear all;
-  transition: 300ms linear all;
-  -webkit-backface-visibility: hidden;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-}
-
+/*
 .slide-hide, .slide-show {
-  -webkit-transition: all ease 1.5s;
-  -moz-transition: all ease 1.5s;
-  -o-transition: all ease 1.5s;
-  transition: all ease 1.5s;
+    -webkit-transition:all ease 1.5s;
+    -moz-transition:all ease 1.5s;
+    -o-transition:all ease 1.5s;
+    transition:all ease 1.5s;
 }
-
 .slide-hide {
-  position: relative;
-  top: 0;
+    position: relative;
+    top: 0;
 }
-
 .slide-hide.slide-hide-active {
-  position: absolute;
-  top: -100px;
+    position: absolute;
+    top: -100px;
 }
-
 .slide-show {
-  position: absolute;
-  top: 100px;
+    position: absolute;
+    top: 100px;
 }
-
 .slide-show.slide-show-active {
-  position: relative;
-  top: 0px;
+    position: relative;
+    top: 0px;
 }
 
+*/
 .fade.ng-hide {
   opacity: 0;
   -webkit-backface-visibility: hidden;
@@ -992,17 +960,10 @@ h1.page-title {
   transform: translate3d(0, 0, 0);
 }
 
-.fade.active {
-  position: relative !important;
-}
-
 .fade.ng-hide-add,
 .fade.ng-hide-remove {
-  position: absolute;
-  left: 0;
-  top: 0;
-  -webkit-transition: 300ms linear all;
-  transition: 300ms linear all;
+  -webkit-transition: 150ms linear all;
+  transition: 150ms linear all;
   -webkit-backface-visibility: hidden;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
@@ -1076,21 +1037,19 @@ h1.page-title {
   bottom: 0;
 }
 .builder__control-panel-mobile .control-panel-inner {
+  background: #fff;
   position: relative;
 }
 .builder__control-panel-mobile .control-panel-inner .build-step-stage {
   height: auto;
   padding: 0;
   padding-bottom: 0;
-  position: relative;
   background: #ffffff;
 }
-.builder__control-panel-mobile .control-panel-inner .build-step-stage.chooser {
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.chooser, .builder__control-panel-mobile .control-panel-inner .build-step-stage.fabric-chooser {
   min-height: 112px;
 }
 .builder__control-panel-mobile .control-panel-inner .build-step-stage .step-container {
-  position: absolute;
-  bottom: 0;
   width: 100%;
 }
 .builder__control-panel-mobile .control-panel-inner .build-step-stage .description {
@@ -1107,7 +1066,7 @@ h1.page-title {
     padding-top: 44px;
     display: inline-block;
   }
-  .builder__control-panel-mobile .control-panel-inner .build-step-stage.chooser {
+  .builder__control-panel-mobile .control-panel-inner .build-step-stage.chooser, .builder__control-panel-mobile .control-panel-inner .build-step-stage.fabric-chooser {
     padding-top: 88px;
     height: 400px;
     overflow: auto;
@@ -1290,8 +1249,9 @@ h1.page-title {
 }
 
 .switch {
+  display: none;
   position: absolute;
-  top: 48px;
+  top: 44px;
   right: 100%;
 }
 .switch ul {
@@ -1302,10 +1262,10 @@ h1.page-title {
 }
 .switch ul li a {
   display: block;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   text-align: center;
-  line-height: 40px;
+  line-height: 44px;
   color: #fff;
 }
 .switch ul li.active {
@@ -1314,8 +1274,13 @@ h1.page-title {
 .switch ul li.active a {
   color: #004964;
 }
+@media screen and (min-width: 800px) {
+  .switch {
+    display: block;
+  }
+}
 
-.chooser .chooser-select {
+.chooser .chooser-select, .fabric-chooser .chooser-select {
   pointer-events: none;
   top: 15px;
   left: calc(50% - 40px);
@@ -1333,10 +1298,10 @@ h1.page-title {
   -o-transition: all 300ms ease;
   transition: all 300ms ease;
 }
-.chooser .chooser-select.live {
+.chooser .chooser-select.live, .fabric-chooser .chooser-select.live {
   opacity: 1;
 }
-.chooser .chooser-select::after {
+.chooser .chooser-select::after, .fabric-chooser .chooser-select::after {
   width: 40px;
   height: 40px;
   margin: auto;
@@ -1359,9 +1324,13 @@ h1.page-title {
   line-height: 34px;
 }
 @media screen and (min-width: 800px) {
-  .chooser .chooser-select {
+  .chooser .chooser-select, .fabric-chooser .chooser-select {
     top: 15px;
     left: 30px;
+  }
+  .chooser.fabric-chooser .chooser-select, .fabric-chooser.fabric-chooser .chooser-select {
+    top: 62px;
+    left: 15px;
   }
 }
 
@@ -1434,7 +1403,18 @@ h1.page-title {
   }
 }
 
+.chooser-group {
+  white-space: nowrap;
+  height: 168px;
+  overflow: auto;
+  width: 100%;
+  padding: 15px calc(50% - 40px) 30px;
+  margin-bottom: -15px;
+  background: #fff;
+  poairion: relative;
+}
 .chooser-group h3 {
+  display: none;
   margin: 5px 0 15px;
   position: relative;
 }
@@ -1449,7 +1429,27 @@ h1.page-title {
   top: 7px;
 }
 .chooser-group .chooser-grid {
+  display: inline;
   position: static;
+  padding: 0;
+  overflow: visible;
+  margin-right: 10px;
+}
+
+.fabric-chooser-container {
+  position: relative;
+}
+.fabric-chooser-container h3 {
+  margin-bottom: 0;
+  padding: 0 15px;
+}
+@media screen and (min-width: 800px) {
+  .fabric-chooser-container {
+    padding-top: 15px;
+  }
+  .fabric-chooser-container .chooser-grid {
+    position: static;
+  }
 }
 
 .builder__stage {
@@ -1502,8 +1502,21 @@ h1.page-title {
 }
 
 .action {
+  -webkit-transition: all 400ms ease;
+  -moz-transition: all 400ms ease;
+  -ms-transition: all 400ms ease;
+  -o-transition: all 400ms ease;
+  transition: all 400ms ease;
   background: #bebebe;
+  overflow: hidden;
+  padding: 0;
+  padding: 0;
+  max-height: 0;
+}
+.template-list .action {
   padding: 15px;
+  max-height: 600px;
+  overflow: visible;
 }
 .action .cft-g {
   margin-left: -10px;
@@ -1522,6 +1535,13 @@ h1.page-title {
 }
 .action .btn, .action .btn-secondary {
   width: 100%;
+}
+@media screen and (min-width: 800px) {
+  .template-chooser .action, .template-fabric-chooser .action {
+    max-height: none;
+    overflow: visible;
+    padding: 15px;
+  }
 }
 
 .builder__mobile-helper {

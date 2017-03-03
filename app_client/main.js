@@ -71,8 +71,15 @@
 	      }
 	    }
 		})
+		.filter('minMax',function(min, max, key) {
+			return function(input){
+				if (min && input[key] < min) return false;
+				if (max && input[key] > max) return false;
+		    return true;
+		  }  
+		})
 		
-
+		
 		
 		
 })();
