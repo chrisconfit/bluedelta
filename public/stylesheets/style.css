@@ -886,6 +886,12 @@ h1.page-title {
   bottom: 0;
   width: 100%;
   height: 44px;
+  pointer-events: none;
+}
+@media screen and (min-width: 800px) {
+  .button-container {
+    pointer-events: auto;
+  }
 }
 
 .step-buttons {
@@ -1076,6 +1082,7 @@ h1.page-title {
 .builder__control-panel-mobile .control-panel-inner {
   background: #fff;
   position: relative;
+  overflow: hidden;
 }
 .builder__control-panel-mobile .control-panel-inner .build-step-stage {
   height: auto;
@@ -1086,8 +1093,47 @@ h1.page-title {
 .builder__control-panel-mobile .control-panel-inner .build-step-stage.chooser, .builder__control-panel-mobile .control-panel-inner .build-step-stage.fabric-chooser {
   min-height: 112px;
 }
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.list .step-container {
+  position: relative;
+}
 .builder__control-panel-mobile .control-panel-inner .build-step-stage .step-container {
+  position: absolute;
+  top: 0;
   width: 100%;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+  /* Initial state when showing */
+}
+.builder__control-panel-mobile .control-panel-inner .build-step-stage .step-container.slide-hide {
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+  top: 0;
+}
+.builder__control-panel-mobile .control-panel-inner .build-step-stage .step-container.slide-hide.ng-hide {
+  top: -200px;
+}
+.builder__control-panel-mobile .control-panel-inner .build-step-stage .step-container.slide-hide.ng-hide-remove {
+  top: 100%;
+  display: block !important;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+.builder__control-panel-mobile .control-panel-inner .build-step-stage .step-container.slide-hide.ng-hide-add {
+  display: block !important;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
 }
 .builder__control-panel-mobile .control-panel-inner .build-step-stage .description {
   display: none;
@@ -1148,6 +1194,7 @@ h1.page-title {
   line-height: 1.8rem;
   position: relative;
   text-align: center;
+  z-index: 10;
 }
 .control-title .builder-control-container {
   overflow: hidden;
@@ -1172,7 +1219,7 @@ h1.page-title {
   background: #7198a7;
   text-align: center;
   position: relative;
-  z-index: 2;
+  z-index: 10;
 }
 .active-item a:not(.fabric) {
   text-decoration: none;
@@ -1539,6 +1586,8 @@ h1.page-title {
 }
 
 .action {
+  position: relative;
+  z-index: 10;
   -webkit-transition: all 400ms ease;
   -moz-transition: all 400ms ease;
   -ms-transition: all 400ms ease;
