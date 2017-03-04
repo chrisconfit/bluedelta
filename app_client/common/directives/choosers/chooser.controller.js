@@ -23,14 +23,36 @@
 				//Center Scroll To
 				scrollTo = scrollTo-(el.offsetWidth/2)+40;
 				
+				var maxLeft = el.scrollWidth - el.offsetWidth;
+				
+				if (scrollTo >= maxLeft) scrollTo = maxLeft-1;
+				if (scrollTo == maxLeft) scrollTo = maxLeft-1;
 				var stepNum = Math.ceil(scrollDuration / 15),
-						distance = (scrollTo - el.scrollLeft),
-						scrollStep = distance / stepNum;
-						scrollTest = (scrollTo < el.scrollLeft ? function(a,b){return a>=b;} : function(a,b){return a<=b;} ),
-						scrollInterval = setInterval(function(){    
-			    if(scrollTest(el.scrollLeft, scrollTo )) el.scrollLeft = el.scrollLeft+scrollStep;
-			    else clearInterval(scrollInterval); 
-			  },15);
+						distance = scrollTo - el.scrollLeft,
+						scrollStep = (distance / stepNum),
+						scrollTest = (el.scrollLeft < scrollTo ? function(a,b){return a<=b-1;} : function(a,b){return a>=b+1;} );		
+				/*
+				DEBUG:					
+				console.log("current Scoll pos: "+el.scrollLeft);
+				console.log("Scroll to "+scrollTo);
+				console.log("distance to go "+distance);
+				console.log(scrollStep);
+				console.log("func: "+scrollTest)
+				console.log("eval");
+				console.log(scrollTest(el.scrollLeft, scrollTo ));
+				console.log("done");
+				*/
+						
+				var scrollInterval = setInterval(function(){    
+				
+					if(scrollTest(el.scrollLeft, scrollTo )){
+						var newScroll = el.scrollLeft+scrollStep;
+						if (newScroll >= maxLeft) newScroll = maxLeft-1;
+						el.scrollLeft = newScroll;
+					}
+					else clearInterval(scrollInterval); 
+		      
+	  		},15);
 			  
 			}
 			

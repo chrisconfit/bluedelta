@@ -1100,40 +1100,61 @@ h1.page-title {
   position: absolute;
   top: 0;
   width: 100%;
-  -webkit-transition: all 200ms ease;
-  -moz-transition: all 200ms ease;
-  -ms-transition: all 200ms ease;
-  -o-transition: all 200ms ease;
-  transition: all 200ms ease;
-  /* Initial state when showing */
 }
-.builder__control-panel-mobile .control-panel-inner .build-step-stage .step-container.slide-hide {
+.builder__control-panel-mobile .control-panel-inner .build-step-stage .slide-hide {
   -webkit-transition: all 200ms ease;
   -moz-transition: all 200ms ease;
   -ms-transition: all 200ms ease;
   -o-transition: all 200ms ease;
   transition: all 200ms ease;
+}
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide {
+  left: 0;
+}
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide.ng-hide {
+  left: -100%;
+}
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide.ng-hide-remove {
+  display: block !important;
+  left: 100%;
+}
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide.ng-hide-add {
+  position: absolute;
   top: 0;
-}
-.builder__control-panel-mobile .control-panel-inner .build-step-stage .step-container.slide-hide.ng-hide {
-  top: -200px;
-}
-.builder__control-panel-mobile .control-panel-inner .build-step-stage .step-container.slide-hide.ng-hide-remove {
-  top: 100%;
   display: block !important;
-  -webkit-transition: all 200ms ease;
-  -moz-transition: all 200ms ease;
-  -ms-transition: all 200ms ease;
-  -o-transition: all 200ms ease;
-  transition: all 200ms ease;
 }
-.builder__control-panel-mobile .control-panel-inner .build-step-stage .step-container.slide-hide.ng-hide-add {
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide {
+  left: 0;
+}
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide.ng-hide {
+  left: 100%;
+}
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide.ng-hide-remove {
   display: block !important;
-  -webkit-transition: all 200ms ease;
-  -moz-transition: all 200ms ease;
-  -ms-transition: all 200ms ease;
-  -o-transition: all 200ms ease;
-  transition: all 200ms ease;
+  left: -100%;
+}
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide.ng-hide-add {
+  position: absolute;
+  top: 0;
+  display: block !important;
+}
+@media screen and (min-width: 800px) {
+  .builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide, .builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide {
+    left: auto;
+  }
+  .builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide.ng-hide, .builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide.ng-hide {
+    left: auto;
+  }
+  .builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide.ng-hide-remove, .builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide.ng-hide-remove {
+    display: none !important;
+    left: auto;
+    position: relative;
+  }
+  .builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide.ng-hide-add, .builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide.ng-hide-add {
+    left: auto;
+    display: none !important;
+    position: relative;
+  }
 }
 .builder__control-panel-mobile .control-panel-inner .build-step-stage .description {
   display: none;

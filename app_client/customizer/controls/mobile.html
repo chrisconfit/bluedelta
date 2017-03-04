@@ -9,7 +9,7 @@
 		</div>
 				
 				
-		<div class="build-step-stage {{vm.builder.panel[vm.builder.step].panelTemplate}}">			
+		<div class="build-step-stage {{vm.builder.panelDir}} {{vm.builder.panel[vm.builder.step].panelTemplate}}">			
 		<div class="step-container tempalte-{{step.panelTemplate}}" ng-class="(step.panelTemplate == 'list' ? 'fade':'slide-hide')" ng-repeat="step in vm.builder.panel" ng-show="vm.builder.panel[vm.builder.step] == step">		
 				
 				
@@ -77,11 +77,11 @@
 		
 		<h3 class="control-title">
 			<div class="builder-control-container">		
-				<a href="" class="fade builder-control-arrow" ng-show="vm.builder.step > 1" ng-click="vm.builder.changeStep(vm.builder.step-1)">
+				<a href="" class="fade builder-control-arrow" ng-show="vm.builder.step > 1" ng-click="vm.builder.panelDir='prev'; vm.builder.changeStep(vm.builder.step-1)">
 					<i class="fa fa-angle-left"></i>
 				</a>
 				<a href="" class="fade builder-control-arrow" ng-show="vm.builder.step < vm.builder.panel.length-1" 
-					ng-click="vm.builder.changeStep(vm.builder.step+1)">
+					ng-click="vm.builder.panelDir='next'; vm.builder.changeStep(vm.builder.step+1)">
 					<i class="fa fa-angle-right"></i>
 				</a>
 			</div>

@@ -253,31 +253,70 @@ h1.page-title{
 				position:absolute;
 				top:0;
 				width:100%;
-			
-				&.slide-hide{
-					@include transition(all,200ms,ease);
-					top:0;
-				}
-				@include transition(all,200ms,ease);
-				/* Initial state when showing */
-				&.slide-hide.ng-hide{
-					top:-200px;
-				}
-				&.slide-hide.ng-hide-remove {
-				  top: 100%;
-				  display: block !important;
-				  @include transition(all,200ms,ease);
-				}
-				
-				&.slide-hide.ng-hide-add {
-				  //top: -100%;
-				  display: block !important;
-				  @include transition(all,200ms,ease);
-				}
-				
-				
-
 			}
+			
+			
+			.slide-hide{
+				@include transition(all,200ms,ease);
+			}
+			
+			&.next{
+				.slide-hide{
+					left:0;
+				}
+				.slide-hide.ng-hide{
+					left:-100%;
+				}
+				.slide-hide.ng-hide-remove {
+					display: block !important;
+					left:100%;
+				}
+				.slide-hide.ng-hide-add {
+					position:absolute;
+					top:0;
+				  display: block !important;
+				}
+			}
+			
+			&.prev{
+				.slide-hide{
+					left:0;
+				}
+				.slide-hide.ng-hide{
+					left:100%;
+				}
+				.slide-hide.ng-hide-remove {
+					display: block !important;
+					left:-100%;
+				}
+				.slide-hide.ng-hide-add {
+					position:absolute;
+					top:0;
+				  display: block !important;
+				}
+			}
+			
+			@include at-query($min, $deskMin){
+				&.next,&.prev{
+					.slide-hide{
+						left:auto;
+					}
+					.slide-hide.ng-hide{
+						left:auto;
+					}
+					.slide-hide.ng-hide-remove {
+						display: none !important;
+						left:auto;
+						position:relative;
+					}
+					.slide-hide.ng-hide-add {
+						left:auto;
+					  display: none !important;
+					  position:relative;
+					}
+				}
+			}
+			
 			.description{
 				display:none;
 			}

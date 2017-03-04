@@ -4,10 +4,10 @@
     .module('meanApp')
     .controller('customizerCtrl', customizerCtrl);
 
-  customizerCtrl.$inject = ['$filter','$timeout','$location', '$window', 'meanData', 'jean'];
-  function customizerCtrl($filter, $timeout, $location, $window, meanData, jean) {
+  customizerCtrl.$inject = ['$filter','$timeout','$location', '$window', 'meanData', 'jean', '$scope'];
+  function customizerCtrl($filter, $timeout, $location, $window, meanData, jean, $scope) {
     var vm = this;
-
+		
 		vm.form = {};		
 		vm.form.steps = [];
     vm.form.steps[1] = {
@@ -51,6 +51,7 @@
 		
 		
 
+		vm.builder.panelDir="next";
 		
 		vm.builder.panel = [];
 		vm.builder.panel[1]={
@@ -136,7 +137,7 @@
 		
 
 		
-		
+		$scope.dir="next";
 		
 		
 	vm.builder.zoom = false;
