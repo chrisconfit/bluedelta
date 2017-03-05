@@ -4,8 +4,8 @@
     .module('meanApp')
     .controller('navigationCtrl', navigationCtrl);
 
-  navigationCtrl.$inject = ['$location','authentication','$route'];
-  function navigationCtrl($location, authentication, $route) {
+  navigationCtrl.$inject = ['$location','authentication','$route','popups'];
+  function navigationCtrl($location, authentication, $route, popups) {
     var vm = this;
 		
     vm.isLoggedIn = authentication.isLoggedIn();

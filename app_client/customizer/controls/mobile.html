@@ -11,10 +11,24 @@
 				
 		<div class="build-step-stage {{vm.builder.panelDir}} {{vm.builder.panel[vm.builder.step].panelTemplate}}">			
 		<div class="step-container tempalte-{{step.panelTemplate}}" ng-class="(step.panelTemplate == 'list' ? 'fade':'slide-hide')" ng-repeat="step in vm.builder.panel" ng-show="vm.builder.panel[vm.builder.step] == step">		
+		
 				
 				
+								<!--All Other Choosers-->
+
+				<chooser 
+				active="vm.builder.panel[vm.builder.step]==step"
+				ng-if="step.panelTemplate=='chooser'" 
+				on-click="chvm.selectAttr" 
+				dataset="vm.builder[step.dataKey]" 
+				step="step"
+				></chooser>
+
+
+
 				<!--Fabric Chooser-->
-				<fabric-chooser 
+				<fabric-chooser
+				active="vm.builder.panel[vm.builder.step]==step"
 				ng-if="step.panelTemplate=='fabric-chooser'" 
 				on-click="chvm.selectAttr" 
 				dataset="vm.builder[step.dataKey]" 
@@ -22,13 +36,6 @@
 				></fabric-chooser>
 
 				
-				<!--All Other Choosers-->
-				<chooser 
-				ng-if="step.panelTemplate=='chooser'" 
-				on-click="chvm.selectAttr" 
-				dataset="vm.builder[step.dataKey]" 
-				step="step"
-				></chooser>
 
 				
 				<!--Overview-->
@@ -85,10 +92,9 @@
 					<i class="fa fa-angle-right"></i>
 				</a>
 			</div>
-			{{vm.builder.panel[vm.builder.step].title}}
+			{{vm.builder.panel[vm.builder.step].title}} <i ng-if="vm.builder.panel[vm.builder.step].title == 'Fabric'" ng-click="vm.popups.denim=true" class="denim-info-button fa fa-question-circle"></i>
 		</h3>
 		
-
 	</div><!--/.control-panel-inner-->
 	
 

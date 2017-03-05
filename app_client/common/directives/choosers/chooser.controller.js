@@ -4,18 +4,21 @@
     .module('meanApp')
     .controller('chooserCtrl', chooserCtrl)
 	
-		chooserCtrl.$inject = ['$scope', '$timeout', '$window','jean'];
+		chooserCtrl.$inject = ['$scope', '$element','$timeout', '$window','jean', 'popups'];
 
 		
-		function chooserCtrl($scope, $timeout, $window, jean) {
+		function chooserCtrl($scope, $element, $timeout, $window, jean, popups) {
 			
 			//console.log($scope);
 			var chvm = this;
-			console.log("data");
-			//console.log($scope.dataSet);
-			//console.log($scope.step);
+
+			//popups
+			chvm.popups = popups;
 			chvm.jean = jean;
 			chvm.breakPoint = 800;
+			
+			
+			          
 			
 			function scrollToLeft(el, scrollTo, scrollDuration) {
 				//Select First Element
@@ -32,7 +35,7 @@
 						scrollStep = (distance / stepNum),
 						scrollTest = (el.scrollLeft < scrollTo ? function(a,b){return a<=b-1;} : function(a,b){return a>=b+1;} );		
 				/*
-				DEBUG:					
+
 				console.log("current Scoll pos: "+el.scrollLeft);
 				console.log("Scroll to "+scrollTo);
 				console.log("distance to go "+distance);
@@ -49,17 +52,34 @@
 						var newScroll = el.scrollLeft+scrollStep;
 						if (newScroll >= maxLeft) newScroll = maxLeft-1;
 						el.scrollLeft = newScroll;
+						
+						/*
+						console.log(newScroll);
+						console.log(scrollTo);
+						*/
 					}
+					
 					else clearInterval(scrollInterval); 
 		      
 	  		},15);
 			  
 			}
 			
-			
-			
-			
-		
+			//Center Selector on chooser change
+			$scope.$watch('active', function(newValue,oldValue) {
+				
+				if ($window.innerWidth >= chvm.breakPoint) return false;
+				
+				if (newValue == true){
+					$timeout(function(){
+						var selector = angular.element($element[0].querySelector('.chooser-select')); 
+						var left = selector.prop('offsetLeft');
+						var chooser = angular.element($element[0].querySelector('.chooser-grid'));
+						left = left-(chooser[0].offsetWidth/2)+40;
+						chooser[0].scrollLeft=left;
+					}, 200);
+				}		
+    	});
 
 
 			chvm.selectAttr = function($event, id, attr, selector){

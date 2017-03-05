@@ -1,7 +1,7 @@
 
-<div ng-show="navvm.hiwPop" ng-click="navvm.hiwPop = false" id="how-it-works" class="popup-window">
+<div ng-show="popups.hiw" ng-click="popups.hiw = false" id="how-it-works" class="popup-window">
 	<div class="popup-content" ng-click="$event.stopPropagation()">
-		<a class="popup-closer" href="" ng-click="navvm.hiwPop = false"></a>
+		<a class="popup-closer" href="" ng-click="popups.hiw = false"></a>
 		<div class="popup-content-inner">
 				<h3 class="popup-title">How it works</h3>
 					<p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed posuere consectetur est at lobortis. Etiam porta sem malesuada magna mollis euismod. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
@@ -31,7 +31,7 @@
 <div class="main-navigation">
 	<div class="container">	
 		<div class="head-left">
-			<!--<a class="mobile-info-button" ng-click="navvm.hiwPop = !navvm.hiwPop"><i class="fa fa-question"></i></a>-->
+			<!--<a class="mobile-info-button" ng-click="popups.hiw = !popups.hiw"><i class="fa fa-question"></i></a>-->
 			<a id="home-link" href="/"><img src="/images/bluedelta-logo.png" alt="Blue Delta Jeans"></a>
 			<span class="title">Custom Jean Builder - Beta</span>
 		</div>
@@ -42,7 +42,7 @@
 		  <ul ng-class="(navvm.mobileMenu ? 'mobileOpen' : 'mobileClosed')" ng-init="">
 			  <!--All views-->
 			  <li class="main-site"><a href="https://bluedeltajeans.com/">Main Site</a></li>
-			  <li class="how-it-works" i><a ng-click="navvm.hiwPop = !navvm.hiwPop; navvm.mobileMenu=false"href="#">How it Works</a></li>
+			  <li class="how-it-works" i><a ng-click="popups.hiw = !popups.hiw; navvm.mobileMenu=false"href="#">How it Works</a></li>
 			  
 			  <!--Not Logged In-->
 				<li class="sign-in" ng-if="!navvm.isLoggedIn"><a class="btn sign-in" href="login">Sign in</a></li>

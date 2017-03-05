@@ -1,6 +1,7 @@
+
 <span ng-class="{ live: chvm.jean.data[step.jeanKey] }" class="chooser-select" id="{{step.jeanKey}}-selector"></span>
 
-<h3>Lightweight <a href="" class="info-pop" ng-click="chvm.denimPop = !chvm.denimPop"><i class="fa fa-question-circle"></i></a></h3>
+<h3>Lightweight <a href="" class="info-pop" ng-click="chvm.popups.denim = !chvm.popups.denim"><i class="fa fa-question-circle"></i></a></h3>
 <div class="cft-g chooser-grid">
 	<div class="cft-gi" ng-repeat="fabric in dataset | filter:weightFilter(null,10) | orderBy:'weight'">
 		<a ng-class="{ active: chvm.jean.data[step.jeanKey]==fabric.id }" id="{{step.jeanKey}}_{{fabric.id}}" 
@@ -11,7 +12,7 @@
 	</div>
 </div>
 
-<h3>Mediumweight <a href="" class="info-pop" ng-click="chvm.denimPop = !chvm.denimPop"><i class="fa fa-question-circle"></i></a></h3>
+<h3>Mediumweight <a href="" class="info-pop" ng-click="chvm.popups.denim = !chvm.popups.denim"><i class="fa fa-question-circle"></i></a></h3>
 <div class="cft-g chooser-grid">
 	<div class="cft-gi" ng-repeat="fabric in dataset | filter:weightFilter(10.001,12) | orderBy:'weight'">
 		<a ng-class="{ active: chvm.jean.data[step.jeanKey]==fabric.id }" id="{{step.jeanKey}}_{{fabric.id}}" 
@@ -22,7 +23,7 @@
 	</div>
 </div>
 
-<h3>Heavyweight <a href="" class="info-pop" ng-click="chvm.denimPop = !chvm.denimPop"><i class="fa fa-question-circle"></i></a></h3>
+<h3>Heavyweight <a href="" class="info-pop" ng-click="chvm.popups.denim = !chvm.popups.denim"><i class="fa fa-question-circle"></i></a></h3>
 <div class="cft-g chooser-grid">
 	<div class="cft-gi" ng-repeat="fabric in dataset | filter:weightFilter(12.001,null) | orderBy:'weight'">
 		<a ng-class="{ active: chvm.jean.data[step.jeanKey]==fabric.id }" id="{{step.jeanKey}}_{{fabric.id}}" 

@@ -33,7 +33,6 @@
 	          } else if (screenWidth >= $scope.breakPoint) {
 	            $scope.viewUrl = "/common/directives/choosers/fabric-chooser-desk.html";
 	          }
-	          console.log($scope.viewUrl)
 	        }
 		      
 		      
