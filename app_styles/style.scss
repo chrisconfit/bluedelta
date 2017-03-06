@@ -41,10 +41,15 @@ body{
 //Navigation
 .main-navigation{
 	background: $blue;
-	height:69px;
+	height:49px;
 	display:block;
 	position:relative;
-	padding-top: 16px;
+	padding-top: 6px;
+	
+	@include at-query($min, 650px){
+		height:69px;
+		padding-top: 16px;
+  }
 	&:after{
 		content:"";
 		display:block;
@@ -73,9 +78,9 @@ body{
 	.head-left{
 		float:left;
 		#home-link{
-			width:150px;
-			margin-top:0;
-			@include at-query($min, 425px){
+			width:130px;
+			margin-top:2px;
+			@include at-query($min, 650px){
 				width:200px;
 				margin-top: -10px;
 			}
@@ -114,6 +119,12 @@ body{
 		//Right Nav
 		&.nav-right{
 			float:right;
+			a.mobile-menu-trigger{
+				@include font-size(14,20);
+				@include at-query($min, 650px){
+					@include font-size(16,24);
+				}
+			}
 			ul{
 				visibility: hidden;
 				opacity: 0;
@@ -122,7 +133,10 @@ body{
 				left:0;
 				right:0;
 				top:0; 
-				top: 53px;
+				top: 43px;
+				@include at-query($min, 650px){
+					top: 53px;
+				}
 				background: rgba(darken($blue,10%),.9);
 				z-index:9999;
 				&.mobileOpen{
@@ -220,20 +234,29 @@ body{
   background-repeat: no-repeat;
   background-position: 50% 50%;
   height: 100vh;
-  margin-top: -69px;
+  margin-top: -49px;
+  @include at-query($min, 650px){
+	  margin-top: -69px;
+	}
   text-align: center;
   color: #ffffff;
 	h1{
 		padding-top: 150px;
 		color:#fff;
-		@include font-size(50,60);
+		@include font-size(40,45);
 		text-transform: uppercase;
 		text-align: center;
+    @include at-query($min, 650px){
+			@include font-size(50,60);
+		}
 	}
 	h3 {
-		@include font-size(28,36);
+		@include font-size(24,30);
 		margin-bottom: 60px;
 		color: #ffffff;
+		@include at-query($min, 650px){
+			@include font-size(28,36);
+		}
 	}
 }
 
@@ -248,9 +271,13 @@ body{
 				background: tint($blue, 17%);
 			}
 			padding:20px;
-			@include font-size(30, 35);
+			@include font-size(25, 35);
+			@include at-query($min, 650px){
+			  @include font-size(30, 35);
+			}
 			display:block;
 			width:48%;
+			min-width: 260px;
 			margin: 0 auto 20px;
 			&.secondary{
 					background:#acacac;

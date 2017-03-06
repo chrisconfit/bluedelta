@@ -426,10 +426,16 @@ body {
 
 .main-navigation {
   background: #004964;
-  height: 69px;
+  height: 49px;
   display: block;
   position: relative;
-  padding-top: 16px;
+  padding-top: 6px;
+}
+@media screen and (min-width: 650px) {
+  .main-navigation {
+    height: 69px;
+    padding-top: 16px;
+  }
 }
 .main-navigation:after {
   content: "";
@@ -462,11 +468,11 @@ body {
   float: left;
 }
 .main-navigation .head-left #home-link {
-  width: 150px;
-  margin-top: 0;
+  width: 130px;
+  margin-top: 2px;
   display: inline-block;
 }
-@media screen and (min-width: 425px) {
+@media screen and (min-width: 650px) {
   .main-navigation .head-left #home-link {
     width: 200px;
     margin-top: -10px;
@@ -511,6 +517,20 @@ body {
 .main-navigation nav.nav-right {
   float: right;
 }
+.main-navigation nav.nav-right a.mobile-menu-trigger {
+  font-size: 14px;
+  line-height: 20px;
+  font-size: 1.4rem;
+  line-height: 2rem;
+}
+@media screen and (min-width: 650px) {
+  .main-navigation nav.nav-right a.mobile-menu-trigger {
+    font-size: 16px;
+    line-height: 24px;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+  }
+}
 .main-navigation nav.nav-right ul {
   visibility: hidden;
   opacity: 0;
@@ -523,9 +543,14 @@ body {
   left: 0;
   right: 0;
   top: 0;
-  top: 53px;
+  top: 43px;
   background: rgba(0, 36, 49, 0.9);
   z-index: 9999;
+}
+@media screen and (min-width: 650px) {
+  .main-navigation nav.nav-right ul {
+    top: 53px;
+  }
 }
 .main-navigation nav.nav-right ul.mobileOpen {
   visibility: visible;
@@ -611,27 +636,48 @@ body {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   height: 100vh;
-  margin-top: -69px;
+  margin-top: -49px;
   text-align: center;
   color: #ffffff;
+}
+@media screen and (min-width: 650px) {
+  .hero {
+    margin-top: -69px;
+  }
 }
 .hero h1 {
   padding-top: 150px;
   color: #fff;
-  font-size: 50px;
-  line-height: 60px;
-  font-size: 5rem;
-  line-height: 6rem;
+  font-size: 40px;
+  line-height: 45px;
+  font-size: 4rem;
+  line-height: 4.5rem;
   text-transform: uppercase;
   text-align: center;
 }
+@media screen and (min-width: 650px) {
+  .hero h1 {
+    font-size: 50px;
+    line-height: 60px;
+    font-size: 5rem;
+    line-height: 6rem;
+  }
+}
 .hero h3 {
-  font-size: 28px;
-  line-height: 36px;
-  font-size: 2.8rem;
-  line-height: 3.6rem;
+  font-size: 24px;
+  line-height: 30px;
+  font-size: 2.4rem;
+  line-height: 3rem;
   margin-bottom: 60px;
   color: #ffffff;
+}
+@media screen and (min-width: 650px) {
+  .hero h3 {
+    font-size: 28px;
+    line-height: 36px;
+    font-size: 2.8rem;
+    line-height: 3.6rem;
+  }
 }
 
 .intro-text {
@@ -644,16 +690,25 @@ body {
 .intro-text .callouts a {
   background: #004964;
   padding: 20px;
-  font-size: 30px;
+  font-size: 25px;
   line-height: 35px;
-  font-size: 3rem;
+  font-size: 2.5rem;
   line-height: 3.5rem;
   display: block;
   width: 48%;
+  min-width: 260px;
   margin: 0 auto 20px;
 }
 .intro-text .callouts a:hover {
   background: #2b687e;
+}
+@media screen and (min-width: 650px) {
+  .intro-text .callouts a {
+    font-size: 30px;
+    line-height: 35px;
+    font-size: 3rem;
+    line-height: 3.5rem;
+  }
 }
 .intro-text .callouts a.secondary {
   background: #acacac;
@@ -1578,9 +1633,14 @@ h1.page-title {
   width: 100%;
   position: relative;
   height: 600px;
-  height: calc(100vh - 69px);
+  height: calc(100vh - 49px);
   background: #ebebeb;
   display: block;
+}
+@media screen and (min-width: 650px) {
+  .builder__stage {
+    height: calc(100vh - 69px);
+  }
 }
 @media screen and (min-width: 800px) {
   .builder__stage {
@@ -1599,7 +1659,12 @@ h1.page-title {
   bottom: 0;
   display: inline-block;
   height: 600px;
-  height: calc(100vh - 90px);
+  height: calc(100vh - 70px);
+}
+@media screen and (min-width: 650px) {
+  .builder__stage img {
+    height: calc(100vh - 90px);
+  }
 }
 @media screen and (min-width: 800px) {
   .builder__stage img {
@@ -1672,7 +1737,7 @@ h1.page-title {
   position: fixed;
   right: 0;
   z-index: 999;
-  top: 79px;
+  top: 59px;
 }
 @media screen and (min-width: 650px) {
   .builder__mobile-helper {
@@ -1742,6 +1807,11 @@ h1.page-title {
   transform: rotate(45deg);
   top: 0;
 }
+@media screen and (min-width: 650px) {
+  .builder__mobile-helper {
+    top: 79px;
+  }
+}
 .builder__mobile-helper ul {
   -webkit-transition: opacity ease 300ms;
   -moz-transition: opacity ease 300ms;
@@ -1801,11 +1871,16 @@ h1.page-title {
   display: block;
   position: relative;
   height: 600px;
-  height: calc(100vh - 69px);
+  height: calc(100vh - 49px);
 }
 @media screen and (min-width: 700px) {
   .builder__stage #zoom-frame {
     width: 70%;
+  }
+}
+@media screen and (min-width: 650px) {
+  .builder__stage #zoom-frame {
+    height: calc(100vh - 69px);
   }
 }
 @media screen and (min-width: 800px) {
