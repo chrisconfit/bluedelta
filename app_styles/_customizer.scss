@@ -150,9 +150,14 @@ h1.page-title{
 	-webkit-transform: translate3d(0,0,0);
 	transform: translate3d(0,0,0);
 }
-.fade.ng-hide-add{
+.fade.ng-hide-remove{
 	position:absolute;
 	left:0;
+		-webkit-transition: 150ms linear all;
+	transition: 150ms linear all;
+	-webkit-backface-visibility: hidden;
+	-webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
 }
 .fade.ng-hide-add,
 .fade.ng-hide-remove {
