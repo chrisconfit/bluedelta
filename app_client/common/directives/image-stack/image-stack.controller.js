@@ -13,12 +13,10 @@
 		isvm.jean = jean;
 		
 		isvm.zoom = false;
-		
 		isvm.pan = "50%,50%";
 		
-		isvm.trackDrag = function(coords){
-			console.log(coords);
-			
+
+		isvm.scanImage = function(x,y){
 			frame = angular.element(document.querySelector("#zoom-frame"))[0];
 			fWidth = frame.clientWidth;
 			fHeight = frame.clientHeight;
@@ -29,38 +27,24 @@
 			offsetL = rect.left + $window.pageXOffset - rootDoc.clientLeft
 
 			//calculate current cursor position inside the frame, as a percentage
-			xPosition = ((coords.x - offsetL) / fWidth) * 100
-			yPosition = ((coords.y - offsetT) / fHeight) * 100
-
-			pan = xPosition + "% " + yPosition + "% 0";
+			xPosition = ((x - offsetL) / fWidth) * 100
+			yPosition = ((y - offsetT) / fHeight) * 100
+			/*
+			console.log(x,y);
+			console.log(fWidth);
+			console.log(offsetL);
+			console.log(x-offsetL);
+			console.log(xPosition, yPosition);
+			*/
+			//pan = (xPosition) + "% " + (yPosition) + "% 0";
+			pan = (100-xPosition) + "% " + (100-yPosition) + "% 0";
 			isvm.pan=pan;
 			images = angular.element(document.querySelectorAll("#zoom-frame img"));
 			images.css({"transform-origin":pan});
-
-			
 		}
 		
 		isvm.trackMouse = function($event){
-			
-			frame = angular.element(document.querySelector("#zoom-frame"))[0];
-			fWidth = frame.clientWidth;
-			fHeight = frame.clientHeight;
-			rect = frame.getBoundingClientRect();
-			rootDoc = frame.ownerDocument.documentElement;
-			
-			//calculate the offset of the frame from the top and left of the document
-			offsetT = rect.top + $window.pageYOffset - rootDoc.clientTop
-			offsetL = rect.left + $window.pageXOffset - rootDoc.clientLeft
-
-			//calculate current cursor position inside the frame, as a percentage
-			xPosition = (($event.pageX - offsetL) / fWidth) * 100
-			yPosition = (($event.pageY - offsetT) / fHeight) * 100
-
-			pan = xPosition + "% " + yPosition + "% 0";
-			isvm.pan=pan;
-			images = angular.element(document.querySelectorAll("#zoom-frame img"));
-			images.css({"transform-origin":pan});
-	
+			isvm.scanImage($event.pageX,$event.pageY);
 		}
 
 			

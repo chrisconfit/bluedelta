@@ -14,7 +14,7 @@
       link: function(scope, ele, attrs, ctrl) {
 	      $swipe.bind(ele, {
           'move': function(coords) {
-						scope.isvm.trackDrag(coords);
+						scope.isvm.scanImage(coords.x,coords.y);
           }
 	      });
 	      
