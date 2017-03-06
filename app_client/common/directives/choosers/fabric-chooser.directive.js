@@ -11,7 +11,8 @@
 	      controller: 'chooserCtrl as chvm',
 	      scope : {
 	        step : '=',
-	        dataset: '='
+	        dataset: '=',
+					active: '='
 	      },
 	      
 	      link: function($scope){

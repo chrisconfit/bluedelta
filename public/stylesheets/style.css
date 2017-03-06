@@ -2022,7 +2022,7 @@ a.overview-trigger i {
 }
 .jean-list dl {
   width: 100%;
-  max-height: calc(100vh - 284px);
+  max-height: calc(100vh - 264px);
 }
 .jean-list dl dt {
   padding: 10px 15px;
