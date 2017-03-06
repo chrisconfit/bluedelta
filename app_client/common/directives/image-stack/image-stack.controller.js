@@ -14,7 +14,7 @@
 		
 		isvm.zoom = false;
 		isvm.pan = "50%,50%";
-		
+		isvm.breakPoint = 800;
 
 		isvm.scanImage = function(x,y){
 			frame = angular.element(document.querySelector("#zoom-frame"))[0];
@@ -36,8 +36,8 @@
 			console.log(x-offsetL);
 			console.log(xPosition, yPosition);
 			*/
-			//pan = (xPosition) + "% " + (yPosition) + "% 0";
-			pan = (100-xPosition) + "% " + (100-yPosition) + "% 0";
+			if ($window.innerWidth < isvm.breakPoint) pan = (100-xPosition) + "% " + (100-yPosition) + "% 0";
+			else pan = (xPosition) + "% " + (yPosition) + "% 0";
 			isvm.pan=pan;
 			images = angular.element(document.querySelectorAll("#zoom-frame img"));
 			images.css({"transform-origin":pan});

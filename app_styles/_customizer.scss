@@ -691,6 +691,10 @@ h1.page-title{
 		&.live{
 			opacity:1;
 		}
+		&#fabric-selector{
+			top:62px;
+			left:15px;
+		}
 		width:80px;
 		height:80px;
 		border:3px solid #91b6c3;
@@ -728,12 +732,6 @@ h1.page-title{
 			left:30px;
 			width:95px;
 			height:95px;
-		}
-		&.fabric-chooser{
-			.chooser-select{
-				top:62px;
-				left:15px;
-			}
 		}
 	}
 }

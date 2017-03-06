@@ -1660,6 +1660,10 @@ h1.page-title {
 .chooser .chooser-select.live, .fabric-chooser .chooser-select.live {
   opacity: 1;
 }
+.chooser .chooser-select#fabric-selector, .fabric-chooser .chooser-select#fabric-selector {
+  top: 62px;
+  left: 15px;
+}
 .chooser .chooser-select::after, .fabric-chooser .chooser-select::after {
   width: 40px;
   height: 40px;
@@ -1693,10 +1697,6 @@ h1.page-title {
     left: 30px;
     width: 95px;
     height: 95px;
-  }
-  .chooser.fabric-chooser .chooser-select, .fabric-chooser.fabric-chooser .chooser-select {
-    top: 62px;
-    left: 15px;
   }
 }
 
