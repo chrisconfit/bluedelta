@@ -32,9 +32,14 @@
 		}
     
     vm.landscape=landscapeDetect();
-    window.addEventListener("resize", function() {
-	    vm.landscape=landscapeDetect();
-		});
+  	var supportsOrientationChange = "onorientationchange" in window,
+    orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
+
+		window.addEventListener(orientationEvent, function() {
+		  vm.landscape=landscapeDetect();
+		  $scope.$apply();
+		}, false);
+		
 		
 		//popups
 		vm.popups = popups;

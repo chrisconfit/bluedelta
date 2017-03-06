@@ -77,7 +77,7 @@
 						//Mobile Choosers
 						if ($window.innerWidth < chvm.breakPoint){
 							var chooser = angular.element($element[0].querySelector('.chooser-grid'));	
-							var left = chvm.selectorCoords.left-(chooser[0].offsetWidth/2)+40;
+							var left = (chooser[0] ? chvm.selectorCoords.left-(chooser[0].offsetWidth/2)+40 : 0);
 							chooser.prop('scrollLeft', left);
 						}
 						
