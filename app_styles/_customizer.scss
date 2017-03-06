@@ -691,10 +691,6 @@ h1.page-title{
 		&.live{
 			opacity:1;
 		}
-		&#fabric-selector{
-			top:62px;
-			left:15px;
-		}
 		width:80px;
 		height:80px;
 		border:3px solid #91b6c3;
@@ -732,6 +728,10 @@ h1.page-title{
 			left:30px;
 			width:95px;
 			height:95px;
+			&#fabric-selector{
+				top:62px;
+				left:15px;
+			}
 		}
 	}
 }
@@ -1077,8 +1077,9 @@ h1.page-title{
 			&:hover{
 				cursor:url(../images/search-plus.png), zoom-in;
 			}
-			@include transition(transform, 400ms, ease);
+			@include transition(all, 400ms, ease);
 			&.zoom{
+				left:0;
 				@include transform(scale(1.5));
 				@include at-query($min, $deskMin){
 					@include transform(scale(2));
