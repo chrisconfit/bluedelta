@@ -263,22 +263,22 @@ h1.page-title{
 			}
 			
 			
-			.slide-hide{
+			.chooser-anim{
 				@include transition(all,200ms,ease);
 			}
 			
 			&.next{
-				.slide-hide{
+				.chooser-anim{
 					left:0;
 				}
-				.slide-hide.ng-hide{
+				.chooser-anim.ng-hide{
 					left:-100%;
 				}
-				.slide-hide.ng-hide-remove {
+				.chooser-anim.ng-hide-remove {
 					display: block !important;
 					left:100%;
 				}
-				.slide-hide.ng-hide-add {
+				.chooser-anim.ng-hide-add {
 					position:absolute;
 					top:0;
 				  display: block !important;
@@ -286,17 +286,17 @@ h1.page-title{
 			}
 			
 			&.prev{
-				.slide-hide{
+				.chooser-anim{
 					left:0;
 				}
-				.slide-hide.ng-hide{
+				.chooser-anim.ng-hide{
 					left:100%;
 				}
-				.slide-hide.ng-hide-remove {
+				.chooser-anim.ng-hide-remove {
 					display: block !important;
 					left:-100%;
 				}
-				.slide-hide.ng-hide-add {
+				.chooser-anim.ng-hide-add {
 					position:absolute;
 					top:0;
 				  display: block !important;
@@ -304,22 +304,26 @@ h1.page-title{
 			}
 			
 			@include at-query($min, $deskMin){
+					
+				.chooser-anim{
+					@include transition(all,20000ms,ease);
+				}
+				
 				&.next,&.prev{
-					.slide-hide{
+					.chooser-anim{
+						left:auto;
+						opacity:1;
+					}
+					.chooser-anim.ng-hide{
+						opacity:0;
 						left:auto;
 					}
-					.slide-hide.ng-hide{
-						left:auto;
+					.chooser-anim.ng-hide-remove {
+						opacity:0
 					}
-					.slide-hide.ng-hide-remove {
-						display: none !important;
-						left:auto;
+					.chooser-anim.ng-hide-add {
 						position:relative;
-					}
-					.slide-hide.ng-hide-add {
 						left:auto;
-					  display: none !important;
-					  position:relative;
 					}
 				}
 			}
@@ -347,7 +351,7 @@ h1.page-title{
 				&.chooser, &.fabric-chooser{
 					padding-top:88px;
 					height:400px;
-					overflow:auto;
+					overflow:hidden;
 					min-height:0;
 				}
 				.step-container{
@@ -610,6 +614,11 @@ h1.page-title{
 	}
 	
 	@include at-query($min, $deskMin){
+		chooser, fabric-chooser{
+			display:block;
+			height:320px;
+			overflow:auto;
+		}
 		.chooser-select{
 			top:15px;
 			left:30px;
@@ -631,6 +640,7 @@ h1.page-title{
 	padding: 5px calc(50% - 40px) 20px;
 	margin-bottom:-15px;
 	overflow:auto;
+	
 	& >.cft-gi{
 		width:80px;
 		margin-right:15px;

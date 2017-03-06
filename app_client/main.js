@@ -78,6 +78,24 @@
 		    return true;
 		  }  
 		})
+		.directive('drag', ['$swipe',
+		  function($swipe) {
+		
+		    return {
+		      restrict: 'A',
+		      scope: {
+		        onDrag: '&'
+		      },
+		      link: function(scope, ele, attrs, ctrl) {
+			      $swipe.bind(ele, {
+		          'start': function(coords) {
+		            scope.onDrag(coords);
+		          }
+			      });
+			    }
+		    }
+		    
+		}])
 		
 		
 		

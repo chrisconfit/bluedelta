@@ -47,7 +47,7 @@
 
 <!--Pant Rendering-->
 <div class="builder__stage">
-	<div class="images" id="zoom-frame" ng-class="{'zoomed': vm.builder.zoom }" 
+	<div class="images" id="zoom-frame" drag on-drag="vm.drag()" ng-class="{'zoomed': vm.builder.zoom }" 
 		ng-click="vm.builder.zoom = !vm.builder.zoom" ng-touch="vm.builder.zoom = !vm.builder.zoom"  ng-touchmove="vm.builder.trackMouse($event)" ng-mousemove="vm.builder.trackMouse($event)">
 		<img ng-if="vm.jean.data.fabric" ng-class="{'zoom': vm.builder.zoom }"
 		src="/images/components/fabrics/g{{vm.jean.data.gender}}_s{{vm.jean.data.style}}_f{{vm.jean.data.fabric}}.jpg">		

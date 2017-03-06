@@ -51,7 +51,9 @@
 		
 		vm.builder = {};
 		
-		
+		vm.drag= function(coords){
+			console.log(coords);
+		}
 		
 
 		vm.builder.panelDir="next";

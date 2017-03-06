@@ -1165,59 +1165,65 @@ h1.page-title {
   top: 0;
   width: 100%;
 }
-.builder__control-panel-mobile .control-panel-inner .build-step-stage .slide-hide {
+.builder__control-panel-mobile .control-panel-inner .build-step-stage .chooser-anim {
   -webkit-transition: all 200ms ease;
   -moz-transition: all 200ms ease;
   -ms-transition: all 200ms ease;
   -o-transition: all 200ms ease;
   transition: all 200ms ease;
 }
-.builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide {
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.next .chooser-anim {
   left: 0;
 }
-.builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide.ng-hide {
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.next .chooser-anim.ng-hide {
   left: -100%;
 }
-.builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide.ng-hide-remove {
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.next .chooser-anim.ng-hide-remove {
   display: block !important;
   left: 100%;
 }
-.builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide.ng-hide-add {
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.next .chooser-anim.ng-hide-add {
   position: absolute;
   top: 0;
   display: block !important;
 }
-.builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide {
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .chooser-anim {
   left: 0;
 }
-.builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide.ng-hide {
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .chooser-anim.ng-hide {
   left: 100%;
 }
-.builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide.ng-hide-remove {
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .chooser-anim.ng-hide-remove {
   display: block !important;
   left: -100%;
 }
-.builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide.ng-hide-add {
+.builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .chooser-anim.ng-hide-add {
   position: absolute;
   top: 0;
   display: block !important;
 }
 @media screen and (min-width: 800px) {
-  .builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide, .builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide {
+  .builder__control-panel-mobile .control-panel-inner .build-step-stage .chooser-anim {
+    -webkit-transition: all 20000ms ease;
+    -moz-transition: all 20000ms ease;
+    -ms-transition: all 20000ms ease;
+    -o-transition: all 20000ms ease;
+    transition: all 20000ms ease;
+  }
+  .builder__control-panel-mobile .control-panel-inner .build-step-stage.next .chooser-anim, .builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .chooser-anim {
+    left: auto;
+    opacity: 1;
+  }
+  .builder__control-panel-mobile .control-panel-inner .build-step-stage.next .chooser-anim.ng-hide, .builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .chooser-anim.ng-hide {
+    opacity: 0;
     left: auto;
   }
-  .builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide.ng-hide, .builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide.ng-hide {
-    left: auto;
+  .builder__control-panel-mobile .control-panel-inner .build-step-stage.next .chooser-anim.ng-hide-remove, .builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .chooser-anim.ng-hide-remove {
+    opacity: 0;
   }
-  .builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide.ng-hide-remove, .builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide.ng-hide-remove {
-    display: none !important;
-    left: auto;
+  .builder__control-panel-mobile .control-panel-inner .build-step-stage.next .chooser-anim.ng-hide-add, .builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .chooser-anim.ng-hide-add {
     position: relative;
-  }
-  .builder__control-panel-mobile .control-panel-inner .build-step-stage.next .slide-hide.ng-hide-add, .builder__control-panel-mobile .control-panel-inner .build-step-stage.prev .slide-hide.ng-hide-add {
     left: auto;
-    display: none !important;
-    position: relative;
   }
 }
 .builder__control-panel-mobile .control-panel-inner .build-step-stage .description {
@@ -1237,7 +1243,7 @@ h1.page-title {
   .builder__control-panel-mobile .control-panel-inner .build-step-stage.chooser, .builder__control-panel-mobile .control-panel-inner .build-step-stage.fabric-chooser {
     padding-top: 88px;
     height: 400px;
-    overflow: auto;
+    overflow: hidden;
     min-height: 0;
   }
   .builder__control-panel-mobile .control-panel-inner .build-step-stage .step-container {
@@ -1504,6 +1510,11 @@ h1.page-title {
   line-height: 34px;
 }
 @media screen and (min-width: 800px) {
+  .chooser chooser, .chooser fabric-chooser, .fabric-chooser chooser, .fabric-chooser fabric-chooser {
+    display: block;
+    height: 320px;
+    overflow: auto;
+  }
   .chooser .chooser-select, .fabric-chooser .chooser-select {
     top: 15px;
     left: 30px;

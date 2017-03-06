@@ -68,34 +68,29 @@
 			
 			//Center Selector on chooser change
 			$scope.$watch('active', function(newValue,oldValue) {	
+				
+				//Only on active choosers...
 				if (newValue == true){
-					
-					console.log(chvm.selectorCoords);
-					
-					
 					
 					$timeout(function(){
 						
-						var selector = angular.element($element[0].querySelector('.chooser-select')); 
-						var chooser = angular.element($element[0].querySelector('.chooser-grid'));						
-						console.log(chvm.selectorCoords);
+						//Mobile Choosers
 						if ($window.innerWidth < chvm.breakPoint){
-
-							var left = selector.prop('offsetLeft');
-							left = left-(chooser[0].offsetWidth/2)+40;
-							chooser[0].scrollLeft=left;
-						}else{
-							var top = selector.prop('offsetTop');
-							console.log(top);
-							console.log(selector[0].offsetTop);
-							//left = left-(chooser[0].offsetWidth/2)+40;
-							//chooser[0].scrollTop=top;
-							chooser[0].scrollTop = selector.offsetTop;
+							var chooser = angular.element($element[0].querySelector('.chooser-grid'));	
+							var left = chvm.selectorCoords.left-(chooser[0].offsetWidth/2)+40;
+							chooser.prop('scrollLeft', left);
+						}
+						
+						//Desktop Choosers
+						else{
+							var chooser = angular.element($element[0]);	
+							chooser.prop('scrollTop', chvm.selectorCoords.top - 15);
 						}
 						
 					}, 200);
 					
 				}		
+				
     	});
 
 
@@ -109,7 +104,7 @@
 				text.css({'right':'-400px', 'opacity':0});
 				selector.css({'top':top+'px', 'left':left+'px'});
 				
-				chvm.selectorCoords[attr] = {"top":top,"left":left};
+				chvm.selectorCoords = {"top":top,"left":left};
 				
 				if ($window.innerWidth < chvm.breakPoint) scrollToLeft(chooser, left, 200);
 				
