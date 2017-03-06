@@ -44,6 +44,7 @@
 		}
 		
 		isvm.trackMouse = function($event){
+			if ($window.innerWidth < isvm.breakPoint) return false;
 			isvm.scanImage($event.pageX,$event.pageY);
 		}
 
