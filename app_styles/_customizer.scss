@@ -742,7 +742,10 @@ h1.page-title{
   position: relative;
   height: 600px;
   //height:$vpHeight2;
-  height: calc(100vh - 69px);
+  height: calc(100vh - 49px);
+  @include at-query($min, 650px){
+	  height: calc(100vh - 69px);
+	}
 	@include at-query($min, $deskMin) {
 		height: 700px;
 		height:$vpHeight2;
@@ -756,7 +759,10 @@ h1.page-title{
 		bottom:0;
 		display:inline-block;
 	  height: 600px;
-	  height:calc(100vh - 90px);
+	  height:calc(100vh - 50px);
+	  @include at-query($min, 650px){
+		  height:calc(100vh - 90px);
+		}
 	  @include at-query($min, $deskMin){
 		  left: 35%;
 		  height: 700px;
@@ -872,7 +878,10 @@ h1.page-title{
 	position: fixed;
 	right: 0;
 	z-index: 999;
-	top: 79px;
+	top: 59px;
+	@include at-query($min, 650px){
+		top: 79px;
+	}
 	ul{
 		@include transition(opacity,ease,300ms);
 		&.hide{
@@ -925,13 +934,16 @@ h1.page-title{
 		
  #zoom-frame{
 		width:100%;
-		@include at-query($min, 700px){
+		@include at-query($min, $deskMin){
 			width: 70%;
 		}
 		display:block;
 		position:relative;
 		height: 600px;
-	  height:calc(100vh - 69px);
+	  height: calc(100vh - 49px);
+	  @include at-query($min, 650px){
+		  height: calc(100vh - 69px);
+		}
 		@include at-query($min, $deskMin) {
 			height: 700px;
 			height:$vpHeight2;
