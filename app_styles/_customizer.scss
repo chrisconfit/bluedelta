@@ -929,7 +929,7 @@ h1.page-title{
 		
  #zoom-frame{
 		width:100%;
-		@include at-query($min, 700px){
+		@include at-query($min, $deskMin){
 			width: 70%;
 		}
 		display:block;
