@@ -2098,11 +2098,20 @@ h1.page-title {
   cursor: url(../images/search-plus.png), zoom-in;
 }
 .builder__stage #zoom-frame img.zoom {
-  -moz-transform: scale(2);
-  -o-transform: scale(2);
-  -ms-transform: scale(2);
-  -webkit-transform: scale(2);
-  transform: scale(2);
+  -moz-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
+}
+@media screen and (min-width: 800px) {
+  .builder__stage #zoom-frame img.zoom {
+    -moz-transform: scale(2);
+    -o-transform: scale(2);
+    -ms-transform: scale(2);
+    -webkit-transform: scale(2);
+    transform: scale(2);
+  }
 }
 
 .popup-window .popup-content.denim-popup .popup-content-inner .denim-weight {
