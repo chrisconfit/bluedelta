@@ -51,10 +51,11 @@
 		
 		vm.builder = {};
 		
-		vm.drag= function(coords){
-			console.log("running drag..."); 
+		$scope.drag = function(coords){
+			console.log('controller func');
 			console.log(coords);
-		}
+			console.log('why not');
+		};
 		
 
 		vm.builder.panelDir="next";
@@ -146,32 +147,7 @@
 		$scope.dir="next";
 		
 		
-	vm.builder.zoom = false;
-		
-		vm.builder.pan = "50%,50%";
-		vm.builder.trackMouse = function($event){
-			
-			frame = angular.element(document.querySelector("#zoom-frame"))[0];
-			fWidth = frame.clientWidth;
-			fHeight = frame.clientHeight;
-			rect = frame.getBoundingClientRect();
-			rootDoc = frame.ownerDocument.documentElement;
-			
-			//calculate the offset of the frame from the top and left of the document
-			offsetT = rect.top + $window.pageYOffset - rootDoc.clientTop
-			offsetL = rect.left + $window.pageXOffset - rootDoc.clientLeft
-
-			//calculate current cursor position inside the frame, as a percentage
-			xPosition = (($event.pageX - offsetL) / fWidth) * 100
-			yPosition = (($event.pageY - offsetT) / fHeight) * 100
-
-			pan = xPosition + "% " + yPosition + "% 0";
-			vm.builder.pan=pan;
-			images = angular.element(document.querySelectorAll("#zoom-frame img"));
-			images.css({"transform-origin":pan});
-	
-		}
-				
+		/*				
 		vm.builder.selectAttr = function($event, id, attr, selector){
 			var selector = angular.element(document.querySelector("#"+attr+"-selector"));
 			var top = angular.element($event.target).prop('offsetTop');
@@ -188,13 +164,13 @@
 
 		}
 		
-	
+	*//*
 		vm.builder.jeanSet = function(attr, val){
 			 vm.jean.data[attr] =	val;
 		}
 		
 		
-		
+		*/
 		
 		
 	
