@@ -32,7 +32,7 @@
 		}
     
     vm.landscape=landscapeDetect();
-    window.addEventListener("orientationchange", function() {
+    window.addEventListener("resize", function() {
 	    vm.landscape=landscapeDetect();
 		});
 		
