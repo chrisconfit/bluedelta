@@ -754,7 +754,7 @@ h1.page-title{
 		bottom:0;
 		display:inline-block;
 	  height: 600px;
-	  height:calc(100vh - 70px);
+	  height:calc(100vh - 50px);
 	  @include at-query($min, 650px){
 		  height:calc(100vh - 90px);
 		}
