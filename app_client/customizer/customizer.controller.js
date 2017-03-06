@@ -8,6 +8,34 @@
   function customizerCtrl($filter, $timeout, $location, $window, meanData, jean, $scope, popups) {
     var vm = this;
 		
+		//Orientation		
+		function landscapeDetect() {
+		  var ua = navigator.userAgent.toLowerCase();
+		  var isAndroid = ua.indexOf("android") > -1; // Detect Android devices
+		  if (isAndroid) {
+		    //window.orientation is different for iOS and Android
+		    if (window.orientation == 0 || window.orientation == 180) { //Landscape Mode
+		      return true;
+		    }
+		    else if (window.orientation == 90 || window.orientation == -90) { //Portrait Mode
+					return false;
+		    }
+		  }
+		  else {
+		    if (window.orientation == 90 || window.orientation == -90) { //Landscape Mode
+		        return true;
+		    }
+		    else if (window.orientation == 0 || window.orientation == 180) { //Portrait Mode
+		        return false;
+		    }
+		  }
+		}
+    
+    vm.landscape=landscapeDetect();
+    window.addEventListener("orientationchange", function() {
+	    vm.landscape=landscapeDetect();
+		});
+		
 		//popups
 		vm.popups = popups;
 		
@@ -170,7 +198,7 @@
 		}
 		
 		
-		*/
+		*/v
 		
 		
 	
