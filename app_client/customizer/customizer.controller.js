@@ -52,6 +52,7 @@
 		vm.builder = {};
 		
 		vm.drag= function(coords){
+			console.log("running drag..."); 
 			console.log(coords);
 		}
 		
