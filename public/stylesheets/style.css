@@ -2100,11 +2100,11 @@ h1.page-title {
 }
 .builder__stage #zoom-frame img.zoom {
   left: 0;
-  -moz-transform: scale(1.5);
-  -o-transform: scale(1.5);
-  -ms-transform: scale(1.5);
-  -webkit-transform: scale(1.5);
-  transform: scale(1.5);
+  -moz-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
 }
 @media screen and (min-width: 800px) {
   .builder__stage #zoom-frame img.zoom {
