@@ -2089,11 +2089,11 @@ h1.page-title {
 }
 .builder__stage #zoom-frame img {
   pointer-events: none;
-  -webkit-transition: all 0.3s ease, transform-origin 1ms;
-  -moz-transition: all 0.3s ease, transform-origin 1ms;
-  -ms-transition: all 0.3s ease, transform-origin 1ms;
-  -o-transition: all 0.3s ease, transform-origin 1ms;
-  transition: all 0.3s ease, transform-origin 1ms;
+  -webkit-transition: transform 300ms ease;
+  -moz-transition: transform 300ms ease;
+  -ms-transition: transform 300ms ease;
+  -o-transition: transform 300ms ease;
+  transition: transform 300ms ease;
 }
 .builder__stage #zoom-frame img:hover {
   cursor: url(../images/search-plus.png), zoom-in;

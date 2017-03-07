@@ -1,5 +1,5 @@
 
-<div class="images" id="zoom-frame" on-drag="drag(coords)" ng-class="{'zoomed': isvm.zoom, 'centered':isvm.centerPan }" 
+<div class="images" id="zoom-frame" on-drag="drag(coords)" ng-class="{'zoomed': isvm.zoom, 'centered':isvm.centerPan}" 
 		ng-click="isvm.zoom = !isvm.zoom" ng-touch="isvm.zoom = !isvm.zoom" ng-mouseleave="isvm.returnPan()" ng-mousemove="isvm.trackMouse($event)">
 		<img ng-if="isvm.jean.data.fabric" ng-class="{'zoom': isvm.zoom }"
 		src="/images/components/fabrics/g{{isvm.jean.data.gender}}_s{{isvm.jean.data.style}}_f{{isvm.jean.data.fabric}}.jpg">		

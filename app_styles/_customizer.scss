@@ -1078,11 +1078,7 @@ h1.page-title{
 			&:hover{
 				cursor:url(../images/search-plus.png), zoom-in;
 			}
-			-webkit-transition: all 0.3s ease, transform-origin 1ms;
-			-moz-transition: all 0.3s ease, transform-origin 1ms;
-			-ms-transition: all 0.3s ease, transform-origin 1ms;
-			-o-transition: all 0.3s ease, transform-origin 1ms;
-			transition: all 0.3s ease, transform-origin 1ms;
+			@include transition(transform,300ms,ease);
 			&.zoom{
 				left:0;
 				@include transform(scale(1.5));

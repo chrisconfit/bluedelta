@@ -20,16 +20,17 @@
 			isvm.pan = "50% 30% 0";	
 			isvm.centerPan = true;
 			images = angular.element(document.querySelectorAll("#zoom-frame img"));
+			
 			setTimeout(function(){
 				images.css({"transform-origin":isvm.pan});
-			}, 100);
+			}, 200);
 		}
 		
 		isvm.scanImage = function(x,y){
-			
+
 			setTimeout(function(){
 				isvm.centerPan = false;
-			}, 700);
+			}, 200);
 			
 			frame = angular.element(document.querySelector("#zoom-frame"))[0];
 			fWidth = frame.clientWidth;
