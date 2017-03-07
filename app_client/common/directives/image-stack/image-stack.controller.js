@@ -4,11 +4,11 @@
     .module('meanApp')
     .controller('istackCtrl', istackCtrl);
 
-  istackCtrl.$inject = ['$window','$swipe', 'jean'];
+  istackCtrl.$inject = ['$window', 'jean'];
   
   
   
-  function istackCtrl($window, $swipe, jean) {
+  function istackCtrl($window, jean) {
 	  var isvm = this;
 		isvm.jean = jean;
 		isvm.centerPan = false;		
@@ -26,11 +26,19 @@
 			}, 200);
 		}
 		
+		
+		isvm.drag = function(event){
+	     console.log('dragger');
+	     console.log(event);
+     } 
+		
+		
 		isvm.scanImage = function(x,y){
 
 			setTimeout(function(){
 				isvm.centerPan = false;
 			}, 200);
+			
 			
 			frame = angular.element(document.querySelector("#zoom-frame"))[0];
 			fWidth = frame.clientWidth;
@@ -44,6 +52,8 @@
 			//calculate current cursor position inside the frame, as a percentage
 			xPosition = ((x - offsetL) / fWidth) * 100
 			yPosition = ((y - offsetT) / fHeight) * 100
+			
+			
 			/*
 			console.log(x,y);
 			console.log(fWidth);

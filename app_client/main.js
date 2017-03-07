@@ -1,9 +1,9 @@
 (function () {
 
-  angular.module('meanApp', ['ngRoute', 'ngAnimate','ngTouch']); 
+  angular.module('meanApp', ['ngRoute', 'ngAnimate','angular-gestures']); 
   
   
-  function config ($routeProvider, $locationProvider) {
+  function config ($routeProvider, $locationProvider, hammerDefaultOptsProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'home/home.view.html',
@@ -39,6 +39,11 @@
 
     // use the HTML5 History API
     $locationProvider.html5Mode(true);
+    
+    console.log(hammerDefaultOptsProvider);
+     hammerDefaultOptsProvider.set({
+        recognizers: [[Hammer.Pan, {time: 250}]]
+    });
   }
 
   function run($rootScope, $location, authentication) {
@@ -55,7 +60,7 @@
   
   angular
     .module('meanApp')
-    .config(['$routeProvider', '$locationProvider', config])
+    .config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvider', config])
     .run(['$rootScope', '$location', 'authentication', run])
 		.filter('spaceless',function() {
 	    return function(input) {
