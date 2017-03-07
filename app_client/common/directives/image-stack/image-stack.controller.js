@@ -11,20 +11,26 @@
   function istackCtrl($window, $swipe, jean) {
 	  var isvm = this;
 		isvm.jean = jean;
-		
+		isvm.centerPan = false;		
 		isvm.zoom = false;
-		isvm.pan = "50%,50%";
+		isvm.pan = "0% 30% 0";
 		isvm.breakPoint = 800;
 		
 		isvm.returnPan = function(){
-			isvm.pan = "0% 30% 0";	
-			console.log(isvm.pan);
+			isvm.pan = "50% 30% 0";	
+			isvm.centerPan = true;
 			images = angular.element(document.querySelectorAll("#zoom-frame img"));
-			console.log(images);
-			images.css({"transform-origin":isvm.pan});
+			setTimeout(function(){
+				images.css({"transform-origin":isvm.pan});
+			}, 100);
 		}
 		
 		isvm.scanImage = function(x,y){
+			
+			setTimeout(function(){
+				isvm.centerPan = false;
+			}, 700);
+			
 			frame = angular.element(document.querySelector("#zoom-frame"))[0];
 			fWidth = frame.clientWidth;
 			fHeight = frame.clientHeight;

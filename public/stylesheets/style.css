@@ -2088,11 +2088,12 @@ h1.page-title {
   cursor: url(../images/search-minus.png), zoom-out;
 }
 .builder__stage #zoom-frame img {
-  -webkit-transition: all 400ms ease;
-  -moz-transition: all 400ms ease;
-  -ms-transition: all 400ms ease;
-  -o-transition: all 400ms ease;
-  transition: all 400ms ease;
+  pointer-events: none;
+  -webkit-transition: all 0.3s ease, transform-origin 1ms;
+  -moz-transition: all 0.3s ease, transform-origin 1ms;
+  -ms-transition: all 0.3s ease, transform-origin 1ms;
+  -o-transition: all 0.3s ease, transform-origin 1ms;
+  transition: all 0.3s ease, transform-origin 1ms;
 }
 .builder__stage #zoom-frame img:hover {
   cursor: url(../images/search-plus.png), zoom-in;
@@ -2107,12 +2108,20 @@ h1.page-title {
 }
 @media screen and (min-width: 800px) {
   .builder__stage #zoom-frame img.zoom {
+    left: 35%;
     -moz-transform: scale(2);
     -o-transform: scale(2);
     -ms-transform: scale(2);
     -webkit-transform: scale(2);
     transform: scale(2);
   }
+}
+.builder__stage #zoom-frame.centered img.zoom {
+  -webkit-transition: all 300ms ease;
+  -moz-transition: all 300ms ease;
+  -ms-transition: all 300ms ease;
+  -o-transition: all 300ms ease;
+  transition: all 300ms ease;
 }
 
 .popup-window .popup-content.denim-popup .popup-content-inner .denim-weight {

@@ -1074,17 +1074,27 @@ h1.page-title{
 		}
 
 		img{
+			pointer-events: none;
 			&:hover{
 				cursor:url(../images/search-plus.png), zoom-in;
 			}
-			@include transition(all, 400ms, ease);
+			-webkit-transition: all 0.3s ease, transform-origin 1ms;
+			-moz-transition: all 0.3s ease, transform-origin 1ms;
+			-ms-transition: all 0.3s ease, transform-origin 1ms;
+			-o-transition: all 0.3s ease, transform-origin 1ms;
+			transition: all 0.3s ease, transform-origin 1ms;
 			&.zoom{
 				left:0;
 				@include transform(scale(1.5));
 				@include at-query($min, $deskMin){
+					left: 35%;
 					@include transform(scale(2));
 				}
 			}
+		}
+		
+		&.centered img.zoom{
+			@include transition(all,300ms,ease);
 		}
 		
 	}
