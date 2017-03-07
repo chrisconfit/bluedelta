@@ -1081,7 +1081,7 @@ h1.page-title{
 			@include transition(transform,300ms,ease);
 			&.zoom{
 				left:0;
-				@include transform(scale(1.2));
+				@include transform(scale(1.7));
 				@include at-query($min, $deskMin){
 					left: 35%;
 					@include transform(scale(2));
