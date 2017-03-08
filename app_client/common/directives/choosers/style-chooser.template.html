@@ -1,0 +1,10 @@
+<h3>Choose a style</h3>
+<div class="cft-g chooser-grid" id="{{step.jeanKey}}-chooser">
+	<span ng-class="{ live: chvm.jean.data[step.jeanKey], active:active }" class="chooser-select" id="{{step.jeanKey}}-selector"></span>
+	<div class="cft-gi" ng-repeat="data in dataset | filter:checkGenderFilter(chvm.jean.data.gender)">
+		<a ng-class="{ active: chvm.jean.data[step.jeanKey]==data.id }" id="{{step.jeanKey}}_{{data.id}}" 
+		href="" ng-click="chvm.selectAttr($event, data.id, step.jeanKey)">
+			<img src="/images/components/{{step.dataKey}}/thumb_{{data.id}}.jpg">
+		</a>
+	</div>
+</div>

@@ -30,9 +30,9 @@
 	        function changeTemplate() {
 	          var screenWidth = $window.innerWidth;
 	          if (screenWidth < $scope.breakPoint) {
-	            $scope.viewUrl = "/common/directives/choosers/fabric-chooser-mobile.html";
+	            $scope.viewUrl = "/common/directives/choosers/fabric-chooser.template-mobile.html";
 	          } else if (screenWidth >= $scope.breakPoint) {
-	            $scope.viewUrl = "/common/directives/choosers/fabric-chooser-desk.html";
+	            $scope.viewUrl = "/common/directives/choosers/fabric-chooser.template-desk.html";
 	          }
 	        }
 		      

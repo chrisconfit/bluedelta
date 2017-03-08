@@ -9,7 +9,8 @@
 		
     return {
       denim : false,
-      hiw : false
+      hiw : false,
+      infoPop:false
     };
     
   }

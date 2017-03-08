@@ -1,13 +1,12 @@
-
 <!--Fabric Popup-->
-<div ng-show="vm.builder.infoPop"	ng-click="vm.builder.infoPop = false" id="how-it-works" class="popup-window">
+<div ng-show="vm.popups.infoPop"	ng-click="vm.popups.infoPop = false" id="how-it-works" class="popup-window">
 	<div class="popup-content fabric-popup" ng-click="$event.stopPropagation()">
 		<a class="popup-closer" href="" ng-click="vm.builder.infoPop = false"></a>
 		<div class="popup-content-inner">
-				<h3 class="popup-title">{{vm.builder.activeItem().name}}</h3>
-				<h4 class="popup-sub-title">{{vm.builder.activeItem().materials}}</h4>
-				<h4 class="popup-sub-title">{{vm.builder.activeItem().supplier}}</h4>
-				<p class="fabric-description">{{vm.builder.activeItem().description}}</p>
+				<h3 class="popup-title">{{vm.activeItem().name}}</h3>
+				<h4 class="popup-sub-title">{{vm.activeItem().materials}}</h4>
+				<h4 class="popup-sub-title">{{vm.activeItem().supplier}}</h4>
+				<p class="fabric-description">{{vm.activeItem().description}}</p>
 				<div class="fabric-preveiw" style="background: url(/images/components/fabrics/preview_{{vm.jean.data.fabric}}.jpg) no-repeat center center; 
 				-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;"></div>
 		</div><!--./popup-content-inner-->
@@ -43,46 +42,3 @@
 		</div><!--./popup-content-inner-->
 	</div>
 </div>
-
-
-<!--Pant Rendering-->
-<div class="builder__stage">
-	<image-stack></image-stack>
-</div>
-<!--Mobile Helper-->
-<div ng-init="vm.showMenu = false" class="builder__mobile-helper">
-	<a ng-click="vm.showMenu=!vm.showMenu" ng-class="(vm.showMenu ? 'closer' : '')" class="menu-icon">
-		<span class="bars">
-	</a>
-	<ul ng-class="(vm.showMenu ? 'show' : 'hide')" class="slide mobile-helper-options">
-		<li>
-			<a href="" ng-click="vm.builder.step=6; vm.builder.overviewOn=true">
-				<i class="fa fa-list-ul"></i>
-			</a>
-		</li>
-		<li>
-			<a href="">
-				<i class="fa fa-share" aria-hidden="true"></i>
-			</a>
-		</li>
-		<li>
-			<a href="">
-				<i class="fa fa-floppy-o"></i>
-			</a>
-		</li>
-		<li>
-			<a href="">
-				<i class="fa fa-shopping-cart"></i>
-			</a>
-		</li>
-	</ul>
-</div>
-<!--Controls Panel-->
-<div class="builder__control-panel-mobile">
-	<ng-include src="'/customizer/controls/mobile.html'"></ng-include>
-</div>
-	
-
-
-
-

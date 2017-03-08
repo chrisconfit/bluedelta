@@ -1,15 +1,16 @@
 <div class="images" id="zoom-frame" ng-class="{'zoomed': isvm.zoom, 'centered':isvm.centerPan}" 
 	ng-click="isvm.toggleZoom()" ng-touch="isvm.zoom = !isvm.zoom" ng-mouseleave="isvm.returnPan()" ng-mousemove="isvm.trackMouse($event)">
+		<!--_s{{isvm.jean.data.style}} will add the current style to the jean, but for now all images are using the "2" style. Let's hardcode that until we need to change-->
 	<img ng-if="isvm.jean.data.fabric" ng-class="{'zoom': isvm.zoom }"
-	src="/images/components/fabrics/g{{isvm.jean.data.gender}}_s{{isvm.jean.data.style}}_f{{isvm.jean.data.fabric}}.jpg">		
+	src="/images/components/fabrics/g{{isvm.jean.data.gender}}_s2_f{{isvm.jean.data.fabric}}.jpg">		
 	<img ng-if="isvm.jean.data.bottom_thread" ng-class="{'zoom': isvm.zoom }"
-	src="/images/components/threads/g{{isvm.jean.data.gender}}_s{{isvm.jean.data.style}}_tb{{isvm.jean.data.bottom_thread}}.png">
+	src="/images/components/threads/g{{isvm.jean.data.gender}}_s2_tb{{isvm.jean.data.bottom_thread}}.png">
 	<img ng-if="isvm.jean.data.top_thread" ng-class="{'zoom': isvm.zoom }"
-	src="/images/components/threads/g{{isvm.jean.data.gender}}_s{{isvm.jean.data.style}}_tt{{isvm.jean.data.top_thread}}.png">
+	src="/images/components/threads/g{{isvm.jean.data.gender}}_s2_tt{{isvm.jean.data.top_thread}}.png">
 	<img ng-if="isvm.jean.data.accent_thread" ng-class="{'zoom': isvm.zoom }"
-	src="/images/components/threads/g{{isvm.jean.data.gender}}_s{{isvm.jean.data.style}}_ta{{isvm.jean.data.accent_thread}}.png">
-	<img class="stage-button" ng-if="isvm.jean.data.hardware != 1"
-	src="/images/components/hardware/thumb_{{isvm.jean.data.hardware}}.jpg">
+	src="/images/components/threads/g{{isvm.jean.data.gender}}_s2_ta{{isvm.jean.data.accent_thread}}.png">
+	<!--<img class="stage-button" ng-if="isvm.jean.data.hardware != 1"
+	src="/images/components/hardware/thumb_{{isvm.jean.data.hardware}}.jpg">-->
 </div>
 <a class="zoom-icon" ng-click="isvm.toggleZoom()" href="">
 	<i class="fa fa-search-plus" aria-hidden="true"></i>

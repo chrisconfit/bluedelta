@@ -226,7 +226,7 @@
 		}
 		
 		isvm.trackMouse = function($event){
-			if (isvm.isMobile()) return false;
+			//if (isvm.isMobile()) return false;
 			isvm.scanImage($event.pageX,$event.pageY);
 		}
 

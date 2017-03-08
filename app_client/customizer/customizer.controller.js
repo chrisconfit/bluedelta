@@ -44,21 +44,7 @@
 		//popups
 		vm.popups = popups;
 		
-		vm.form = {};		
-		vm.form.steps = [];
-    vm.form.steps[1] = {
-	    "template": "/customizer/form-templates/gender.html",
-	    "title" : "Gender"
-    };
-    vm.form.steps[2] = {
-	    "template": "/customizer/form-templates/style.html",
-	    "title" : "Style"
-    };
-    vm.form.steps[3] = {
-	    "template": "/customizer/form-templates/build.html",
-	    "title" : "Build"
-    };
-
+		//jean
 		vm.jean = jean;
 		vm.jean.step = (jean.step ? jean.step : 1);
 
@@ -66,11 +52,11 @@
 		vm.jean.data.style=2;
 		vm.jean.step = 3;
 		
-    vm.form.nextStep = function(){
+    vm.jean.nextStep = function(){
 	    vm.jean.step =	vm.jean.step + 1;  
     }
     
-	  vm.form.selectStyle = function(id){
+	  vm.jean.selectStyle = function(id){
 	    vm.jean.data.style =	id;	    vm.form.nextStep();
     }    
 
@@ -79,10 +65,10 @@
 		vm.jean.data.accent_thread = vm.jean.data.accent_thread || "1";
 		vm.jean.data.top_thread = vm.jean.data.top_thread || "1";
 		vm.jean.data.bottom_thread = vm.jean.data.bottom_thread || "1";
-		vm.jean.data.hardware = vm.jean.data.hardware || "1";
+		//vm.jean.data.hardware = vm.jean.data.hardware || "1";
 	
 		
-		vm.builder = {};
+		vm.data = {};
 		
 		$scope.drag = function(coords){
 			console.log('controller func');
@@ -91,152 +77,135 @@
 		};
 		
 
-		vm.builder.panelDir="next";
+		vm.panelDir="next";
 		
-		vm.builder.panel = [];
-		vm.builder.panel[1]={
+		vm.panel = [];
+		vm.panel.push({
+			"panelTemplate":"gender-chooser",
+			"dataKey":"genders",
+			"title":"Gender",
+			"jeanKey":"gender"
+		});
+		vm.panel.push({
+			"panelTemplate":"style-chooser",
+			"dataKey":"styles",
+			"title":"Style",
+			"jeanKey":"style"
+		});
+		vm.panel.push({
 			"panelTemplate":"fabric-chooser",
 			"dataKey":"fabrics",
 			"title":"Fabric",
-			"jeanKey":"fabric",
-			"thumbPrefix":"f"
-		};
-		vm.builder.panel[2]={
+			"jeanKey":"fabric"
+		});
+		vm.panel.push({
 			"panelTemplate":"chooser",
 			"dataKey":"threads",
 			"title":"Top Thread",
-			"jeanKey":"top_thread",
-			"thumbPrefix":"f"
-		};
-		vm.builder.panel[3]={
+			"jeanKey":"top_thread"
+		});
+		vm.panel.push({
 			"panelTemplate":"chooser",
 			"dataKey":"threads",
 			"title":"Bottom Thread",
-			"jeanKey":"bottom_thread",
-			"thumbPrefix":"f"
-		};
-		vm.builder.panel[4]={
+			"jeanKey":"bottom_thread"
+		});
+		vm.panel.push({
 			"panelTemplate":"chooser",
 			"dataKey":"threads",
 			"title":"Accent Thread",
-			"jeanKey":"accent_thread",
-			"thumbPrefix":"f"
-		};
-		vm.builder.panel[5]={
+			"jeanKey":"accent_thread"
+		});
+		/*
+		vm.panel.push({
 			"panelTemplate":"chooser",
 			"dataKey":"hardware",
 			"title":"Hardware",
-			"jeanKey":"hardware",
-			"thumbPrefix":"f"
-		};
-		vm.builder.panel[6]={
+			"jeanKey":"hardware"
+		});
+		*/
+		vm.panel.push({
 			"panelTemplate":"list",
-			"title":"Overview",
-			"dataKey":"hardware",
-			"jeanKey":"hardware",
-			"thumbPrefix":"f"
-		};
+			"title":"Overview"
+		});
 		
-		vm.builder.activeItem = function(){
-			var data = vm.builder[vm.builder.panel[vm.builder.step].dataKey];
-			var key = vm.jean.data[vm.builder.panel[vm.builder.step].jeanKey];
+		vm.panelStep = 0;
+		vm.changeStep = function(step){
+			if (step >= vm.panel.length) return false;
+			if (step < 0) return false;
+			if (step===undefined) return false;
+			else vm.panelStep = step; 
+		}
+		
+		
+		vm.activeItem = function(){
+			var data = vm.data[vm.panel[vm.panelStep].dataKey];
+			var key = vm.jean.data[vm.panel[vm.panelStep].jeanKey];
+			console.log(data,key);
 			return $filter('filter')(data, {id: key})[0];
 		}
 		
-		vm.builder.styleByGender = function(gender){
+		vm.getActiveItemName = function(){
+			var name = vm.activeItem().name;
+			name = name.replace(/Raw Denim/g, "");
+			return name;
+		}
+		
+		vm.styleByGender = function(gender){
 			return function(style){
 				return style["images_"+gender];
 		  }
 		};
 		
 		vm.dataLookup = function(jeanKey, id, attr){
+			
 			attr = attr||null;
-			var dataKey = (jeanKey == "gender" || jeanKey == "style" ? jeanKey+"s" : $filter('filter')(vm.builder.panel, {jeanKey: jeanKey})[0].dataKey);
-			var dataSet = vm.builder[dataKey];
+			var dataKey = (jeanKey == "gender" || jeanKey == "style" ? jeanKey+"s" : $filter('filter')(vm.panel, {jeanKey: jeanKey})[0].dataKey);
+			var dataSet = vm.data[dataKey];
 			selected = $filter('filter')(dataSet, {id: id})[0];
 			if (!attr) return selected;
-			else return selected[attr];
-			
+			else return selected[attr];	
 		}
-		vm.builder.getActiveItemName = function(){
-			var name = vm.builder.activeItem().name;
-			name = name.replace(/Raw Denim/g, "");
-			return name;
-		}
-		vm.builder.step = 1;
-		vm.builder.changeStep = function(step){
-			
-			if (step >= vm.builder.panel.length) return false;
-			if (step <= 0) return false;
-			if (!step) return false;
-			else vm.builder.step = step; 
-		}
-		
-		
-		
-		
-
-		
-		$scope.dir="next";
-		
-		
-		/*				
-		vm.builder.selectAttr = function($event, id, attr, selector){
-			var selector = angular.element(document.querySelector("#"+attr+"-selector"));
-			var top = angular.element($event.target).prop('offsetTop');
-			var left = angular.element($event.target).prop('offsetLeft');
-			var text = angular.element(document.querySelectorAll('#item-title'));
-			
-			text.css({'right':'-400px', 'opacity':0});
-			selector.css({'top':top+'px', 'left':left+'px'});
-			$timeout(function(){
-				text.css({'right':'15px', 'opacity':1});				
-				vm.jean.data[attr] =	id;	
-			}, 200);
-			
-
-		}
-		
-	*//*
-		vm.builder.jeanSet = function(attr, val){
-			 vm.jean.data[attr] =	val;
-		}
-		
-		
-		*/
 		
 		
 	
-		
+	
+	
+	
+	/*
+	*   GET CUSTOMIZER DATA
+	*/
+	
+	 	
 	//Gender
   meanData.getGenders()
   .then(function(res){
-    vm.builder.genders=res.data;
+    vm.data.genders=res.data;
 	});		
 	
   //Styles
   meanData.getStyles()
   .then(function(res){
-    vm.builder.styles=res.data;
+    vm.data.styles=res.data;
 	});
 	
 	//Threads
   meanData.getThreads()
   .then(function(res){
-    vm.builder.threads=res.data;
+    vm.data.threads=res.data;
 	});
 	
 	
 	//Hardware
   meanData.getHardware()
   .then(function(res){
-    vm.builder.hardware=res.data;
+    vm.data.hardware=res.data;
 	});
 	
 	//Fabrics
   meanData.getFabrics()
   .then(function(res){
-    vm.builder.fabrics=res.data;
+    vm.data.fabrics=res.data;
 	});
 	
 		
