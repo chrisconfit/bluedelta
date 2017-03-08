@@ -37,13 +37,40 @@
 			}, 200);
 		}
 		
-
+		isvm.touchStart= function(e){
+	
+			
+			var x = e.touches[0].clientX/e.touches[0].target.clientWidth*100;
+			var y = e.touches[0].clientY/e.touches[0].target.clientHeight*100;
+			if (x>100) x=100;
+			if (x<0) x=0;
+			if (y>100) y=100;
+			if (y<0) y=0;
+			isvm.pan = x+"% "+y+"% 0";
+			images = angular.element(document.querySelectorAll("#zoom-frame img"));
+			images.css({"transform-origin":isvm.pan});
+		}
+		
+		isvm.touchMove= function(e){
+			var x = e.touches[0].clientX/e.touches[0].target.clientWidth*100;
+			var y = e.touches[0].clientY/e.touches[0].target.clientHeight*100;
+			if (x>100) x=100;
+			if (x<0) x=0;
+			if (y>100) y=100;
+			if (y<0) y=0;
+			isvm.pan = x+"% "+y+"% 0";
+			images = angular.element(document.querySelectorAll("#zoom-frame img"));
+			images.css({"transform-origin":isvm.pan});
+		}
 		
 	  isvm.zoomDrag = {"x":0,"y":0};
 	  isvm.dragTracker = {"x":0,"y":0};
+	  isvm.panDirection = false;
 		isvm.dragPan = function(u, event) {
+		
+			console.log(event.direction);
 			
-			console.log(event.center);
+			
 			//Only Drag on mobile
 			if (!isvm.isMobile()) return false;
 			

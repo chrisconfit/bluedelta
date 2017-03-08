@@ -13,9 +13,14 @@
       controller: 'istackCtrl as isvm',
       link: function(scope, ele, attrs, ctrl) {
 	      
-	      console.log('here we go')
 	      
-	     				
+	     ele.on('touchstart', function(e){
+			 	scope.isvm.touchStart(e);	
+	     });	
+	     
+	     ele.on('touchmove', function(e){
+			 	scope.isvm.touchMove(e);	
+	     });				
 			
        
 	      
