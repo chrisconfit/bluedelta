@@ -58,42 +58,32 @@
 
 		 isvm.myDrag = function(s, event) {
 			 var images = angular.element(document.querySelectorAll("#zoom-frame img"));
-			// console.log('imgdata');
-			// console.log(images);
-			// console.log(images[0].height);
-			 
+
 			 var frame={
 				 "width":event.target.clientWidth,
 				 "height":event.target.clientHeight
 			 }
 
-			 var windowHeight = window.innerHeight;
-			 var line = windowHeight - 175;
+			 
+			 
 			 
 			 var origHeight = images[0].height;
 			 var newHeight = origHeight*1.7;
-			 var bounds={"y":{},"x":{}};
-			 console.log(newHeight);
 			 
-			 bounds.y.bottom =-(newHeight*.225);
+			 var bounds={"y":{},"x":{}};
+			 
+			 
+			 bounds.y.bottom =-(newHeight*.2);
 			 bounds.y.top =(newHeight/2)+175;
 			 bounds.x.left = -(event.target.clientWidth-(event.target.clientWidth*.05));
 			 bounds.x.right = event.target.clientWidth-(event.target.clientWidth*.05);
 			 
 			 
-			// console.log('image');
-			 //console.log(yBoundBottom);
-console.log(bounds.y);
 
-//			console.log(imageHeight*1.7);
 			if (!isvm.zoom) return false;
 
 
-			
-			//	console.log(event);
-//		var frame
-			
-				
+		
 				//Get drag length
 				var drag = {
 					"x" : event.deltaX,
@@ -106,28 +96,30 @@ console.log(bounds.y);
 			//	console.log(x,y);
 	       
 	       //Get % for move
+	       /*
 	       var x = Math.abs(x)/frame.width*100;      
 	       x = (drag.x<0)?-x:x;	       
 	       var y = Math.abs(y)/frame.height*100;
 	       y = (drag.y<0)?-y:y;
-				 
+				 */
 				 x=x+isvm.zoomDrag.x;
 				 y=y+isvm.zoomDrag.y
 				 
 
 				 
-				 /*
+				 
 				 if (y>bounds.y.top) y = bounds.y.top;
 				 if (y<bounds.y.bottom) y = bounds.y.bottom;
 				 if (x<bounds.x.left) x = bounds.x.left;
 				 if (x>bounds.x.right) x = bounds.x.right;
-				 */
+				 /*
 				 
 				 if (y>60) y = 60;
 				 if (y<-90) y = -90;
 				 if (x<-150) x = -150;
 				 if (x>60) x = 60;
 				 
+				 */
 				 				 console.log(x,y);
 				 				// console.log(y);
 				 /*
@@ -177,13 +169,13 @@ console.log(bounds.y);
 //				 images.css('transform', 'translate(' + dragX + 'px, ' + dragY + 'px) scale(2)');
 	console.log("move:");
 		
-			var pan = -x + "% " + -y + "% 0";
+		//	var pan = -x + "% " + -y + "% 0";
 
 
-			images.css({"transform-origin":pan});
+			//images.css({"transform-origin":pan});
 
-	//			 images.css('left', move.x+"px");
-//				 images.css('bottom', -move.y+"px");
+				 images.css('left', move.x+"px");
+				 images.css('bottom', -move.y+"px");
 				 
 				 isvm.dragTracker = event.isFinal ? {"x":0,"y":0} : drag;
 				 
