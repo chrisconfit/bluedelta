@@ -74,10 +74,13 @@
 			 var newHeight = origHeight*1.7;
 			 var bounds={"y":{},"x":{}};
 			 console.log(newHeight);
+			 
 			 bounds.y.bottom =-(newHeight*.225);
 			 bounds.y.top =(newHeight/2)+175;
 			 bounds.x.left = -(event.target.clientWidth-(event.target.clientWidth*.05));
 			 bounds.x.right = event.target.clientWidth-(event.target.clientWidth*.05);
+			 
+			 
 			// console.log('image');
 			 //console.log(yBoundBottom);
 console.log(bounds.y);
@@ -103,21 +106,29 @@ console.log(bounds.y);
 			//	console.log(x,y);
 	       
 	       //Get % for move
-	       //var x = Math.abs(x)/frame.width*100;      
-	      // x = (drag.x<0)?-x:x;	       
-	       //var y = Math.abs(y)/frame.height*100;
-	       //y = (drag.y<0)?-y:y;
+	       var x = Math.abs(x)/frame.width*100;      
+	       x = (drag.x<0)?-x:x;	       
+	       var y = Math.abs(y)/frame.height*100;
+	       y = (drag.y<0)?-y:y;
 				 
 				 x=x+isvm.zoomDrag.x;
 				 y=y+isvm.zoomDrag.y
 				 
-				 console.log(y);
+
 				 
-				 
+				 /*
 				 if (y>bounds.y.top) y = bounds.y.top;
 				 if (y<bounds.y.bottom) y = bounds.y.bottom;
 				 if (x<bounds.x.left) x = bounds.x.left;
 				 if (x>bounds.x.right) x = bounds.x.right;
+				 */
+				 
+				 if (y>60) y = 60;
+				 if (y<-90) y = -90;
+				 if (x<-150) x = -150;
+				 if (x>60) x = 60;
+				 
+				 				 console.log(x,y);
 				 				// console.log(y);
 				 /*
 				 var bounds = {
@@ -166,10 +177,13 @@ console.log(bounds.y);
 //				 images.css('transform', 'translate(' + dragX + 'px, ' + dragY + 'px) scale(2)');
 	console.log("move:");
 		
+			var pan = -x + "% " + -y + "% 0";
 
 
-				 images.css('left', move.x+"px");
-				 images.css('bottom', -move.y+"px");
+			images.css({"transform-origin":pan});
+
+	//			 images.css('left', move.x+"px");
+//				 images.css('bottom', -move.y+"px");
 				 
 				 isvm.dragTracker = event.isFinal ? {"x":0,"y":0} : drag;
 				 

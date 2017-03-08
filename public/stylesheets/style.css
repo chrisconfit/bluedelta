@@ -2090,7 +2090,11 @@ h1.page-title {
 .builder__stage #zoom-frame img {
   bottom: -175px;
   pointer-events: none;
-  transition: transform 300ms ease, left 300ms ease;
+  -webkit-transition: all 300ms ease;
+  -moz-transition: all 300ms ease;
+  -ms-transition: all 300ms ease;
+  -o-transition: all 300ms ease;
+  transition: all 300ms ease;
 }
 .builder__stage #zoom-frame img:hover {
   cursor: url(../images/search-plus.png), zoom-in;
