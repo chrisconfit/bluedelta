@@ -1084,6 +1084,7 @@ h1.page-title{
 			-webkit-transition:transform 300ms ease, margin-left 300ms ease;
 			-moz-transition:transform 300ms ease, margin-left 300ms ease;
 			-o-transition:transform 300ms ease, margin-left 300ms ease;
+			margin-left:0;
 			&.zoom{
 				margin-left:-50%;
 				@include transform(scale(1.7));

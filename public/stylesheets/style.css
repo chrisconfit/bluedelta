@@ -2095,6 +2095,7 @@ h1.page-title {
   -webkit-transition: transform 300ms ease, margin-left 300ms ease;
   -moz-transition: transform 300ms ease, margin-left 300ms ease;
   -o-transition: transform 300ms ease, margin-left 300ms ease;
+  margin-left: 0;
 }
 .builder__stage #zoom-frame img:hover {
   cursor: url(../images/search-plus.png), zoom-in;
