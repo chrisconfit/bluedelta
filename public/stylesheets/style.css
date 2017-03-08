@@ -2091,22 +2091,27 @@ h1.page-title {
   bottom: -175px;
   pointer-events: none;
   margin-left: 0;
-  transition: transform 300ms ease, margin-left 300ms ease;
-  -webkit-transition: transform 300ms ease, margin-left 300ms ease;
-  -moz-transition: transform 300ms ease, margin-left 300ms ease;
-  -o-transition: transform 300ms ease, margin-left 300ms ease;
-  margin-left: 0;
+  /*
+  transition:transform 300ms ease;
+  -webkit-transition:transform 300ms ease, margin-left 300ms ease;
+  -moz-transition:transform 300ms ease, margin-left 300ms ease;
+  -o-transition:transform 300ms ease, margin-left 300ms ease;
+  */
+  -webkit-transition: transform 300ms ease;
+  -moz-transition: transform 300ms ease;
+  -ms-transition: transform 300ms ease;
+  -o-transition: transform 300ms ease;
+  transition: transform 300ms ease;
 }
 .builder__stage #zoom-frame img:hover {
   cursor: url(../images/search-plus.png), zoom-in;
 }
 .builder__stage #zoom-frame img.zoom {
-  margin-left: -50%;
-  -moz-transform: scale(1.7);
-  -o-transform: scale(1.7);
-  -ms-transform: scale(1.7);
-  -webkit-transform: scale(1.7);
-  transform: scale(1.7);
+  -moz-transform: scale(1.7) translateX(-50%);
+  -o-transform: scale(1.7) translateX(-50%);
+  -ms-transform: scale(1.7) translateX(-50%);
+  -webkit-transform: scale(1.7) translateX(-50%);
+  transform: scale(1.7) translateX(-50%);
 }
 @media screen and (min-width: 800px) {
   .builder__stage #zoom-frame img {

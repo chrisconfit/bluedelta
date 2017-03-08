@@ -20,6 +20,10 @@
 	     
 	     ele.on('touchmove', function(e){
 			 	scope.isvm.touchMove(e);	
+	     });		
+	     
+	     ele.on('touchend', function(e){
+			 	scope.isvm.touchEnd(e);	
 	     });				
 			
        

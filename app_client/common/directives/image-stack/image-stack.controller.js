@@ -4,77 +4,103 @@
     .module('meanApp')
     .controller('istackCtrl', istackCtrl);
 
-  istackCtrl.$inject = ['$window', 'jean'];
+  istackCtrl.$inject = ['$window', '$scope','jean'];
   
   
   
-  function istackCtrl($window, jean) {
+  function istackCtrl($window, $scope, jean) {
 	  var isvm = this;
 		isvm.jean = jean;
 		isvm.centerPan = false;		
 		isvm.zoom = false;
-		isvm.pan = "0% 30% 0";
+		isvm.pan = {"x":50, "y":30};
 		isvm.isMobile = function(){ return $window.innerWidth<800 };
 		
 		
 		isvm.toggleZoom = function(){
-			//left = (isvm.zoom ? "50%" : "0");
 			isvm.zoom = !isvm.zoom
-			/*
-			var images = angular.element(document.querySelectorAll("#zoom-frame img"));
-			images.css('left', left);
-			images.css('bottom',"-175px");
-			*/
+		}
+		
+		isvm.touchEnd = function(){
+			isvm.dragTracker = {"x":0,"y":0};
+			$scope.$apply();
 		}
 		
 		isvm.returnPan = function(){
 			if (isvm.isMobile()) return false;
-			isvm.pan = "50% 30% 0";	
+			//isvm.pan = "50% 30% 0";	
 			isvm.centerPan = true;
 			images = angular.element(document.querySelectorAll("#zoom-frame img"));
 			setTimeout(function(){
 				images.css({"transform-origin":isvm.pan});
 			}, 200);
 		}
-		
-		isvm.touchStart= function(e){
-		
-			
-			var x = e.touches[0].clientX/e.touches[0].target.clientWidth*100;
-			var y = e.touches[0].clientY/e.touches[0].target.clientHeight*100;
-			if (x>100) x=100;
-			if (x<0) x=0;
-			if (y>100) y=100;
-			if (y<0) y=0;
-			isvm.pan = x+"% "+y+"% 0";
-			images = angular.element(document.querySelectorAll("#zoom-frame img"));
-			images.css({"transform-origin":isvm.pan});
+				
+		isvm.touchStart= function(e){	
+			//Setup Swipe starting point
+			isvm.swipeStart={"x":e.touches[0].clientX,"y":e.touches[0].clientY};
+			//Clear out Swipe Object
+			isvm.swipe={};
 		}
 		
 		isvm.zoomDrag = {"x":0,"y":0};
-	  isvm.dragTracker = {"x":0,"y":0}
+	  isvm.dragTracker = {"x":0,"y":0};
 		
 		isvm.touchMove= function(e){
+			
+			var images = angular.element(document.querySelectorAll("#zoom-frame img"));
+			//Only Drag on mobile
+			if (!isvm.isMobile()) return false;
+			//Only run function if we're zoomed in
+			if (!isvm.zoom) return false;
+			//Prevent Scrolling?
 			e.preventDefault();
-			console.log(e);
-			var x = e.touches[0].clientX/e.touches[0].target.clientWidth*100;
-			var y = e.touches[0].clientY/e.touches[0].target.clientHeight*100;
 			
+
+			var touch = e.touches[0],
+			target = touch.target,
+			drag = {
+				"x" : touch.clientX-isvm.swipeStart.x,
+				"y" : touch.clientY-isvm.swipeStart.y
+			};
 			
-			if (x>100) x=100;
-			if (x<0) x=0;
-			if (y>100) y=100;
-			if (y<0) y=0;
+			//Subtract previous returns of this drag length to get the amount dragged since last return	
+			var x = drag.x-isvm.dragTracker.x,
+			y = drag.y-isvm.dragTracker.y;
+		
+			//Get drag % of container for Transform Origin Only 
+			var x = (x/target.clientWidth*100)+isvm.zoomDrag.x,      
+			y = (y/target.clientHeight*100)+isvm.zoomDrag.y;
+
+			//Set up max bounds
+			var bounds={"y":{},"x":{}}; 
+			bounds.y.top    = 60;
+			bounds.y.bottom = -90;
+			bounds.x.left   = -120;
+			bounds.x.right  = 90;
 			
+			//Apply Bounds	
+			if (y>bounds.y.top) y = bounds.y.top;
+			if (y<bounds.y.bottom) y = bounds.y.bottom;
+			if (x<bounds.x.left) x = bounds.x.left;
+			if (x>bounds.x.right) x = bounds.x.right;
 			
-			isvm.pan = (100-x) + "% " + (100-y) + "% 0";
-			images = angular.element(document.querySelectorAll("#zoom-frame img"));
-			images.css({"transform-origin":isvm.pan});
+			//Build Move Objext		
+			var move = {"x":x,"y":y};
+			isvm.zoomDrag = move;	 	       
+	        
+			//Alter transform origin
+			var pan = -x + "% " + -y + "% 0";
+			images.css({"transform-origin":pan});
+
+			isvm.dragTracker = drag;	
+			$scope.$apply();
+
 		}
 		
-	  isvm.zoomDrag = {"x":0,"y":0};
-	  isvm.dragTracker = {"x":0,"y":0};
-	  isvm.panDirection = false;
+
+
+
 		isvm.dragPan = function(u, event) {
 		
 			console.log(event.direction);

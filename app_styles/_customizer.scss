@@ -1080,14 +1080,15 @@ h1.page-title{
 			&:hover{
 				cursor:url(../images/search-plus.png), zoom-in;
 			}
-			transition:transform 300ms ease, margin-left 300ms ease;
+			/*
+			transition:transform 300ms ease;
 			-webkit-transition:transform 300ms ease, margin-left 300ms ease;
 			-moz-transition:transform 300ms ease, margin-left 300ms ease;
 			-o-transition:transform 300ms ease, margin-left 300ms ease;
-			margin-left:0;
+			*/
+			@include transition(transform,300ms,ease);
 			&.zoom{
-				margin-left:-50%;
-				@include transform(scale(1.7));
+				@include transform(scale(1.7) translateX(-50%));
 			}
 			
 			@include at-query($min, $deskMin){
