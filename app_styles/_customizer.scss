@@ -1081,7 +1081,8 @@ h1.page-title{
 			}
 			
 			//transition:transform 300ms ease, left 300ms ease;
-			@include transition(all,300ms,ease);
+			//
+			//@include transition(all,300ms,ease);
 			&.zoom{
 				left:0;
 				@include transform(scale(1.7));
