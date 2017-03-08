@@ -37,11 +37,13 @@
 			}, 200);
 		}
 		
+
 		
 	  isvm.zoomDrag = {"x":0,"y":0};
 	  isvm.dragTracker = {"x":0,"y":0};
 		isvm.dragPan = function(u, event) {
 			
+			console.log(event.center);
 			//Only Drag on mobile
 			if (!isvm.isMobile()) return false;
 			
@@ -64,10 +66,14 @@
 				"y" : event.deltaY
 			}
 			
+		
+			
 			//Subtract previous returns of this drag length to get the amount dragged since last return	
 			var x = drag.x-isvm.dragTracker.x,
 			y = drag.y-isvm.dragTracker.y;
 
+			console.log(x,y);
+			
 			//Get drag % of container for Transform Origin Only 
 			var x = Math.abs(x)/frame.width*100;      
 			x = (drag.x<0)?-x:x;	       
@@ -101,6 +107,7 @@
 			//Build Move Objext		
 			var move = {"x":x,"y":y}
 			
+			console.log(move);
 			//Register Drag
 			isvm.zoomDrag = move;	 	       
 	        

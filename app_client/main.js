@@ -42,7 +42,7 @@
     
     console.log(hammerDefaultOptsProvider);
      hammerDefaultOptsProvider.set({
-        recognizers: [[Hammer.Pan, {time: 250}],[Hammer.Tap, {time: 250}]]
+        recognizers: [[Hammer.Pan, {time: 10}],[Hammer.Tap, {time: 250}]]
     });
   }
 
