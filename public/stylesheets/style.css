@@ -2090,13 +2090,17 @@ h1.page-title {
 .builder__stage #zoom-frame img {
   bottom: -175px;
   pointer-events: none;
-  transition: transform 300ms ease;
+  margin-left: 0;
+  transition: transform 300ms ease, margin-left 300ms ease;
+  -webkit-transition: transform 300ms ease, margin-left 300ms ease;
+  -moz-transition: transform 300ms ease, margin-left 300ms ease;
+  -o-transition: transform 300ms ease, margin-left 300ms ease;
 }
 .builder__stage #zoom-frame img:hover {
   cursor: url(../images/search-plus.png), zoom-in;
 }
 .builder__stage #zoom-frame img.zoom {
-  left: 0;
+  margin-left: -50%;
   -moz-transform: scale(1.7);
   -o-transform: scale(1.7);
   -ms-transform: scale(1.7);
@@ -2104,7 +2108,12 @@ h1.page-title {
   transform: scale(1.7);
 }
 @media screen and (min-width: 800px) {
+  .builder__stage #zoom-frame img {
+    bottom: 0;
+    margin-left: -150px;
+  }
   .builder__stage #zoom-frame img.zoom {
+    margin-left: -150px;
     left: 35%;
     -moz-transform: scale(2);
     -o-transform: scale(2);

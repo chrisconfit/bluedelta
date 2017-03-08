@@ -14,49 +14,36 @@
 		isvm.centerPan = false;		
 		isvm.zoom = false;
 		isvm.pan = "0% 30% 0";
-		isvm.breakPoint = 800;
+		isvm.isMobile = function(){ return $window.innerWidth<800 };
 		
 		
 		isvm.toggleZoom = function(){
-			left = (isvm.zoom ? "50%" : "0");
+			//left = (isvm.zoom ? "50%" : "0");
 			isvm.zoom = !isvm.zoom
-			
+			/*
 			var images = angular.element(document.querySelectorAll("#zoom-frame img"));
 			images.css('left', left);
 			images.css('bottom',"-175px");
-			
+			*/
 		}
+		
 		isvm.returnPan = function(){
+			if (isvm.isMobile()) return false;
 			isvm.pan = "50% 30% 0";	
 			isvm.centerPan = true;
 			images = angular.element(document.querySelectorAll("#zoom-frame img"));
-			
 			setTimeout(function(){
 				images.css({"transform-origin":isvm.pan});
 			}, 200);
 		}
 		
 		
-		isvm.drag = function(event){
-	     console.log('dragger');
-	     console.log(event);
-     } 
-		 
-		 
-		
-		
-		 isvm.scale = 1
-	   isvm.xImage = 0; 
-		 isvm.yImage = 0;
-	   isvm.zoomDrag = {"x":0,"y":0};
-	   isvm.dragTracker = {"x":0,"y":0};
-	   isvm.yLast = 0;
-//	   if (event.isFinal);
-
-
-
-
-		isvm.myDrag = function(u, event) {
+	  isvm.zoomDrag = {"x":0,"y":0};
+	  isvm.dragTracker = {"x":0,"y":0};
+		isvm.dragPan = function(u, event) {
+			
+			//Only Drag on mobile
+			if (!isvm.isMobile()) return false;
 			
 			//Only run function if we're zoomed in
 			if (!isvm.zoom) return false;
@@ -101,10 +88,10 @@
 			bounds.x.right = event.target.clientWidth-(event.target.clientWidth*.05);*/
 				
 			//Transform Origin Bounds
-			bounds.y.top    = 90;
+			bounds.y.top    = 60;
 			bounds.y.bottom = -90;
-			bounds.x.left   = -90;
-			bounds.x.right  = 90
+			bounds.x.left   = -150;
+			bounds.x.right  = 60;
 				
 			if (y>bounds.y.top) y = bounds.y.top;
 			if (y<bounds.y.bottom) y = bounds.y.bottom;
@@ -170,7 +157,7 @@
 		}
 		
 		isvm.trackMouse = function($event){
-			if ($window.innerWidth < isvm.breakPoint) return false;
+			if (isvm.isMobile()) return false;
 			isvm.scanImage($event.pageX,$event.pageY);
 		}
 
