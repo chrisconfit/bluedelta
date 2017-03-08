@@ -2060,7 +2060,7 @@ h1.page-title {
   display: block;
   position: relative;
   height: 600px;
-  height: calc(100vh - 49px);
+  height: calc(100vh - 225px);
 }
 @media screen and (min-width: 800px) {
   .builder__stage #zoom-frame {
@@ -2088,12 +2088,9 @@ h1.page-title {
   cursor: url(../images/search-minus.png), zoom-out;
 }
 .builder__stage #zoom-frame img {
+  bottom: -175px;
   pointer-events: none;
-  -webkit-transition: transform 300ms ease;
-  -moz-transition: transform 300ms ease;
-  -ms-transition: transform 300ms ease;
-  -o-transition: transform 300ms ease;
-  transition: transform 300ms ease;
+  transition: transform 300ms ease, left 300ms ease;
 }
 .builder__stage #zoom-frame img:hover {
   cursor: url(../images/search-plus.png), zoom-in;

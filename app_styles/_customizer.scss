@@ -1052,7 +1052,7 @@ h1.page-title{
 		display:block;
 		position:relative;
 		height: 600px;
-	  height: calc(100vh - 49px);
+	  height: calc(100vh - 225px);
 	  @include at-query($min, 650px){
 		  height: calc(100vh - 69px);
 		}
@@ -1074,11 +1074,12 @@ h1.page-title{
 		}
 
 		img{
+			bottom:-175px;
 			pointer-events: none;
 			&:hover{
 				cursor:url(../images/search-plus.png), zoom-in;
 			}
-			@include transition(transform,300ms,ease);
+			transition:transform 300ms ease, left 300ms ease;
 			&.zoom{
 				left:0;
 				@include transform(scale(1.7));
