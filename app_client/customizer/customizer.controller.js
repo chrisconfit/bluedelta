@@ -46,20 +46,21 @@
 		
 		//jean
 		vm.jean = jean;
-		vm.jean.step = (jean.step ? jean.step : 1);
+		//vm.jean.step = (jean.step ? jean.step : 1);
 
 		vm.jean.data.gender=1;
-		vm.jean.data.style=2;
-		vm.jean.step = 3;
+		vm.jean.data.style=1;
 		
+		/*
     vm.jean.nextStep = function(){
 	    vm.jean.step =	vm.jean.step + 1;  
     }
-    
+    */
 	  vm.jean.selectStyle = function(id){
-	    vm.jean.data.style =	id;	    vm.form.nextStep();
+	    vm.jean.data.style =	id;	   
+	    //vm.form.nextStep();
     }    
-
+		
 		//Set Defaults
 		vm.jean.data.fabric = vm.jean.data.fabric || "1004";
 		vm.jean.data.accent_thread = vm.jean.data.accent_thread || "1";
@@ -67,16 +68,8 @@
 		vm.jean.data.bottom_thread = vm.jean.data.bottom_thread || "1";
 		//vm.jean.data.hardware = vm.jean.data.hardware || "1";
 	
-		
 		vm.data = {};
 		
-		$scope.drag = function(coords){
-			console.log('controller func');
-			console.log(coords);
-			console.log('why not');
-		};
-		
-
 		vm.panelDir="next";
 		
 		vm.panel = [];

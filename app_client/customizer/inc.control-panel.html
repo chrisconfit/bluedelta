@@ -22,13 +22,13 @@
 				></gender-chooser>
 								
 				<!--Style Chooser-->
-				<style-chooser 
+				<div style-chooser
 				active="vm.panel[vm.panelStep]==step"
 				ng-if="step.panelTemplate=='style-chooser'" 
 				on-click="chvm.selectAttr" 
 				dataset="vm.data[step.dataKey]" 
 				step="step"
-				></style-chooser>
+				></div>
 
 				<!--Fabric Chooser-->
 				<fabric-chooser
@@ -87,7 +87,7 @@
 		
 		<div ng-show="vm.panel[vm.panelStep].panelTemplate!='list'" class="active-item">
 			<a href="#" id="item-title" class="item-title {{vm.panel[vm.panelStep].jeanKey}}"
-				ng-click="vm.panel[vm.panelStep].jeanKey != 'fabric' || (vm.builder.infoPop=!vm.builder.infoPop)">
+				ng-click="vm.panel[vm.panelStep].jeanKey != 'fabric' || (vm.popups.infoPop=!vm.popups.infoPop)">
         {{ vm.getActiveItemName() }}<i class="fa fa-question-circle"> </i>
 			</a>
 		</div>

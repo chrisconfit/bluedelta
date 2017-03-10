@@ -1,7 +1,7 @@
 <!--Fabric Popup-->
 <div ng-show="vm.popups.infoPop"	ng-click="vm.popups.infoPop = false" id="how-it-works" class="popup-window">
 	<div class="popup-content fabric-popup" ng-click="$event.stopPropagation()">
-		<a class="popup-closer" href="" ng-click="vm.builder.infoPop = false"></a>
+		<a class="popup-closer" href="" ng-click="vm.popups.infoPop = false"></a>
 		<div class="popup-content-inner">
 				<h3 class="popup-title">{{vm.activeItem().name}}</h3>
 				<h4 class="popup-sub-title">{{vm.activeItem().materials}}</h4>
