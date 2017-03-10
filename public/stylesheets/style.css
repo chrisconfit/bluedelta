@@ -1800,23 +1800,23 @@ h1.page-title {
     margin-bottom: 15px;
   }
 }
-style-chooser .cft-g.chooser-grid, gender-chooser .cft-g.chooser-grid {
+div[style-chooser] .cft-g.chooser-grid, gender-chooser .cft-g.chooser-grid {
   padding: 0;
   width: auto;
   margin-left: -30px;
   margin-bottom: 0;
   margin-left: -15px;
 }
-style-chooser .cft-g.chooser-grid > .cft-gi, gender-chooser .cft-g.chooser-grid > .cft-gi {
+div[style-chooser] .cft-g.chooser-grid > .cft-gi, gender-chooser .cft-g.chooser-grid > .cft-gi {
   padding-left: 30px;
   margin-right: 0;
   width: 33.3333%;
 }
-style-chooser .cft-g.chooser-grid#gender-chooser > .cft-gi, gender-chooser .cft-g.chooser-grid#gender-chooser > .cft-gi {
+div[style-chooser] .cft-g.chooser-grid#gender-chooser > .cft-gi, gender-chooser .cft-g.chooser-grid#gender-chooser > .cft-gi {
   width: 50%;
 }
 @media screen and (min-width: 800px) {
-  style-chooser .cft-g.chooser-grid > .cft-gi, gender-chooser .cft-g.chooser-grid > .cft-gi {
+  div[style-chooser] .cft-g.chooser-grid > .cft-gi, gender-chooser .cft-g.chooser-grid > .cft-gi {
     padding-left: 15px;
     margin-bottom: 0;
   }

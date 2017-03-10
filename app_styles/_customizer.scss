@@ -823,7 +823,7 @@ h1.page-title{
 		}
 	}
 	
-	style-chooser &, gender-chooser &{
+	div[style-chooser] &, gender-chooser &{
 		padding:0;
 		width:auto;
 		margin-left:-30px;
