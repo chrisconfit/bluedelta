@@ -21,7 +21,11 @@
 			"/images/styles/bootcut-2.jpg",
 			"/images/styles/bootcut-3.jpg"
     ],
-    "images_2":false
+    "images_2": [
+			"/images/styles/f-boot-1.jpg",
+			"/images/styles/f-boot-2.jpg",
+			"/images/styles/f-boot-3.jpg"
+    ]
   },
   {
     "name":"Skinny",
@@ -35,7 +39,7 @@
   },
   {
     "name":"Cigarette",
-    "id":1,
+    "id":4,
     "images_1":false,
     "images_2" : [
 			"/images/styles/cig-1.jpg",

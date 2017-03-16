@@ -134,7 +134,6 @@
 		vm.activeItem = function(){
 			var data = vm.data[vm.panel[vm.panelStep].dataKey];
 			var key = vm.jean.data[vm.panel[vm.panelStep].jeanKey];
-			console.log(data,key);
 			return $filter('filter')(data, {id: key})[0];
 		}
 		
