@@ -42,12 +42,6 @@
 		"thumb": "/images/controls/thread-brown.jpg"
 	},
 	{
-		"id":8,
-		"name":"Yellow",
-		"layer": "/images/components/thread-yellow.png",
-		"thumb": "/images/controls/thread-yellow.jpg"
-	},
-	{
 		"id":9,
 		"name":"Black",
 		"layer": "/images/components/thread-black.png",
