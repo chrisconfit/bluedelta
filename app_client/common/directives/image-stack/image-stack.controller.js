@@ -28,7 +28,7 @@
 		
 		isvm.returnPan = function(){
 			if (isvm.isMobile()) return false;
-			//isvm.pan = "50% 30% 0";	
+			isvm.pan = "50% 30% 0";	
 			isvm.centerPan = true;
 			images = angular.element(document.querySelectorAll("#zoom-frame img"));
 			setTimeout(function(){
