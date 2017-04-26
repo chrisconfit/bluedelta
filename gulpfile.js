@@ -11,9 +11,8 @@ gulp.task('scripts', function() {
   gulp.src(['./app_client/**/*.js', '!./app_client/**/*.test.js', '!./app_client/app.min.js'])
     .pipe(sourcemaps.init())
     .pipe(uglify({mangle: true}).on('error', gutil.log))
-      .pipe(concat('./app.min.js'))
-      
-      .pipe(gulp.dest('app_client'))
+    .pipe(concat('./app.min.js'))  
+    .pipe(gulp.dest('app_client'))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('app_client'));
 });
