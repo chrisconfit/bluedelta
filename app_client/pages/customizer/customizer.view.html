@@ -1,0 +1,58 @@
+<div ng-show="vm.landscape" class="landscape-message">
+	<div class="text-container">
+		<div class="icon-container">
+			<i class="fa fa-mobile" aria-hidden="true"></i>
+			<i class="fa fa-thumbs-down" aria-hidden="true"></i>
+		</div>
+		<h3>This customizer works best in Portrait mode.</h3>
+		<p>Please rotate your device to continue.</p>
+	</div>
+</div>
+<navigation></navigation>
+
+
+<div class="customizer-page-content">
+	<div ng-include="'/pages/customizer/inc.popups.html'"></div>
+
+	<!--Pant Rendering-->
+	<div class="builder__stage">
+		<image-stack></image-stack>
+	</div>
+	
+	<!--Controls Panel-->
+	<div class="builder__control-panel">
+		<ng-include src="'/pages/customizer/inc.control-panel.html'"></ng-include>
+	</div>
+	
+	<!--Mobile Helper-->
+	<div ng-init="vm.showMenu = false" class="builder__mobile-helper">
+		<a ng-click="vm.showMenu=!vm.showMenu" ng-class="(vm.showMenu ? 'closer' : '')" class="menu-icon">
+			<span class="bars">
+		</a>
+		<ul ng-class="(vm.showMenu ? 'show' : 'hide')" class="slide mobile-helper-options">
+			<li>
+				<a href="" ng-click="vm.panelStep=vm.panel.length-1; vm.overviewOn=true">
+					<i class="fa fa-list-ul"></i>
+				</a>
+			</li>
+			<li>
+				<a href="">
+					<i class="fa fa-share" aria-hidden="true"></i>
+				</a>
+			</li>
+			<li>
+				<a href="">
+					<i class="fa fa-floppy-o"></i>
+				</a>
+			</li>
+			<li>
+				<a href="">
+					<i class="fa fa-shopping-cart"></i></a>
+			</li>
+		</ul>
+	</div>
+
+</div>
+
+
+
