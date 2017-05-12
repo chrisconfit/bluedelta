@@ -64,8 +64,26 @@
     };
 
     login = function(user) {
-      return $http.post('/api/login', user).success(function(data) {
-        saveToken(data.token);
+      // return $http.post('/api/login', user).success(function(data) {
+      //   saveToken(data.token);
+      // });
+      const userPool = new CognitoUserPool({
+        UserPoolId: 'us-east-1_LOGu3QxlG',
+        ClientId: '722lmps6diglhvjek6gmrk4g69'
+      });
+      const authenticationData = {
+        Username: user.email,
+        Password: user.password
+      };
+
+      const cognitoUser = new CognitoUser({ Username: user.email, Pool: userPool });
+      const authenticationDetails = new AuthenticationDetails(authenticationData);
+
+      return new Promise( function (resolve, reject) {
+        cognitoUser.authenticateUser(authenticationDetails, {
+              onSuccess: function (result) { resolve(result.getIdToken().getJwtToken()); },
+              onFailure: function (err) { reject(err); }
+        })
       });
     };
 
