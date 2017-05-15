@@ -1,12 +1,18 @@
+
 (function () {
+
+console.log(AWSCognito);
 
   angular
     .module('bdApp')
     .service('authentication', authentication);
 
-  authentication.$inject = ['$http', '$window'];
-  function authentication ($http, $window) {
-
+  authentication.$inject = ['$http', '$window', 'aws', 'awsConfig'];
+  function authentication ($http, $window, aws, awsConfig) {
+    
+    var userPool = aws.createUserPool(awsConfig.poolInfo);
+    console.log(userPool);
+  
     var saveToken = function (token) {
       $window.localStorage['mean-token'] = token;
     };
@@ -57,7 +63,10 @@
       }
 
 		}
+		
+		
     register = function(user) {
+      console.log('USER! => ', user);
       return $http.post('/api/register', user).success(function(data){
         saveToken(data.token);
       });
