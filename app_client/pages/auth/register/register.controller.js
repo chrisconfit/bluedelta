@@ -23,11 +23,9 @@
 
     vm.onSubmit = function () {
       var userAttrList, acceptedCognitoFields;
-      
       acceptedCognitoFields = ['email'];
       
       userAttrList = aws.createUserAttributeList(vm.credentials, aws.userAttributeConstructor, acceptedCognitoFields);
-      
       aws.registerUser(userPool, vm.credentials.email, vm.credentials.password, userAttrList);
       
       // original code below

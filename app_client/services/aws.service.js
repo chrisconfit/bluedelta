@@ -20,7 +20,7 @@
             Value: userDetailObj[keyName]
           }));
         }
-      }
+  
       return newAttributeList;
     }
     
