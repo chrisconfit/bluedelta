@@ -31,7 +31,7 @@ provider:
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in ping.js
-  # - path: url path is /ping
+  # - path: url path is /api/v1/ping
   # - method: POST request
   # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
   #     domain api call
@@ -41,7 +41,7 @@ functions:
     handler: ping.main
     events:
       - http:
-          path: ping
+          path: api/v1/ping
           method: get
           cors: true
  
