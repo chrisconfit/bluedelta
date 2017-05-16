@@ -22,8 +22,11 @@
 		}
 
     vm.onSubmit = function () {
-      console.log('testing aws method');
-      aws.createUserAttributeList(vm.credentials, aws.createUserAttribute);
+      var userName, userPassword, userAttrList;
+      userAttrList = aws.createUserAttributeList(vm.credentials, aws.createUserAttribute);
+      userName     = vm.credentials.name;
+      userPassword = vm.credentials.password;
+      aws.registerUser(userPool, userName.replace(' ', '-'), userPassword, userAttrList);
       console.log('Submitting registration');
       authentication
         .register(vm.credentials)

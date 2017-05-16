@@ -15,17 +15,17 @@
     // new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataFullName)
     
     // for now just log what we got
-    createUserAttributeList = function(userDetailObj, cognitoConstructorFunction) {
+    createUserAttributeList = function(userDetailObj, cognitoUserAttrConstructorFunction) {
       var newAttributeList = [];
       for (var keyName in userDetailObj) {
-        newAttributeList.push(new cognitoConstructorFunction({
-            Name: keyName,
-            Value: userDetailObj[keyName]
-          })
-        );
+        if (keyName !== 'password') {
+          newAttributeList.push(new cognitoUserAttrConstructorFunction({
+              Name: keyName,
+              Value: userDetailObj[keyName]
+            })
+          );
+        }
       }
-      
-      console.log(newAttributeList);
       return newAttributeList;
     }
     
