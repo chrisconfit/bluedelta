@@ -7,23 +7,32 @@
   aws.$inject = ['$http', '$window'];
   function aws ($http, $window) {
     
-    AWSCognito.config.region = 'us-east-1';
+    
+    
     
     createUserPool = function(validPoolData) {
         var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(validPoolData);
         return userPool;
     }
     
-    var configSettings = {
-      poolData: {
-        UserPoolId : 'us-east-1_LOGu3QxlG',
-        ClientId   : '722lmps6diglhvjek6gmrk4g69'
-      }
+    registerUser = function(userPool, userName, password, attributeList) {
+      console.log('insid');
+      
+      var validatorsOrNull = null;
+      
+      userPool.signUp(userName, password, attributeList, validatorsOrNull, function(err, result) {
+        if (err) {
+          alert(err);
+          return;
+        }
+        var cognitoUser = result.user;
+        console.log('user name is ' + cognitoUser.getUsername());
+      })
     }
 
     return {
 	    createUserPool: createUserPool,
-	    configSettings: configSettings
+	    registerUser: registerUser
     };
   }
 

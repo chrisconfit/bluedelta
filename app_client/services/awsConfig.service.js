@@ -10,7 +10,7 @@
       
     
     var region = 'us-east-1';
-    
+    AWSCognito.config.region = region;
     
     
     var poolInfo = {
