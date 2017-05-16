@@ -7,13 +7,33 @@
   aws.$inject = ['$http', '$window'];
   function aws ($http, $window) {
     
+    // var dataFullName = {
+    //     Name: 'full_name',
+    //     Value: 'Firstname Last'
+    // };
+    createUserAttribute = AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute;
+    // new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataFullName)
     
-    
+    // for now just log what we got
+    createUserAttributeList = function(userDetailObj, cognitoConstructorFunction) {
+      var newAttributeList = [];
+      for (var keyName in userDetailObj) {
+        newAttributeList.push(new cognitoConstructorFunction({
+            Name: keyName,
+            Value: userDetailObj[keyName]
+          })
+        );
+      }
+      
+      console.log(newAttributeList);
+      return newAttributeList;
+    }
     
     createUserPool = function(validPoolData) {
         var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(validPoolData);
         return userPool;
     }
+    
     
     registerUser = function(userPool, userName, password, attributeList) {
       console.log('insid');
@@ -31,6 +51,8 @@
     }
 
     return {
+      createUserAttribute: createUserAttribute,
+      createUserAttributeList: createUserAttributeList,
 	    createUserPool: createUserPool,
 	    registerUser: registerUser
     };

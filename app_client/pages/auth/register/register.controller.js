@@ -8,10 +8,8 @@
   function registerCtrl($location, authentication, aws, awsConfig) {
     var vm = this;
 
-    // vm credentials has to read like aws stuff
-    
     var userPool = aws.createUserPool(awsConfig.poolInfo);
-    console.log("userPool from registerCtrl => ", userPool);
+    // console.log("userPool from registerCtrl => ", userPool);
 
     vm.credentials = {
       name : "",
@@ -24,9 +22,10 @@
 		}
 
     vm.onSubmit = function () {
+      console.log('testing aws method');
+      aws.createUserAttributeList(vm.credentials, aws.createUserAttribute);
       console.log('Submitting registration');
       authentication
-      .ragister()
         .register(vm.credentials)
         .error(function(err){
           //alert(err);

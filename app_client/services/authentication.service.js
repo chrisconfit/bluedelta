@@ -65,12 +65,14 @@
 
 		}
 		
-		ragister = function() {
-		  return aws.registerUser;
-		};
+		awsRegisterUser = aws.registerUser;
+		
+		
 		
     register = function(user) {
+      
       return $http.post('/api/register', user).success(function(data){
+        console.log('register ran. Data => ', data);
         saveToken(data.token);
       });
     };
@@ -86,7 +88,7 @@
     };
 
     return {
-      ragister: ragister,
+      awsRegisterUser: awsRegisterUser,
 	    isAdmin : isAdmin,
       currentUser : currentUser,
       saveToken : saveToken,
