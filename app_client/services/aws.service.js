@@ -7,23 +7,18 @@
   aws.$inject = ['$http', '$window'];
   function aws ($http, $window) {
     
-    // var dataFullName = {
-    //     Name: 'full_name',
-    //     Value: 'Firstname Last'
-    // };
-    createUserAttribute = AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute;
-    // new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataFullName)
+    userAttributeConstructor = AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute;
     
-    // for now just log what we got
-    createUserAttributeList = function(userDetailObj, cognitoUserAttrConstructorFunction) {
+    
+    
+    createUserAttributeList = function(userDetailObj, cognitoUserAttrConstructorFunction, allowedFields) {
       var newAttributeList = [];
       for (var keyName in userDetailObj) {
-        if (keyName !== 'password') {
+        if (allowedFields.indexOf(keyName) !== -1 ) {
           newAttributeList.push(new cognitoUserAttrConstructorFunction({
-              Name: keyName,
-              Value: userDetailObj[keyName]
-            })
-          );
+            Name: keyName,
+            Value: userDetailObj[keyName]
+          }));
         }
       }
       return newAttributeList;
@@ -36,22 +31,19 @@
     
     
     registerUser = function(userPool, userName, password, attributeList) {
-      console.log('insid');
-      
       var validatorsOrNull = null;
-      
       userPool.signUp(userName, password, attributeList, validatorsOrNull, function(err, result) {
         if (err) {
           alert(err);
           return;
         }
         var cognitoUser = result.user;
-        console.log('user name is ' + cognitoUser.getUsername());
+        // console.log('user name is ' + cognitoUser.getUsername());
       })
     }
 
     return {
-      createUserAttribute: createUserAttribute,
+      userAttributeConstructor: userAttributeConstructor,
       createUserAttributeList: createUserAttributeList,
 	    createUserPool: createUserPool,
 	    registerUser: registerUser
