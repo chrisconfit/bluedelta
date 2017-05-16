@@ -33,4 +33,6 @@ node_modules
 
 .DS_Store
 
-.DS_Store?
+.DS_Store?.idea
+.idea/blue-delta.iml .idea/modules.xml .idea/workspace.xml
+**/.idea
