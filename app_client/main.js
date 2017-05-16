@@ -25,7 +25,7 @@
         controller: 'closetCtrl',
         controllerAs: 'vm'
       })
-      .when('/customizer', {
+      .when('/customizer/:jean_id?/:action?', {
         templateUrl: '/pages/customizer/customizer.view.html',
         controller: 'customizerCtrl',
         controllerAs: 'vm'
@@ -45,7 +45,7 @@
   function run($rootScope, $location, authentication) {
     $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
 	    var locked = [
-		    '/closet'
+		    '/closets'
 	    ];
 	    
 	    if (locked.indexOf($location.path()) >= 0  && !authentication.isLoggedIn()) {
@@ -80,8 +80,28 @@
 		  }  
 		})
 		.filter('displayName',function() {
+			return function(input){				
+				return input ? input.replace(/Raw Denim/g, "") : false;
+		  }  
+		})
+		
+		.filter('listData',function() {
 			return function(input){
-				return input.replace(/Raw Denim/g, "");
+				
+				var display = [
+					'fabric',
+					'accent_thread',
+					'top_thread',
+					'bottom_thread',
+					'gender',
+					'style'
+				];
+			
+				for (key in input){
+					if (display.indexOf(key)<0)
+						delete input[key];					
+				}
+				return input;
 		  }  
 		})
 		
