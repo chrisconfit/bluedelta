@@ -4,11 +4,11 @@
     .module('bdApp')
     .controller('registerCtrl', registerCtrl);
 
-  registerCtrl.$inject = ['$location', 'authentication', 'aws', 'awsConfig'];
-  function registerCtrl($location, authentication, aws, awsConfig) {
+  registerCtrl.$inject = ['$location', 'authentication', 'aws'];
+  function registerCtrl($location, authentication, aws) {
     var vm = this;
 
-    var userPool = aws.createUserPool(awsConfig.poolInfo);
+    
     // console.log("userPool from registerCtrl => ", userPool);
 
     vm.credentials = {
@@ -22,24 +22,46 @@
 		}
 
     vm.onSubmit = function () {
-      var userAttrList, acceptedCognitoFields;
-      acceptedCognitoFields = ['email'];
+      /*
+       awsConfig.userDetailObj = aws.updateUserDetailObj(awsConfig.userDetailObj, vm.credentials);
+       awsConfig.userAttrList  = aws.updateUserAttrList(awsConfig.userAttrList, );
+
+       */
+
+
+      var userAttrList;
+      /*
+        PSEUDO
+
+        authentication.userAttrList = authentication.userAttrList.map(attrObj => {
+          for ( var key in vm.credentials) {
+            if (attrObj[key]) {
+              attrObj[key] = vm.credentials[key];
+            }
+          }
+          return attrObj;
+        })
+
+
+      */
       
-      userAttrList = aws.createUserAttributeList(vm.credentials, aws.userAttributeConstructor, acceptedCognitoFields);
-      aws.registerUser(userPool, vm.credentials.email, vm.credentials.password, userAttrList);
+
+
+      userAttrList = authentication.createUserAttributeList(vm.credentials, awsConfig.acceptedCognitoFields);
+      console.log(userAttrList);
       
       // original code below
       console.log('Submitting registration');
       authentication
-        .register(vm.credentials)
-        .error(function(err){
-          //alert(err);
-          console.log(err);
-          vm.errors.message = err.message;
-        })
-        .then(function(){
-          $location.path('profile');
-        });
+        .register(authentication.userPool, vm.credentials.email, vm.credentials.password, userAttrList);
+        // .error(function(err){
+        //   //alert(err);
+        //   console.log(err);
+        //   vm.errors.message = err.message;
+        // })
+        // .then(function(){
+        //   $location.path('profile');
+        // });
     };
 
   }

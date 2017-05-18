@@ -6,12 +6,7 @@
 
   authentication.$inject = ['$http', '$window', 'aws', 'awsConfig'];
   function authentication ($http, $window, aws, awsConfig) {
-    
-    var userPool = aws.createUserPool(awsConfig.poolInfo);
-    
-    
-    
-    console.log(userPool);
+
     
   
     var saveToken = function (token) {
@@ -50,6 +45,7 @@
         };
       }
     };
+
 		
 		var isAdmin = function(){
 			if(isLoggedIn()){
@@ -62,20 +58,18 @@
         var roles = payload.permissions;
 				return roles.indexOf('admin') !== -1;
       }
-
 		}
+
+    
+
+    
+
+
+
+    
+
 		
-		awsRegisterUser = aws.registerUser;
-		
-		
-		
-    register = function(user) {
-      
-      return $http.post('/api/register', user).success(function(data){
-        console.log('register ran. Data => ', data);
-        saveToken(data.token);
-      });
-    };
+    
 
     login = function(user) {
       return $http.post('/api/login', user).success(function(data) {
@@ -88,7 +82,9 @@
     };
 
     return {
-      awsRegisterUser: awsRegisterUser,
+      userAttrList: userAttrList,
+      createUserAttributeList: createUserAttributeList,
+      userPool: userPool,
 	    isAdmin : isAdmin,
       currentUser : currentUser,
       saveToken : saveToken,
