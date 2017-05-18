@@ -22,6 +22,7 @@
       return authenticationDetails;
     }
 
+
     function _getCognitoUser(uname, upool) {
       var userData = { Username : uname, Pool : upool };
       var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
@@ -89,11 +90,8 @@
     }
 
     signupForApplication = function(emailAddress, password) {
-      
       var attributeList = _buildAttributeList(_buildAttribute, {email: emailAddress});
-
       var cognitoUser;
-
       _getUserPool().signUp(emailAddress, password, attributeList, null, function(err, result) {
           if (err) {
               alert(err);
@@ -103,16 +101,9 @@
       });
     }
 
-    updateAttributesOnUser = function(username, obj) {
-      function getCognitoUser(uname, upool) {
-        var userData = { Username : uname, Pool : upool };
-        var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
-        return cognitoUser;
-      }
-      
-      
+    updateAttributesOnUser = function(username, obj) {      
       var attributeList = _buildAttributeList(_buildAttribute, obj);
-      var cognitoUser   = getCognitoUser(username, _getUserPool());
+      var cognitoUser   = _getCognitoUser(username, _getUserPool());
       cognitoUser.updateAttributes(attributeList, function(err, result) {
           if (err) {
               alert(err);
@@ -259,9 +250,23 @@
     }
 
     return {
-     
+      getUserFromLocalStorage: getUserFromLocalStorage,
+      deleteCognitoUser: deleteCognitoUser,
+      authenticateCognitoUser: authenticateCognitoUser,
+      signupForApplication: signupForApplication,
+      updateAttributesOnUser: updateAttributesOnUser,
+      deleteUserAttributes: deleteUserAttributes,
+      verifyUserAttribute: verifyUserAttribute,
+      retrieveUserAttributes: retrieveUserAttributes,
+      resendConfirmationCode: resendConfirmationCode,
+      confirmRegistration: confirmRegistration,
+      changePassword: changePassword,
+      forgotPasswordFlow: forgotPasswordFlow,
+      deleteUser: deleteUser,
+      signUserOut: signUserOut,
+      signUserOutGlobally: signUserOutGlobally,
+      getCurrentUserFromLocalStorage: getCurrentUserFromLocalStorage,
+      confirmRegisteredUnauthenticatedUser: confirmRegisteredUnauthenticatedUser
     };
   }
-
-
 })();
