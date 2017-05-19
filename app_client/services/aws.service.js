@@ -21,6 +21,7 @@
       var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
       return authenticationDetails;
     }
+      
 
 
     function _getCognitoUser(uname, upool) {
