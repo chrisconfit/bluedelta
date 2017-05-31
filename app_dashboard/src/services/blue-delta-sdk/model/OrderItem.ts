@@ -12,7 +12,11 @@
 
 import * as models from './models';
 
-export interface UsersListResponse {
-    "items": Array<models.User>;
-}
+export interface OrderItem {
+    jean: models.Jean;
 
+    status?: string;
+
+    tracking?: string;
+
+}

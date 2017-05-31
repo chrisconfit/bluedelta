@@ -61,7 +61,7 @@ export class DefaultApi {
      * 
      * @param button 
      */
-    public buttonsCreate(button: models.Button, extraHttpRequestParams?: any): Observable<{}> {
+    public buttonsCreate(button: models.Button, extraHttpRequestParams?: any): Observable<models.Button> {
         return this.buttonsCreateWithHttpInfo(button, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -156,7 +156,7 @@ export class DefaultApi {
      * 
      * @param fabric 
      */
-    public fabricsCreate(fabric: models.Fabric, extraHttpRequestParams?: any): Observable<{}> {
+    public fabricsCreate(fabric: models.Fabric, extraHttpRequestParams?: any): Observable<models.Fabric> {
         return this.fabricsCreateWithHttpInfo(fabric, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -265,6 +265,133 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param order 
+     */
+    public orderCreate(order: models.Order, extraHttpRequestParams?: any): Observable<models.Order> {
+        return this.orderCreateWithHttpInfo(order, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     * @param orderId 
+     */
+    public ordersDelete(orderId: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.ordersDeleteWithHttpInfo(orderId, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     * @param orderId 
+     */
+    public ordersGet(orderId: string, extraHttpRequestParams?: any): Observable<models.Order> {
+        return this.ordersGetWithHttpInfo(orderId, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     */
+    public ordersList(extraHttpRequestParams?: any): Observable<models.OrdersListResponse> {
+        return this.ordersListWithHttpInfo(extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     */
+    public ordersListByUser(userId: string, extraHttpRequestParams?: any): Observable<models.OrdersListResponse> {
+        return this.ordersListByUserWithHttpInfo(userId, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     */
+    public ordersOptions(extraHttpRequestParams?: any): Observable<{}> {
+        return this.ordersOptionsWithHttpInfo(extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     * @param orderId 
+     */
+    public ordersOrderIdOptions(orderId: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.ordersOrderIdOptionsWithHttpInfo(orderId, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     * @param orderId 
+     * @param order 
+     */
+    public ordersUpdate(orderId: string, order: models.Order, extraHttpRequestParams?: any): Observable<models.Order> {
+        return this.ordersUpdateWithHttpInfo(orderId, order, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
      */
     public ping(extraHttpRequestParams?: any): Observable<{}> {
         return this.pingWithHttpInfo(extraHttpRequestParams)
@@ -297,7 +424,7 @@ export class DefaultApi {
      * 
      * @param thread 
      */
-    public threadsCreate(thread: models.Thread, extraHttpRequestParams?: any): Observable<{}> {
+    public threadsCreate(thread: models.Thread, extraHttpRequestParams?: any): Observable<models.Thread> {
         return this.threadsCreateWithHttpInfo(thread, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -514,6 +641,22 @@ export class DefaultApi {
             });
     }
 
+    /**
+     * 
+     * 
+     * @param userId 
+     */
+    public usersUserIdOrdersOptions(userId: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.usersUserIdOrdersOptionsWithHttpInfo(userId, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
 
     /**
      * 
@@ -573,6 +716,7 @@ export class DefaultApi {
 
         // to determine the Accept header
         let produces: string[] = [
+            'application/json'
         ];
 
         // authentication (sigv4) required
@@ -824,6 +968,7 @@ export class DefaultApi {
 
         // to determine the Accept header
         let produces: string[] = [
+            'application/json'
         ];
 
         // authentication (sigv4) required
@@ -1094,6 +1239,338 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param order 
+     */
+    public orderCreateWithHttpInfo(order: models.Order, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/orders`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'order' is not null or undefined
+        if (order === null || order === undefined) {
+            throw new Error('Required parameter order was null or undefined when calling orderCreate.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'application/json'
+        ];
+
+        // authentication (sigv4) required
+        if (this.configuration.apiKey) {
+            headers.set('Authorization', this.configuration.apiKey);
+        }
+
+        headers.set('Content-Type', 'application/json');
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Post,
+            headers: headers,
+            body: order == null ? '' : JSON.stringify(order), // https://github.com/angular/angular/issues/10612
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param orderId 
+     */
+    public ordersDeleteWithHttpInfo(orderId: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/orders/${orderId}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'orderId' is not null or undefined
+        if (orderId === null || orderId === undefined) {
+            throw new Error('Required parameter orderId was null or undefined when calling ordersDelete.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        // authentication (sigv4) required
+        if (this.configuration.apiKey) {
+            headers.set('Authorization', this.configuration.apiKey);
+        }
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Delete,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param orderId 
+     */
+    public ordersGetWithHttpInfo(orderId: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/orders/${orderId}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'orderId' is not null or undefined
+        if (orderId === null || orderId === undefined) {
+            throw new Error('Required parameter orderId was null or undefined when calling ordersGet.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'application/json'
+        ];
+
+        // authentication (sigv4) required
+        if (this.configuration.apiKey) {
+            headers.set('Authorization', this.configuration.apiKey);
+        }
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Get,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public ordersListWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/orders`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'application/json'
+        ];
+
+        // authentication (sigv4) required
+        if (this.configuration.apiKey) {
+            headers.set('Authorization', this.configuration.apiKey);
+        }
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Get,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     */
+    public ordersListByUserWithHttpInfo(userId: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/users/${userId}/orders`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'userId' is not null or undefined
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling ordersListByUser.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'application/json'
+        ];
+
+        // authentication (sigv4) required
+        if (this.configuration.apiKey) {
+            headers.set('Authorization', this.configuration.apiKey);
+        }
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Get,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public ordersOptionsWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/orders`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Options,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param orderId 
+     */
+    public ordersOrderIdOptionsWithHttpInfo(orderId: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/orders/${orderId}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'orderId' is not null or undefined
+        if (orderId === null || orderId === undefined) {
+            throw new Error('Required parameter orderId was null or undefined when calling ordersOrderIdOptions.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Options,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param orderId 
+     * @param order 
+     */
+    public ordersUpdateWithHttpInfo(orderId: string, order: models.Order, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/orders/${orderId}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'orderId' is not null or undefined
+        if (orderId === null || orderId === undefined) {
+            throw new Error('Required parameter orderId was null or undefined when calling ordersUpdate.');
+        }
+        // verify required parameter 'order' is not null or undefined
+        if (order === null || order === undefined) {
+            throw new Error('Required parameter order was null or undefined when calling ordersUpdate.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'application/json'
+        ];
+
+        // authentication (sigv4) required
+        if (this.configuration.apiKey) {
+            headers.set('Authorization', this.configuration.apiKey);
+        }
+
+        headers.set('Content-Type', 'application/json');
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Post,
+            headers: headers,
+            body: order == null ? '' : JSON.stringify(order), // https://github.com/angular/angular/issues/10612
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
      */
     public pingWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/ping`;
@@ -1181,6 +1658,7 @@ export class DefaultApi {
 
         // to determine the Accept header
         let produces: string[] = [
+            'application/json'
         ];
 
         // authentication (sigv4) required
@@ -1713,6 +2191,43 @@ export class DefaultApi {
         // verify required parameter 'userId' is not null or undefined
         if (userId === null || userId === undefined) {
             throw new Error('Required parameter userId was null or undefined when calling usersUserIdOptions.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Options,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     */
+    public usersUserIdOrdersOptionsWithHttpInfo(userId: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/users/${userId}/orders`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'userId' is not null or undefined
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling usersUserIdOrdersOptions.');
         }
         // to determine the Content-Type header
         let consumes: string[] = [

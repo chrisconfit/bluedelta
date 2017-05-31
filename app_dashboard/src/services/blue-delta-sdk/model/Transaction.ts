@@ -12,7 +12,9 @@
 
 import * as models from './models';
 
-export interface FabricsListResponse {
-    "items": Array<models.Fabric>;
-}
+export interface Transaction {
+    transactionId?: string;
 
+    status?: string;
+
+}

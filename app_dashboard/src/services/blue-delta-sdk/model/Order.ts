@@ -12,9 +12,13 @@
 
 import * as models from './models';
 
-export interface Measurement {
-    "measurementId": string;
-    "userId"?: string;
-    "waist"?: number;
-}
+export interface Order {
+    orderId?: string;
 
+    userId: string;
+
+    orderItems?: Array<models.OrderItem>;
+
+    transaction?: models.Transaction;
+
+}

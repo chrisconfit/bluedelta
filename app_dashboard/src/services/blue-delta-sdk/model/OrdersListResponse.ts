@@ -12,7 +12,7 @@
 
 import * as models from './models';
 
-export interface ButtonsListResponse {
-    "items": Array<models.Button>;
-}
+export interface OrdersListResponse {
+    items: Array<models.Order>;
 
+}
