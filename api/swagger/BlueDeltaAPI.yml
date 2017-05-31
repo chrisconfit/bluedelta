@@ -707,6 +707,10 @@ definitions:
         type: number
         format: float
         minimum: 0.0
+      leg:
+        type: number
+        format: float
+        minimum: 0.0
       # TODO Add more measurement parameters
   
   JeansListResponse:
