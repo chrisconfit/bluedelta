@@ -377,26 +377,37 @@ paths:
       - sigv4: []
 
 parameters:
-  Pitch:
+  Button:
     in: "body"
     name: "body"
     required: true
     schema:
-      $ref: "#/definitions/Pitch"
-  PitchId:
+      $ref: "#/definitions/Button"
+  ButtonId:
     in: "path"
-    name: "pitchId"
+    name: "buttonId"
     required: true
     type: string
-  Comment:
+  Thread:
     in: "body"
     name: "body"
     required: true
     schema:
-      $ref: "#/definitions/Comment"
-  CommentId:
+      $ref: "#/definitions/Thread"
+  ThreadId:
     in: "path"
-    name: "commentId"
+    name: "threadId"
+    required: true
+    type: string
+  Fabric:
+    in: "body"
+    name: "body"
+    required: true
+    schema:
+      $ref: "#/definitions/Fabric"
+  FabricId:
+    in: "path"
+    name: "fabricId"
     required: true
     type: string
   User:

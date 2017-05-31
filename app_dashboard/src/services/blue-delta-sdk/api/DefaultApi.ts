@@ -43,9 +43,10 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param buttonId 
      */
-    public buttonsButtonIdOptions(extraHttpRequestParams?: any): Observable<{}> {
-        return this.buttonsButtonIdOptionsWithHttpInfo(extraHttpRequestParams)
+    public buttonsButtonIdOptions(buttonId: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.buttonsButtonIdOptionsWithHttpInfo(buttonId, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -58,9 +59,10 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param button 
      */
-    public buttonsCreate(extraHttpRequestParams?: any): Observable<{}> {
-        return this.buttonsCreateWithHttpInfo(extraHttpRequestParams)
+    public buttonsCreate(button: models.Button, extraHttpRequestParams?: any): Observable<{}> {
+        return this.buttonsCreateWithHttpInfo(button, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -73,9 +75,10 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param buttonId 
      */
-    public buttonsDelete(extraHttpRequestParams?: any): Observable<{}> {
-        return this.buttonsDeleteWithHttpInfo(extraHttpRequestParams)
+    public buttonsDelete(buttonId: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.buttonsDeleteWithHttpInfo(buttonId, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -88,9 +91,10 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param buttonId 
      */
-    public buttonsGet(extraHttpRequestParams?: any): Observable<models.Button> {
-        return this.buttonsGetWithHttpInfo(extraHttpRequestParams)
+    public buttonsGet(buttonId: string, extraHttpRequestParams?: any): Observable<models.Button> {
+        return this.buttonsGetWithHttpInfo(buttonId, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -133,9 +137,11 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param buttonId 
+     * @param button 
      */
-    public buttonsUpdate(extraHttpRequestParams?: any): Observable<models.Button> {
-        return this.buttonsUpdateWithHttpInfo(extraHttpRequestParams)
+    public buttonsUpdate(buttonId: string, button: models.Button, extraHttpRequestParams?: any): Observable<models.Button> {
+        return this.buttonsUpdateWithHttpInfo(buttonId, button, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -148,9 +154,10 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param fabric 
      */
-    public fabricsCreate(extraHttpRequestParams?: any): Observable<{}> {
-        return this.fabricsCreateWithHttpInfo(extraHttpRequestParams)
+    public fabricsCreate(fabric: models.Fabric, extraHttpRequestParams?: any): Observable<{}> {
+        return this.fabricsCreateWithHttpInfo(fabric, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -163,9 +170,10 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param fabricId 
      */
-    public fabricsDelete(extraHttpRequestParams?: any): Observable<{}> {
-        return this.fabricsDeleteWithHttpInfo(extraHttpRequestParams)
+    public fabricsDelete(fabricId: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.fabricsDeleteWithHttpInfo(fabricId, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -178,9 +186,10 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param fabricId 
      */
-    public fabricsFabricIdOptions(extraHttpRequestParams?: any): Observable<{}> {
-        return this.fabricsFabricIdOptionsWithHttpInfo(extraHttpRequestParams)
+    public fabricsFabricIdOptions(fabricId: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.fabricsFabricIdOptionsWithHttpInfo(fabricId, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -193,9 +202,10 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param fabricId 
      */
-    public fabricsGet(extraHttpRequestParams?: any): Observable<models.Fabric> {
-        return this.fabricsGetWithHttpInfo(extraHttpRequestParams)
+    public fabricsGet(fabricId: string, extraHttpRequestParams?: any): Observable<models.Fabric> {
+        return this.fabricsGetWithHttpInfo(fabricId, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -238,9 +248,11 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param fabricId 
+     * @param fabric 
      */
-    public fabricsUpdate(extraHttpRequestParams?: any): Observable<models.Fabric> {
-        return this.fabricsUpdateWithHttpInfo(extraHttpRequestParams)
+    public fabricsUpdate(fabricId: string, fabric: models.Fabric, extraHttpRequestParams?: any): Observable<models.Fabric> {
+        return this.fabricsUpdateWithHttpInfo(fabricId, fabric, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -283,9 +295,10 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param thread 
      */
-    public threadsCreate(extraHttpRequestParams?: any): Observable<{}> {
-        return this.threadsCreateWithHttpInfo(extraHttpRequestParams)
+    public threadsCreate(thread: models.Thread, extraHttpRequestParams?: any): Observable<{}> {
+        return this.threadsCreateWithHttpInfo(thread, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -298,9 +311,10 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param threadId 
      */
-    public threadsDelete(extraHttpRequestParams?: any): Observable<{}> {
-        return this.threadsDeleteWithHttpInfo(extraHttpRequestParams)
+    public threadsDelete(threadId: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.threadsDeleteWithHttpInfo(threadId, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -313,9 +327,10 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param threadId 
      */
-    public threadsGet(extraHttpRequestParams?: any): Observable<models.Thread> {
-        return this.threadsGetWithHttpInfo(extraHttpRequestParams)
+    public threadsGet(threadId: string, extraHttpRequestParams?: any): Observable<models.Thread> {
+        return this.threadsGetWithHttpInfo(threadId, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -358,9 +373,10 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param threadId 
      */
-    public threadsThreadIdOptions(extraHttpRequestParams?: any): Observable<{}> {
-        return this.threadsThreadIdOptionsWithHttpInfo(extraHttpRequestParams)
+    public threadsThreadIdOptions(threadId: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.threadsThreadIdOptionsWithHttpInfo(threadId, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -373,9 +389,11 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param threadId 
+     * @param thread 
      */
-    public threadsUpdate(extraHttpRequestParams?: any): Observable<models.Thread> {
-        return this.threadsUpdateWithHttpInfo(extraHttpRequestParams)
+    public threadsUpdate(threadId: string, thread: models.Thread, extraHttpRequestParams?: any): Observable<models.Thread> {
+        return this.threadsUpdateWithHttpInfo(threadId, thread, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -500,12 +518,17 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param buttonId 
      */
-    public buttonsButtonIdOptionsWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public buttonsButtonIdOptionsWithHttpInfo(buttonId: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/buttons/${buttonId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'buttonId' is not null or undefined
+        if (buttonId === null || buttonId === undefined) {
+            throw new Error('Required parameter buttonId was null or undefined when calling buttonsButtonIdOptions.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -532,12 +555,17 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param button 
      */
-    public buttonsCreateWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public buttonsCreateWithHttpInfo(button: models.Button, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/buttons`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'button' is not null or undefined
+        if (button === null || button === undefined) {
+            throw new Error('Required parameter button was null or undefined when calling buttonsCreate.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -552,9 +580,12 @@ export class DefaultApi {
             headers.set('Authorization', this.configuration.apiKey);
         }
 
+        headers.set('Content-Type', 'application/json');
+
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
+            body: button == null ? '' : JSON.stringify(button), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
 
@@ -569,12 +600,17 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param buttonId 
      */
-    public buttonsDeleteWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public buttonsDeleteWithHttpInfo(buttonId: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/buttons/${buttonId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'buttonId' is not null or undefined
+        if (buttonId === null || buttonId === undefined) {
+            throw new Error('Required parameter buttonId was null or undefined when calling buttonsDelete.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -606,12 +642,17 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param buttonId 
      */
-    public buttonsGetWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public buttonsGetWithHttpInfo(buttonId: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/buttons/${buttonId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'buttonId' is not null or undefined
+        if (buttonId === null || buttonId === undefined) {
+            throw new Error('Required parameter buttonId was null or undefined when calling buttonsGet.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -714,12 +755,22 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param buttonId 
+     * @param button 
      */
-    public buttonsUpdateWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public buttonsUpdateWithHttpInfo(buttonId: string, button: models.Button, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/buttons/${buttonId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'buttonId' is not null or undefined
+        if (buttonId === null || buttonId === undefined) {
+            throw new Error('Required parameter buttonId was null or undefined when calling buttonsUpdate.');
+        }
+        // verify required parameter 'button' is not null or undefined
+        if (button === null || button === undefined) {
+            throw new Error('Required parameter button was null or undefined when calling buttonsUpdate.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -735,9 +786,12 @@ export class DefaultApi {
             headers.set('Authorization', this.configuration.apiKey);
         }
 
+        headers.set('Content-Type', 'application/json');
+
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
+            body: button == null ? '' : JSON.stringify(button), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
 
@@ -752,12 +806,17 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param fabric 
      */
-    public fabricsCreateWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public fabricsCreateWithHttpInfo(fabric: models.Fabric, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/fabrics`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'fabric' is not null or undefined
+        if (fabric === null || fabric === undefined) {
+            throw new Error('Required parameter fabric was null or undefined when calling fabricsCreate.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -772,9 +831,12 @@ export class DefaultApi {
             headers.set('Authorization', this.configuration.apiKey);
         }
 
+        headers.set('Content-Type', 'application/json');
+
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
+            body: fabric == null ? '' : JSON.stringify(fabric), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
 
@@ -789,12 +851,17 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param fabricId 
      */
-    public fabricsDeleteWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public fabricsDeleteWithHttpInfo(fabricId: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/fabrics/${fabricId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'fabricId' is not null or undefined
+        if (fabricId === null || fabricId === undefined) {
+            throw new Error('Required parameter fabricId was null or undefined when calling fabricsDelete.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -826,12 +893,17 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param fabricId 
      */
-    public fabricsFabricIdOptionsWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public fabricsFabricIdOptionsWithHttpInfo(fabricId: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/fabrics/${fabricId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'fabricId' is not null or undefined
+        if (fabricId === null || fabricId === undefined) {
+            throw new Error('Required parameter fabricId was null or undefined when calling fabricsFabricIdOptions.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -858,12 +930,17 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param fabricId 
      */
-    public fabricsGetWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public fabricsGetWithHttpInfo(fabricId: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/fabrics/${fabricId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'fabricId' is not null or undefined
+        if (fabricId === null || fabricId === undefined) {
+            throw new Error('Required parameter fabricId was null or undefined when calling fabricsGet.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -966,12 +1043,22 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param fabricId 
+     * @param fabric 
      */
-    public fabricsUpdateWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public fabricsUpdateWithHttpInfo(fabricId: string, fabric: models.Fabric, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/fabrics/${fabricId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'fabricId' is not null or undefined
+        if (fabricId === null || fabricId === undefined) {
+            throw new Error('Required parameter fabricId was null or undefined when calling fabricsUpdate.');
+        }
+        // verify required parameter 'fabric' is not null or undefined
+        if (fabric === null || fabric === undefined) {
+            throw new Error('Required parameter fabric was null or undefined when calling fabricsUpdate.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -987,9 +1074,12 @@ export class DefaultApi {
             headers.set('Authorization', this.configuration.apiKey);
         }
 
+        headers.set('Content-Type', 'application/json');
+
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
+            body: fabric == null ? '' : JSON.stringify(fabric), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
 
@@ -1073,12 +1163,17 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param thread 
      */
-    public threadsCreateWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public threadsCreateWithHttpInfo(thread: models.Thread, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/threads`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'thread' is not null or undefined
+        if (thread === null || thread === undefined) {
+            throw new Error('Required parameter thread was null or undefined when calling threadsCreate.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -1093,9 +1188,12 @@ export class DefaultApi {
             headers.set('Authorization', this.configuration.apiKey);
         }
 
+        headers.set('Content-Type', 'application/json');
+
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
+            body: thread == null ? '' : JSON.stringify(thread), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
 
@@ -1110,12 +1208,17 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param threadId 
      */
-    public threadsDeleteWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public threadsDeleteWithHttpInfo(threadId: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/threads/${threadId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'threadId' is not null or undefined
+        if (threadId === null || threadId === undefined) {
+            throw new Error('Required parameter threadId was null or undefined when calling threadsDelete.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -1147,12 +1250,17 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param threadId 
      */
-    public threadsGetWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public threadsGetWithHttpInfo(threadId: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/threads/${threadId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'threadId' is not null or undefined
+        if (threadId === null || threadId === undefined) {
+            throw new Error('Required parameter threadId was null or undefined when calling threadsGet.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -1255,12 +1363,17 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param threadId 
      */
-    public threadsThreadIdOptionsWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public threadsThreadIdOptionsWithHttpInfo(threadId: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/threads/${threadId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'threadId' is not null or undefined
+        if (threadId === null || threadId === undefined) {
+            throw new Error('Required parameter threadId was null or undefined when calling threadsThreadIdOptions.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -1287,12 +1400,22 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param threadId 
+     * @param thread 
      */
-    public threadsUpdateWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public threadsUpdateWithHttpInfo(threadId: string, thread: models.Thread, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/threads/${threadId}`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'threadId' is not null or undefined
+        if (threadId === null || threadId === undefined) {
+            throw new Error('Required parameter threadId was null or undefined when calling threadsUpdate.');
+        }
+        // verify required parameter 'thread' is not null or undefined
+        if (thread === null || thread === undefined) {
+            throw new Error('Required parameter thread was null or undefined when calling threadsUpdate.');
+        }
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -1308,9 +1431,12 @@ export class DefaultApi {
             headers.set('Authorization', this.configuration.apiKey);
         }
 
+        headers.set('Content-Type', 'application/json');
+
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
             headers: headers,
+            body: thread == null ? '' : JSON.stringify(thread), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
 
