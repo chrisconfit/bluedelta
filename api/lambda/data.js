@@ -259,6 +259,65 @@ class FabricsTable extends Table {
     }
 }
 
+class OrdersTable extends Table {
+    constructor() {
+        super({
+                // Parametrization supported for the name so it can be user configured.
+                TableName: config.getName('orders'),
+                KeySchema: [{ AttributeName: 'orderId', KeyType: 'HASH' }],
+                AttributeDefinitions: [
+                    { AttributeName: 'orderId', AttributeType: 'S' },
+                    { AttributeName: 'userId', AttributeType: 'S' }
+                ],
+                GlobalSecondaryIndexes: [
+                    {
+                        IndexName: 'userIdGSI',
+                        KeySchema: [ { AttributeName: 'userId', KeyType: 'HASH' }],
+                        Projection: { ProjectionType: 'ALL' },
+                        ProvisionedThroughput: {
+                            ReadCapacityUnits: 1,
+                            WriteCapacityUnits: 1
+                        }
+                    },
+                    {
+                        IndexName: 'ordersByUserByTimeGSI',
+                        KeySchema: [
+                            { AttributeName: 'userId', KeyType: 'HASH' }
+                        ],
+                        Projection: { ProjectionType: 'ALL' },
+                        ProvisionedThroughput: {
+                            ReadCapacityUnits: 1,
+                            WriteCapacityUnits: 1
+                        }
+                    }
+                ],
+                ProvisionedThroughput: {
+                    ReadCapacityUnits: 1,
+                    WriteCapacityUnits: 1
+                }
+            },
+            // These are custom options that the Table class understands
+            {
+                // Which parameters are auto-generated with uuid.v1() which is time dependant.
+                uuid: ['orderId'],
+                // Whether to add timestamps to the entries.
+                timestamps: true,
+            });
+    }
+
+    delete(orderId) {
+        return super.delete({orderId: orderId});
+    }
+
+    get(orderId) {
+        return super.get({orderId: orderId});
+    }
+
+    update(orderId) {
+        return super.put({orderId: orderId});
+    }
+}
+
 class UsersTable extends Table {
   constructor() {
     super({
