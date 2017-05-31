@@ -101,6 +101,105 @@ paths:
       security:
       - sigv4: []
 
+  /users/{userId}/orders:
+    get:
+      description: Returns List of 'Orders' by 'User'
+      operationId: orders-ListByUser
+      parameters:
+      - $ref: "#/parameters/UserId"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/OrdersListResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+      - sigv4: []
+
+  /orders:
+    get:
+      description: Returns List of 'Orders'
+      operationId: orders-List
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/OrdersListResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+      - sigv4: []
+    post:
+      description: Adds an Order
+      operationId: order-Create
+      parameters:
+      - $ref: "#/parameters/Order"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Order"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+      - sigv4: []
+
+  /orders/{orderId}:
+    delete:
+      description: Deletes an Order
+      operationId: orders-Delete
+      parameters:
+      - $ref: "#/parameters/OrderId"
+      responses:
+        "200":
+          description: Success
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+      - sigv4: []
+    get:
+      description: Returns an Order
+      operationId: orders-Get
+      parameters:
+      - $ref: "#/parameters/OrderId"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Order"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+      - sigv4: []
+    post:
+      description: Updates an Order
+      operationId: orders-Update
+      parameters:
+      - $ref: "#/parameters/OrderId"
+      - $ref: "#/parameters/Order"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Order"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+      - sigv4: []
+
   /buttons:
     get:
       description: Returns List of 'Buttons'
@@ -127,7 +226,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "$/definitions/Button"
+            $ref: "#/definitions/Button"
         default:
           description: Error
           schema:
@@ -214,7 +313,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "$/definitions/Thread"
+            $ref: "#/definitions/Thread"
         default:
           description: Error
           schema:
@@ -301,7 +400,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "$/definitions/Fabric"
+            $ref: "#/definitions/Fabric"
         default:
           description: Error
           schema:
@@ -377,6 +476,28 @@ paths:
       - sigv4: []
 
 parameters:
+  User:
+    in: "body"
+    name: "body"
+    required: true
+    schema:
+      $ref: "#/definitions/User"
+  UserId:
+    in: "path"
+    name: "userId"
+    required: true
+    type: string
+  Order:
+    in: "body"
+    name: "body"
+    required: true
+    schema:
+      $ref: "#/definitions/Order"
+  OrderId:
+    in: "path"
+    name: "orderId"
+    required: true
+    type: string
   Button:
     in: "body"
     name: "body"
@@ -410,17 +531,6 @@ parameters:
     name: "fabricId"
     required: true
     type: string
-  User:
-    in: "body"
-    name: "body"
-    required: true
-    schema:
-      $ref: "#/definitions/User"
-  UserId:
-    in: "path"
-    name: "userId"
-    required: true
-    type: string
 definitions:
   UsersListResponse:
     required:
@@ -442,6 +552,66 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Jean"
+
+  OrdersListResponse:
+    required:
+    - items
+    properties:
+      items:
+        type: array
+        items:
+          $ref: "#/definitions/Order"
+
+  Order:
+    required:
+    - userId
+    properties:
+      orderId:
+        type: string
+      userId:
+        type: string
+      orderItems:
+        type: array
+        items:
+          $ref: "#/definitions/OrderItem"
+      transaction:
+        $ref: "#/definitions/Transaction"
+
+  OrderItemsListResponse:
+    required:
+    - items
+    properties:
+      items:
+        type: array
+        items:
+          $ref: "#/definitions/OrderItem"
+
+  OrderItem:
+    required:
+    - jean
+    properties:
+      jean:
+        $ref: "#/definitions/Jean"
+      status:
+        type: string
+      tracking:
+        type: string
+
+  TransactionsListResponse:
+    required:
+    - items
+    properties:
+      items:
+        type: array
+        items:
+          $ref: "#/definitions/Transaction"
+
+  Transaction:
+    properties:
+      transactionId:
+        type: string
+      status:
+        type: string
 
   ButtonsListResponse:
     required:

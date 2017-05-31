@@ -8,6 +8,7 @@ var spawn = require('child_process').spawn;
 let swaggerDir = path.join(__dirname,'..','swagger');
 let apiSdkDir = path.join(swaggerDir,'generated');
 let appSdkDir = path.join(__dirname,'..','..','app_dashboard','src','services','blue-delta-sdk');
+let appClientSdkDir = path.join(__dirname,'..','..','app_client','services','blue-delta-sdk');
 
 function createSdk() {
   // Create generated directory if it does not exist
@@ -49,6 +50,47 @@ function createSdk() {
   });
 }
 
+function createClientSdk() {
+    // Create generated directory if it does not exist
+    if (fs.existsSync(apiSdkDir)) {
+        fs.removeSync(apiSdkDir);
+        fs.mkdirSync(apiSdkDir);
+    } else {
+        fs.mkdirSync(apiSdkDir);
+    }
+
+    return new Promise((resolve, reject) => {
+        // Run Swagger codegen locally to generate SDK files
+        let cmd = spawn('swagger-codegen', ['generate', '-i', swaggerDir + '/BlueDeltaAPI-exported.yml', '-l', 'typescript-angular', '-o', apiSdkDir]);
+        cmd.stdout.on('data', data => {
+            process.stdout.write(data);
+        });
+        cmd.stderr.on('data', data => {
+            process.stderr.write(data);
+        });
+        cmd.on('exit', code => {
+            if (code) {
+                reject(new Error(`Finished with exit code ${code}`));
+                return;
+            }
+            resolve('Generated SDK successfully');
+        });
+    }).then(() => {
+        // Clear any existing files from app SDK directory
+        fs.removeSync(appClientSdkDir);
+        fs.mkdirSync(appClientSdkDir);
+
+        // Copy SDK from temporary generated directory
+        fs.copySync(apiSdkDir,appClientSdkDir);
+        logger.info('Successfully generated Angular/TypeScript SDK at', appClientSdkDir);
+
+        // Delete temporary generated SDK folder
+        fs.removeSync(apiSdkDir);
+        return 'Successfully generated SDK';
+    });
+}
+
 module.exports = {
-  createSdk
+  createSdk,
+  createClientSdk,
 };

@@ -118,6 +118,11 @@ gulp.task('create_sdk', function (done) {
   execPromise(util.swagger.createSdk(), done);
 });
 
+gulp.task('create_client_sdk', function (done) {
+    logger.info('Generating Angular TypeScript SDK Swagger API definition...');
+    execPromise(util.swagger.createClientSdk(), done);
+});
+
 gulp.task('delete_export_api', function (done) {
   logger.info('Deleting exported Swagger API definition from API Gateway...');
   execPromise(util.apigateway.deleteApiExport(), done);
@@ -173,6 +178,8 @@ gulp.task('deploy_api', gulp.series('import_api', 'sleep', 'create_api_stage'));
 gulp.task('deploy_lambda', gulp.series('create_lambda_zip', 'upload_lambda_zip', 'create_lambda_functions', 'create_custom_authorizer', 'create_cognito_sync_trigger'));
 
 gulp.task('generate_sdk', gulp.series('export_api', 'create_sdk', 'delete_export_api'));
+
+gulp.task('generate_client_sdk', gulp.series('export_api', 'create_client_sdk', 'delete_export_api'));
 
 
 gulp.task('deploy', gulp.series(

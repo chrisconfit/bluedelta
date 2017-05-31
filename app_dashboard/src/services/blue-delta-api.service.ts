@@ -1,6 +1,6 @@
 import { Http, RequestOptions } from '@angular/http';
 import { Injectable } from "@angular/core";
-import { DefaultApi } from "./liftpitch-sdk/api/DefaultApi";
+import { DefaultApi } from "./blue-delta-sdk/api/DefaultApi";
 import { UserLoginService } from "./account-management.service";
 import { Config } from "../config/config";
 import { HttpService } from "./http-service";

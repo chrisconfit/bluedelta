@@ -11,14 +11,14 @@ function Create(event, context) {
 
 function Delete(event, context){
   // If does not exists will give 404.
-  return UsersTable.get(event.identityId).then(
+  return UsersTable.get(event.params.userId).then(
     () => {
-      return UsersTable.delete(event.identityId);
+      return UsersTable.delete(event.params.userId);
     });
 }
 
 function Get(event, context) {
-  return UsersTable.get(event.identityId);
+  return UsersTable.get(event.params.userId);
 }
 
 function List(event, context) {
@@ -27,23 +27,11 @@ function List(event, context) {
   return UsersTable.scan();
 }
 
-function ListFollowers(event, context) {
-  console.log(event);
-  // TODO Add pagination and only list followers.
-  return UsersTable.scan();
-}
-
-function ListFollowing(event, context) {
-  console.log(event);
-  // TODO Add pagination and only list followers.
-  return UsersTable.scan();
-}
-
 function Update(event, context) {
   let input = JSON.parse(event.body);
-  return UsersTable.get(event.identityId).then((data) => {
+  return UsersTable.get(event.params.userId).then((data) => {
     input.createTime = data.createTime;
-    input.identityId = event.identityId;
+    input.identityId = event.params.userId;
     return UsersTable.put(input);
   });
 }
@@ -53,7 +41,5 @@ module.exports = {
   Delete,
   Get,
   List,
-  ListFollowers,
-  ListFollowing,
   Update,
 };
