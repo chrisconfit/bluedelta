@@ -6,7 +6,7 @@
 			
 			<div class="cft-g jean-profile-grid">
 				<div class="cft-gi main">
-					
+ 
 					<div class="jean-profile-data">
 						<h3>{{vm.jean.data.title}}</h3>
 						<p>Status:{{vm.jean.data.buildStatus}}</p>
@@ -16,9 +16,9 @@
 					
 					<div class="jean-list closet">
 						<dl>
-							<!--
-							<dt ng-repeat-start="(key, value) in vm.jean.data">{{key | scoreToSpace}}:</dt><!--
-							--<dd ng-repeat-end>{{vm.dataLookup(key,value,"name")}}</dd>-->
+							
+							<dt ng-repeat-start="(key, value) in vm.jean.data | listData">{{key | scoreToSpace}}:</dt><!--
+							--><dd ng-repeat-end>{{vm.dataLookup(key,value,"name")}}</dd>
 						</dl>
 					</div>
 					

@@ -87,7 +87,7 @@
 		
 		.filter('listData',function() {
 			return function(input){
-				
+				var retObj = {}; 
 				var display = [
 					'fabric',
 					'accent_thread',
@@ -98,10 +98,10 @@
 				];
 			
 				for (key in input){
-					if (display.indexOf(key)<0)
-						delete input[key];					
+					if (display.indexOf(key)>=0)
+						retObj[key] = input[key];			
 				}
-				return input;
+				return retObj;
 		  }  
 		})
 		

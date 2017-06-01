@@ -13,13 +13,13 @@
 
 
       <div class="jean-closet">
+	      
 	      <div class="in-production">
 		      <h3>In Production</h3>
 		      <div class="cft-g jean-grid">
-	
 			      <div ng-repeat="jean in vm.jeans | filter:{ status: 'production' }" class="cft-gi">
 				      <div class="jean-card">
-								<img ng-click="vm.popups.jeanProfile = true; vm.jean.data=jean" src="/images/thumbnails/{{jean.id}}.jpg">
+								<img ng-click="vm.selectJean(jean)" src="/images/thumbnails/{{jean.id}}.jpg">
 								<div class="box-content">
 						      <h4 ng-click="vm.popups.jeanProfile = true; vm.jean.data=jean">{{jean.title}}</h4>
 									<h5>{{jean.buildStatus}}</h5>
@@ -29,6 +29,7 @@
 			      </div>
 		      </div>
 	      </div>
+	      
 	      <div class="owned">
 		      <h3>Owned</h3>
 		      <div class="cft-g jean-grid">
@@ -43,6 +44,7 @@
 			      </div>
 		      </div>
 	      </div>
+	      
 				<div class="in-production">
 		      <h3>Saved</h3>
 		      <div class="cft-g jean-grid">
@@ -56,6 +58,7 @@
 			      </div>
 		      </div>
 	      </div>
+	      
       </div><!--/.jean-closet-->
       
     </div><!--/.main

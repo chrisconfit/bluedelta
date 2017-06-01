@@ -52,12 +52,18 @@
 			$location.path('/customizer');
 		}
 		
+		vm.selectJean = function(jean){
+			console.log(jean);
+			console.log(vm.jean);
+			vm.popups.jeanProfile = true; 
+			vm.jean.data=jean
+		}
+		
 		meanData.getJeansByUser(1)
 		  .success(function(data) {
 				for (x=0; x<data.length; x++){
 					vm.jeans.push(data[x]);
 				}
-        console.log(vm.jeans);
       })
       .error(function (e) {
         console.log(e);
