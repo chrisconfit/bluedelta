@@ -15,7 +15,7 @@ export class TasksPage {
 
   public items: any;
   public refresher: any;
-  private taskTable: string = 'ionic-mobile-hub-tasks';
+  private taskTable: string = 'blue-delta-dashboard-mobile-hub-tasks';
 
   constructor(public navCtrl: NavController,
               public modalCtrl: ModalController,

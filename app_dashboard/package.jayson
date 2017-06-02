@@ -13,7 +13,7 @@
     "ionic-plugin-keyboard": "^2.2.1",
     "moment": "2.15.0",
     "reflect-metadata": "0.1.8",
-    "sjcl": "1.0.6",
+    
   },
   "devDependencies": {
     "@angular/cli": "^1.0.4",
