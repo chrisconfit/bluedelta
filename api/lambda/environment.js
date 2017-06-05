@@ -3,11 +3,11 @@
 
 var config = {
   "REGION": "us-east-1",
-  "PROFILE_IMAGES_S3_BUCKET": "blue-delta-api-development-stack-userdatabucket-1roa31kj25t6q",
-  "API_ENDPOINT": "https://ritgmsrczb.execute-api.us-east-1.amazonaws.com/development",
-  "USER_POOL_ID": "us-east-1_hbjWOqI1M",
-  "CLIENT_ID": "1slpl86p8rf8ea6mhq00tl1b2r",
-  "IDENTITY_POOL_ID": "us-east-1:60cb9dd2-a77d-4f65-94eb-bf32a0a7cacf"
+  "PROFILE_IMAGES_S3_BUCKET": "blue-delta-api-development-stack-userdatabucket-18i38b7jec8iy",
+  "API_ENDPOINT": "https://q9hjkns92l.execute-api.us-east-1.amazonaws.com/development",
+  "USER_POOL_ID": "us-east-1_4qqyrSzbj",
+  "CLIENT_ID": "63bvnqlj8u6gsmj78iq9f31ctt",
+  "IDENTITY_POOL_ID": "us-east-1:5ff0b8df-d240-4a6a-92f7-a35248e789ad"
 };
 
 module.exports = { config };
