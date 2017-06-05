@@ -64,13 +64,19 @@ export class User {
   }
 
   register(username, password, attr) {
+    console.log('username', username);
+    console.log('password', password);
+    console.log('attr', attr);
     let attributes = [];
 
     for (var x in attr) {
       attributes.push(this.cognito.makeAttribute(x, attr[x]));
     }
+
+    console.log('attributes', attributes);
     
     return new Promise((resolve, reject) => {
+      console.log('getUserPool() ', this.cognito.getUserPool());
       this.cognito.getUserPool().signUp(username, password, attributes, null, function(err, result) {
         if (err) { 
           reject(err);

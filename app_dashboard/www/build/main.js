@@ -36242,11 +36242,16 @@ var User = (function () {
     };
     User.prototype.register = function (username, password, attr) {
         var _this = this;
+        console.log('username', username);
+        console.log('password', password);
+        console.log('attr', attr);
         var attributes = [];
         for (var x in attr) {
             attributes.push(this.cognito.makeAttribute(x, attr[x]));
         }
+        console.log('attributes', attributes);
         return new Promise(function (resolve, reject) {
+            console.log('getUserPool() ', _this.cognito.getUserPool());
             _this.cognito.getUserPool().signUp(username, password, attributes, null, function (err, result) {
                 if (err) {
                     reject(err);

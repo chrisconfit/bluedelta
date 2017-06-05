@@ -8,7 +8,7 @@
 const aws_app_analytics = 'enable';
 const aws_cloud_logic = 'enable';
 const aws_cloud_logic_custom = '[{"id":"ritgmsrczb","name":"BlueDelta-API","description":"","endpoint":"https://ritgmsrczb.execute-api.us-east-1.amazonaws.com/development","region":"us-east-1","paths":["/buttons/{buttonId}","/orders","/users","/threads/{threadId}","/users/{userId}/orders","/users/{userId}","/orders/{orderId}","/buttons","/ping","/fabrics","/threads","/fabrics/{fabricId}"]}]';
-const aws_cognito_identity_pool_id = 'us-east-1:4b9decce-b45c-4b52-9dc6-e8b1c492daa0';
+const aws_cognito_identity_pool_id = 'us-east-1:5ff0b8df-d240-4a6a-92f7-a35248e789ad';
 const aws_cognito_region = 'us-east-1';
 const aws_content_delivery = 'enable';
 const aws_content_delivery_bucket = 'bddashboard-hosting-mobilehub-1077456737';
@@ -27,9 +27,9 @@ const aws_user_files = 'enable';
 const aws_user_files_s3_bucket = 'bddashboard-userfiles-mobilehub-1077456737';
 const aws_user_files_s3_bucket_region = 'us-east-1';
 const aws_user_pools = 'enable';
-const aws_user_pools_id = 'us-east-1_ZPDEJYYFu';
+const aws_user_pools_id = 'us-east-1_4qqyrSzbj';
 const aws_user_pools_mfa_type = 'OFF';
-const aws_user_pools_web_client_id = '3530keufhjb60g1hpol3r6lh3k';
+const aws_user_pools_web_client_id = '63bvnqlj8u6gsmj78iq9f31ctt';
 const aws_user_settings = 'enable';
 
 AWS.config.region = aws_project_region;
