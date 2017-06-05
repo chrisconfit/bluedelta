@@ -23,6 +23,11 @@ import { User } from '../providers/user';
 import { Cognito } from '../providers/aws.cognito';
 import { DynamoDB } from '../providers/aws.dynamodb';
 
+import { DefaultApi } from '../services/blue-delta-sdk/api/DefaultApi';
+import { HttpService } from "../services/http-service";
+import { HttpModule } from "@angular/http";
+import { NoAuthorizationClient, CustomAuthorizerClient, UserPoolsAuthorizerClient, IamAuthorizerClient } from "../services/blue-delta-api.service";
+
 @NgModule({
   declarations: [
     MyApp,
@@ -38,6 +43,7 @@ import { DynamoDB } from '../providers/aws.dynamodb';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp, new AwsConfig().load())
   ],
   bootstrap: [IonicApp],
@@ -60,7 +66,13 @@ import { DynamoDB } from '../providers/aws.dynamodb';
     Camera,
     User,
     Cognito,
-    DynamoDB
+    DynamoDB,
+    DefaultApi,
+    HttpService,
+    NoAuthorizationClient,
+    CustomAuthorizerClient,
+    UserPoolsAuthorizerClient,
+    IamAuthorizerClient
   ]
 })
 export class AppModule {}

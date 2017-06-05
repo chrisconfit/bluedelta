@@ -33,5 +33,11 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
+
+    BUTTONLSIT
+
+    {{ ( buttonsList | async ) }}
+
+    <button ion-button color="primary" (click)="getButtons()">getButtons</button>
 </ion-content>
 

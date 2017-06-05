@@ -4,6 +4,10 @@ import { NavController, ModalController } from 'ionic-angular';
 import { TasksCreatePage } from '../tasks-create/tasks-create';
 
 import { DynamoDB, User } from '../../providers/providers';
+import { GlobalStateService } from "../../services/global-state.service";
+import { NoAuthorizationClient, CustomAuthorizerClient, UserPoolsAuthorizerClient } from "../../services/blue-delta-api.service";
+
+
 
 declare var AWS: any;
 
@@ -13,6 +17,8 @@ declare var AWS: any;
 })
 export class TasksPage {
 
+  public buttonsList: any;
+
   public items: any;
   public refresher: any;
   private taskTable: string = 'blue-delta-dashboard-mobile-hub-tasks';
@@ -20,10 +26,16 @@ export class TasksPage {
   constructor(public navCtrl: NavController,
               public modalCtrl: ModalController,
               public user: User,
-              public db: DynamoDB) {
+              public db: DynamoDB,
+              // public globals: GlobalStateService, 
+              private noAuthClient: NoAuthorizationClient, 
+              private customAuthClient: CustomAuthorizerClient, 
+              private userPoolsAuthClient: UserPoolsAuthorizerClient) {
 
     this.refreshTasks();
   }
+
+  
 
   refreshData(refresher) {
     this.refresher = refresher;
@@ -100,6 +112,11 @@ export class TasksPage {
     }).catch((err) => {
       console.log('there was an error', err);
     });
+  }
+
+  getButtons() {
+    this.buttonsList = this.customAuthClient.getClient().buttonsList();
+    console.log('HERE IT IS!', this.buttonsList);
   }
 
 }
