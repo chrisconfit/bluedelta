@@ -464,7 +464,7 @@ paths:
   /ping:
     get:
       description: Unsecured ping
-      operationId: ping
+      operationId: ping-PingOperation
       responses:
         "200":
           description: Success

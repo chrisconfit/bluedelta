@@ -34,6 +34,16 @@ function process(definition, path, method, accountId, region) {
         }
         `,
     },
+    responses: {
+        default: {
+            statusCode: 200,
+            // responseParameters: {
+            //     'method.response.header.Access-Control-Allow-Methods': method,
+            //     'method.response.header.Access-Control-Allow-Headers': "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+            //     'method.response.header.Access-Control-Allow-Origin': "'*'"
+            // }
+        }
+    },
     uri: `arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${region}` +
     `:${accountId}:function:${config.getResourcePrefix()}api/invocations`,
     passthroughBehavior: 'when_no_match',
