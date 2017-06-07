@@ -7,33 +7,51 @@ let ping = rfr('ping');
 
 function handler(event, context) {
 
-  function initialNarrowing(httpMethod) {
+  function initialNarrowingByHttp(httpMethod) {
     switch(httpMethod) {
       case 'GET':
-        console.log('GET RAN');
-        return (collection, itemId) => {
-          console.log(collection, itemId);
+        return (itemId) => {
           if (itemId) return 'Get';
           return 'List'
         };
       case 'POST':
-        console.log('POST RAN');
-        return (collection, itemId) => {
-          console.log(collection, itemId);
-          return '';
+        return (itemId) => {
+          if (itemId) return 'Update';
+          return 'Create';
         };
       case 'DELETE':
-        console.log('DELETE RAN');
-        return (collection, itemId) => {
-          console.log(collection, itemId);
-          return '';
+        return (itemId) => {
+          return 'DELETE';
         };
     }
-  }
+  } // tested
 
-  let determine = initialNarrowing(event.httpMethod);
+  function getLastEndpointResource(endpointPath) {
+    let resourceArray = endpointPath.split('/').filter(v => v.length > 1);
+    if (resourceArray.length > 1) return resourceArray[resourceArray.length - 1];
+    return resourceArray[0];
+  } // tested
 
-  let methodToCall = determine('collection', null);
+  function isACollection(resourceString) {
+    return (/(buttons|fabrics|jeans|measurements|orders|ping|threads|users)/.test(resourceString));
+  } // tested
+
+  function isAnId(resourceString) {
+    return !(/(buttons|fabrics|jeans|measurements|orders|ping|threads|users)/.test(resourceString));
+  } // tested
+
+  function getLastCollectionInEndpoint(endpointPath, validator) {
+    let collections = endpointPath.split('/').filter(v => v.length > 1 ).filter(v => validator(v));
+    if (collections.length > 1) return collections[collections.length - 1];
+    return collections[0];
+  } // tested
+
+
+  let determineMethodByIdPresence = initialNarrowingByHttp(event.httpMethod);
+
+  let methodToCall = determineMethodByIdPresence( isAnId( getLastEndpointResource(event.path) ) );
+
+  console.log('methodToCall', methodToCall);
   
   return rfr('buttons')[methodToCall](event, context);
   //

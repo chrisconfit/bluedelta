@@ -204,6 +204,40 @@ export class ButtonListPage {
     );
   }
 
+  createButtonWithAuth(button:Button):void {
+    
+    this.userPoolsAuthClient.getClient().buttonsCreate(button).subscribe(
+      (data) => {
+        this.globals.dismissLoader();
+        this.initialized = true;
+      },
+      (err) => {
+        this.globals.dismissLoader();
+        this.initialized = true; 
+        console.error(err);
+        this.globals.displayAlert('Error encountered',
+          `An error occurred when trying to create Button. Please check the console logs for more information.`)
+      }
+    );
+  }
+
+  updateButtonWithAuth(button:Button):void {
+    this.userPoolsAuthClient.getClient().buttonsUpdate(button.buttonId , button).subscribe(
+      (data) => {
+        this.globals.dismissLoader();
+        this.initialized = true;
+      },
+      (err) => {
+        this.globals.dismissLoader();
+        this.initialized = true; 
+        console.error(err);
+        this.globals.displayAlert('Error encountered',
+          `An error occurred when trying to create Button. Please check the console logs for more information.`)
+      }
+    );
+  }
+
+
 
   constructor(private navCtrl: NavController,  public globals: GlobalStateService, private noAuthClient: NoAuthorizationClient, private customAuthClient: CustomAuthorizerClient, private userPoolsAuthClient: UserPoolsAuthorizerClient) {
   }

@@ -232,7 +232,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /buttons/{buttonId}:
     delete:
@@ -249,7 +249,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     get:
       description: Returns a Button
       # used as the method name of the controller
@@ -285,7 +285,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /threads:
     get:

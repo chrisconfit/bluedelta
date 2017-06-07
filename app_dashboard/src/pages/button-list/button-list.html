@@ -44,6 +44,17 @@
       <button ion-button (click)="loadOrdersForUserWithAuth('some-user-uuid')" type="submit" color="light" style='text-transform:none'>Load Orders For User with Auth</button>
     </div>
 
+    <hr>
+
+    <div align='center' *ngIf="initialized">
+      <button ion-button (click)="createButtonWithAuth({buttonId: 'buttonId', name: 'Brown Button'})" type="submit" color="light" style='text-transform:none'>Create Button with Auth</button>
+    </div>
+
+    <div align='center' *ngIf="initialized">
+      <button ion-button (click)="updateButtonWithAuth({buttonId: 'buttonId', name: 'RED Button'})" type="submit" color="light" style='text-transform:none'>Update Button with Auth</button>
+    </div>
+
+
 
     <div *ngIf="buttons.length === 0">
       DISPLAYS IF BUTTONS LENGTH IS ZERO
