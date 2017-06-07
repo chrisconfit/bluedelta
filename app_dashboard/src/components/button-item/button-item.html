@@ -1,0 +1,9 @@
+<ion-item>
+  <ion-thumbnail item-left (click)="gotoResourceListPage(button)">
+    <img src="{{button.imageUrl}}">
+  </ion-thumbnail>
+  <!--<ion-icon name="compass" item-left (click)="gotoResourceListPage(button)"></ion-icon>-->
+  <h2 (click)="gotoResourceListPage(button)">{{button.name}}</h2>
+  <p (click)="gotoResourceListPage(button)">{{button.buttonId}}</p>
+  <!--<button *ngIf="globals.displayAdminFeatures()" (click)="displayDeleteButtonConfirmation(button.buttonId, button.name)" ion-button color="danger" item-right>Delete</button>-->
+</ion-item>

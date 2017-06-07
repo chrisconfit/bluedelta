@@ -23,6 +23,7 @@ import {
   UserPoolsAuthorizerClient,
   NoAuthorizationClient
 } from "../services/blue-delta-api.service";
+import { ButtonItemComponent } from '../components/button-item/button-item';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {
     ButtonListPage,
     MyApp,
     TabsPage,
-    WelcomePage
+    WelcomePage,
+    ButtonItemComponent
   ],
   imports: [
     HttpModule,
