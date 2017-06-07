@@ -47,7 +47,7 @@
     <hr>
 
     <div align='center' *ngIf="initialized">
-      <button ion-button (click)="createButtonWithAuth({buttonId: 'buttonId3', name: 'dumb Button'})" type="submit" color="light" style='text-transform:none'>Create Button with Auth</button>
+      <button ion-button (click)="createButtonWithAuth({name: 'another Button'})" type="submit" color="light" style='text-transform:none'>Create Button with Auth</button>
     </div>
 
     <div align='center' *ngIf="initialized">
@@ -77,7 +77,7 @@
         </ion-thumbnail>
         <!--<ion-icon name="compass" item-left (click)="gotoResourceListPage(button)"></ion-icon>-->
         <h2 (click)="gotoResourceListPage(button)">{{button.name}}</h2>
-        <p (click)="gotoResourceListPage(button)">{{button.description}}</p>
+        <p (click)="gotoResourceListPage(button)">{{button.buttonId}}</p>
         <button *ngIf="globals.displayAdminFeatures()" (click)="displayDeleteButtonConfirmation(button.buttonId, button.name)" ion-button color="danger" item-right>Delete</button>
       </ion-item>
     </ion-list>
