@@ -172,8 +172,8 @@ function addCognitoTriggerPermission(config) {
         let params = {
             Action: 'lambda:InvokeFunction',
             FunctionName: config.FunctionName,
-            Principal: 'cognito-trigger.amazonaws.com',
-            StatementId: 'cognito-trigger-invoke-permissions',
+            Principal: 'cognito-idp.amazonaws.com',
+            StatementId: 'cognito-idp-invoke-permissions',
         };
         let lambda = new AWS.Lambda();
         lambda.addPermission(params, (err, data) => {
