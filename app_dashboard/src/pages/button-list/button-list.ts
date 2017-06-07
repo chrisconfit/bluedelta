@@ -92,9 +92,11 @@ export class ButtonListPage {
       (data) => {
         // this.buttons = data.items
         // sort by name
+        console.log('DATA!!!!', data);
         this.buttons = data.items.sort((a, b) => {
             return a.name.localeCompare(b.name);
         });
+        
         this.globals.dismissLoader();
         this.initialized = true;
       },
@@ -106,6 +108,7 @@ export class ButtonListPage {
           `An error occurred when trying to load the buttons. Please check the console logs for more information.`)
       }
     );
+    console.log('this.buttons', this.buttons);
   };
 
   loadButtonsWithoutAuth(): void {
@@ -114,6 +117,7 @@ export class ButtonListPage {
       (data) => {
         // this.buttons = data.items
         // sort by name
+        
         this.buttons = data.items.sort((a, b) => {
           return a.name.localeCompare(b.name);
         });
@@ -204,7 +208,7 @@ export class ButtonListPage {
     );
   }
 
-  createButtonWithAuth(button:Button):void {
+  createButtonWithAuth(button):void {
     
     this.userPoolsAuthClient.getClient().buttonsCreate(button).subscribe(
       (data) => {
@@ -222,7 +226,7 @@ export class ButtonListPage {
   }
 
   updateButtonWithAuth(button:Button):void {
-    this.userPoolsAuthClient.getClient().buttonsUpdate(button.buttonId , button).subscribe(
+    this.userPoolsAuthClient.getClient().buttonsUpdate('buttonId' , button).subscribe(
       (data) => {
         this.globals.dismissLoader();
         this.initialized = true;
@@ -232,7 +236,7 @@ export class ButtonListPage {
         this.initialized = true; 
         console.error(err);
         this.globals.displayAlert('Error encountered',
-          `An error occurred when trying to create Button. Please check the console logs for more information.`)
+          `An error occurred when trying to update Button. Please check the console logs for more information.`)
       }
     );
   }
