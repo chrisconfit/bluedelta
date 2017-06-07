@@ -45,6 +45,24 @@ function createCustomAuthorizerLambdaFunction() {
     }).then(createFunctionImpl);
 }
 
+function createCognitoTriggerFunction() {
+    return cf.getStackOutputs().then((cfOutputs) => {
+        assert(cfOutputs.LambdaExecutionRoleArn, 'Missing LambdaExecutionRoleArn');
+        return {
+            Code: {
+                S3Bucket: cfOutputs.LambdaBucket,
+                S3Key: config.getLambdaZipName(),
+            },
+            Description: 'Custom function for Cognito trigger',
+            FunctionName: config.getResourcePrefix() + 'cognito-trigger',
+            Handler: 'cognito_trigger.handler',
+            Role: cfOutputs.LambdaExecutionRoleArn,
+            Runtime: 'nodejs4.3',
+            Timeout: 10
+        };
+    }).then(createFunctionImpl);
+}
+
 function createCognitoSyncTriggerFunction() {
   return cf.getStackOutputs().then((cfOutputs) => {
     assert(cfOutputs.LambdaExecutionRoleArn, 'Missing LambdaExecutionRoleArn');
@@ -149,6 +167,31 @@ function addCognitoSyncPermission(config) {
   });
 }
 
+function addCognitoTriggerPermission(config) {
+    return new Promise((resolve, reject) => {
+        let params = {
+            Action: 'lambda:InvokeFunction',
+            FunctionName: config.FunctionName,
+            Principal: 'cognito-idp.amazonaws.com',
+            StatementId: 'cognito-idp-invoke-permissions',
+        };
+        let lambda = new AWS.Lambda();
+        lambda.addPermission(params, (err, data) => {
+            if (err) {
+                if (err.code === 'ResourceConflictException') {
+                    resolve();
+                }
+
+                reject(err);
+                return;
+            }
+
+            logger.info('Permissions updated', config.FunctionName);
+            resolve(data);
+        });
+    });
+}
+
 function addPermission(config) {
   return new Promise((resolve, reject) => {
     let params = {
@@ -190,6 +233,21 @@ function createFunctionsFromSwagger() {
     });
     return Promise.all(permPromises);
   });
+}
+
+function createCognitoTriggerFunctionAndPermission() {
+    return new Promise((resolve, reject) => {
+        createCognitoTriggerFunction()
+            .then((data) => {
+                addCognitoTriggerPermission(data).then(() => {
+                    resolve(data.FunctionName);
+                });
+            })
+            .catch((err) => {
+                logger.error(err);
+                reject(err);
+            });
+    });
 }
 
 function createCognitoSyncTriggerFunctionAndPermission() {
@@ -302,5 +360,6 @@ module.exports = {
   createFunctionsFromSwagger,
   createCustomAuthorizerFunction,
   createCognitoSyncTriggerFunctionAndPermission,
+  createCognitoTriggerFunctionAndPermission,
   deleteFunctions
 };

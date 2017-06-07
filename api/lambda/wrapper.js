@@ -68,7 +68,7 @@ function wrapCognitoFunction(func) {
   return (event, context, callback) => {
     try {
       func(event, context).then((data) => {
-        callback(null, data);
+        callback(null, event);
       }).catch((lambdaError) => {
         callback(lambdaError, event);
       });
