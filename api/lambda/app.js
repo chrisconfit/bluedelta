@@ -21,7 +21,7 @@ function handler(event, context) {
         };
       case 'DELETE':
         return (itemId) => {
-          return 'DELETE';
+          return 'Delete';
         };
     }
   } // tested
