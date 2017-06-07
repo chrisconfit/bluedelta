@@ -17,12 +17,18 @@ declare const AWS: any;
 })
 export class ButtonListPage {
 
+  usersList: any = 'start val for users';
+
+  ordersList: any = 'start val for orderslist';
+
   initialized = false;
   accountSigninPage = AccountSigninPage;
   accountSignupPage = AccountSignupPage;
   buttonAddPage = ButtonAddPage;
   buttons: Button[] = [];
   // resourceListPage = ResourceListPage;
+
+  buttonGotten: Button|string = 'blahhhhhhhh';
 
   displayDeleteButtonConfirmation(buttonId, buttonName) {
     console.log("Deleting buttonID " + buttonId);
@@ -123,6 +129,80 @@ export class ButtonListPage {
       }
     );
   };
+
+  getButtonWithAuth(buttonId:string):void {
+    this.userPoolsAuthClient.getClient().buttonsGet(buttonId).subscribe(
+      (data) => {
+        this.buttonGotten = data;
+        this.globals.dismissLoader();
+        this.initialized = true;
+      },
+      (err) => {
+        this.globals.dismissLoader();
+        this.initialized = true; 
+        console.error(err);
+        this.globals.displayAlert('Error encountered',
+          `An error occurred when trying to load the buttons. Please check the console logs for more information.`)
+      }
+    );
+  }
+
+  getButtonWithoutAuth(buttonId:string):void {
+    this.noAuthClient.getClient().buttonsGet(buttonId).subscribe(
+      (data) => {
+        this.buttonGotten = data;
+        this.globals.dismissLoader();
+        this.initialized = true;
+      },
+      (err) => {
+        this.globals.dismissLoader();
+        this.initialized = true; 
+        console.error(err);
+        this.globals.displayAlert('Error encountered',
+          `An error occurred when trying to load the button. Please check the console logs for more information.`)
+      }
+    );
+  }
+
+  loadUsersWithAuth() {
+    this.usersList = [];
+    this.userPoolsAuthClient.getClient().usersList().subscribe(
+      (data) => {
+        // this.buttons = data.items
+        // sort by name
+        this.usersList = data;
+        this.globals.dismissLoader();
+        this.initialized = true;
+      },
+      (err) => {
+        this.globals.dismissLoader();
+        this.initialized = true; 
+        console.error(err);
+        this.globals.displayAlert('Error encountered',
+          `An error occurred when trying to load the users. Please check the console logs for more information.`)
+      }
+    );
+  }
+
+  loadOrdersForUserWithAuth(userId:string):void {
+    this.ordersList = [];
+    this.userPoolsAuthClient.getClient().ordersListByUser(userId).subscribe(
+      (data) => {
+        // this.buttons = data.items
+        // sort by name
+        this.ordersList = data;
+        this.globals.dismissLoader();
+        this.initialized = true;
+      },
+      (err) => {
+        this.globals.dismissLoader();
+        this.initialized = true; 
+        console.error(err);
+        this.globals.displayAlert('Error encountered',
+          `An error occurred when trying to load the orders list for user. Please check the console logs for more information.`)
+      }
+    );
+  }
 
 
   constructor(private navCtrl: NavController,  public globals: GlobalStateService, private noAuthClient: NoAuthorizationClient, private customAuthClient: CustomAuthorizerClient, private userPoolsAuthClient: UserPoolsAuthorizerClient) {

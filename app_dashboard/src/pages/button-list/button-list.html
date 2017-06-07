@@ -32,6 +32,33 @@
       <button ion-button (click)="loadButtonsWithAuth()" type="submit" color="light" style='text-transform:none'>Load Buttons with Auth</button>
     </div>
 
+    <div align='center' *ngIf="initialized">
+      <button ion-button (click)="getButtonWithAuth('this-should-be-a-uuid')" type="submit" color="light" style='text-transform:none'>Get Button with Auth</button>
+    </div>
+
+    <div align='center' *ngIf="initialized">
+      <button ion-button (click)="loadUsersWithAuth()" type="submit" color="light" style='text-transform:none'>Load Users with Auth</button>
+    </div>
+
+    <div align='center' *ngIf="initialized">
+      <button ion-button (click)="loadOrdersForUserWithAuth('some-user-uuid')" type="submit" color="light" style='text-transform:none'>Load Orders For User with Auth</button>
+    </div>
+
+
+    <div *ngIf="buttons.length === 0">
+      DISPLAYS IF BUTTONS LENGTH IS ZERO
+    </div>
+    {{ buttonGotten }}
+    <br>
+
+    <br>
+
+    {{ usersList }}
+
+    <br>
+
+    {{ ordersList }}
+
     <ion-list>
       <ion-item *ngFor="let button of buttons">
         <ion-thumbnail item-left (click)="gotoResourceListPage(button)">

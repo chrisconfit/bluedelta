@@ -6,8 +6,36 @@ let users = rfr('users');
 let ping = rfr('ping');
 
 function handler(event, context) {
-  let buttons = rfr('buttons');
-  return buttons.List(event, context);
+
+  function initialNarrowing(httpMethod) {
+    switch(httpMethod) {
+      case 'GET':
+        console.log('GET RAN');
+        return (collection, itemId) => {
+          console.log(collection, itemId);
+          if (itemId) return 'Get';
+          return 'List'
+        };
+      case 'POST':
+        console.log('POST RAN');
+        return (collection, itemId) => {
+          console.log(collection, itemId);
+          return '';
+        };
+      case 'DELETE':
+        console.log('DELETE RAN');
+        return (collection, itemId) => {
+          console.log(collection, itemId);
+          return '';
+        };
+    }
+  }
+
+  let determine = initialNarrowing(event.httpMethod);
+
+  let methodToCall = determine('collection', null);
+  
+  return rfr('buttons')[methodToCall](event, context);
   //
   // if (event.operation && event.operation.startsWith('com.hatboysoftware.blue-delta')) {
   //   let offset = event.operation.lastIndexOf('.') + 1;
