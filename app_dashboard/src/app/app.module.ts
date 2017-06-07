@@ -24,6 +24,8 @@ import {
   NoAuthorizationClient
 } from "../services/blue-delta-api.service";
 import { ButtonItemComponent } from '../components/button-item/button-item';
+// import { NgReduxModule } from "@angular-redux/store";
+// import { ButtonActions } from "../reducers/buttons/buttons.actions";
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { ButtonItemComponent } from '../components/button-item/button-item';
   ],
   imports: [
     HttpModule,
+    // NgReduxModule,
     IonicModule.forRoot(MyApp),
     BrowserModule,
   ],
@@ -67,6 +70,7 @@ import { ButtonItemComponent } from '../components/button-item/button-item';
     { provide: IamAuthorizerClient, useClass: IamAuthorizerClient },
     { provide: UserPoolsAuthorizerClient, useClass: UserPoolsAuthorizerClient },
     { provide: NoAuthorizationClient, useClass: NoAuthorizationClient },
+    // ButtonActions
   ]
 })
 export class AppModule {}
