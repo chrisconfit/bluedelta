@@ -531,6 +531,7 @@ export class UserProfileService {
           reject(err);
           return;
         }
+        cognitoUser
         cognitoUser.getUserAttributes((err: Error, result: any) => {
           if (err) {
             reject(err);

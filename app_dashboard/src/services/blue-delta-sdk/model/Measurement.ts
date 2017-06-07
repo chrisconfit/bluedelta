@@ -19,4 +19,6 @@ export interface Measurement {
 
     waist?: number;
 
+    leg?: number;
+
 }

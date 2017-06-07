@@ -27,7 +27,7 @@ import { Configuration }                                     from '../configurat
 
 @Injectable()
 export class DefaultApi {
-    protected basePath = 'https://ritgmsrczb.execute-api.us-east-1.amazonaws.com/development';
+    protected basePath = 'https://kd6f1omjzc.execute-api.us-east-1.amazonaws.com/development';
     public defaultHeaders: Headers = new Headers();
     public configuration: Configuration = new Configuration();
 
@@ -393,8 +393,8 @@ export class DefaultApi {
      * 
      * 
      */
-    public ping(extraHttpRequestParams?: any): Observable<{}> {
-        return this.pingWithHttpInfo(extraHttpRequestParams)
+    public pingOptions(extraHttpRequestParams?: any): Observable<{}> {
+        return this.pingOptionsWithHttpInfo(extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -408,8 +408,8 @@ export class DefaultApi {
      * 
      * 
      */
-    public pingOptions(extraHttpRequestParams?: any): Observable<{}> {
-        return this.pingOptionsWithHttpInfo(extraHttpRequestParams)
+    public pingPingOperation(extraHttpRequestParams?: any): Observable<{}> {
+        return this.pingPingOperationWithHttpInfo(extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -1572,7 +1572,39 @@ export class DefaultApi {
      * 
      * 
      */
-    public pingWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+    public pingOptionsWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/ping`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Options,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     */
+    public pingPingOperationWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/ping`;
 
         let queryParameters = new URLSearchParams();
@@ -1593,38 +1625,6 @@ export class DefaultApi {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
-            headers: headers,
-            search: queryParameters
-        });
-
-        // https://github.com/swagger-api/swagger-codegen/issues/4037
-        if (extraHttpRequestParams) {
-            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
-        }
-
-        return this.http.request(path, requestOptions);
-    }
-
-    /**
-     * 
-     * 
-     */
-    public pingOptionsWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + `/ping`;
-
-        let queryParameters = new URLSearchParams();
-        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            'application/json'
-        ];
-
-        // to determine the Accept header
-        let produces: string[] = [
-        ];
-
-        let requestOptions: RequestOptionsArgs = new RequestOptions({
-            method: RequestMethod.Options,
             headers: headers,
             search: queryParameters
         });

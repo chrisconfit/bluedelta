@@ -34,7 +34,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Adds a User
       operationId: users-Create
@@ -117,7 +117,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /orders:
     get:
@@ -216,7 +216,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Adds a Button
       operationId: buttons-Create
@@ -232,7 +232,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /buttons/{buttonId}:
     delete:
@@ -249,7 +249,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     get:
       description: Returns a Button
       # used as the method name of the controller
@@ -268,7 +268,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Updates a Button
       operationId: buttons-Update
@@ -285,7 +285,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /threads:
     get:
@@ -464,7 +464,7 @@ paths:
   /ping:
     get:
       description: Unsecured ping
-      operationId: ping
+      operationId: ping-PingOperation
       responses:
         "200":
           description: Success
@@ -752,11 +752,11 @@ securityDefinitions:
     name: "Authorization"
     in: "header"
     x-amazon-apigateway-authtype: "custom"
-#  blue-delta-userPool-authorizer:
-#    type: "apiKey"
-#    name: "Authorization"
-#    in: "header"
-#    x-amazon-apigateway-authtype: "cognito_user_pools"
+  blue-delta-userPool-authorizer:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+    x-amazon-apigateway-authtype: "cognito_user_pools"
   sigv4:
     type: "apiKey"
     name: "Authorization"

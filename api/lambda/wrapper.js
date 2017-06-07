@@ -25,6 +25,9 @@ function wrapFunction(func) {
       func(event, context).then((data) => {
         callback(null, wrapHeaders({
           statusCode: 200,
+          headers: {
+              'Access-Control-Allow-Origin': '*',
+          },
           body: JSON.stringify(data),
         }));
       }).catch((lambdaError) => {
@@ -49,6 +52,9 @@ function wrapFunction(func) {
       console.error('Uncaught exception', e, e.stack);
       callback(null, wrapHeaders({
         statusCode: 500,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+        },
         body: JSON.stringify({
           message: 'An internal error occurred',
           type: 'internalError',
