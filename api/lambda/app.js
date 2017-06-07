@@ -47,13 +47,15 @@ function handler(event, context) {
   } // tested
 
 
+  let lastCollection = getLastCollectionInEndpoint(event.path, isACollection);
   let determineMethodByIdPresence = initialNarrowingByHttp(event.httpMethod);
-
   let methodToCall = determineMethodByIdPresence( isAnId( getLastEndpointResource(event.path) ) );
 
+  
+  console.log('lastCollection',lastCollection);
   console.log('methodToCall', methodToCall);
   
-  return rfr('buttons')[methodToCall](event, context);
+  return rfr(lastCollection)[methodToCall](event, context);
   //
   // if (event.operation && event.operation.startsWith('com.hatboysoftware.blue-delta')) {
   //   let offset = event.operation.lastIndexOf('.') + 1;
