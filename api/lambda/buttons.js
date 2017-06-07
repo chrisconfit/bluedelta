@@ -23,6 +23,7 @@ function Get(event, context) {
 }
 
 function List(event, context) {
+    console.log('buttons-List');
     console.log(event);
     //TODO(Justin): Add pagination to list results
     return ButtonsTable.scan();

@@ -216,7 +216,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Adds a Button
       operationId: buttons-Create
@@ -752,11 +752,11 @@ securityDefinitions:
     name: "Authorization"
     in: "header"
     x-amazon-apigateway-authtype: "custom"
-#  blue-delta-userPool-authorizer:
-#    type: "apiKey"
-#    name: "Authorization"
-#    in: "header"
-#    x-amazon-apigateway-authtype: "cognito_user_pools"
+  blue-delta-userPool-authorizer:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+    x-amazon-apigateway-authtype: "cognito_user_pools"
   sigv4:
     type: "apiKey"
     name: "Authorization"

@@ -1,78 +1,70 @@
-import { NgModule, ErrorHandler } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { NgModule }                    from '@angular/core';
+import { IonicApp, IonicModule }       from 'ionic-angular';
+import { MyApp }                       from './app.component';
+import { HttpModule }                  from "@angular/http";
 
-import { Camera } from '@ionic-native/camera';
-
-import { AwsConfig } from './app.config';
-import { MyApp } from './app.component';
-import { LoginPage } from '../pages/login/login';
-import { SignupPage } from '../pages/signup/signup';
-import { ConfirmPage } from '../pages/confirm/confirm';
-import { SettingsPage } from '../pages/settings/settings';
-import { AboutPage } from '../pages/about/about';
-import { AccountPage } from '../pages/account/account';
-import { TabsPage } from '../pages/tabs/tabs';
-import { TasksPage } from '../pages/tasks/tasks';
-import { TasksCreatePage } from '../pages/tasks-create/tasks-create';
-
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { User } from '../providers/user';
-import { Cognito } from '../providers/aws.cognito';
-import { DynamoDB } from '../providers/aws.dynamodb';
-
-import { DefaultApi } from '../services/blue-delta-sdk/api/DefaultApi';
-import { HttpService } from "../services/http-service";
-import { HttpModule } from "@angular/http";
-import { NoAuthorizationClient, CustomAuthorizerClient, UserPoolsAuthorizerClient, IamAuthorizerClient } from "../services/blue-delta-api.service";
+import { AboutPage }                   from '../pages/about/about';
+import { AccountConfirmationCodePage } from '../pages/account-confirmation-code/account-confirmation-code';
+import { AccountChangePasswordPage }   from '../pages/account-change-password/account-change-password';
+import { AccountForgotPasswordPage }   from '../pages/account-forgot-password/account-forgot-password';
+import { AccountPage }                 from '../pages/account/account';
+import { AccountSigninPage }           from '../pages/account-signin/account-signin';
+import { AccountSigninUsingSAMLPage }  from '../pages/account-signin-using-saml/account-signin-using-saml';
+import { AccountSignupPage }           from '../pages/account-signup/account-signup';
+import { ButtonListPage }            from '../pages/button-list/button-list';
+import { ButtonAddPage }             from '../pages/button-add/button-add';
+import { TabsPage }                    from '../pages/tabs/tabs';
+import { WelcomePage }                 from '../pages/welcome/welcome';
+import { BrowserModule }               from "@angular/platform-browser";
+import { HttpService }                 from "../services/http-service";
+import {
+  IamAuthorizerClient,
+  CustomAuthorizerClient,
+  UserPoolsAuthorizerClient,
+  NoAuthorizationClient
+} from "../services/blue-delta-api.service";
 
 @NgModule({
   declarations: [
-    MyApp,
-    LoginPage,
-    SignupPage,
-    ConfirmPage,
-    SettingsPage,
-    AboutPage,
+    AccountConfirmationCodePage,
+    AccountChangePasswordPage,
+    AccountForgotPasswordPage,
     AccountPage,
+    AccountSigninPage,
+    AccountSigninUsingSAMLPage,
+    AccountSignupPage,
+    ButtonAddPage,
+    ButtonListPage,
+    MyApp,
     TabsPage,
-    TasksPage,
-    TasksCreatePage
+    WelcomePage
   ],
   imports: [
-    BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp, new AwsConfig().load())
+    IonicModule.forRoot(MyApp),
+    BrowserModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    LoginPage,
-    SignupPage,
-    ConfirmPage,
-    SettingsPage,
-    AboutPage,
+    AccountConfirmationCodePage,
+    AccountChangePasswordPage,
+    AccountForgotPasswordPage,
     AccountPage,
+    AccountSigninPage,
+    AccountSigninUsingSAMLPage,
+    AccountSignupPage,
+    ButtonAddPage,
+    ButtonListPage,
+    MyApp,
     TabsPage,
-    TasksPage,
-    TasksCreatePage
+    WelcomePage,
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Camera,
-    User,
-    Cognito,
-    DynamoDB,
-    DefaultApi,
-    HttpService,
-    NoAuthorizationClient,
-    CustomAuthorizerClient,
-    UserPoolsAuthorizerClient,
-    IamAuthorizerClient
+    { provide: HttpService, useClass: HttpService },
+    { provide: CustomAuthorizerClient, useClass: CustomAuthorizerClient },
+    { provide: IamAuthorizerClient, useClass: IamAuthorizerClient },
+    { provide: UserPoolsAuthorizerClient, useClass: UserPoolsAuthorizerClient },
+    { provide: NoAuthorizationClient, useClass: NoAuthorizationClient },
   ]
 })
 export class AppModule {}

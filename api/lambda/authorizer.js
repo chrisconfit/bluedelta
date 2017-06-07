@@ -397,10 +397,10 @@ function processAuthRequest(event, tokenIssuer, awsAccountId, apiOptions, callba
       }
 
       if (!admin) {
-        policy.denyMethod(AuthPolicy.HttpVerb.DELETE, '/locations');
-        policy.denyMethod(AuthPolicy.HttpVerb.DELETE, '/locations/*');
-        policy.denyMethod(AuthPolicy.HttpVerb.POST, '/locations');
-        policy.denyMethod(AuthPolicy.HttpVerb.POST, '/locations/*');
+        // policy.denyMethod(AuthPolicy.HttpVerb.DELETE, '/locations');
+        // policy.denyMethod(AuthPolicy.HttpVerb.DELETE, '/locations/*');
+        // policy.denyMethod(AuthPolicy.HttpVerb.POST, '/locations');
+        // policy.denyMethod(AuthPolicy.HttpVerb.POST, '/locations/*');
       }
 
       let iamPolicy = policy.build();

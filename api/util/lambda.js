@@ -37,7 +37,7 @@ function createCustomAuthorizerLambdaFunction() {
             },
             Description: 'Custom authorizer function for API Gateway to grant admin-only permissions',
             FunctionName: config.getResourcePrefix() + 'authorizer',
-            Handler: 'app.handler',
+            Handler: 'authorizer.Custom',
             Role: cfOutputs.LambdaExecutionRoleArn,
             Runtime: 'nodejs4.3',
             Timeout: 10

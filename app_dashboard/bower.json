@@ -1,12 +1,13 @@
 {
-  "name": "BlueDelta-Dashboard",
-  "description": "BlueDelta-Dashboard",
+  "name": "blue-delta",
+  "description": "BlueDelta: Book conference rooms, desks and more",
   "main": "",
   "authors": [
-    "Matthew Alan Gray <mgray@hatboysoftware.com>",
-    "John McDonald <john.mcdonald@hatboysoftware.com>",
-    "Jake Corn <jake.corn@hatboysoftware.com>"
+    "Jim Tran",
+    "Justin Pirtle"
   ],
+  "license": "MIT",
+  "homepage": "https://github.com/justonian/blue-delta",
   "ignore": [
     "**/.*",
     "node_modules",
