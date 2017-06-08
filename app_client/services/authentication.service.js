@@ -4,9 +4,11 @@
     .module('bdApp')
     .service('authentication', authentication);
 
-  authentication.$inject = ['$http', '$window'];
-  function authentication ($http, $window) {
+  authentication.$inject = ['$http', '$window', 'aws', 'awsConfig'];
+  function authentication ($http, $window, aws, awsConfig) {
 
+    
+  
     var saveToken = function (token) {
       $window.localStorage['mean-token'] = token;
     };
@@ -43,6 +45,7 @@
         };
       }
     };
+
 		
 		var isAdmin = function(){
 			if(isLoggedIn()){
@@ -55,13 +58,18 @@
         var roles = payload.permissions;
 				return roles.indexOf('admin') !== -1;
       }
-
 		}
-    register = function(user) {
-      return $http.post('/api/register', user).success(function(data){
-        saveToken(data.token);
-      });
-    };
+
+    
+
+    
+
+
+
+    
+
+		
+    
 
     login = function(user) {
       return $http.post('/api/login', user).success(function(data) {
@@ -74,6 +82,9 @@
     };
 
     return {
+      userAttrList: userAttrList,
+      createUserAttributeList: createUserAttributeList,
+      userPool: userPool,
 	    isAdmin : isAdmin,
       currentUser : currentUser,
       saveToken : saveToken,
