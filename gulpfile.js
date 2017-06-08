@@ -8,7 +8,11 @@ var compass = require('gulp-compass');
 var gutil = require('gulp-util');
 
 gulp.task('scripts', function() {
-  gulp.src(['./app_client/**/*.js', '!./app_client/**/*.test.js', '!./app_client/app.min.js'])
+  gulp.src(['./app_client/**/*.js', 
+  	'!./app_client/**/*.test.js', 
+  	'!./app_client/app.min.js', 
+  	'!./app_client/services/blue-delta-sdk/test/',
+  	'!./app_client/services/blue-delta-sdk/test/**/*'])
     .pipe(sourcemaps.init())
     .pipe(uglify({mangle: true}).on('error', gutil.log))
     .pipe(concat('./app.min.js'))  

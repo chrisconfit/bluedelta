@@ -4,20 +4,20 @@
     .module('bdApp')
     .controller('navigationCtrl', navigationCtrl);
 
-  navigationCtrl.$inject = ['$location','authentication','$route','popups'];
-  function navigationCtrl($location, authentication, $route, popups) {
+  navigationCtrl.$inject = ['$location','accountManagement','$route','popups'];
+  function navigationCtrl($location, accountManagement, $route, popups) {
     var vm = this;
 		
-    vm.isLoggedIn = authentication.isLoggedIn();
-		vm.isAdmin = authentication.isAdmin();
-    vm.currentUser = authentication.currentUser();
+    //vm.isLoggedIn = accountManagement.isLoggedIn();
+		//vm.isAdmin = accountManagement.isAdmin();
+    //vm.currentUser = accountManagement.currentUser();
 		
 		vm.drops={};
 		vm.drops.acct=false;
 		vm.mobileMenu = false;
 		
 		vm.logout = function(){
-			authentication.logout();
+			//accountManagement.logout();
 			if ($location.path() == "/")
 				$route.reload();
 		}
