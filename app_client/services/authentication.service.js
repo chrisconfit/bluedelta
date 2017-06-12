@@ -4,11 +4,9 @@
     .module('bdApp')
     .service('authentication', authentication);
 
-  authentication.$inject = ['$http', '$window', 'aws', 'awsConfig'];
-  function authentication ($http, $window, aws, awsConfig) {
+  authentication.$inject = ['$http', '$window', 'aws', '$q'];
+  function authentication ($http, $window, aws, $q) {
 
-    
-  
     var saveToken = function (token) {
       $window.localStorage['mean-token'] = token;
     };
@@ -65,26 +63,30 @@
     
 
 
+//		console.log(aws.authenticateCognitoUser('cplefevre', 'ConfitConfit@123'));
 
+		var register = function(userDetails){
+			//console.log(userDetails);
+		//	console.log(aws.signupForApplication('hello@confitdesign.com', 'ConfitConfit@123'));	
+		}
     
 
 		
     
 
     login = function(user) {
-      return $http.post('/api/login', user).success(function(data) {
-        saveToken(data.token);
-      });
-    };
+	    
+	    aws.authenticateCognitoUser(user, password);
+		};
 
     logout = function() {
       $window.localStorage.removeItem('mean-token');
     };
 
     return {
-      userAttrList: userAttrList,
-      createUserAttributeList: createUserAttributeList,
-      userPool: userPool,
+      //userAttrList: userAttrList,
+      //createUserAttributeList: createUserAttributeList,
+      //userPool: userPool,
 	    isAdmin : isAdmin,
       currentUser : currentUser,
       saveToken : saveToken,

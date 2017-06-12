@@ -1,6 +1,6 @@
 (function () {
 
-  angular.module('bdApp', ['ngRoute', 'ngAnimate','angular-gestures']); 
+  angular.module('bdApp', ['ngRoute', 'ngAnimate','ngSanitize', 'angular-gestures']); 
   
   
   function config ($routeProvider, $locationProvider) {

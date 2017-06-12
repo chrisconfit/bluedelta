@@ -4,11 +4,11 @@
     .module('bdApp')
     .service('aws', aws);
 
-  aws.$inject = ['$http', '$window'];
-  function aws ($http, $window) {
-
+  aws.$inject = ['$http', '$window', '$q', 'AWSConfig'];
+  function aws ($http, $window, $q, AWSConfig) {
+			
     function _getUserPool() {
-      var poolData = { UserPoolId : 'us-east-1_TcoKGbf7n', ClientId : '4pe2usejqcdmhi0a25jp4b5sh3' };
+      var poolData = { UserPoolId : AWSConfig.USER_POOL_ID, ClientId : AWSConfig.CLIENT_ID };
       var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
       return userPool;
     }
@@ -22,8 +22,6 @@
       return authenticationDetails;
     }
       
-
-
     function _getCognitoUser(uname, upool) {
       var userData = { Username : uname, Pool : upool };
       var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
@@ -49,7 +47,7 @@
         return attrList;
       }
     
-
+			
     getUserFromLocalStorage = function(username) {
       var cognitoUser = _getCognitoUser(username, _getUserPool());
       if (cognitoUser != null) {
@@ -75,31 +73,52 @@
     }
 
     authenticateCognitoUser = function(username, password) {
-      var authenticationDetails = _getAuthenticationDetails(username, password)
+      var authenticationDetails = _getAuthenticationDetails(username, password);
       var cognitoUser = _getCognitoUser(username, _getUserPool());
       
+      var defer = $q.defer();
+      
       cognitoUser.authenticateUser(authenticationDetails, {
-          onSuccess: function (result) {
-              console.log('access token + ' + result.getAccessToken().getJwtToken());
-              /*Use the idToken for Logins Map when Federating User Pools with Cognito Identity or when passing through an Authorization Header to an API Gateway Authorizer*/
-              console.log('idToken + ' + result.idToken.jwtToken);
-          },
-          onFailure: function(err) {
-              alert(err);
-          },
+        onSuccess: function (result) {
+					console.log("succ");
+					defer.resolve(result);
+					console.log('access token + ' + result.getAccessToken().getJwtToken());
+					//Use the idToken for Logins Map when Federating User Pools with Cognito Identity or when passing through an Authorization Header to an API Gateway Authorizer
+					console.log('idToken + ' + result.idToken.jwtToken);
+        },
+        onFailure: function(err) {
+          defer.reject(err);
+        }, 
+        newPasswordRequired: function(userAttributes, requiredAttributes) {
+          // User was signed up by an admin and must provide new
+          // password and required attributes, if any, to complete
+          // authentication.
+					console.log(userAttributes, requiredAttributes);
+
+          // the api doesn't accept this field back
+          //delete userAttributes.email_verified;
+
+          // Get these details and call
+	        // cognitoUser.completeNewPasswordChallenge("ConfitConfit@123", userAttributes, this);
+	      }
       });
+      
+      return defer.promise;
     }
+		
 
     signupForApplication = function(emailAddress, password) {
+	    
+	    var defer = $q.defer();
+	    
       var attributeList = _buildAttributeList(_buildAttribute, {email: emailAddress});
       var cognitoUser;
       _getUserPool().signUp(emailAddress, password, attributeList, null, function(err, result) {
-          if (err) {
-              alert(err);
-              return;
-          }
-          cognitoUser = result.user;
+        if (err) defer.reject(err);
+        else defer.resolve(result);
       });
+      
+      return defer.promise;
     }
 
     updateAttributesOnUser = function(username, obj) {      
@@ -152,16 +171,25 @@
     }
 
     resendConfirmationCode = function(cognitoUser) {
+	    if(!cognitoUser.resendConfirmationCode){
+		  	//We've just got an email address...
+		  	cognitoUser = _getCognitoUser(cognitoUser, _getUserPool());
+	    }
+	    
       cognitoUser.resendConfirmationCode(function(err, result) {
-          if (err) {
-              alert(err);
-              return;
-              }
-              alert(result);
+	      
+	      //TODO: This function throws an error on success that obscures a promise. Once the SDK has been fixed, we need to implement a promise structure to properly display results on the front end.
+        if (err) {
+          console.log(err);
+          return;
+        }
+        
+        //code has been sent
+        return true;
       });
     }
-
-    confirmRegistration = function(cognitoUser, confirmationCode) {
+    
+   confirmRegistration = function(cognitoUser, confirmationCode) {
       cognitoUser.confirmRegistration(confirmationCode, true, function(err, result) {
           if (err) {
               alert(err);
@@ -213,46 +241,83 @@
           cognitoUser.signOut();
       }
     }
+    
+    signCurrentUserOut = function() {
+	  	var cognitoUser = _getUserPool().getCurrentUser();
+      if (cognitoUser != null) {
+          cognitoUser.signOut();
+      }
+    }
+
 
     signUserOutGlobally = function(cognitoUser) {
       cognitoUser.globalSignOut();
     }
 
     getCurrentUserFromLocalStorage = function() {
+
+	    var defer = $q.defer();
+	    
       var cognitoUser = _getUserPool().getCurrentUser();
+      
+    
       if (cognitoUser != null) {
         cognitoUser.getSession(function(err, session) {
-            if (err) {
-               alert(err);
-                return;
-            }
-            console.log('session validity: ' + session.isValid());
-            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                IdentityPoolId : '...' ,// your identity pool id here
-                Logins : {
-                    // Change the key below according to the specific region your user pool is in.
-                    'cognito-idp.<region>.amazonaws.com/<YOUR_USER_POOL_ID>' : session.getIdToken().getJwtToken()
-                }
-            });
-            // Instantiate aws sdk service objects now that the credentials have been updated.
-            // example: var s3 = new AWS.S3();
-        });
-      }
-    }
-
-    confirmRegisteredUnauthenticatedUser = function(userName, confirmationCode) {
-      var cognitoUser = _getCognitoUser(userName, _getUserPool());
-      cognitoUser.confirmRegistration(confirmationCode, true, function(err, result) {
+        	
+        	//TODO: Decide if further error handling is necessary...
           if (err) {
-              alert(err);
-              return;
+            defer.reject(err);
+            return defer.promise;
           }
-          console.log('call result: ' + result);
+					
+					AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId : AWSConfig.IDENTITY_POOL_ID
+          });
+	          
+          //var loginKey = 'cognito-idp.'+AWSConfig.REGION+'.amazonaws.com/'+AWSConfig.USER_POOL_ID;
+          defer.resolve(session);
+          
+					// Instantiate aws sdk service objects now that the credentials have been updated.
+          // example: var s3 = new AWS.S3();
+        });
+      }else{
+	      defer.reject("User does not exist");
+      }
+      
+      return defer.promise;
+    }
+		
+		
+    confirmRegisteredUnauthenticatedUser = function(userName, confirmationCode) {
+	    
+      var cognitoUser = _getCognitoUser(userName, _getUserPool());
+	    var defer = $q.defer();
+      
+      cognitoUser.confirmRegistration(confirmationCode, true, function(err, result) {
+        if (err) defer.reject(err);
+        else defer.resolve(result);
+      });
+      
+      return defer.promise;
+    }
+    
+
+    changePassword = function(cognitoUser, oldPassword, newPassword) {
+      cognitoUser.changePassword(oldPassword, newPassword, function(err, result) {
+        if (err) {
+            alert(err);
+            return;
+        }
+        console.log('call result: ' + result);
       });
     }
-
+    
+    
+    
+      
+    
     return {
-      getUserFromLocalStorage: getUserFromLocalStorage,
+	    getUserFromLocalStorage: getUserFromLocalStorage,
       deleteCognitoUser: deleteCognitoUser,
       authenticateCognitoUser: authenticateCognitoUser,
       signupForApplication: signupForApplication,
@@ -268,7 +333,8 @@
       signUserOut: signUserOut,
       signUserOutGlobally: signUserOutGlobally,
       getCurrentUserFromLocalStorage: getCurrentUserFromLocalStorage,
-      confirmRegisteredUnauthenticatedUser: confirmRegisteredUnauthenticatedUser
+      confirmRegisteredUnauthenticatedUser: confirmRegisteredUnauthenticatedUser,
+      signCurrentUserOut:signCurrentUserOut
     };
   }
 })();

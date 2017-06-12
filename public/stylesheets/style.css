@@ -2369,3 +2369,20 @@ a.overview-trigger i {
     max-height: none;
   }
 }
+
+.form-messages {
+  padding: 10px;
+  border: 1px solid #802323;
+  background: rgba(193, 82, 82, 0.3);
+  color: #802323;
+}
+.form-messages.warning {
+  border-color: #937204;
+  color: #937204;
+  background: rgba(227, 181, 11, 0.3);
+}
+.form-messages.success {
+  border-color: #039703;
+  color: #039703;
+  background: rgba(43, 199, 80, 0.15);
+}
