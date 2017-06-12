@@ -2323,6 +2323,10 @@ a.overview-trigger i {
   -o-transition: all 300ms ease;
   transition: all 300ms ease;
 }
+.jean-list.closet {
+  max-height: none;
+  overflow: visible;
+}
 .jean-list.show {
   max-height: 500px;
   overflow: auto;
@@ -2385,4 +2389,117 @@ a.overview-trigger i {
   border-color: #039703;
   color: #039703;
   background: rgba(43, 199, 80, 0.15);
+}
+
+.container.page-container {
+  margin-top: 30px;
+}
+@media screen and (min-width: 800px) {
+  .container.page-container {
+    margin-top: 50px;
+  }
+}
+
+.page-title h1 {
+  border-bottom: 1px solid #f1f1f1;
+  margin-bottom: 30px;
+  font-size: 25px;
+  line-height: 34px;
+  font-size: 2.5rem;
+  line-height: 3.4rem;
+}
+@media screen and (min-width: 800px) {
+  .page-title h1 {
+    margin-bottom: 50px;
+    font-size: 30px;
+    line-height: 38px;
+    font-size: 3rem;
+    line-height: 3.8rem;
+  }
+}
+
+.cft-g.page-grid {
+  margin-left: -60px;
+}
+.cft-g.page-grid > .cft-gi {
+  padding-left: 60px;
+  width: 100%;
+  vertical-align: top;
+}
+@media screen and (min-width: 800px) {
+  .cft-g.page-grid > .cft-gi.main {
+    width: 71%;
+  }
+  .cft-g.page-grid > .cft-gi.sidebar {
+    width: 29%;
+  }
+}
+
+.cft-g.jean-grid {
+  margin-left: -40px;
+}
+.cft-g.jean-grid .cft-gi {
+  vertical-align: top;
+  padding-left: 40px;
+  width: 50%;
+  margin-bottom: 40px;
+}
+@media screen and (min-width: 650px) {
+  .cft-g.jean-grid .cft-gi {
+    width: 33.333%;
+  }
+}
+
+.jean-card img {
+  width: 100%;
+  margin: 0;
+  display: block;
+}
+.jean-card h3, .jean-card h4, .jean-card h5 {
+  margin-bottom: 5px;
+}
+
+.box-content {
+  background: #f1f1f1;
+  padding: 10px;
+}
+.box-content h4 {
+  font-size: 18px;
+  line-height: 24px;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  color: #004964;
+}
+.box-content h5 {
+  font-size: 15px;
+  line-height: 19px;
+  font-size: 1.5rem;
+  line-height: 1.9rem;
+  color: #363839;
+}
+
+.box-title {
+  color: #fff;
+  background: #004964;
+  display: block;
+  margin: 0;
+  padding: 10px;
+  font-size: 18px;
+  line-height: 24px;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  color: #fff;
+}
+
+.jean-profile-grid > .cft-gi {
+  width: 100%;
+  vertical-align: top;
+}
+@media screen and (min-width: 700px) {
+  .jean-profile-grid > .cft-gi.main {
+    width: 70%;
+  }
+  .jean-profile-grid > .cft-gi.sidebar {
+    width: 30%;
+  }
 }

@@ -1272,6 +1272,10 @@ a.overview-trigger{
 	background:#fff;
 }
 .jean-list{
+	&.closet{
+		max-height:none;
+		overflow: visible
+	}
 	max-height:0;
 	overflow:hidden;
 	@include transition(all,300ms,ease);

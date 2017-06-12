@@ -452,6 +452,7 @@ form.login-form, form.register-form{
 
 @import "customizer";
 
+
 .form-messages{
 	padding:10px;
 	border:1px solid #802323;
@@ -468,3 +469,102 @@ form.login-form, form.register-form{
 		background:rgba(43, 199, 80, 0.15);
 	}
 }
+
+//Secondary pages 
+
+.container.page-container{
+	margin-top:30px;
+	@include at-query($min, 800px){
+		margin-top:50px;
+	}
+}
+.page-title{
+	h1{
+		border-bottom:1px solid $lightGrey;
+		margin-bottom:30px;
+		@include font-size(25,34);
+		@include at-query($min, 800px){
+			margin-bottom:50px;
+			@include font-size(30,38);	
+		}
+	}
+}
+.cft-g.page-grid{
+	margin-left:-60px;
+	&>.cft-gi{
+		padding-left:60px;
+		width:100%;
+		vertical-align:top;
+	}
+	@include at-query($min, 800px){
+		&>.cft-gi.main{
+			width:71%;
+		}
+		&>.cft-gi.sidebar{
+			width:29%;
+		}
+	}
+}
+.cft-g.jean-grid{
+	margin-left:-40px;
+	.cft-gi{
+		vertical-align: top;
+		padding-left:40px;
+		width:50%;
+		margin-bottom:40px;
+		@include at-query($min, 650px){
+			width:33.333%;
+		}
+	}
+}
+.jean-card{
+	img{
+		width:100%;
+		margin:0;
+		display:block;
+	}
+	h3,h4,h5{
+		margin-bottom:5px;
+	}
+}
+
+.box-content{
+	background:$lightGrey;
+	padding:10px;
+	h4{
+		@include font-size(18,24);
+		color:$blue;
+	}
+	h5{
+		@include font-size(15,19);
+		color:$darkGrey;
+	}
+}
+
+
+.box-title{
+	color:#fff;
+	background:$blue;
+	display:block;
+	margin:0;
+	padding:10px;
+	@include font-size(18,24);
+	color:#fff;	
+}
+
+.jean-profile-grid{
+	&>.cft-gi{
+		width:100%;
+		vertical-align: top;
+	}
+	@include at-query($min, 700px){
+		&>.cft-gi.main{
+			width:70%;
+		}
+		&>.cft-gi.sidebar{
+			width:30%;
+		}
+	}
+}
+
+
