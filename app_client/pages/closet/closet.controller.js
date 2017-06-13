@@ -4,20 +4,33 @@
     .module('bdApp')
     .controller('closetCtrl', closetCtrl);
 
-  closetCtrl.$inject = ['$location', 'jean', 'meanData','popups', '$filter', 'aws'];
-  function closetCtrl($location, jean, meanData, popups, $filter, aws) {
+  closetCtrl.$inject = ['$location', 'jean','popups', '$filter', 'aws', 'bdAPI'];
+  function closetCtrl($location, jean, popups, $filter, aws, bdAPI) {
+	  
+
+	  
     var vm = this;
+    
+    var api = new bdAPI.DefaultApi();
+    aws.getCurrentUserFromLocalStorage().then(
+    	function(result){
+	    	api.apiClient.defaultHeaders['Authorization'] = result;
+	    	vm.setUpClosetData();
+    	},    	
+    	function(err){
+	    	console.log('you are not authenticated...'+err);
+    	}
+    );
+    
 		vm.popups=popups;
     vm.user = {};
 		vm.jeans = [];
 		vm.jean={};
 		vm.data={};
 		
-		vm.jean=jean;
-		
-		//Set up customizer data...
+		//Utility function for setting up customizer data from JSON... 
 		vm.setupData = function (func, dataKey) {
-		  meanData[func]()
+		  bdAPI.jsonData[func]()
 		   .success(function(data) {
         vm.data[dataKey] = data;
       })
@@ -26,10 +39,34 @@
       });
 		}
 
-		vm.setupData('getGenders', 'genders'),
-		vm.setupData('getStyles', 'styles'),
-		vm.setupData('getFabrics', 'fabrics'),
-		vm.setupData('getThreads', 'threads'),
+
+		//Set up Closet Data using JSON
+		vm.setUpClosetData = function(){
+			
+			//Get User data
+			console.log(api);
+			console.log(api.usersList());
+			
+			vm.setupData('getGenders', 'genders'),
+			vm.setupData('getStyles', 'styles'),
+			vm.setupData('getFabrics', 'fabrics'),
+			vm.setupData('getThreads', 'threads'),
+			bdAPI.jsonData.getJeansByUser(1)
+		  .success(function(data) {
+				for (x=0; x<data.length; x++){
+					vm.jeans.push(data[x]);
+				}
+      })
+      .error(function (e) {
+        console.log(e);
+      });
+      
+		}
+		
+		vm.jean=jean;
+		
+	
+
 
 
 
@@ -59,16 +96,7 @@
 			vm.jean.data=jean
 		}
 		
-		meanData.getJeansByUser(1)
-		  .success(function(data) {
-				for (x=0; x<data.length; x++){
-					vm.jeans.push(data[x]);
-				}
-      })
-      .error(function (e) {
-        console.log(e);
-      });
-      
+	
 		
 		//Get User
   }

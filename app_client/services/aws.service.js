@@ -48,6 +48,8 @@
       }
     
 			
+			
+			
     getUserFromLocalStorage = function(username) {
       var cognitoUser = _getCognitoUser(username, _getUserPool());
       if (cognitoUser != null) {
