@@ -28,7 +28,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new BlueDeltaApi.User();
+    instance = new BlueDeltaApi.Address();
   });
 
   var getProperty = function(object, getter, property) {
@@ -47,40 +47,40 @@
       object[property] = value;
   }
 
-  describe('User', function() {
-    it('should create an instance of User', function() {
-      // uncomment below and update the code to test User
-      //var instane = new BlueDeltaApi.User();
-      //expect(instance).to.be.a(BlueDeltaApi.User);
+  describe('Address', function() {
+    it('should create an instance of Address', function() {
+      // uncomment below and update the code to test Address
+      //var instane = new BlueDeltaApi.Address();
+      //expect(instance).to.be.a(BlueDeltaApi.Address);
     });
 
-    it('should have the property identityId (base name: "identityId")', function() {
-      // uncomment below and update the code to test the property identityId
-      //var instane = new BlueDeltaApi.User();
+    it('should have the property addressLine1 (base name: "address_line_1")', function() {
+      // uncomment below and update the code to test the property addressLine1
+      //var instane = new BlueDeltaApi.Address();
       //expect(instance).to.be();
     });
 
-    it('should have the property email (base name: "email")', function() {
-      // uncomment below and update the code to test the property email
-      //var instane = new BlueDeltaApi.User();
+    it('should have the property addressLine2 (base name: "address_line_2")', function() {
+      // uncomment below and update the code to test the property addressLine2
+      //var instane = new BlueDeltaApi.Address();
       //expect(instance).to.be();
     });
 
-    it('should have the property phoneNumber (base name: "phone_number")', function() {
-      // uncomment below and update the code to test the property phoneNumber
-      //var instane = new BlueDeltaApi.User();
+    it('should have the property city (base name: "city")', function() {
+      // uncomment below and update the code to test the property city
+      //var instane = new BlueDeltaApi.Address();
       //expect(instance).to.be();
     });
 
-    it('should have the property addresses (base name: "addresses")', function() {
-      // uncomment below and update the code to test the property addresses
-      //var instane = new BlueDeltaApi.User();
+    it('should have the property state (base name: "state")', function() {
+      // uncomment below and update the code to test the property state
+      //var instane = new BlueDeltaApi.Address();
       //expect(instance).to.be();
     });
 
-    it('should have the property jeans (base name: "jeans")', function() {
-      // uncomment below and update the code to test the property jeans
-      //var instane = new BlueDeltaApi.User();
+    it('should have the property zip (base name: "zip")', function() {
+      // uncomment below and update the code to test the property zip
+      //var instane = new BlueDeltaApi.Address();
       //expect(instance).to.be();
     });
 

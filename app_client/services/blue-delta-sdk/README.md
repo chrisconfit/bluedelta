@@ -117,6 +117,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [BlueDeltaApi.Address](docs/Address.md)
  - [BlueDeltaApi.Button](docs/Button.md)
  - [BlueDeltaApi.ButtonsListResponse](docs/ButtonsListResponse.md)
  - [BlueDeltaApi.Fabric](docs/Fabric.md)
