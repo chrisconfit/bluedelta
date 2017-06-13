@@ -14,12 +14,12 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/Button', 'model/ButtonsListResponse', 'model/Fabric', 'model/FabricsListResponse', 'model/Jean', 'model/Measurement', 'model/Order', 'model/OrderItem', 'model/OrdersListResponse', 'model/Thread', 'model/ThreadsListResponse', 'model/Transaction', 'model/User', 'model/UsersListResponse', 'api/DefaultApi'], factory);
+    define(['ApiClient', 'model/Address', 'model/Button', 'model/ButtonsListResponse', 'model/Fabric', 'model/FabricsListResponse', 'model/Jean', 'model/Measurement', 'model/Order', 'model/OrderItem', 'model/OrdersListResponse', 'model/Thread', 'model/ThreadsListResponse', 'model/Transaction', 'model/User', 'model/UsersListResponse', 'api/DefaultApi'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('./ApiClient'), require('./model/Button'), require('./model/ButtonsListResponse'), require('./model/Fabric'), require('./model/FabricsListResponse'), require('./model/Jean'), require('./model/Measurement'), require('./model/Order'), require('./model/OrderItem'), require('./model/OrdersListResponse'), require('./model/Thread'), require('./model/ThreadsListResponse'), require('./model/Transaction'), require('./model/User'), require('./model/UsersListResponse'), require('./api/DefaultApi'));
+    module.exports = factory(require('./ApiClient'), require('./model/Address'), require('./model/Button'), require('./model/ButtonsListResponse'), require('./model/Fabric'), require('./model/FabricsListResponse'), require('./model/Jean'), require('./model/Measurement'), require('./model/Order'), require('./model/OrderItem'), require('./model/OrdersListResponse'), require('./model/Thread'), require('./model/ThreadsListResponse'), require('./model/Transaction'), require('./model/User'), require('./model/UsersListResponse'), require('./api/DefaultApi'));
   }
-}(function(ApiClient, Button, ButtonsListResponse, Fabric, FabricsListResponse, Jean, Measurement, Order, OrderItem, OrdersListResponse, Thread, ThreadsListResponse, Transaction, User, UsersListResponse, DefaultApi) {
+}(function(ApiClient, Address, Button, ButtonsListResponse, Fabric, FabricsListResponse, Jean, Measurement, Order, OrderItem, OrdersListResponse, Thread, ThreadsListResponse, Transaction, User, UsersListResponse, DefaultApi) {
   'use strict';
 
   /**
@@ -59,6 +59,11 @@
      * @property {module:ApiClient}
      */
     ApiClient: ApiClient,
+    /**
+     * The Address model constructor.
+     * @property {module:model/Address}
+     */
+    Address: Address,
     /**
      * The Button model constructor.
      * @property {module:model/Button}

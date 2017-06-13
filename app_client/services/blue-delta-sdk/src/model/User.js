@@ -14,18 +14,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/Jean'], factory);
+    define(['ApiClient', 'model/Address', 'model/Jean'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./Jean'));
+    module.exports = factory(require('../ApiClient'), require('./Address'), require('./Jean'));
   } else {
     // Browser globals (root is window)
     if (!root.BlueDeltaApi) {
       root.BlueDeltaApi = {};
     }
-    root.BlueDeltaApi.User = factory(root.BlueDeltaApi.ApiClient, root.BlueDeltaApi.Jean);
+    root.BlueDeltaApi.User = factory(root.BlueDeltaApi.ApiClient, root.BlueDeltaApi.Address, root.BlueDeltaApi.Jean);
   }
-}(this, function(ApiClient, Jean) {
+}(this, function(ApiClient, Address, Jean) {
   'use strict';
 
 
@@ -48,6 +48,9 @@
 
     _this['identityId'] = identityId;
 
+
+
+
   };
 
   /**
@@ -64,6 +67,15 @@
       if (data.hasOwnProperty('identityId')) {
         obj['identityId'] = ApiClient.convertToType(data['identityId'], 'String');
       }
+      if (data.hasOwnProperty('email')) {
+        obj['email'] = ApiClient.convertToType(data['email'], 'String');
+      }
+      if (data.hasOwnProperty('phone_number')) {
+        obj['phone_number'] = ApiClient.convertToType(data['phone_number'], 'String');
+      }
+      if (data.hasOwnProperty('addresses')) {
+        obj['addresses'] = ApiClient.convertToType(data['addresses'], [Address]);
+      }
       if (data.hasOwnProperty('jeans')) {
         obj['jeans'] = ApiClient.convertToType(data['jeans'], [Jean]);
       }
@@ -75,6 +87,18 @@
    * @member {String} identityId
    */
   exports.prototype['identityId'] = undefined;
+  /**
+   * @member {String} email
+   */
+  exports.prototype['email'] = undefined;
+  /**
+   * @member {String} phone_number
+   */
+  exports.prototype['phone_number'] = undefined;
+  /**
+   * @member {Array.<module:model/Address>} addresses
+   */
+  exports.prototype['addresses'] = undefined;
   /**
    * @member {Array.<module:model/Jean>} jeans
    */
