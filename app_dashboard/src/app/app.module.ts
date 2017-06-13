@@ -1,76 +1,110 @@
-import { NgModule }                    from '@angular/core';
-import { IonicApp, IonicModule }       from 'ionic-angular';
-import { MyApp }                       from './app.component';
-import { HttpModule }                  from "@angular/http";
+import { BrowserModule } from '@angular/platform-browser';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 
-import { AboutPage }                   from '../pages/about/about';
-import { AccountConfirmationCodePage } from '../pages/account-confirmation-code/account-confirmation-code';
-import { AccountChangePasswordPage }   from '../pages/account-change-password/account-change-password';
-import { AccountForgotPasswordPage }   from '../pages/account-forgot-password/account-forgot-password';
-import { AccountPage }                 from '../pages/account/account';
-import { AccountSigninPage }           from '../pages/account-signin/account-signin';
-import { AccountSigninUsingSAMLPage }  from '../pages/account-signin-using-saml/account-signin-using-saml';
-import { AccountSignupPage }           from '../pages/account-signup/account-signup';
-import { ButtonListPage }            from '../pages/button-list/button-list';
-import { ButtonAddPage }             from '../pages/button-add/button-add';
-import { TabsPage }                    from '../pages/tabs/tabs';
-import { WelcomePage }                 from '../pages/welcome/welcome';
-import { BrowserModule }               from "@angular/platform-browser";
-import { HttpService }                 from "../services/http-service";
-import {
-  IamAuthorizerClient,
-  CustomAuthorizerClient,
-  UserPoolsAuthorizerClient,
-  NoAuthorizationClient
-} from "../services/blue-delta-api.service";
-import { ButtonItemComponent } from '../components/button-item/button-item';
-// import { NgReduxModule } from "@angular-redux/store";
-// import { ButtonActions } from "../reducers/buttons/buttons.actions";
+import { MyApp } from './app.component';
+
+import { NgReduxModule } from '@angular-redux/store';
+
+import { WelcomePage } from "../pages/welcome/welcome";
+import { BottomTabsPage } from "../pages/bottom-tabs/bottom-tabs";
+import { GlobalStateService } from "../services/global-state.service";
+import { AccountSigninPage } from "../pages/account-signin/account-signin";
+import { AccountSignupPage } from "../pages/account-signup/account-signup";
+import { AccountConfirmationCodePage } from "../pages/account-confirmation-code/account-confirmation-code";
+import { UserRegistrationService } from "../services/account-management.service";
+import { AccountForgotPasswordPage } from "../pages/account-forgot-password/account-forgot-password";
+import { NoAuthorizationClient, CustomAuthorizerClient, UserPoolsAuthorizerClient } from "../services/blue-delta-api.service";
+import { HttpModule } from "@angular/http";
+import { HttpService } from "../services/http-service";
+import { ButtonItemComponent } from '../components/button-master/button-index/button-item/button-item';
+import { ResourceProvider } from '../providers/resource/resource.provider';
+import { ButtonActions } from "../reducers/buttons/buttons.actions";
+import { UsersActions } from "../reducers/users/users.actions";
+import { ButtonIndexComponent } from '../components/button-master/button-index/button-index';
+import { ButtonMasterComponent } from '../components/button-master/button-master';
+import { CreateButtonFormComponent } from '../components/button-master/create-button-form/create-button-form';
+import { EditButtonFormComponent } from '../components/button-master/button-index/button-item/edit-button-form/edit-button-form';
+import { ButtonItemDetailsComponent } from '../components/button-master/button-index/button-item/button-item-details/button-item-details';
+import { ButtonItemButtonsComponent } from '../components/button-master/button-index/button-item/button-item-buttons/button-item-buttons';
+import { ButtonItemImageComponent } from '../components/button-master/button-index/button-item/button-item-image/button-item-image';
+import { VendorsPage } from "../pages/vendors/vendors";
+import { ProfilePage } from "../pages/profile/profile";
+import { AdminsPage } from "../pages/admins/admins";
+import { OrdersIndexComponent } from '../components/orders-list-master/orders-index/orders-index';
+import { OrdersListItemComponent } from '../components/orders-list-master/orders-index/orders-list-item/orders-list-item';
+import { OrdersListMasterComponent } from '../components/orders-list-master/orders-list-master';
+import { OrdersPage } from '../pages/orders/orders';
+import { CustomersPage } from '../pages/customers/customers';
+import { ButtonsProvider } from "../providers/buttons/buttons";
+import { OrdersProvider } from "../providers/orders/orders";
+
+
 
 @NgModule({
   declarations: [
-    AccountConfirmationCodePage,
-    AccountChangePasswordPage,
-    AccountForgotPasswordPage,
-    AccountPage,
-    AccountSigninPage,
-    AccountSigninUsingSAMLPage,
-    AccountSignupPage,
-    ButtonAddPage,
-    ButtonListPage,
     MyApp,
-    TabsPage,
     WelcomePage,
-    ButtonItemComponent
+    VendorsPage,
+    ProfilePage,
+    AdminsPage,
+    OrdersPage,
+    CustomersPage,
+    BottomTabsPage,
+    AccountSigninPage,
+    AccountSignupPage,
+    AccountConfirmationCodePage,
+    AccountForgotPasswordPage,
+    ButtonItemComponent,
+    ButtonIndexComponent,
+    ButtonMasterComponent,
+    CreateButtonFormComponent,
+    EditButtonFormComponent,
+    ButtonItemDetailsComponent,
+    ButtonItemButtonsComponent,
+    ButtonItemImageComponent,
+    OrdersIndexComponent,
+    OrdersListItemComponent,
+    OrdersListMasterComponent,
   ],
   imports: [
-    HttpModule,
-    // NgReduxModule,
-    IonicModule.forRoot(MyApp),
     BrowserModule,
+    NgReduxModule,
+    HttpModule,
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    AccountConfirmationCodePage,
-    AccountChangePasswordPage,
-    AccountForgotPasswordPage,
-    AccountPage,
-    AccountSigninPage,
-    AccountSigninUsingSAMLPage,
-    AccountSignupPage,
-    ButtonAddPage,
-    ButtonListPage,
     MyApp,
-    TabsPage,
     WelcomePage,
+    VendorsPage,
+    ProfilePage,
+    AdminsPage,
+    OrdersPage,
+    CustomersPage,
+    BottomTabsPage,
+    AccountSigninPage,
+    AccountSignupPage,
+    AccountConfirmationCodePage,
+    AccountForgotPasswordPage,
   ],
   providers: [
-    { provide: HttpService, useClass: HttpService },
-    { provide: CustomAuthorizerClient, useClass: CustomAuthorizerClient },
-    { provide: IamAuthorizerClient, useClass: IamAuthorizerClient },
-    { provide: UserPoolsAuthorizerClient, useClass: UserPoolsAuthorizerClient },
-    { provide: NoAuthorizationClient, useClass: NoAuthorizationClient },
-    // ButtonActions
+    StatusBar,
+    SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    GlobalStateService,
+    UserRegistrationService,
+    NoAuthorizationClient,
+    HttpService,
+    CustomAuthorizerClient,
+    UserPoolsAuthorizerClient,
+    ResourceProvider,
+    ButtonActions,
+    UsersActions,
+    ButtonsProvider,
+    OrdersProvider
   ]
 })
 export class AppModule {}

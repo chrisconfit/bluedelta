@@ -14,9 +14,10 @@
       <ion-label floating>Registration Code</ion-label>
       <ion-input [(ngModel)]="registrationCode.code" name="code" type="text" #code="ngModel" required></ion-input>
     </ion-item>
-    <p [hidden]="code.valid || submitted == false" color="danger" padding-left>
+    <p [hidden]="code.valid || ( resourceService.users$ | async ).registrationCode.submitted === false" color="danger" padding-left>
       Registration code is required
     </p>
+    
 
   </form>
 

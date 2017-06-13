@@ -1,0 +1,6 @@
+  <span *ngIf="(resourceService.buttons$ | async).buttonInEdit !== button.buttonId">{{ button.name }}</span>
+  <span *ngIf="button.buttonId === (resourceService.buttons$ | async).itemBeingFetched">&nbsp;&nbsp;...fetching</span>
+  <span *ngIf="button.buttonId === (resourceService.buttons$ | async).buttonMarkedForDelete">&nbsp;&nbsp;...deleting</span>
+  <span *ngIf="!button.buttonId">&nbsp;&nbsp;...saving</span>
+  <p>{{  button.createTime | date }}</p>
+  <p *ngIf="button.updateTime">{{  button.updateTime | date }}</p>

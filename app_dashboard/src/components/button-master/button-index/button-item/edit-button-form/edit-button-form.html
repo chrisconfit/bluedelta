@@ -1,0 +1,12 @@
+<form [formGroup]="resourceService.buttonEdit">
+<div *ngIf="(resourceService.buttons$ | async).buttonInEdit === button.buttonId">
+    <ion-item>
+    <ion-label>Name</ion-label>
+    <ion-input type="text" formControlName="name" placeholder="Enter New Name"></ion-input>
+    </ion-item>
+    <ion-item>
+    <ion-label>Layer</ion-label>
+    <ion-textarea formControlName="layer" placeholder="Enter New Layer"></ion-textarea>
+    </ion-item>
+</div>
+</form>

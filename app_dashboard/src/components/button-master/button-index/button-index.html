@@ -1,0 +1,3 @@
+<ion-list>
+    <button-item [button]="button" *ngFor="let button of (resourceService.buttons$ | async).list"></button-item>      
+</ion-list>

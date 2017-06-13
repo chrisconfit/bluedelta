@@ -50,7 +50,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /users/{userId}:
     delete:
@@ -66,7 +66,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     get:
       description: Returns a User
       operationId: users-Get
@@ -82,7 +82,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Updates a User
       operationId: users-Update
@@ -99,7 +99,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /users/{userId}/orders:
     get:
@@ -133,7 +133,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Adds an Order
       operationId: order-Create
@@ -149,7 +149,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /orders/{orderId}:
     delete:
@@ -165,7 +165,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     get:
       description: Returns an Order
       operationId: orders-Get
@@ -181,7 +181,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Updates an Order
       operationId: orders-Update
@@ -198,7 +198,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /buttons:
     get:
@@ -303,7 +303,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Adds a Thread
       operationId: threads-Create
@@ -319,7 +319,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /threads/{threadId}:
     delete:
@@ -336,7 +336,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     get:
       description: Returns a Thread
       # used as the method name of the controller
@@ -355,7 +355,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Updates a Thread
       operationId: threads-Update
@@ -372,7 +372,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /fabrics:
     get:
@@ -390,7 +390,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Adds a Fabric
       operationId: fabrics-Create
@@ -406,7 +406,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /fabrics/{fabricId}:
     delete:
@@ -423,7 +423,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     get:
       description: Returns a Fabric
       # used as the method name of the controller
@@ -442,7 +442,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Updates a Fabric
       operationId: fabrics-Update
@@ -459,7 +459,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /ping:
     get:
@@ -473,7 +473,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
 parameters:
   User:
@@ -490,7 +490,7 @@ parameters:
   Order:
     in: "body"
     name: "body"
-    required: true
+    # required: true
     schema:
       $ref: "#/definitions/Order"
   OrderId:
@@ -512,7 +512,7 @@ parameters:
   Thread:
     in: "body"
     name: "body"
-    required: true
+    # required: true
     schema:
       $ref: "#/definitions/Thread"
   ThreadId:
@@ -523,7 +523,7 @@ parameters:
   Fabric:
     in: "body"
     name: "body"
-    required: true
+    # required: true
     schema:
       $ref: "#/definitions/Fabric"
   FabricId:
@@ -563,8 +563,8 @@ definitions:
           $ref: "#/definitions/Order"
 
   Order:
-    required:
-    - userId
+    # required:
+    # - userId
     properties:
       orderId:
         type: string
@@ -646,8 +646,8 @@ definitions:
           $ref: "#/definitions/Fabric"
 
   Fabric:
-    required:
-    - fabricId
+    # required:
+    # - fabricId
     properties:
       fabricId:
         type: string

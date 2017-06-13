@@ -1,0 +1,4 @@
+<button ion-button *ngIf="(resourceService.buttons$ | async).buttonInEdit === button.buttonId" (click)="resourceService.exitButtonEditMode(button)">DISCARD CHANGES</button>
+  <button ion-button *ngIf="(resourceService.buttons$ | async).buttonInEdit !== button.buttonId" (click)="resourceService.startButtonEdit(button)">EDIT</button>
+  <button ion-button (click)="resourceService.deleteButtonWithAuth(button.buttonId)">DELETE</button>
+  <button ion-button *ngIf="(resourceService.buttons$ | async).buttonInEdit === button.buttonId" (click)="resourceService.editButtonWithAuth(button, resourceService.buttonEdit)" [disabled]="!resourceService.buttonEdit?.valid">Submit</button>
