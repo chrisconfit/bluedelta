@@ -4,8 +4,8 @@
     .module('bdApp')
     .controller('closetCtrl', closetCtrl);
 
-  closetCtrl.$inject = ['$location', 'jean', 'meanData','popups', '$filter'];
-  function closetCtrl($location, jean, meanData, popups, $filter) {
+  closetCtrl.$inject = ['$location', 'jean', 'meanData','popups', '$filter', 'aws'];
+  function closetCtrl($location, jean, meanData, popups, $filter, aws) {
     var vm = this;
 		vm.popups=popups;
     vm.user = {};
@@ -69,13 +69,8 @@
         console.log(e);
       });
       
-    meanData.getProfile()
-      .success(function(data) {
-        vm.user = data;
-      })
-      .error(function (e) {
-        console.log(e);
-      });
+		
+		//Get User
   }
   
 

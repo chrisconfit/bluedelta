@@ -17,6 +17,11 @@
     <button type="submit" class="btn btn-default">Sign in!</button>
    </form>
 	 
+	 <br>
+	 <button ng-click="vm.loginFB()" class="btn"><i class="fa fa-facebook"></i>&nbsp;&nbsp;Log In with Facebook</button>
+	 
+	 <br><br>
+	 <button ng-click="vm.loginFB()" class="btn"><i class="fa fa-google-plus"></i>&nbsp;&nbsp;Log In with Google+</button>
 	 
 	  <div class="message-block" ng-show="vm.messages.message">
 	  	<p class="form-messages {{vm.messages.type}}" ng-bind-html="vm.messages.message"></p>

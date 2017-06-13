@@ -40,7 +40,17 @@
 				}
 			);
 		}
-
+		
+		vm.loginFB = function(){
+			aws.authenticateViaFB().then(
+				function(result){
+					$location.path('/closet');
+				},
+				function(err){
+					vm.messages.set(err.message,"error");
+				}
+			);
+		}
 
     vm.onSubmit = function () {
 	    vm.errors.message = "";

@@ -71,16 +71,41 @@
         console.log('call result: ' + result);
       });
     }
+		
 
+		authenticateViaFB = function(){
+			
+			var defer = $q.defer();
+			
+			FB.login(function (response) {
+			  if (response.authResponse) { // logged in
+			    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+			      IdentityPoolId: AWSConfig.IDENTITY_POOL_ID,
+			      Logins: {
+			        'graph.facebook.com': response.authResponse.accessToken
+			      }
+			    });
+			
+			    s3 = new AWS.S3; // we can now create our service object
+			
+			    defer.resolve();
+			  } else {
+			    defer.reject('There was a problem logging in with Facebook.');
+			  }
+			});
+			
+			return defer.promise;		
+		}
+		
     authenticateCognitoUser = function(username, password) {
       var authenticationDetails = _getAuthenticationDetails(username, password);
       var cognitoUser = _getCognitoUser(username, _getUserPool());
       
       var defer = $q.defer();
       
+      
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
-					console.log("succ");
 					defer.resolve(result);
 					console.log('access token + ' + result.getAccessToken().getJwtToken());
 					//Use the idToken for Logins Map when Federating User Pools with Cognito Identity or when passing through an Authorization Header to an API Gateway Authorizer
@@ -317,6 +342,7 @@
       
     
     return {
+	    authenticateViaFB: authenticateViaFB,
 	    getUserFromLocalStorage: getUserFromLocalStorage,
       deleteCognitoUser: deleteCognitoUser,
       authenticateCognitoUser: authenticateCognitoUser,
