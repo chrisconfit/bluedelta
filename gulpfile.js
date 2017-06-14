@@ -8,11 +8,26 @@ var compass = require('gulp-compass');
 var gutil = require('gulp-util');
 
 gulp.task('scripts', function() {
-  gulp.src(['./app_client/**/*.js', 
+  gulp.src([
+      '!./app_client/services/blue-delta-sdk/**/*',
+    './app_client/services/blue-delta-sdk/API/Client/Button.js',
+    './app_client/services/blue-delta-sdk/API/Client/ButtonsListResponse.js',
+      './app_client/services/blue-delta-sdk/API/Client/Fabric.js',
+      './app_client/services/blue-delta-sdk/API/Client/FabricsListResponse.js',
+      './app_client/services/blue-delta-sdk/API/Client/Jean.js',
+      './app_client/services/blue-delta-sdk/API/Client/Measurement.js',
+      './app_client/services/blue-delta-sdk/API/Client/Order.js',
+      './app_client/services/blue-delta-sdk/API/Client/OrderItem.js',
+      './app_client/services/blue-delta-sdk/API/Client/OrdersListResponse.js',
+      './app_client/services/blue-delta-sdk/API/Client/Thread.js',
+      './app_client/services/blue-delta-sdk/API/Client/ThreadsListResponse.js',
+      './app_client/services/blue-delta-sdk/API/Client/Transaction.js',
+      './app_client/services/blue-delta-sdk/API/Client/User.js',
+      './app_client/services/blue-delta-sdk/API/Client/UsersListResponse.js',
+      './app_client/services/blue-delta-sdk/API/Client/DefaultApi.js',
+    './app_client/**/*.js',
   	'!./app_client/**/*.test.js', 
-  	'!./app_client/app.min.js', 
-  	'!./app_client/services/blue-delta-sdk/test/',
-  	'!./app_client/services/blue-delta-sdk/test/**/*'])
+  	'!./app_client/app.min.js'])
     .pipe(sourcemaps.init())
     .pipe(uglify({mangle: true}).on('error', gutil.log))
     .pipe(concat('./app.min.js'))  

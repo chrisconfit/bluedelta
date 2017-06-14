@@ -10,11 +10,11 @@
 
 	  
     var vm = this;
-    
-    var api = new bdAPI.DefaultApi();
+
+    // var api = new bdAPI.DefaultApi;
     aws.getCurrentUserFromLocalStorage().then(
     	function(result){
-	    	api.apiClient.defaultHeaders['Authorization'] = result;
+	    	bdAPI.defaultHeaders_['Authorization'] = result.idToken.getJwtToken();
 	    	vm.setUpClosetData();
     	},    	
     	function(err){
@@ -44,8 +44,8 @@
 		vm.setUpClosetData = function(){
 			
 			//Get User data
-			console.log(api);
-			console.log(api.usersList());
+			console.log(bdAPI);
+			console.log(bdAPI.usersList());
 			
 			vm.setupData('getGenders', 'genders'),
 			vm.setupData('getStyles', 'styles'),
