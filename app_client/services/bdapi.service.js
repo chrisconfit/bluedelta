@@ -7,6 +7,7 @@
 
   bdAPI.$inject = ['$window', '$http'];
   function bdAPI ($window, $http) {
+	  console.log($window);
 		if($window.BlueDeltaApi){
 	    //Delete moment from window so it's not globally accessible.
 	    //  We can still get at it through _thirdParty however, more on why later
