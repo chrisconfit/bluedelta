@@ -1,0 +1,9 @@
+  <span *ngIf="userService.itemIdMarkedForEdit !== user.identityId">{{ user.name }}</span><span *ngIf="user.updateTime">&nbsp;&nbsp;(edited)</span>
+  <span *ngIf="user.identityId === userService.itemIdBeingFetched">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
+  <span *ngIf="user.identityId === userService.itemIdMarkedForDelete">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
+  <span *ngIf="!user.identityId">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
+  <p>{{  user.createTime | date }}</p>
+  <p *ngIf="user.email">{{  user.email }}</p>
+  <p *ngIf="user.phoneNumber">{{  user.phoneNumber }}</p>
+  <p *ngIf="user.addresses">{{  user.addresses | json }}</p>
+  

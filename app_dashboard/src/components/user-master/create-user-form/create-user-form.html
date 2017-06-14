@@ -1,0 +1,22 @@
+<div>
+  <div align='center'>
+    <button float-left margin ion-button (click)="userService.loadItemsWithAuth()"><ion-icon name="refresh"></ion-icon></button>
+    <button float-left margin ion-button *ngIf="!userService.itemInCreation" (click)="userService.startItemCreate()"><ion-icon name="create"></ion-icon></button>
+  </div>
+</div>
+
+<form [formGroup]="userService.itemCreate">
+  <div *ngIf="userService.itemInCreation">
+      <ion-item>
+      <ion-label>Name</ion-label>
+      <ion-input type="text" formControlName="name" placeholder="Enter New Name"></ion-input>
+      </ion-item>
+      <ion-item>
+      <ion-label>Layer</ion-label>
+      <ion-textarea formControlName="layer" placeholder="Enter New Layer"></ion-textarea>
+      </ion-item>
+      <button ion-button (click)="userService.exitItemCreate()"><ion-icon name="arrow-back"></ion-icon></button>
+      <button ion-button (click)="userService.createItemWithAuth(buttonService.itemCreate.value)"><ion-icon name="checkmark"></ion-icon></button>
+  </div>
+  
+</form>

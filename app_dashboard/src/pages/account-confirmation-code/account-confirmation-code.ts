@@ -1,24 +1,32 @@
-import { Component }                   from '@angular/core';
-import { NavController }               from 'ionic-angular';
-import { AlertController }             from 'ionic-angular';
-import { UserRegistrationService }     from '../../services/account-management.service';
-import { GlobalStateService } from '../../services/global-state.service';
-import { Logger } from '../../services/logger.service';
-
+import { Component } from '@angular/core';
+import { NavController, AlertController } from 'ionic-angular';
+import { UserRegistrationService } from "../../services/account-management.service";
+import { GlobalStateService } from "../../services/global-state.service";
+import { ResourceProvider } from "../../providers/resource/resource.provider";
+import { UsersActions } from "../../reducers/users/users.actions";
 
 @Component({
+  selector: 'page-account-confirmation-code',
   templateUrl: 'account-confirmation-code.html',
 })
 export class AccountConfirmationCodePage {
 
-  public submitted: boolean = false;
+  
 
   public registrationCode = {
     code: undefined
   };
 
+  constructor(
+    private navCtrl: NavController, 
+    private alertCtrl: AlertController, 
+    private globals: GlobalStateService, 
+    public resourceService: ResourceProvider,
+    public userActions: UsersActions) {
+  }
+
   confirmSignUp(form) {
-    this.submitted = true;
+    this.userActions.confirmationCodeSubmitted(true);
     if (form && form.valid) {
       UserRegistrationService.confirmSignUp(this.registrationCode.code.toString())
       .then(() => {
@@ -55,11 +63,6 @@ export class AccountConfirmationCodePage {
     alert.present();
   }
 
-  constructor(private navCtrl: NavController, private alertCtrl: AlertController, private globals: GlobalStateService) {
 
-  }
 
-  ionViewDidEnter() {
-    Logger.banner("Confirmation Code");
-  }
 }

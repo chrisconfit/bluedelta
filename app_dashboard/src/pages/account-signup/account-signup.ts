@@ -1,16 +1,24 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
-import { UserRegistrationService, IUserRegistration } from '../../services/account-management.service';
-import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
-import { GlobalStateService } from '../../services/global-state.service';
-import { Logger } from '../../services/logger.service';
+import { NavController, AlertController } from 'ionic-angular';
+import { UserRegistrationService, IUserRegistration } from "../../services/account-management.service";
+import { GlobalStateService } from "../../services/global-state.service";
+import { AccountConfirmationCodePage } from "../account-confirmation-code/account-confirmation-code";
+import { UsersActions } from "../../reducers/users/users.actions";
 
 @Component({
-  selector: 'account-signup',
-  templateUrl: 'account-signup.html'
+  selector: 'page-account-signup',
+  templateUrl: 'account-signup.html',
 })
 export class AccountSignupPage {
+
+  constructor(
+    public navCtrl: NavController, 
+    private alertCtrl: AlertController, 
+    private userRegistrationService: UserRegistrationService, 
+    private globals: GlobalStateService,
+    public userActions: UsersActions) {
+  }
+
   accountConfirmationCodePage = AccountConfirmationCodePage;
 
   public userData: IUserRegistration = {
@@ -21,11 +29,10 @@ export class AccountSignupPage {
     email: ''
   };
 
-  public submitted: boolean = false;
+  // public submitted: boolean = false;
 
   onSignUp(form) {
-    this.submitted = true;
-
+    this.userActions.signUpFormSubmitted(true);
     if (form && form.valid) {
       UserRegistrationService.signUp(this.userData).then(() => {
         // Sign-up successful. Redirect to confirm sign-up page.
@@ -44,7 +51,7 @@ export class AccountSignupPage {
       subTitle: subTitle,
       buttons: [
         {
-         text: 'OK',
+          text: 'OK',
           handler: () => {
             console.log('OK clicked');
           }
@@ -54,10 +61,6 @@ export class AccountSignupPage {
     alert.present();
   }
 
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController, private userRegistrationService: UserRegistrationService, private globals: GlobalStateService) {
-  }
+  
 
-  ionViewDidEnter() {
-    Logger.banner("Register");
-  }
 }

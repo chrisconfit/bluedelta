@@ -1,31 +1,26 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { TabsPage } from '../tabs/tabs';
-import { AlertController } from 'ionic-angular';
-import { GlobalStateService } from '../../services/global-state.service';
-import { AccountForgotPasswordPage } from '../account-forgot-password/account-forgot-password';
-import { AccountSignupPage } from '../account-signup/account-signup';
-// import { WelcomePage } from '../welcome/welcome';
-import { AccountSigninUsingSAMLPage } from '../account-signin-using-saml/account-signin-using-saml';
-import {
-  UserLoginService, IUserLogin, UserState,
-  UserRegistrationService, CognitoUtil
-} from '../../services/account-management.service';
-import { Logger } from '../../services/logger.service';
-import { Config } from '../../config/config';
+import { NavController, AlertController } from 'ionic-angular';
+import { GlobalStateService } from "../../services/global-state.service";
+import { AccountSignupPage } from "../account-signup/account-signup";
+import { BottomTabsPage } from "../bottom-tabs/bottom-tabs";
+import { IUserLogin, UserLoginService, CognitoUtil, UserState, UserRegistrationService } from "../../services/account-management.service";
+import { Config } from "../../config/config";
+import { AccountForgotPasswordPage } from "../account-forgot-password/account-forgot-password";
+import { ResourceProvider } from "../../providers/resource/resource.provider";
+import { UsersActions } from "../../reducers/users/users.actions";
+
 
 @Component({
+  selector: 'page-account-signin',
   templateUrl: 'account-signin.html',
 })
-
 export class AccountSigninPage {
 
   allowButtonPresses = true; // to prevent multiple clicks
   accountSignupPage = AccountSignupPage;
   accountForgotPasswordPage = AccountForgotPasswordPage;
-  accountSigninUsingSAMLPage = AccountSigninUsingSAMLPage;
-  tabsPage = TabsPage;
-  alertCtrl : AlertController = this.globals.getAlertController();
+  tabsPage = BottomTabsPage;
+  alertCtrl : AlertController = this.resourceService.getAlertController();
 
   public userData: IUserLogin = {
     username: "user1",
@@ -35,12 +30,20 @@ export class AccountSigninPage {
   signInButtonClicked: boolean = false;
   forgotPasswordButtonClicked: boolean = false;
 
+  constructor(
+    public navCtrl: NavController, 
+    private globals: GlobalStateService, 
+    public resourceService: ResourceProvider, 
+    public userActions: UsersActions) {
+  }
+
   onSignIn(form) {
     this.signInButtonClicked = true;
     this.forgotPasswordButtonClicked = false;
 
     if (form && form.valid) {
       this.login();
+      this.resourceService.initialized = true;
     }
   }
 
@@ -52,7 +55,7 @@ export class AccountSigninPage {
     // Do not allow default users to change their passwords
     if (form && this.userData.username != null) {
       if (Config['DEFAULT_USERNAMES'].findIndex((el)=>{ return el === this.userData.username; }) > -1) {
-        this.globals.displayAlert('Cannot reset passwords for default users',
+        this.resourceService.displayAlert('Cannot reset passwords for default users',
           `The user [${this.userData.username}] is a default user. ` +
           `Passwords for default users cannot be reset.<br/><br/>Please try ` +
           'again using a username for a user that you have manually registered.');
@@ -84,20 +87,20 @@ export class AccountSigninPage {
       return;
     }
     this.allowButtonPresses = false;
-    this.globals.displayLoader('Signing in...');
+    this.resourceService.displayLoader('Signing in...');
     UserLoginService.signIn(this.userData)
     .then(() => {
       // Login was successful
-      this.globals.dismissLoader();
+      this.resourceService.dismissLoader();
       this.showLoginSuccessAlert(this.userData.username, () => {
-        this.globals.userId = this.globals.getUserId();
+        this.userActions.setCurrentUserId(this.resourceService.getUserId());
         this.globals.setViewAdminFeaturesOverride(this.globals.isAdminRole());
         this.navCtrl.popToRoot({animate: false});
         // this.navCtrl.push(WelcomePage);
       });
     }).catch((err: Error): void => {
       // Login was unsuccessful
-      this.globals.dismissLoader();
+      this.resourceService.dismissLoader();
       this.allowButtonPresses = true;
       this.displayAlertError(err);
     });
@@ -135,7 +138,7 @@ export class AccountSigninPage {
     let alert = this.alertCtrl.create({
       title: 'Success!',
       subTitle: subtitle,
-      message: `Username: <b>${username}</b><br/>First name: <b>${this.globals.getUserFirstName()}</b><br/>Last name: <b>${this.globals.getUserLastName()}</b>`,
+      message: `Username: <b>${username}</b><br/>First name: <b>${this.resourceService.getUserFirstName()}</b><br/>Last name: <b>${this.resourceService.getUserLastName()}</b>`,
       buttons: [{
           text: 'OK',
           handler: data => {
@@ -171,23 +174,15 @@ export class AccountSigninPage {
           text: 'Verify',
           handler: data => {
             UserRegistrationService.confirmSignUp(data.verificationCode)
-            .then(() => {
-              // this.showLoginSuccessAlert(this.userData.username, () => {
-                // now, sign in
+            .then(() => {                
               UserLoginService.signIn(this.userData).then(() => {
-                // Login was successful
                 this.showLoginSuccessAlert(this.userData.username, () => {
-                  this.globals.userId = this.globals.getUserId();
+                  this.userActions.setCurrentUserId(this.resourceService.getUserId());
                   this.navCtrl.popToRoot({animate: false});
-                  // this.navCtrl.push(WelcomePage);
                 });
               }).catch((err: Error): void => {
-                // Login was unsuccessful
                 this.displayAlertError(err);
               });
-              // this.navCtrl.popToRoot({animate: false});
-              // this.navCtrl.pop();
-              // });
             }).catch((err: Error) => {
               console.error(err);
               this.showConfirmationFailureAlert(err);
@@ -234,13 +229,5 @@ export class AccountSigninPage {
     });
     alert.present();
   }
-
-  constructor(public navCtrl: NavController, private globals: GlobalStateService) {
-
-  }
-
-  ionViewDidEnter() {
-    Logger.banner("Sign-In");
-    this.allowButtonPresses = true;
-  }
+ 
 }
