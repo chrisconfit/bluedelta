@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { GlobalStateService } from '../../services/global-state.service';
-import { UserLoginService, CognitoUtil } from '../../services/account-management.service';
-import { Logger } from '../../services/logger.service';
-
+import { GlobalStateService } from "../../services/global-state.service";
+import { CognitoUtil, UserLoginService } from "../../services/account-management.service";
+import { ResourceProvider } from "../../providers/resource/resource.provider";
+import { Logger } from "../../services/logger.service";
 
 @Component({
+  selector: 'page-account-forgot-password',
   templateUrl: 'account-forgot-password.html',
 })
-
 export class AccountForgotPasswordPage {
 
   formData: {
@@ -17,6 +17,12 @@ export class AccountForgotPasswordPage {
   } = {};
 
   submitted: boolean = false;
+
+  constructor(
+    public navCtrl: NavController,
+    private globals: GlobalStateService,
+    public resourceService: ResourceProvider) {
+  }
 
   onSubmit(form) {
     this.submitted = true;
@@ -35,7 +41,7 @@ export class AccountForgotPasswordPage {
   }
 
   showSuccessAlert() {
-    let alertController = this.globals.getAlertController();
+    let alertController = this.resourceService.getAlertController();
     let alert = alertController.create({
       title: 'Password changed.',
       subTitle: 'Your password has been successfully changed. Please try signing in again with your new password.',
@@ -51,7 +57,7 @@ export class AccountForgotPasswordPage {
   }
 
   showFailureAlert() {
-    let alertController = this.globals.getAlertController();
+    let alertController = this.resourceService.getAlertController();
     let alert = alertController.create({
       title: 'Error encountered',
       subTitle: 'There was a problem changing your password. Please try again.',
@@ -66,11 +72,11 @@ export class AccountForgotPasswordPage {
     alert.present();
   }
 
-  constructor(public navCtrl: NavController, private globals: GlobalStateService) {
 
-  }
 
   ionViewDidEnter() {
     Logger.banner("Forgot Password");
   }
+
+
 }

@@ -5,20 +5,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <base href="/">
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="lib/closure-library/closure/goog/base.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/Button.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/ButtonsListResponse.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/Fabric.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/FabricsListResponse.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/Jean.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/Measurement.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/Order.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/OrderItem.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/OrdersListResponse.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/Thread.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/ThreadsListResponse.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/Transaction.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/User.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/UsersListResponse.js"></script>
+  <script src="lib/blue-delta-sdk/API/Client/DefaultApi.js"></script>
   <script src="https://use.typekit.net/rjf0vtn.js"></script>
   <script>try{Typekit.load({ async: true });}catch(e){}</script>
   <script src="https://use.fontawesome.com/b5cea278b8.js"></script>
+  
+  <script src="lib/aws/aws-cognito-sdk.min.js"></script>
+  <script src="lib/aws/amazon-cognito-identity.min.js"></script>
+  <!-- optional: only if you use other AWS services -->
+  <script src="lib/aws/aws-sdk.min.js"></script>
 </head>
 <body>
 	<div ng-view>
 	</div>
 </div>
-
   <script src="lib/angular/angular.min.js"></script>
+  <script src="lib/angular/angular-sanitize.min.js"></script>
   <script src="lib/angular/angular-route.min.js"></script>
   <script src="lib/angular/angular-animate.min.js"></script>
   <script src="lib/angular/gestures.js"></script>
   <script src="app.min.js"></script>
-
+  <script>
+    goog.require('API.Client.DefaultApi');
+  </script>
+  <script>
+	  window.fbAsyncInit = function() {
+	    FB.init({
+	      appId            : '395422434185275',
+	      autoLogAppEvents : true,
+	      xfbml            : true,
+	      version          : 'v2.9'
+	    });
+	    FB.AppEvents.logPageView();
+	  };
+	
+	  (function(d, s, id){
+	     var js, fjs = d.getElementsByTagName(s)[0];
+	     if (d.getElementById(id)) {return;}
+	     js = d.createElement(s); js.id = id;
+	     js.src = "//connect.facebook.net/en_US/sdk.js";
+	     fjs.parentNode.insertBefore(js, fjs);
+	   }(document, 'script', 'facebook-jssdk'));
+	</script>
 </body>
-</html>
+</html
+

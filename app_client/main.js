@@ -1,6 +1,6 @@
 (function () {
 
-  angular.module('bdApp', ['ngRoute', 'ngAnimate','angular-gestures']); 
+  angular.module('bdApp', ['ngRoute', 'ngAnimate','ngSanitize', 'angular-gestures']); 
   
   
   function config ($routeProvider, $locationProvider) {
@@ -25,7 +25,7 @@
         controller: 'closetCtrl',
         controllerAs: 'vm'
       })
-      .when('/customizer', {
+      .when('/customizer/:jean_id?/:action?', {
         templateUrl: '/pages/customizer/customizer.view.html',
         controller: 'customizerCtrl',
         controllerAs: 'vm'
@@ -42,22 +42,28 @@
     
    }
 
-  function run($rootScope, $location, authentication) {
+  function run($rootScope, $location, aws) {
     $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
 	    var locked = [
 		    '/closet'
 	    ];
-	    
-	    if (locked.indexOf($location.path()) >= 0  && !authentication.isLoggedIn()) {
-       // $location.path('/login');
-      }
+	    if (locked.indexOf($location.path()) >= 0 ){
+		    aws.getCurrentUserFromLocalStorage().then(
+			    function(result){
+				    return true;
+				  },
+				  function(err){
+					  $location.path('/login');
+					}
+		    );
+	  	}
     });
   }
   
   angular
     .module('bdApp')
     .config(['$routeProvider', '$locationProvider', config])
-    .run(['$rootScope', '$location', 'authentication', run])
+    .run(['$rootScope', '$location', 'aws', run])
 		.filter('spaceless',function() {
 	    return function(input) {
 	      if (input) {
@@ -80,8 +86,28 @@
 		  }  
 		})
 		.filter('displayName',function() {
+			return function(input){				
+				return input ? input.replace(/Raw Denim/g, "") : false;
+		  }  
+		})
+		
+		.filter('listData',function() {
 			return function(input){
-				return input.replace(/Raw Denim/g, "");
+				var retObj = {}; 
+				var display = [
+					'fabric',
+					'accent_thread',
+					'top_thread',
+					'bottom_thread',
+					'gender',
+					'style'
+				];
+			
+				for (key in input){
+					if (display.indexOf(key)>=0)
+						retObj[key] = input[key];			
+				}
+				return retObj;
 		  }  
 		})
 		

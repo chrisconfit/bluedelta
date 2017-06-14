@@ -1,4 +1,3 @@
-
 <div ng-show="popups.hiw" ng-click="popups.hiw = false" id="how-it-works" class="popup-window">
 	<div class="popup-content" ng-click="$event.stopPropagation()">
 		<a class="popup-closer" href="" ng-click="popups.hiw = false"></a>
@@ -33,7 +32,7 @@
 		<div class="head-left">
 			<!--<a class="mobile-info-button" ng-click="popups.hiw = !popups.hiw"><i class="fa fa-question"></i></a>-->
 			<a id="home-link" href="/"><img src="/images/bluedelta-logo.png" alt="Blue Delta Jeans"></a>
-			<span class="title">Custom Jean Builder - Beta</span>
+			<span class="title">Custom Jean Builder (B)</span>
 		</div>
 		<nav class="main-nav nav-right">
 			
@@ -49,12 +48,10 @@
 				<!--<li class="sign-in" ng-if="!navvm.isLoggedIn"><a class="btn register" href="register">Register</a></li>-->
 				
 				<!--Logged In-->
-				<li class="my-account" ng-if="navvm.isLoggedIn"><a class="btn drop-trigger account" ng-click="navvm.drops.account=!navvm.drops.account" href="">My Account</a>
-					<ul ng-class="(navvm.drops.account ? 'dropped' : '')" class="dropdown">
-						<li class="closet" ng-if="navvm.isLoggedIn"><a href="closet">Closet</a></li>
-						<li class="log-out" ng-if="navvm.isLoggedIn"><a class="btn logout" ng-click="navvm.logout()" href="/">Log Out</a></li>
-					</ul>
-				</li>	
+				<li class="closet" ng-if="navvm.isLoggedIn"><a href="closet">Closet</a></li>
+				<li class="log-out" ng-if="navvm.isLoggedIn"><a class="btn logout" ng-click="navvm.logout()" href="/">Log Out</a></li>
+			
+			
 				
 				<!--Admin-->
 		    <li ng-if="navvm.isLoggedIn && navvm.isAdmin"><a class="btn admin" href="admin">Admin</a></li>

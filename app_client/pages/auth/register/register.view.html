@@ -1,22 +1,41 @@
 <navigation></navigation>
 
 <div class="container">
+  
   <h1>Register</h1>
-  <p class="lead">Already a member? Please <a href="login">log in</a> instead.</p>
-  <form class="register-form" ng-submit="vm.onSubmit()">
-    <div class="form-group">
-      <label for="name">Full name</label>
-      <input type="text" class="form-control" id="name" placeholder="Enter your name" ng-model="vm.credentials.name">
-    </div>
-    <div class="form-group">
-      <label for="email">Email address</label>
-      <input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="vm.credentials.email">
-    </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" placeholder="Password" ng-model="vm.credentials.password">
-    </div>
-    <button type="submit" class="btn btn-default">Register!</button>
-  </form>
-  <p class="form-errors" ng-show="vm.errors.message">Error: {{vm.errors.message}}</p>
+  
+	<div class="step-1" ng-if="vm.formStep == 1">
+		<p class="lead">Already a member? Please <a href="login">log in</a> instead.</p>
+	  <form class="register-form" ng-submit="vm.registerUser()">
+	    <div class="form-group">
+	      <label for="name">Full name</label>
+	      <input type="text" class="form-control" id="name" placeholder="Enter your name" ng-model="vm.credentials.name">
+	    </div>
+	    <div class="form-group">
+	      <label for="email">Email address</label>
+	      <input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="vm.credentials.email">
+	    </div>
+	    <div class="form-group">
+	      <label for="password">Password</label>
+	      <input type="password" class="form-control" id="password" placeholder="Password" ng-model="vm.credentials.password">
+	    </div>
+	    <button type="submit" class="btn btn-default">Register!</button>
+	  </form>
+	</div>
+  
+  <div class="step-2" ng-if="vm.formStep == 2">
+	  <p class="lead">A confirmation code has been sent to {{vm.credentials.email}}. Enter the code below to confirm your account.</p>
+  	<form class="confirm-form" ng-if="vm.formStep == 2" ng-submit="vm.confirmUser()">	  
+	    <div class="form-group">
+	      <label for="code">Confirmation Code</label>
+	      <input type="text" class="form-control" id="confirm" placeholder="Enter your confirmation code" ng-model="vm.credentials.code">
+	    </div>
+	    <a href="" ng-click="vm.resendCode()">Resend Confirmation Code</a>
+	    <button type="submit" class="btn btn-default">Confirm!</button>
+	  </form>  
+  </div>		
+  
+  <div class="message-block" ng-show="vm.messages.message">
+  	<p class="form-messages {{vm.messages.type}}" ng-bind-html="vm.messages.message"></p>
+	</div>
 </div>
