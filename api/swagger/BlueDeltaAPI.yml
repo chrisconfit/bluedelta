@@ -82,7 +82,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Updates a User
       operationId: users-Update
@@ -99,7 +99,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /users/{userId}/orders:
     get:
@@ -479,7 +479,7 @@ parameters:
   User:
     in: "body"
     name: "body"
-    required: true
+    # required: true
     schema:
       $ref: "#/definitions/User"
   UserId:
@@ -501,7 +501,7 @@ parameters:
   Button:
     in: "body"
     name: "body"
-    required: true
+    # required: true
     schema:
       $ref: "#/definitions/Button"
   ButtonId:
@@ -548,10 +548,45 @@ definitions:
     properties:
       identityId:
         type: string
+      name:
+        type: string
+      email:
+        type: string
+      phone_number:
+        type: string
+      addresses:
+        type: array
+        items:
+          $ref: "#/definitions/Address"
       jeans:
         type: array
         items:
           $ref: "#/definitions/Jean"
+
+  AddressListResponse:
+    required:
+    - items
+    properties:
+      items:
+        type: array
+        items:
+          $ref: "#/definitions/Address"
+
+  Address:
+    type: object
+    properties:
+      address_line_1:
+        type: string
+      address_line_2:
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+      zip:
+        type: string
+      primary:
+        type: boolean
 
   OrdersListResponse:
     required:
@@ -624,8 +659,8 @@ definitions:
 
   Button:
     type: object
-    required:
-    - buttonId
+    #required:
+    # - buttonId
     properties:
       buttonId:
         type: string
@@ -646,8 +681,8 @@ definitions:
           $ref: "#/definitions/Fabric"
 
   Fabric:
-    required:
-    - fabricId
+#    required:
+#    - fabricId
     properties:
       fabricId:
         type: string

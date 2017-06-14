@@ -67,6 +67,7 @@ gulp.task('create_dynamodb_tables', function (done) {
     (new lambdaData.ButtonsTable()).safeCreateTable(),
     (new lambdaData.ThreadsTable()).safeCreateTable(),
     (new lambdaData.FabricsTable()).safeCreateTable(),
+    (new lambdaData.OrdersTable()).safeCreateTable(),
     (new lambdaData.UsersTable()).safeCreateTable(),
   ];
   execPromise(Promise.all(promises), done);
@@ -78,6 +79,7 @@ gulp.task('delete_dynamodb_tables', function (done) {
     (new lambdaData.ButtonsTable()).deleteTable(),
     (new lambdaData.ThreadsTable()).deleteTable(),
     (new lambdaData.FabricsTable()).deleteTable(),
+    (new lambdaData.OrdersTable()).deleteTable(),
     (new lambdaData.UsersTable()).deleteTable(),
   ];
   execPromise(Promise.all(promises), done);
@@ -106,6 +108,11 @@ gulp.task('create_custom_authorizer', function (done) {
 gulp.task('create_cognito_sync_trigger', function (done) {
   logger.info('Creating Cognito Sync Trigger Lambda function...');
   execPromise(util.lambda.createCognitoSyncTriggerFunctionAndPermission(), done);
+});
+
+gulp.task('create_cognito_trigger', function (done) {
+    logger.info('Creating Cognito Sync Trigger Lambda function...');
+    execPromise(util.lambda.createCognitoTriggerFunctionAndPermission(), done);
 });
 
 gulp.task('export_api', function (done) {
@@ -175,7 +182,7 @@ gulp.task('delete_cloudwatch_logs', function (done) {
 
 gulp.task('deploy_api', gulp.series('import_api', 'sleep', 'create_api_stage'));
 
-gulp.task('deploy_lambda', gulp.series('create_lambda_zip', 'upload_lambda_zip', 'create_lambda_functions', 'create_custom_authorizer', 'create_cognito_sync_trigger'));
+gulp.task('deploy_lambda', gulp.series('create_lambda_zip', 'upload_lambda_zip', 'create_lambda_functions', 'create_custom_authorizer', 'create_cognito_sync_trigger', 'create_cognito_trigger'));
 
 gulp.task('generate_sdk', gulp.series('export_api', 'create_sdk', 'delete_export_api'));
 

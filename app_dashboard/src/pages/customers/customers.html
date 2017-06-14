@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Customers</ion-title>
+    <ion-buttons right>
+      <button ion-button icon-left [navPush]="accountSignupPage" *ngIf="!( resourceService.users$ | async ).currentUserId">
+          <ion-icon name="contact"></ion-icon>Register
+      </button>
+      <button ion-button icon-left [navPush]="accountSigninPage" *ngIf="!( resourceService.users$ | async ).currentUserId">
+          <ion-icon name="log-in"></ion-icon>Sign In
+      </button>
+      <button ion-button icon-left (click)="globals.logout()" *ngIf="( resourceService.users$ | async ).currentUserId">
+          <ion-icon name="log-out"></ion-icon>Sign Out
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <!--<ion-list>
+    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+      <ion-icon [name]="item.icon" item-left></ion-icon>
+      {{item.title}}
+      <div class="item-note" item-right>
+        {{item.note}}
+      </div>
+    </button>
+  </ion-list>-->
+
+  
+  
+  <button-master float-left margin></button-master>
+
+  <!--<orders-list-master></orders-list-master>-->
+
+  <user-master float-left margin></user-master>
+
+  <jean-master float-left margin></jean-master>
+
+</ion-content>
+
+
+
+  
+    
+    
+
+  

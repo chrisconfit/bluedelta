@@ -56,7 +56,7 @@
 						</a>
 						<div class="jean-list" ng-class="(vm.overviewOn ? 'show' :'hide')">
 							<dl>
-								<dt ng-repeat-start="(key, value) in vm.jean.data">{{key | scoreToSpace}}:</dt><!--
+								<dt ng-repeat-start="(key, value) in vm.jean.data | listData" >{{key | scoreToSpace}}:</dt><!--
 								--><dd ng-repeat-end>{{vm.dataLookup(key,value,"name")}}</dd>
 							</dl>
 						</div>
@@ -75,7 +75,7 @@
 					</a>
 			  </div><!--
 				--><div class="cft-gi">
-					<a class="btn" href="#">
+					<a class="btn" ng-click="vm.createThumb()" href="#">
 						Save <i class="fa fa-floppy-o" aria-hidden="true"></i>
 					</a>
 			  </div>

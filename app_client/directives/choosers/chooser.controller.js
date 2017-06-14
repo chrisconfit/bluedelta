@@ -62,17 +62,26 @@
 	  		},15);
 			  
 			}
-			
+
 			chvm.selectorCoords = {"top":0, "left":0};
 			
 			
-			//Center Selector on chooser change
+			//Center Selector on chooser change... Center on selected attr if edting preexisting jean...
 			$scope.$watch('active', function(newValue,oldValue) {	
 				
 				//Only on active choosers...
 				if (newValue == true){
-					
+
 					$timeout(function(){
+						
+						var key = $scope.step.jeanKey+"_"+chvm.jean.data[$scope.step.jeanKey],
+						activeElement = angular.element(document.querySelector('#'+key));
+						
+						chvm.selectorCoords.top = activeElement.prop('offsetTop');
+						chvm.selectorCoords.left = activeElement.prop('offsetLeft');
+							
+						var selector = angular.element(document.querySelector("#"+$scope.step.jeanKey+"-selector"));
+						selector.css({'top':chvm.selectorCoords.top+'px', 'left':chvm.selectorCoords.left+'px'});
 						
 						//Mobile Choosers
 						if ($window.innerWidth < chvm.breakPoint){
@@ -82,7 +91,7 @@
 						}
 						
 						//Desktop Choosers
-						else{
+						else{						
 							var chooser = angular.element($element[0]);	
 							chooser.prop('scrollTop', chvm.selectorCoords.top - 15);
 						}

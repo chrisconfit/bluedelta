@@ -1,3 +1,4 @@
+export * from './Address';
 export * from './Button';
 export * from './ButtonsListResponse';
 export * from './Fabric';

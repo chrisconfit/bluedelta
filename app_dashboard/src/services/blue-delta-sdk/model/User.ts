@@ -15,6 +15,12 @@ import * as models from './models';
 export interface User {
     identityId: string;
 
+    email?: string;
+
+    phoneNumber?: string;
+
+    addresses?: Array<models.Address>;
+
     jeans?: Array<models.Jean>;
 
 }

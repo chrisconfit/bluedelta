@@ -1,0 +1,12 @@
+<form [formGroup]="buttonService.itemEdit">
+<div *ngIf="buttonService.itemIdMarkedForEdit === button.buttonId">
+    <ion-item>
+    <ion-label>Name</ion-label>
+    <ion-input type="text" formControlName="name" placeholder="Enter New Name"></ion-input>
+    </ion-item>
+    <ion-item>
+    <ion-label>Layer</ion-label>
+    <ion-input formControlName="layer" placeholder="Enter New Layer"></ion-input>
+    </ion-item>
+</div>
+</form>

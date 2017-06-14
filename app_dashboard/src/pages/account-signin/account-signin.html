@@ -1,8 +1,5 @@
 <ion-header>
   <ion-navbar>
-    <!--<button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>-->
     <ion-buttons right>
       <button ion-button icon-left [navPush]="accountSignupPage">
         <ion-icon name="contact"></ion-icon>Register
@@ -17,8 +14,6 @@
 
   <h5>Sign-in using Cognito User Pools</h5>
 
-  <!--
-  <p *ngIf="submitted" style="color: #ea6153;">Please fill out all details accurately.</p>-->
   <ion-list>
     <form #signInForm="ngForm" novalidate>
 
@@ -26,17 +21,11 @@
         <ion-label floating>Username</ion-label>
         <ion-input [(ngModel)]="userData.username" ngControl="username" name="username" type="text" #username="ngModel" required></ion-input>
       </ion-item>
-      <p [hidden]="username.valid || (!signInButtonClicked && !forgotPasswordButtonClicked)" color="danger" padding-left>
-        Username is required
-      </p>
 
       <ion-item>
         <ion-label floating>Password</ion-label>
         <ion-input [(ngModel)]="userData.password" ngControl="password" name="password" type="password" #password="ngModel" required></ion-input>
       </ion-item>
-      <p [hidden]="password.valid || !signInButtonClicked" color="danger" padding-left>
-        Password is required
-      </p>
 
     </form>
   </ion-list>

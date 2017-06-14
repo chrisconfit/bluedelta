@@ -7,6 +7,8 @@ let ping = rfr('ping');
 
 function handler(event, context) {
 
+  console.log('EVENT!!!!!!', event);
+
   function initialNarrowingByHttp(httpMethod) {
     switch(httpMethod) {
       case 'GET':
@@ -21,7 +23,7 @@ function handler(event, context) {
         };
       case 'DELETE':
         return (itemId) => {
-          return 'DELETE';
+          return 'Delete';
         };
     }
   } // tested

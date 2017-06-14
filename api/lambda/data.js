@@ -356,5 +356,6 @@ module.exports = {
   ButtonsTable,
   ThreadsTable,
   FabricsTable,
+  OrdersTable,
   UsersTable
 };
