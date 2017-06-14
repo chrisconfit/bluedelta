@@ -11,14 +11,14 @@ function Create(event, context) {
 
 function Delete(event, context){
   // If does not exists will give 404.
-  return UsersTable.get(event.pathParameters.identityId).then(
+  return UsersTable.get(event.pathParameters.userId).then(
     () => {
-      return UsersTable.delete(event.pathParameters.identityId);
+      return UsersTable.delete(event.pathParameters.userId);
     });
 }
 
 function Get(event, context) {
-  return UsersTable.get(event.pathParameters.identityId);
+  return UsersTable.get(event.pathParameters.userId);
 }
 
 function List(event, context) {
@@ -29,9 +29,9 @@ function List(event, context) {
 
 function Update(event, context) {
   let input = JSON.parse(event.body);
-  return UsersTable.get(event.pathParameters.identityId).then((data) => {
+  return UsersTable.get(event.pathParameters.userId).then((data) => {
     input.createTime = data.createTime;
-    input.identityId = event.pathParameters.identityId;
+    input.identityId = event.pathParameters.userId;
     return UsersTable.put(input);
   });
 }
