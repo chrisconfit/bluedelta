@@ -12,14 +12,14 @@ function Create(event, context) {
 
 function Delete(event, context){
     // If does not exists will give 404.
-    return ThreadsTable.get(event.params.threadId).then(
+    return ThreadsTable.get(event.pathParameters.threadId).then(
         () => {
-            return ThreadsTable.delete(event.params.threadId);
+            return ThreadsTable.delete(event.pathParameters.threadId);
         });
 }
 
 function Get(event, context) {
-    return ThreadsTable.get(event.params.threadId);
+    return ThreadsTable.get(event.pathParameters.threadId);
 }
 
 function List(event, context) {
@@ -30,7 +30,7 @@ function List(event, context) {
 
 function Update(event, context) {
     let input = JSON.parse(event.body);
-    return ThreadsTable.get(event.params.threadId).then((data) => {
+    return ThreadsTable.get(event.pathParameters.threadId).then((data) => {
         input.createTime = data.createTime;
         input.threadId = event.params.threadId;
         return ThreadsTable.put(input);

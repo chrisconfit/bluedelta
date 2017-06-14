@@ -1,0 +1,6 @@
+  <span *ngIf="buttonService.itemIdMarkedForEdit !== button.buttonId">{{ button.name }}</span><span *ngIf="button.updateTime">&nbsp;&nbsp;(edited)</span>
+  <span *ngIf="button.buttonId === buttonService.itemIdBeingFetched">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
+  <span *ngIf="button.buttonId === buttonService.itemIdMarkedForDelete">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
+  <span *ngIf="!button.buttonId">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
+  <p>{{  button.createTime | date }}</p>
+  

@@ -11,14 +11,14 @@ function Create(event, context) {
 
 function Delete(event, context){
     // If does not exists will give 404.
-    return OrdersTable.get(event.params.orderId).then(
+    return OrdersTable.get(event.pathParameters.orderId).then(
         () => {
-            return OrdersTable.delete(event.params.orderId);
+            return OrdersTable.delete(event.pathParameters.orderId);
         });
 }
 
 function Get(event, context) {
-    return OrdersTable.get(event.params.orderId);
+    return OrdersTable.get(event.pathParameters.orderId);
 }
 
 function List(event, context) {
@@ -34,7 +34,7 @@ function ListByUser(event, context) {
 
 function Update(event, context) {
     let input = JSON.parse(event.body);
-    return OrdersTable.get(event.params.orderId).then((data) => {
+    return OrdersTable.get(event.pathParameters.orderId).then((data) => {
         input.createTime = data.createTime;
         input.orderId = event.orderId;
         return OrdersTable.put(input);
