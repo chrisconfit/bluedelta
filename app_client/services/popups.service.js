@@ -10,7 +10,8 @@
     return {
       denim : false,
       hiw : false,
-      infoPop:false
+      infoPop:false,
+      jeanProfile:false
     };
     
   }

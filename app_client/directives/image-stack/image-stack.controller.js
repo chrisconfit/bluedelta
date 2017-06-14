@@ -4,11 +4,11 @@
     .module('bdApp')
     .controller('istackCtrl', istackCtrl);
 
-  istackCtrl.$inject = ['$window', '$scope','jean'];
+  istackCtrl.$inject = ['$window', '$scope', '$q', 'jean'];
   
   
   
-  function istackCtrl($window, $scope, jean) {
+  function istackCtrl($window, $scope, $q, jean) {
 	  var isvm = this;
 		isvm.jean = jean;
 		isvm.centerPan = false;		
@@ -187,9 +187,12 @@
 				 
 
 		}
+		
 
 		
+
 		
+
 		isvm.scanImage = function(x,y){
 
 			setTimeout(function(){

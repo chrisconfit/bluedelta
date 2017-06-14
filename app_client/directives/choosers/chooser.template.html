@@ -3,8 +3,7 @@
 <div class="description" ng-if="step.jeanKey == 'fabric'">
 	<p>We have a range of fabrics in different weights from lightweight linen to heavyweight raw denim. <a href="" ng-click="vm.builder.denimPop = !denimPop"><strong>Learn More.</strong></a></p>
 </div>
-
-<div class="cft-g chooser-grid" id="{{step.jeanKey}}-chooser">
+<div class="cft-g chooser-grid" id="{{step.jeanKey}}-chooser" data-key="{{step.jeanKey}}">
 	<span ng-class="{ live: chvm.jean.data[step.jeanKey], active:active }" class="chooser-select" id="{{step.jeanKey}}-selector"></span>
 	<div class="cft-gi" ng-repeat="data in dataset">
 		<a ng-class="{ active: chvm.jean.data[step.jeanKey]==data.id }" id="{{step.jeanKey}}_{{data.id}}" 

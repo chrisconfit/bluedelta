@@ -1,7 +1,6 @@
 /* Theme colors */
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
 $colorText:#1d1d1d;
 $blue: #004964;
 $tan:#b8a98c;
@@ -11,6 +10,8 @@ $darkerBlue: #4f7e84;
 $peach:#f3ece2;
 $darkBlue: #004964;
 $teal: #41778b;
+$darkGrey:#363839;
+
 /* Button colors */
 $colorBtnPrimary: $blue; // boring grey
 $colorBtnPrimaryHover: darken($colorBtnPrimary, 10%);
@@ -39,9 +40,9 @@ $errorRedBg: lighten($blue, 55%);
 $successGreen: #0a942a;
 
 /* Typography */
-$openSans: "proxima-nova",'Open Sans', sans-serif;
-$headerFontStack:$openSans;
-$bodyFontStack:$openSans;
+$proximaOpen: "proxima-nova",'Open Sans', sans-serif;
+$headerFontStack:$proximaOpen;
+$bodyFontStack:$proximaOpen;
 
 
 /*Sass Media Query Break Points*/

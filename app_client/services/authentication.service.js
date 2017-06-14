@@ -4,8 +4,8 @@
     .module('bdApp')
     .service('authentication', authentication);
 
-  authentication.$inject = ['$http', '$window'];
-  function authentication ($http, $window) {
+  authentication.$inject = ['$http', '$window', 'aws', '$q'];
+  function authentication ($http, $window, aws, $q) {
 
     var saveToken = function (token) {
       $window.localStorage['mean-token'] = token;
@@ -43,6 +43,7 @@
         };
       }
     };
+
 		
 		var isAdmin = function(){
 			if(isLoggedIn()){
@@ -55,25 +56,37 @@
         var roles = payload.permissions;
 				return roles.indexOf('admin') !== -1;
       }
-
 		}
-    register = function(user) {
-      return $http.post('/api/register', user).success(function(data){
-        saveToken(data.token);
-      });
-    };
+
+    
+
+    
+
+
+//		console.log(aws.authenticateCognitoUser('cplefevre', 'ConfitConfit@123'));
+
+		var register = function(userDetails){
+			//console.log(userDetails);
+		//	console.log(aws.signupForApplication('hello@confitdesign.com', 'ConfitConfit@123'));	
+		}
+    
+
+		
+    
 
     login = function(user) {
-      return $http.post('/api/login', user).success(function(data) {
-        saveToken(data.token);
-      });
-    };
+	    
+	    aws.authenticateCognitoUser(user, password);
+		};
 
     logout = function() {
       $window.localStorage.removeItem('mean-token');
     };
 
     return {
+      //userAttrList: userAttrList,
+      //createUserAttributeList: createUserAttributeList,
+      //userPool: userPool,
 	    isAdmin : isAdmin,
       currentUser : currentUser,
       saveToken : saveToken,

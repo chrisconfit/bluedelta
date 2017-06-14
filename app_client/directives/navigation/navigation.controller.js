@@ -4,20 +4,32 @@
     .module('bdApp')
     .controller('navigationCtrl', navigationCtrl);
 
-  navigationCtrl.$inject = ['$location','authentication','$route','popups'];
-  function navigationCtrl($location, authentication, $route, popups) {
+  navigationCtrl.$inject = ['$location','$route','popups', 'aws'];
+  function navigationCtrl($location, $route, popups, aws) {
     var vm = this;
 		
-    vm.isLoggedIn = authentication.isLoggedIn();
-		vm.isAdmin = authentication.isAdmin();
-    vm.currentUser = authentication.currentUser();
+
+		vm.isLoggedIn = null;
+		aws.getCurrentUserFromLocalStorage().then(
+			function(result){
+				if (result.accessToken != "") vm.isLoggedIn = true;
+			},
+			function(err){
+				console.log(err);
+				vm.isLoggedIn = false;
+			}
+		);
+		
+		
+		//vm.isAdmin = accountManagement.isAdmin();
+    //vm.currentUser = accountManagement.currentUser();
 		
 		vm.drops={};
 		vm.drops.acct=false;
 		vm.mobileMenu = false;
 		
 		vm.logout = function(){
-			authentication.logout();
+			aws.signCurrentUserOut();
 			if ($location.path() == "/")
 				$route.reload();
 		}
