@@ -71,16 +71,16 @@ export class UsersProvider {
         });
         this.itemInCreation = false;
         this.itemCreate = this.createNewItemForm();
-        this.presentToast('Button Successfully Created!');
+        this.presentToast('User Successfully Created!');
       },
       (err) => {
         this.dismissLoader();
         this.initialized = true; 
         this.displayAlert('Error encountered',
-          `An error occurred when trying to create Order. Please check the console logs for more information.`)
-        console.log('error from create order', err);
+          `An error occurred when trying to create User. Please check the console logs for more information.`)
+        console.log('error from create user', err);
         this.itemInCreation = false;
-        this.presentToast('Error Creating Button');
+        this.presentToast('Error Creating User');
       }
     );
   }

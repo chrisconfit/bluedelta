@@ -93,6 +93,7 @@ export class AccountSigninPage {
       // Login was successful
       this.resourceService.dismissLoader();
       this.showLoginSuccessAlert(this.userData.username, () => {
+        this.userActions.setCurrentUserName(this.userData.username);
         this.userActions.setCurrentUserId(this.resourceService.getUserId());
         this.globals.setViewAdminFeaturesOverride(this.globals.isAdminRole());
         this.navCtrl.popToRoot({animate: false});

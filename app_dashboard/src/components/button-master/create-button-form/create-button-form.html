@@ -9,11 +9,11 @@
   <div *ngIf="buttonService.itemInCreation">
       <ion-item>
       <ion-label>Name</ion-label>
-      <ion-input type="text" formControlName="name" placeholder="Enter New Name"></ion-input>
+      <ion-input type="text" formControlName="name"></ion-input>
       </ion-item>
       <ion-item>
       <ion-label>Layer</ion-label>
-      <ion-textarea formControlName="layer" placeholder="Enter New Layer"></ion-textarea>
+      <ion-textarea formControlName="layer"></ion-textarea>
       </ion-item>
       <button ion-button (click)="buttonService.exitItemCreate()"><ion-icon name="arrow-back"></ion-icon></button>
       <button ion-button (click)="buttonService.createItemWithAuth(buttonService.itemCreate.value)"><ion-icon name="checkmark"></ion-icon></button>
