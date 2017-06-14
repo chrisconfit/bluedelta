@@ -1,0 +1,16 @@
+<form [formGroup]="fabricService.itemEdit">
+  <div *ngIf="fabricService.itemIdMarkedForEdit === fabric.fabricId">
+      <ion-item>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Layer</ion-label>
+        <ion-input formControlName="layer"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Thumb</ion-label>
+        <ion-input formControlName="thumb"></ion-input>
+      </ion-item>
+  </div>
+</form>

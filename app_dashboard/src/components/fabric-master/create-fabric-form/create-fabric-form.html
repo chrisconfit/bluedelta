@@ -1,0 +1,26 @@
+<div>
+  <div align='center'>
+    <button float-left margin ion-button (click)="fabricService.loadItemsWithAuth()"><ion-icon name="refresh"></ion-icon></button>
+    <button float-left margin ion-button *ngIf="!fabricService.itemInCreation" (click)="fabricService.startItemCreate()"><ion-icon name="create"></ion-icon></button>
+  </div>
+</div>
+
+<form [formGroup]="fabricService.itemCreate">
+  <div *ngIf="fabricService.itemInCreation">
+      <ion-item>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Layer</ion-label>
+        <ion-input formControlName="layer"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Thumb</ion-label>
+        <ion-input formControlName="thumb"></ion-input>
+      </ion-item>
+      <button ion-button (click)="fabricService.exitItemCreate()"><ion-icon name="arrow-back"></ion-icon></button>
+      <button ion-button (click)="fabricService.createItemWithAuth(fabricService.itemCreate.value)"><ion-icon name="checkmark"></ion-icon></button>
+  </div>
+  
+</form>

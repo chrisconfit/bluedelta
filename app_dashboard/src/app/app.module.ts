@@ -53,6 +53,7 @@ import { UserItemImageComponent } from '../components/user-master/user-index/use
 import { UserItemButtonsComponent } from '../components/user-master/user-index/user-item/user-item-buttons/user-item-buttons';
 import { UserItemDetailsComponent } from '../components/user-master/user-index/user-item/user-item-details/user-item-details';
 import { ThreadsProvider } from '../providers/threads/threads';
+
 import { ThreadMasterComponent } from '../components/thread-master/thread-master';
 import { ThreadIndexComponent } from '../components/thread-master/thread-index/thread-index';
 import { CreateThreadFormComponent } from '../components/thread-master/create-thread-form/create-thread-form';
@@ -61,6 +62,17 @@ import { EditThreadFormComponent } from '../components/thread-master/thread-inde
 import { ThreadItemButtonsComponent } from '../components/thread-master/thread-index/thread-item/thread-item-buttons/thread-item-buttons';
 import { ThreadItemDetailsComponent } from '../components/thread-master/thread-index/thread-item/thread-item-details/thread-item-details';
 import { ThreadItemImageComponent } from '../components/thread-master/thread-index/thread-item/thread-item-image/thread-item-image';
+
+import { FabricMasterComponent } from '../components/fabric-master/fabric-master';
+import { FabricIndexComponent } from '../components/fabric-master/fabric-index/fabric-index';
+import { CreateFabricFormComponent } from '../components/fabric-master/create-fabric-form/create-fabric-form';
+import { FabricItemComponent } from '../components/fabric-master/fabric-index/fabric-item/fabric-item';
+import { FabricItemButtonsComponent } from '../components/fabric-master/fabric-index/fabric-item/fabric-item-buttons/fabric-item-buttons';
+import { FabricItemDetailsComponent } from '../components/fabric-master/fabric-index/fabric-item/fabric-item-details/fabric-item-details';
+import { FabricItemImageComponent } from '../components/fabric-master/fabric-index/fabric-item/fabric-item-image/fabric-item-image';
+
+import { FabricsProvider } from '../providers/fabrics/fabrics';
+import { EditFabricFormComponent } from "../components/fabric-master/fabric-index/fabric-item/edit-fabric-form/edit-fabric-form";
 
 
 
@@ -108,6 +120,15 @@ import { ThreadItemImageComponent } from '../components/thread-master/thread-ind
     ThreadItemButtonsComponent,
     ThreadItemDetailsComponent,
     ThreadItemImageComponent,
+
+    FabricMasterComponent,
+    FabricIndexComponent,
+    CreateFabricFormComponent,
+    FabricItemComponent,
+    FabricItemButtonsComponent,
+    FabricItemDetailsComponent,
+    FabricItemImageComponent,
+    EditFabricFormComponent
   ],
   imports: [
     BrowserModule,
@@ -146,7 +167,8 @@ import { ThreadItemImageComponent } from '../components/thread-master/thread-ind
     ButtonsProvider,
     OrdersProvider,
     UsersProvider,
-    ThreadsProvider
+    ThreadsProvider,
+    FabricsProvider
   ]
 })
 export class AppModule {}
