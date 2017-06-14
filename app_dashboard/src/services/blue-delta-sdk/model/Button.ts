@@ -13,15 +13,12 @@
 import * as models from './models';
 
 export interface Button {
-    buttonId?: string;
+    buttonId: string;
 
     name?: string;
 
     thumb?: string;
 
     layer?: string;
-
-    createTime?: any;
-    updateTime?: any;
 
 }
