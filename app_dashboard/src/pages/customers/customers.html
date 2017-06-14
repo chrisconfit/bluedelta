@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <!--<ion-list>
     <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
       <ion-icon [name]="item.icon" item-left></ion-icon>
       {{item.title}}
@@ -16,10 +16,14 @@
         {{item.note}}
       </div>
     </button>
-  </ion-list>
+  </ion-list>-->
 
   
   
-  <button-master></button-master>
+  <button-master float-left margin></button-master>
+
+  <!--<orders-list-master></orders-list-master>-->
+
+  <user-master float-left margin></user-master>
 
 </ion-content>

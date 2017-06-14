@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UserPoolsAuthorizerClient, CustomAuthorizerClient } from "../../services/blue-delta-api.service";
 import { LoadingController, AlertController, ToastController } from "ionic-angular";
-import { ButtonModel } from "../../models/button.model";
-import { Button } from "../../services/blue-delta-sdk/index";
+import { User } from "../../services/blue-delta-sdk/index";
+import { UserModel } from "../../models/user.model";
 
 
 @Injectable()
-export class ButtonsProvider {
-  providerName = 'ButtonsProvider';
-  modelName = 'button';
+export class UsersProvider {
+  providerName = 'UsersProvider';
+  modelName = 'user';
   private itemEdit: FormGroup|null;
   private loader = null;
   private itemCreate: FormGroup|null;
@@ -53,12 +53,11 @@ export class ButtonsProvider {
     );
   };
 
-  createItemWithAuth(item):void {
+  createItemWithAuth(userItem: User):void {
     this.exitItemCreate();
-    console.log('THIS IS THE ITEM', item);
-    item = new ButtonModel(item.name, item.layer, item.thumb);
-    this.list = [ ...this.list, item ];
-    this.userPoolsAuthClient.getClient()[this.modelName + 'sCreate'](item).subscribe(
+    userItem = new UserModel(userItem.identityId, userItem.email, userItem.phoneNumber, userItem.addresses, userItem.jeans);
+    this.list = [ ...this.list, userItem ];
+    this.userPoolsAuthClient.getClient()[this.modelName + 'sCreate'](userItem).subscribe(
       (data) => {        
         this.dismissLoader();
         this.initialized = true;
@@ -87,26 +86,25 @@ export class ButtonsProvider {
   }
 
   deleteItemWithAuth(itemId: string) {
-    console.log('ID OF BUTTON TO DELETE',itemId);
     this.itemIdMarkedForDelete = itemId;
     this.userPoolsAuthClient.getClient()[this.modelName + 'sDelete'](itemId)
       .subscribe(
         (data) => {
           console.log(`${this.providerName} delete success data`, data);
-          this.list = [ ...this.list ].filter(v => v.buttonId !== this.itemIdMarkedForDelete);
+          this.list = [ ...this.list ].filter(v => v.identityId !== this.itemIdMarkedForDelete);
           this.dismissLoader();
           this.initialized = true;
           this.itemIdMarkedForDelete = null;
-          this.presentToast('Button Successfully Deleted');
+          this.presentToast('User Successfully Deleted');
         },
         (err) => {
           this.dismissLoader();
           this.initialized = true; 
           this.displayAlert('Error encountered',
-            `An error occurred when trying to delete order ${itemId}. Please check the console logs for more information.`)
+            `An error occurred when trying to delete user ${itemId}. Please check the console logs for more information.`)
           console.log(`${this.providerName} delete error`, err);
           this.itemIdMarkedForDelete = null;
-          this.presentToast('Error Deleting Button');
+          this.presentToast('Error Deleting User');
         }
     );
   }
@@ -161,9 +159,9 @@ export class ButtonsProvider {
       );
   }
 
-  startItemEdit(button: Button) {
-    this.itemIdMarkedForEdit = button.buttonId;
-    this.itemEdit = this.createNewItemForm(button);
+  startItemEdit(user: User) {
+    this.itemIdMarkedForEdit = user.identityId;
+    this.itemEdit = this.createNewItemForm(user);
   }
 
   exitItemEditMode() {

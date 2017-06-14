@@ -1,4 +1,3 @@
-
 import { Button } from "../services/blue-delta-sdk/index";
 
 export class ButtonModel implements Button {

@@ -40,6 +40,18 @@ import { OrdersPage } from '../pages/orders/orders';
 import { CustomersPage } from '../pages/customers/customers';
 import { ButtonsProvider } from "../providers/buttons/buttons";
 import { OrdersProvider } from "../providers/orders/orders";
+import { CreateOrderFormComponent } from '../components/orders-list-master/create-order-form/create-order-form';
+import { EditOrderFormComponent } from '../components/orders-list-master/orders-index/orders-list-item/edit-order-form/edit-order-form';
+import { OrderItemDetailsComponent } from '../components/orders-list-master/orders-index/orders-list-item/order-item-details/order-item-details';
+import { UsersProvider } from '../providers/users/users';
+import { UserMasterComponent } from '../components/user-master/user-master';
+import { UserIndexComponent } from '../components/user-master/user-index/user-index';
+import { CreateUserFormComponent } from '../components/user-master/create-user-form/create-user-form';
+import { UserItemComponent } from '../components/user-master/user-index/user-item/user-item';
+import { EditUserFormComponent } from '../components/user-master/user-index/user-item/edit-user-form/edit-user-form';
+import { UserItemImageComponent } from '../components/user-master/user-index/user-item/user-item-image/user-item-image';
+import { UserItemButtonsComponent } from '../components/user-master/user-index/user-item/user-item-buttons/user-item-buttons';
+import { UserItemDetailsComponent } from '../components/user-master/user-index/user-item/user-item-details/user-item-details';
 
 
 
@@ -68,6 +80,17 @@ import { OrdersProvider } from "../providers/orders/orders";
     OrdersIndexComponent,
     OrdersListItemComponent,
     OrdersListMasterComponent,
+    CreateOrderFormComponent,
+    EditOrderFormComponent,
+    OrderItemDetailsComponent,
+    UserMasterComponent,
+    UserIndexComponent,
+    CreateUserFormComponent,
+    UserItemComponent,
+    EditUserFormComponent,
+    UserItemImageComponent,
+    UserItemButtonsComponent,
+    UserItemDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,7 +127,8 @@ import { OrdersProvider } from "../providers/orders/orders";
     ButtonActions,
     UsersActions,
     ButtonsProvider,
-    OrdersProvider
+    OrdersProvider,
+    UsersProvider
   ]
 })
 export class AppModule {}
