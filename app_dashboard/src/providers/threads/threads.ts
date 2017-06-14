@@ -54,8 +54,10 @@ export class ThreadsProvider {
   };
 
   createItemWithAuth(threadItem: Thread):void {
+    console.log('threadItem', threadItem);
     this.exitItemCreate();
     threadItem = new ThreadModel(threadItem.threadId, threadItem.name, threadItem.thumb, threadItem.layer);
+    console.log('threadItem', threadItem);
     this.list = [ ...this.list, threadItem ];
     this.userPoolsAuthClient.getClient()[this.modelName + 'sCreate'](threadItem).subscribe(
       (data) => {        

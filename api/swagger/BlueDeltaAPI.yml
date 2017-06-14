@@ -303,7 +303,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Adds a Thread
       operationId: threads-Create
@@ -319,7 +319,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /threads/{threadId}:
     delete:
@@ -336,7 +336,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     get:
       description: Returns a Thread
       # used as the method name of the controller
@@ -355,7 +355,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Updates a Thread
       operationId: threads-Update
@@ -372,7 +372,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /fabrics:
     get:
@@ -512,7 +512,7 @@ parameters:
   Thread:
     in: "body"
     name: "body"
-    required: true
+    #required: true
     schema:
       $ref: "#/definitions/Thread"
   ThreadId:
@@ -705,8 +705,8 @@ definitions:
           $ref: "#/definitions/Thread"
 
   Thread:
-    required:
-    - threadId
+    # required:
+    # - threadId
     properties:
       threadId:
         type: string

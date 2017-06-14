@@ -1,12 +1,16 @@
 <form [formGroup]="threadService.itemEdit">
   <div *ngIf="threadService.itemIdMarkedForEdit === thread.threadId">
       <ion-item>
-      <ion-label>Name</ion-label>
-      <ion-input type="text" formControlName="name" placeholder="Enter New Name"></ion-input>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
       </ion-item>
       <ion-item>
-      <ion-label>Layer</ion-label>
-      <ion-input formControlName="layer" placeholder="Enter New Layer"></ion-input>
+        <ion-label>Layer</ion-label>
+        <ion-input formControlName="layer"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Thumb</ion-label>
+        <ion-input formControlName="thumb"></ion-input>
       </ion-item>
   </div>
 </form>

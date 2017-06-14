@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ThreadsProvider } from "../../providers/threads/threads";
 
 
 @Component({
@@ -7,9 +8,10 @@ import { Component } from '@angular/core';
 })
 export class ThreadMasterComponent {
 
-  
 
-  constructor() {    
+  constructor(
+    public threadService: ThreadsProvider
+  ) {    
   }
 
 }
