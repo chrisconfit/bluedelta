@@ -129,8 +129,6 @@ export class UsersProvider {
   }
 
   editItemWithAuth(item: any, newValues: any):void {
-    console.log('item', item);
-    console.log('newValues.value', newValues.value);
     this.itemIdMarkedForEdit = item.identityId;
     this.userPoolsAuthClient.getClient()[this.modelName + 'sUpdate'](this.itemIdMarkedForEdit, newValues.value)
       .subscribe(
@@ -139,15 +137,16 @@ export class UsersProvider {
             this.initialized = true;
             this.itemIdMarkedForEdit = null;
             this.list = [ ...this.list ].map(v => {
-              if (v.buttonId === data.buttonId) {
+              if (v.identityId === data.identityId) {
                 v.updateTime = data.updateTime;
-                if (v.name !== data.name) v.name = data.name;
-                if (v.layer !== data.layer) v.layer = data.layer;
-                if (v.thumb !== data.thumb) v.thumb = data.thumb;
+                if (v.email !== data.email) v.email = data.email;
+                if (v.phoneNumber !== data.phoneNumber) v.phoneNumber = data.phoneNumber;
+                if (v.addresses !== data.addresses) v.addresses = data.addresses;
               }
               return v;
             });
             this.presentToast('Successfully Edited Item');
+            // this.list = [ ...this.list, data ]
           },
           (err) => {
             this.dismissLoader();
@@ -176,15 +175,16 @@ export class UsersProvider {
 
 
   createNewItemForm(item?) {
-    let email = '', phoneNumber = ''
+    let email = '', phoneNumber = '', addresses = '';
     if (item) {
       email  = item.email;
       phoneNumber = item.phoneNumber;
-      
+      addresses = item.addresses;
     }
     return this.formBuilder.group({
       email: [email, Validators.required],
-      phoneNumber: [phoneNumber]
+      phoneNumber: [phoneNumber],
+      addresses: [addresses],
     });
   }
 

@@ -15,4 +15,13 @@ export class UserItemDetailsComponent {
   ) {
   }
 
+  logIt(date) {
+    console.log(date);
+    console.log(Date.parse(date));
+  }
+
+  isRecentEdit(date) {
+    return (new Date().getTime() -  Date.parse(date) < 3600);
+  }
+
 }
