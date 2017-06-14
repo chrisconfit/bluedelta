@@ -129,7 +129,9 @@ export class UsersProvider {
   }
 
   editItemWithAuth(item: any, newValues: any):void {
-    this.itemIdMarkedForEdit = item.buttonId;
+    console.log('item', item);
+    console.log('newValues.value', newValues.value);
+    this.itemIdMarkedForEdit = item.identityId;
     this.userPoolsAuthClient.getClient()[this.modelName + 'sUpdate'](this.itemIdMarkedForEdit, newValues.value)
       .subscribe(
           (data) => {
@@ -174,16 +176,15 @@ export class UsersProvider {
 
 
   createNewItemForm(item?) {
-    let name = '', layer = '', thumb = '';
+    let email = '', phoneNumber = ''
     if (item) {
-      name  = item.name;
-      layer = item.layer;
-      thumb = item.thumb;
+      email  = item.email;
+      phoneNumber = item.phoneNumber;
+      
     }
     return this.formBuilder.group({
-      name: [name, Validators.required],
-      layer: [layer],
-      thumb: [thumb]
+      email: [email, Validators.required],
+      phoneNumber: [phoneNumber]
     });
   }
 
