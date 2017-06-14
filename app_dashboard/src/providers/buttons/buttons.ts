@@ -10,9 +10,9 @@ import { Button } from "../../services/blue-delta-sdk/index";
 export class ButtonsProvider {
   providerName = 'ButtonsProvider';
   modelName = 'button';
-  private itemEdit: FormGroup;
+  private itemEdit: FormGroup|null;
   private loader = null;
-  private itemCreate: FormGroup;
+  private itemCreate: FormGroup|null;
   initialized = false;
   itemInCreation: boolean = false;
   list: any = [];
@@ -51,18 +51,23 @@ export class ButtonsProvider {
   };
 
   createItemWithAuth(item):void {
+    this.exitItemCreate();
     console.log('THIS IS THE ITEM', item);
-    alert('in the func');
     item = new ButtonModel(item.name, item.layer, item.thumb);
     this.list = [ ...this.list, item ];
     this.userPoolsAuthClient.getClient()[this.modelName + 'sCreate'](item).subscribe(
       (data) => {        
-        alert('in the success');
-        console.log('DATA', data);
         this.dismissLoader();
         this.initialized = true;
         console.log(`${this.providerName} create success data`, data);
-        this.list = [ ...this.list ].map(v => (!v.orderId) ? data : v);
+        this.list = [ ...this.list ].map(v => {
+          if (!v.buttonId) {
+            v.buttonId = data.buttonId;
+          }
+          return v;
+        });
+        this.itemInCreation = false;
+        this.itemCreate = this.createNewItemForm();
       },
       (err) => {
         this.dismissLoader();
@@ -70,6 +75,7 @@ export class ButtonsProvider {
         this.displayAlert('Error encountered',
           `An error occurred when trying to create Order. Please check the console logs for more information.`)
         console.log('error from create order', err);
+        this.itemInCreation = false;
       }
     );
   }
@@ -81,7 +87,7 @@ export class ButtonsProvider {
       .subscribe(
         (data) => {
           console.log(`${this.providerName} delete success data`, data);
-          this.list = [ ...this.list ].filter(v => v.itemId !== this.itemIdMarkedForDelete);
+          this.list = [ ...this.list ].filter(v => v.buttonId !== this.itemIdMarkedForDelete);
           this.dismissLoader();
           this.initialized = true;
           this.itemIdMarkedForDelete = null;
@@ -148,6 +154,10 @@ export class ButtonsProvider {
 
   exitItemEditMode() {
     this.itemIdMarkedForEdit = null;
+  }
+
+  exitItemCreate() {
+    this.itemInCreation = false;
   }
 
 
