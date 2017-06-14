@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UserPoolsAuthorizerClient, CustomAuthorizerClient } from "../../services/blue-delta-api.service";
-import { LoadingController, AlertController } from "ionic-angular";
+import { LoadingController, AlertController, ToastController } from "ionic-angular";
 import { ButtonModel } from "../../models/button.model";
 import { Button } from "../../services/blue-delta-sdk/index";
 
@@ -26,13 +26,15 @@ export class ButtonsProvider {
     private userPoolsAuthClient: UserPoolsAuthorizerClient,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public toastCtrl: ToastController
   ) {
     this.itemEdit = this.createNewItemForm();
     this.itemCreate = this.createNewItemForm();
   }
 
   loadItemsWithAuth(): void {
+    this.presentLoader();
     this.userPoolsAuthClient.getClient()[this.modelName + 'sList']().subscribe(
       (data) => {
         this.dismissLoader();
@@ -46,6 +48,7 @@ export class ButtonsProvider {
         this.displayAlert('Error encountered',
           `An error occurred when trying to load the ${this.modelName}s. Please check the console logs for more information.`)
         console.log('error from load order list', err);
+        this.presentToast('Error Loading Items');
       }
     );
   };
@@ -63,11 +66,13 @@ export class ButtonsProvider {
         this.list = [ ...this.list ].map(v => {
           if (!v.buttonId) {
             v.buttonId = data.buttonId;
+            v.createTime = data.createTime;
           }
           return v;
         });
         this.itemInCreation = false;
         this.itemCreate = this.createNewItemForm();
+        this.presentToast('Button Successfully Created!');
       },
       (err) => {
         this.dismissLoader();
@@ -76,6 +81,7 @@ export class ButtonsProvider {
           `An error occurred when trying to create Order. Please check the console logs for more information.`)
         console.log('error from create order', err);
         this.itemInCreation = false;
+        this.presentToast('Error Creating Button');
       }
     );
   }
@@ -91,6 +97,7 @@ export class ButtonsProvider {
           this.dismissLoader();
           this.initialized = true;
           this.itemIdMarkedForDelete = null;
+          this.presentToast('Button Successfully Deleted');
         },
         (err) => {
           this.dismissLoader();
@@ -99,6 +106,7 @@ export class ButtonsProvider {
             `An error occurred when trying to delete order ${itemId}. Please check the console logs for more information.`)
           console.log(`${this.providerName} delete error`, err);
           this.itemIdMarkedForDelete = null;
+          this.presentToast('Error Deleting Button');
         }
     );
   }
@@ -123,16 +131,24 @@ export class ButtonsProvider {
   }
 
   editItemWithAuth(item: any, newValues: any):void {
-    console.log('ITEM', item);
-    console.log('newValues', newValues.value);
     this.itemIdMarkedForEdit = item.buttonId;
     this.userPoolsAuthClient.getClient()[this.modelName + 'sUpdate'](this.itemIdMarkedForEdit, newValues.value)
       .subscribe(
           (data) => {
-            console.log(`${this.providerName} edit success data`, data);
+            console.log("DATA!!!!!!!!!!!!!!!!!!", data);
             this.dismissLoader();
             this.initialized = true;
             this.itemIdMarkedForEdit = null;
+            this.list = [ ...this.list ].map(v => {
+              if (v.buttonId === data.buttonId) {
+                v.updateTime = data.updateTime;
+                if (v.name !== data.name) v.name = data.name;
+                if (v.layer !== data.layer) v.layer = data.layer;
+                if (v.thumb !== data.thumb) v.thumb = data.thumb;
+              }
+              return v;
+            });
+            this.presentToast('Successfully Edited Item');
           },
           (err) => {
             this.dismissLoader();
@@ -141,6 +157,7 @@ export class ButtonsProvider {
               `An error occurred when trying to edit item ${this.itemIdMarkedForEdit}. Please check the console logs for more information.`)
               console.log(`${this.providerName} edit error`, err);
               this.itemIdMarkedForEdit = null;
+              this.presentToast('Unable to Edit Item');
           }
       );
   }
@@ -176,11 +193,19 @@ export class ButtonsProvider {
   }
 
   dismissLoader() {
-    if (this.loader != null) {
+    if (this.loader) {
       this.loader.dismiss();
     }
     this.loader = null;
   }
+
+  presentLoader() {
+    if (!this.loader) {
+      this.loader = this.loadingCtrl.create();
+    }
+    this.loader.present();
+  }
+
 
   getAlertController() {
     return this.alertCtrl;
@@ -203,8 +228,15 @@ export class ButtonsProvider {
     this.itemInCreation = true;
   }
 
-  exitButtonCreate() {
-    
+ 
+
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      position: 'bottom',
+      duration: 2000
+    });
+    toast.present();
   }
 
 }

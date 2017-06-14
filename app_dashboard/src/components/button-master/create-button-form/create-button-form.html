@@ -1,6 +1,7 @@
 <div>
   <div align='center'>
-    <button ion-button (click)="buttonService.startItemCreate()">Create Button</button>
+    <button float-left margin ion-button (click)="buttonService.loadItemsWithAuth()"><ion-icon name="refresh"></ion-icon></button>
+    <button float-left margin ion-button *ngIf="!buttonService.itemInCreation" (click)="buttonService.startItemCreate()"><ion-icon name="create"></ion-icon></button>
   </div>
 </div>
 
@@ -14,8 +15,8 @@
       <ion-label>Layer</ion-label>
       <ion-textarea formControlName="layer" placeholder="Enter New Layer"></ion-textarea>
       </ion-item>
-      <button ion-button (click)="buttonService.createItemWithAuth(buttonService.itemCreate.value)">Save New Button</button>
-      <button ion-button (click)="buttonService.exitItemCreate()">Discard Changes</button>
+      <button ion-button (click)="buttonService.exitItemCreate()"><ion-icon name="arrow-back"></ion-icon></button>
+      <button ion-button (click)="buttonService.createItemWithAuth(buttonService.itemCreate.value)"><ion-icon name="checkmark"></ion-icon></button>
   </div>
   
 </form>
