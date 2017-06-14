@@ -10,11 +10,11 @@
 
 	  
     var vm = this;
-    
-    var api = new bdAPI.DefaultApi();
+
+    // var api = new bdAPI.DefaultApi;
     aws.getCurrentUserFromLocalStorage().then(
     	function(result){
-	    	api.apiClient.defaultHeaders['Authorization'] = result;
+	    	bdAPI.defaultHeaders_['Authorization'] = result.idToken.getJwtToken();
 	    	vm.setUpClosetData();
     	},    	
     	function(err){
@@ -42,10 +42,36 @@
 
 		//Set up Closet Data using JSON
 		vm.setUpClosetData = function(){
-			
+			/*
 			//Get User data
-			console.log(api);
-			console.log(api.usersList());
+			bdAPI.usersList().then(
+				function(result){
+					console.log(result);
+					
+					
+				},
+				function(err){
+					console.log(err);
+				}
+			);
+			*/
+			aws.getCurrentUserFromLocalStorage().then(
+				function(result){
+					console.log('user');	
+					console.log(result.idToken);
+					
+					var idTokenPayload = result.idToken.jwtToken.split('.')[1];
+					var payload = JSON.parse(sjcl.codec.utf8String.fromBits(sjcl.codec.base64url.toBits(idTokenPayload)));
+					console.log(payload);
+//var userGroup = payload["cognito:groups"];
+
+
+
+				},
+				function(err){
+					console.log(err);
+				}
+			);			
 			
 			vm.setupData('getGenders', 'genders'),
 			vm.setupData('getStyles', 'styles'),

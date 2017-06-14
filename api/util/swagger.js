@@ -61,7 +61,7 @@ function createClientSdk() {
 
     return new Promise((resolve, reject) => {
         // Run Swagger codegen locally to generate SDK files
-        let cmd = spawn('swagger-codegen', ['generate', '-i', swaggerDir + '/BlueDeltaAPI-exported.yml', '-l', 'javascript', '-o', apiSdkDir]);
+        let cmd = spawn('swagger-codegen', ['generate', '-i', swaggerDir + '/BlueDeltaAPI-exported.yml', '-l', 'javascript-closure-angular', '-o', apiSdkDir]);
         cmd.stdout.on('data', data => {
             process.stdout.write(data);
         });

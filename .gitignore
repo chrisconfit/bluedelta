@@ -40,3 +40,4 @@ api/dist
 .idea/blue-delta.iml .idea/modules.xml .idea/workspace.xml
 **/.idea
 
+app_dashboard/www/build

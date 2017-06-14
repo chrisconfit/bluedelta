@@ -280,6 +280,8 @@
     signUserOutGlobally = function(cognitoUser) {
       cognitoUser.globalSignOut();
     }
+		
+		
 
     getCurrentUserFromLocalStorage = function() {
 
