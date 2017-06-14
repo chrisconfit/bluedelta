@@ -12,14 +12,14 @@ function Create(event, context) {
 
 function Delete(event, context){
     // If does not exists will give 404.
-    return FabricsTable.get(event.params.fabricId).then(
+    return FabricsTable.get(event.pathParameters.fabricId).then(
         () => {
-            return FabricsTable.delete(event.params.fabricId);
+            return FabricsTable.delete(event.pathParameters.fabricId);
         });
 }
 
 function Get(event, context) {
-    return FabricsTable.get(event.params.fabricId);
+    return FabricsTable.get(event.pathParameters.fabricId);
 }
 
 function List(event, context) {
@@ -30,7 +30,7 @@ function List(event, context) {
 
 function Update(event, context) {
     let input = JSON.parse(event.body);
-    return FabricsTable.get(event.params.fabricId).then((data) => {
+    return FabricsTable.get(event.pathParameters.fabricId).then((data) => {
         input.createTime = data.createTime;
         input.fabricId = event.params.fabricId;
         return FabricsTable.put(input);
