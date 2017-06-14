@@ -1,7 +1,7 @@
 <ion-item>
   
   <button-item-image item-left [button]="button"></button-item-image>
-  <button-item-details *ngIf="(resourceService.buttons$ | async).buttonInEdit !== button.buttonId" [button]="button"></button-item-details>
+  <button-item-details *ngIf="buttonService.itemIdMarkedForEdit !== button.buttonId" [button]="button"></button-item-details>
   <edit-button-form [button]="button"></edit-button-form>
   <button-item-buttons [button]="button"></button-item-buttons>
   

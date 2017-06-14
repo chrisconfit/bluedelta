@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ResourceProvider } from "../../../providers/resource/resource.provider";
+import { ButtonsProvider } from "../../../providers/buttons/buttons";
 
 @Component({
   selector: 'create-button-form',
@@ -9,7 +10,8 @@ export class CreateButtonFormComponent {
 
 
   constructor(
-    public resourceService: ResourceProvider
+    public resourceService: ResourceProvider,
+    public buttonService: ButtonsProvider
   ) {
     
   }

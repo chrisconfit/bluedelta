@@ -18,12 +18,8 @@
     </button>
   </ion-list>
 
-  <button (click)="buttonService.loadItemsWithAuth()">load</button>
+  <button ion-list (click)="buttonService.loadItemsWithAuth()">load buttons list</button>
   
-  <ion-list>
-    <ion-item ion-item *ngFor="let item of buttonService.list">
-      {{ item | json }}
-    </ion-item>
-  </ion-list>
+  <button-master></button-master>
 
 </ion-content>

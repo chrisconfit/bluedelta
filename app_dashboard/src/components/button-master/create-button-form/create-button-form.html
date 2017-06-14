@@ -1,11 +1,11 @@
 <div>
-  <div align='center' *ngIf="(resourceService.users$ | async).currentUserId">
-    <button ion-button (click)="resourceService.startButtonCreate()">Create Button</button>
+  <div align='center'>
+    <button ion-button (click)="buttonService.startItemCreate()">Create Button</button>
   </div>
 </div>
 
-<form [formGroup]="resourceService.buttonCreate">
-  <div *ngIf="(resourceService.buttons$ | async).buttonInCreation">
+<form [formGroup]="buttonService.itemCreate">
+  <div *ngIf="buttonService.itemInCreation">
       <ion-item>
       <ion-label>Name</ion-label>
       <ion-input type="text" formControlName="name" placeholder="Enter New Name"></ion-input>
@@ -14,8 +14,8 @@
       <ion-label>Layer</ion-label>
       <ion-textarea formControlName="layer" placeholder="Enter New Layer"></ion-textarea>
       </ion-item>
-      <button ion-button (click)="resourceService.createButtonWithAuth(resourceService.buttonCreate.value)">Save New Button</button>
-      <button ion-button (click)="resourceService.exitButtonCreate()">Discard Changes</button>
+      <button ion-button (click)="buttonService.createItemWithAuth(buttonService.itemCreate.value)">Save New Button</button>
+      <button ion-button (click)="buttonService.exitItemCreate()">Discard Changes</button>
   </div>
   
 </form>

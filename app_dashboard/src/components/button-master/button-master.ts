@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ResourceProvider } from "../../providers/resource/resource.provider";
+import { ButtonsProvider } from "../../providers/buttons/buttons";
 
 @Component({
   selector: 'button-master',
@@ -8,7 +9,8 @@ import { ResourceProvider } from "../../providers/resource/resource.provider";
 export class ButtonMasterComponent {
 
   constructor(
-    public resourceService: ResourceProvider
+    public resourceService: ResourceProvider,
+    public buttonService: ButtonsProvider
   ) {
   }
 

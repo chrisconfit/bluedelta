@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UserPoolsAuthorizerClient, CustomAuthorizerClient } from "../../services/blue-delta-api.service";
 import { LoadingController, AlertController } from "ionic-angular";
+import { ButtonModel } from "../../models/button.model";
+import { Button } from "../../services/blue-delta-sdk/index";
 
 
 @Injectable()
@@ -12,10 +14,11 @@ export class ButtonsProvider {
   private loader = null;
   private itemCreate: FormGroup;
   initialized = false;
-
+  itemInCreation: boolean = false;
   list: any = [];
-  itemIdMarkedForDelete: string;
-  itemIdMarkedForEdit: string;
+  itemIdMarkedForDelete: string|null = null;
+  itemIdMarkedForEdit: string|null = null;
+  itemIdBeingFetched: string|null = null;
 
   
   constructor(  
@@ -48,9 +51,14 @@ export class ButtonsProvider {
   };
 
   createItemWithAuth(item):void {
+    console.log('THIS IS THE ITEM', item);
+    alert('in the func');
+    item = new ButtonModel(item.name, item.layer, item.thumb);
     this.list = [ ...this.list, item ];
-    this.userPoolsAuthClient.getClient()[this.modelName + 'Create'](item).subscribe(
+    this.userPoolsAuthClient.getClient()[this.modelName + 'sCreate'](item).subscribe(
       (data) => {        
+        alert('in the success');
+        console.log('DATA', data);
         this.dismissLoader();
         this.initialized = true;
         console.log(`${this.providerName} create success data`, data);
@@ -67,14 +75,16 @@ export class ButtonsProvider {
   }
 
   deleteItemWithAuth(itemId: string) {
+    console.log('ID OF BUTTON TO DELETE',itemId);
     this.itemIdMarkedForDelete = itemId;
-    this.userPoolsAuthClient.getClient()[this.modelName + 'Delete'](itemId)
+    this.userPoolsAuthClient.getClient()[this.modelName + 'sDelete'](itemId)
       .subscribe(
         (data) => {
           console.log(`${this.providerName} delete success data`, data);
           this.list = [ ...this.list ].filter(v => v.itemId !== this.itemIdMarkedForDelete);
           this.dismissLoader();
           this.initialized = true;
+          this.itemIdMarkedForDelete = null;
         },
         (err) => {
           this.dismissLoader();
@@ -82,11 +92,13 @@ export class ButtonsProvider {
           this.displayAlert('Error encountered',
             `An error occurred when trying to delete order ${itemId}. Please check the console logs for more information.`)
           console.log(`${this.providerName} delete error`, err);
+          this.itemIdMarkedForDelete = null;
         }
     );
   }
 
   getItemWithAuth(itemId: string) {
+    this.itemIdBeingFetched = itemId;
     this.userPoolsAuthClient.getClient()[this.modelName + 'sGet'](itemId)
       .subscribe(
           (data) => {
@@ -105,22 +117,37 @@ export class ButtonsProvider {
   }
 
   editItemWithAuth(item: any, newValues: any):void {
-    this.itemIdMarkedForEdit = item.orderId;
-    this.userPoolsAuthClient.getClient()[this.modelName + 'sUpdate'](item.orderId, newValues.value)
+    console.log('ITEM', item);
+    console.log('newValues', newValues.value);
+    this.itemIdMarkedForEdit = item.buttonId;
+    this.userPoolsAuthClient.getClient()[this.modelName + 'sUpdate'](this.itemIdMarkedForEdit, newValues.value)
       .subscribe(
           (data) => {
             console.log(`${this.providerName} edit success data`, data);
             this.dismissLoader();
             this.initialized = true;
+            this.itemIdMarkedForEdit = null;
           },
           (err) => {
             this.dismissLoader();
             this.initialized = true;
             this.displayAlert('Error encountered',
-              `An error occurred when trying to edit order ${item}. Please check the console logs for more information.`)
-              console.log(`${this.providerName} get error`, err);
+              `An error occurred when trying to edit item ${this.itemIdMarkedForEdit}. Please check the console logs for more information.`)
+              console.log(`${this.providerName} edit error`, err);
+              this.itemIdMarkedForEdit = null;
           }
       );
+  }
+
+  startItemEdit(button: Button) {
+    this.itemIdMarkedForEdit = button.buttonId;
+    this.itemEdit = this.createNewItemForm(button);
+    console.log('starting item edit');
+    console.log(button);
+  }
+
+  exitItemEditMode() {
+    this.itemIdMarkedForEdit = null;
   }
 
 
@@ -160,6 +187,14 @@ export class ButtonsProvider {
       buttons: [{ text: 'OK', handler: okFunction }]
     });
     alert.present();
+  }
+
+  startItemCreate() {
+    this.itemInCreation = true;
+  }
+
+  exitButtonCreate() {
+    
   }
 
 }

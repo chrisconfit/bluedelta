@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ButtonsProvider } from "../../providers/buttons/buttons";
+import { ResourceProvider } from "../../providers/resource/resource.provider";
 
 @Component({
   selector: 'page-customers',
@@ -14,7 +15,8 @@ export class CustomersPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public buttonService: ButtonsProvider) {
+    public buttonService: ButtonsProvider,
+    public resourceService: ResourceProvider) {
     
     this.selectedItem = navParams.get('item');
 
