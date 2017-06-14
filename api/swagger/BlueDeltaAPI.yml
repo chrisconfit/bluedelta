@@ -82,7 +82,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
     post:
       description: Updates a User
       operationId: users-Update
@@ -99,7 +99,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+      - blue-delta-userPool-authorizer: []
 
   /users/{userId}/orders:
     get:
@@ -479,7 +479,7 @@ parameters:
   User:
     in: "body"
     name: "body"
-    required: true
+    # required: true
     schema:
       $ref: "#/definitions/User"
   UserId:

@@ -47,7 +47,7 @@ export class ButtonsProvider {
         this.initialized = true; 
         this.displayAlert('Error encountered',
           `An error occurred when trying to load the ${this.modelName}s. Please check the console logs for more information.`)
-        console.log('error from load order list', err);
+        console.log('error from load button list', err);
         this.presentToast('Error Loading Items');
       }
     );
@@ -79,7 +79,7 @@ export class ButtonsProvider {
         this.initialized = true; 
         this.displayAlert('Error encountered',
           `An error occurred when trying to create Order. Please check the console logs for more information.`)
-        console.log('error from create order', err);
+        console.log('error from create button', err);
         this.itemInCreation = false;
         this.presentToast('Error Creating Button');
       }

@@ -4,6 +4,17 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Customers</ion-title>
+    <ion-buttons right>
+      <button ion-button icon-left [navPush]="accountSignupPage" *ngIf="!( resourceService.users$ | async ).currentUserId">
+          <ion-icon name="contact"></ion-icon>Register
+      </button>
+      <button ion-button icon-left [navPush]="accountSigninPage" *ngIf="!( resourceService.users$ | async ).currentUserId">
+          <ion-icon name="log-in"></ion-icon>Sign In
+      </button>
+      <button ion-button icon-left (click)="globals.logout()" *ngIf="( resourceService.users$ | async ).currentUserId">
+          <ion-icon name="log-out"></ion-icon>Sign Out
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -27,3 +38,11 @@
   <user-master float-left margin></user-master>
 
 </ion-content>
+
+
+
+  
+    
+    
+
+  

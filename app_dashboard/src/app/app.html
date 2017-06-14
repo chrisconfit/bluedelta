@@ -9,7 +9,7 @@
 
   <ion-content>
     
-    <ion-list>
+    <ion-list no-lines>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <ion-icon *ngIf="p.title === 'Customers'" name="people"></ion-icon>
         <ion-icon *ngIf="p.title === 'Profile'" name="person"></ion-icon>
