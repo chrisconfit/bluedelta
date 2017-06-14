@@ -52,15 +52,15 @@ import { EditUserFormComponent } from '../components/user-master/user-index/user
 import { UserItemImageComponent } from '../components/user-master/user-index/user-item/user-item-image/user-item-image';
 import { UserItemButtonsComponent } from '../components/user-master/user-index/user-item/user-item-buttons/user-item-buttons';
 import { UserItemDetailsComponent } from '../components/user-master/user-index/user-item/user-item-details/user-item-details';
-import { JeansProvider } from '../providers/jeans/jeans';
-import { JeanMasterComponent } from '../components/jean-master/jean-master';
-import { JeanIndexComponent } from '../components/jean-master/jean-index/jean-index';
-import { CreateJeanFormComponent } from '../components/jean-master/create-jean-form/create-jean-form';
-import { JeanItemComponent } from '../components/jean-master/jean-index/jean-item/jean-item';
-import { EditJeanFormComponent } from '../components/jean-master/jean-index/jean-item/edit-jean-form/edit-jean-form';
-import { JeanItemButtonsComponent } from '../components/jean-master/jean-index/jean-item/jean-item-buttons/jean-item-buttons';
-import { JeanItemDetailsComponent } from '../components/jean-master/jean-index/jean-item/jean-item-details/jean-item-details';
-import { JeanItemImageComponent } from '../components/jean-master/jean-index/jean-item/jean-item-image/jean-item-image';
+import { ThreadsProvider } from '../providers/threads/threads';
+import { ThreadMasterComponent } from '../components/thread-master/thread-master';
+import { ThreadIndexComponent } from '../components/thread-master/thread-index/thread-index';
+import { CreateThreadFormComponent } from '../components/thread-master/create-thread-form/create-thread-form';
+import { ThreadItemComponent } from '../components/thread-master/thread-index/thread-item/thread-item';
+import { EditThreadFormComponent } from '../components/thread-master/thread-index/thread-item/edit-thread-form/edit-thread-form';
+import { ThreadItemButtonsComponent } from '../components/thread-master/thread-index/thread-item/thread-item-buttons/thread-item-buttons';
+import { ThreadItemDetailsComponent } from '../components/thread-master/thread-index/thread-item/thread-item-details/thread-item-details';
+import { ThreadItemImageComponent } from '../components/thread-master/thread-index/thread-item/thread-item-image/thread-item-image';
 
 
 
@@ -100,14 +100,14 @@ import { JeanItemImageComponent } from '../components/jean-master/jean-index/jea
     UserItemImageComponent,
     UserItemButtonsComponent,
     UserItemDetailsComponent,
-    JeanMasterComponent,
-    JeanIndexComponent,
-    CreateJeanFormComponent,
-    JeanItemComponent,
-    EditJeanFormComponent,
-    JeanItemButtonsComponent,
-    JeanItemDetailsComponent,
-    JeanItemImageComponent,
+    ThreadMasterComponent,
+    ThreadIndexComponent,
+    CreateThreadFormComponent,
+    ThreadItemComponent,
+    EditThreadFormComponent,
+    ThreadItemButtonsComponent,
+    ThreadItemDetailsComponent,
+    ThreadItemImageComponent,
   ],
   imports: [
     BrowserModule,
@@ -146,7 +146,7 @@ import { JeanItemImageComponent } from '../components/jean-master/jean-index/jea
     ButtonsProvider,
     OrdersProvider,
     UsersProvider,
-    JeansProvider
+    ThreadsProvider
   ]
 })
 export class AppModule {}

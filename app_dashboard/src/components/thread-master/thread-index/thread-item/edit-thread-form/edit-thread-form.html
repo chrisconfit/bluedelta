@@ -1,5 +1,5 @@
-<form [formGroup]="jeanService.itemEdit">
-  <div *ngIf="jeanService.itemIdMarkedForEdit === jean.jeanId">
+<form [formGroup]="threadService.itemEdit">
+  <div *ngIf="threadService.itemIdMarkedForEdit === thread.threadId">
       <ion-item>
       <ion-label>Name</ion-label>
       <ion-input type="text" formControlName="name" placeholder="Enter New Name"></ion-input>

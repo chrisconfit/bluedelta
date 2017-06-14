@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UserPoolsAuthorizerClient, CustomAuthorizerClient } from "../../services/blue-delta-api.service";
 import { LoadingController, AlertController, ToastController } from "ionic-angular";
-import { Jean } from "../../services/blue-delta-sdk/index";
-import { JeanModel } from "../../models/jean.model";
+import { Thread } from "../../services/blue-delta-sdk/index";
+import { ThreadModel } from "../../models/thread.model";
 
 
 @Injectable()
-export class JeansProvider {
-  providerName = 'JeansProvider';
-  modelName = 'jean';
+export class ThreadsProvider {
+  providerName = 'ThreadsProvider';
+  modelName = 'thread';
   private itemEdit: FormGroup|null;
   private loader = null;
   private itemCreate: FormGroup|null;
@@ -35,8 +35,7 @@ export class JeansProvider {
 
   loadItemsWithAuth(): void {
     this.presentLoader();
-    this.userPoolsAuthClient.getClient().
-    [this.modelName + 'sList']().subscribe(
+    this.userPoolsAuthClient.getClient()[this.modelName + 'sList']().subscribe(
       (data) => {
         this.dismissLoader();
         this.initialized = true;
@@ -48,40 +47,40 @@ export class JeansProvider {
         this.initialized = true; 
         this.displayAlert('Error encountered',
           `An error occurred when trying to load the ${this.modelName}s. Please check the console logs for more information.`)
-        console.log('error from load order list', err);
+        console.log('error from load thread list', err);
         this.presentToast('Error Loading Items');
       }
     );
   };
 
-  createItemWithAuth(jeanItem: Jean):void {
+  createItemWithAuth(threadItem: Thread):void {
     this.exitItemCreate();
-    jeanItem = new JeanModel(jeanItem.jeanId, jeanItem.measurement, jeanItem.thread, jeanItem.fabric, jeanItem.button);
-    this.list = [ ...this.list, jeanItem ];
-    this.userPoolsAuthClient.getClient()[this.modelName + 'sCreate'](jeanItem).subscribe(
+    threadItem = new ThreadModel(threadItem.threadId, threadItem.name, threadItem.thumb, threadItem.layer);
+    this.list = [ ...this.list, threadItem ];
+    this.userPoolsAuthClient.getClient()[this.modelName + 'sCreate'](threadItem).subscribe(
       (data) => {        
         this.dismissLoader();
         this.initialized = true;
         console.log(`${this.providerName} create success data`, data);
         this.list = [ ...this.list ].map(v => {
-          if (!v.buttonId) {
-            v.buttonId = data.buttonId;
+          if (!v.threadId) {
+            v.threadId = data.threadId;
             v.createTime = data.createTime;
           }
           return v;
         });
         this.itemInCreation = false;
         this.itemCreate = this.createNewItemForm();
-        this.presentToast('Jean Successfully Created!');
+        this.presentToast('Thread Successfully Created!');
       },
       (err) => {
         this.dismissLoader();
         this.initialized = true; 
         this.displayAlert('Error encountered',
-          `An error occurred when trying to create Jean. Please check the console logs for more information.`)
-        console.log('error from create jean', err);
+          `An error occurred when trying to create Thread. Please check the console logs for more information.`)
+        console.log('error from create thread', err);
         this.itemInCreation = false;
-        this.presentToast('Error Creating Jean');
+        this.presentToast('Error Creating Thread');
       }
     );
   }
@@ -92,20 +91,20 @@ export class JeansProvider {
       .subscribe(
         (data) => {
           console.log(`${this.providerName} delete success data`, data);
-          this.list = [ ...this.list ].filter(v => v.identityId !== this.itemIdMarkedForDelete);
+          this.list = [ ...this.list ].filter(v => v.threadId !== this.itemIdMarkedForDelete);
           this.dismissLoader();
           this.initialized = true;
           this.itemIdMarkedForDelete = null;
-          this.presentToast('Jean Successfully Deleted');
+          this.presentToast('Thread Successfully Deleted');
         },
         (err) => {
           this.dismissLoader();
           this.initialized = true; 
           this.displayAlert('Error encountered',
-            `An error occurred when trying to delete jean ${itemId}. Please check the console logs for more information.`)
+            `An error occurred when trying to delete thread ${itemId}. Please check the console logs for more information.`)
           console.log(`${this.providerName} delete error`, err);
           this.itemIdMarkedForDelete = null;
-          this.presentToast('Error Deleting Jean');
+          this.presentToast('Error Deleting Thread');
         }
     );
   }
@@ -122,14 +121,14 @@ export class JeansProvider {
             this.dismissLoader();
             this.initialized = true;
             this.displayAlert('Error encountered',
-              `An error occurred when trying to get order ${itemId}. Please check the console logs for more information.`)
+              `An error occurred when trying to get thread ${itemId}. Please check the console logs for more information.`)
             console.log(`${this.providerName} get error`, err);
           }
       );
   }
 
   editItemWithAuth(item: any, newValues: any):void {
-    this.itemIdMarkedForEdit = item.jeanId;
+    this.itemIdMarkedForEdit = item.threadId;
     this.userPoolsAuthClient.getClient()[this.modelName + 'sUpdate'](this.itemIdMarkedForEdit, newValues.value)
       .subscribe(
           (data) => {
@@ -137,17 +136,15 @@ export class JeansProvider {
             this.initialized = true;
             this.itemIdMarkedForEdit = null;
             this.list = [ ...this.list ].map(v => {
-              if (v.jeanId === data.jeanId) {
+              if (v.threadId === data.threadId) {
                 v.updateTime = data.updateTime;
-                if (v.measurement !== data.measurement) v.measurement = data.measurement;
-                if (v.thread !== data.thread) v.thread = data.thread;
-                if (v.fabric !== data.fabric) v.fabric = data.fabric;
-                if (v.button !== data.button) v.button = data.button;
+                if (v.name !== data.name) v.name = data.name;
+                if (v.thumb !== data.thumb) v.thumb = data.thumb;
+                if (v.layer !== data.layer) v.layer = data.layer;
               }
               return v;
             });
             this.presentToast('Successfully Edited Item');
-            // this.list = [ ...this.list, data ]
           },
           (err) => {
             this.dismissLoader();
@@ -161,9 +158,9 @@ export class JeansProvider {
       );
   }
 
-  startItemEdit(jean: Jean) {
-    this.itemIdMarkedForEdit = jean.jeanId;
-    this.itemEdit = this.createNewItemForm(jean);
+  startItemEdit(thread: Thread) {
+    this.itemIdMarkedForEdit = thread.threadId;
+    this.itemEdit = this.createNewItemForm(thread);
   }
 
   exitItemEditMode() {
@@ -176,18 +173,16 @@ export class JeansProvider {
 
 
   createNewItemForm(item?) {
-    let measurement = '', thread = '', fabric = '', button = '';
+    let name = '', thumb = '', layer = '';
     if (item) {
-      measurement  = item.measurement;
-      thread = item.thread;
-      fabric = item.fabric;
-      button = item.button;
+      name  = item.name;
+      thumb = item.thumb;
+      layer = item.layer;
     }
     return this.formBuilder.group({
-      measurement: [measurement, Validators.required],
-      thread: [thread],
-      fabric: [fabric],
-      button: [button]
+      name: [name, Validators.required],
+      thumb: [thumb],
+      layer: [layer]
     });
   }
 
