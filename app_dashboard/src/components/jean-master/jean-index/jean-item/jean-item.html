@@ -1,0 +1,8 @@
+<ion-item>
+  
+  <jean-item-image item-left [jean]="jean"></jean-item-image>
+  <jean-item-details float-left *ngIf="jeanService.itemIdMarkedForEdit !== jean.jeanId" [jean]="jean"></jean-item-details>
+  <edit-jean-form [jean]="jean"></edit-jean-form>
+  <jean-item-buttons float-right [jean]="jean"></jean-item-buttons>
+  
+</ion-item>

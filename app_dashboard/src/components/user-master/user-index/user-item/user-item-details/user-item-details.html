@@ -3,8 +3,9 @@
   <span *ngIf="user.identityId === userService.itemIdMarkedForDelete">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
   <span *ngIf="!user.identityId">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
   <p>{{  user.createTime | date }}</p>
-  <p *ngIf="user.email">{{  user.email }}</p>
-  <p *ngIf="user.phoneNumber">{{  user.phoneNumber }}</p>
+  <a href="{{ 'mailto:' + user.email }}" *ngIf="user.email">{{  user.email }}</a>
+  <br>
+  <a href="{{ 'tel:1' + user.phoneNumber }}" *ngIf="user.phoneNumber">{{  user.phoneNumber }}</a>
   <p *ngIf="user.addresses">{{  user.addresses }}</p>
 
   <span style="font-size:10px;" *ngIf="isRecentEdit(user.updateTime)" (click)="logIt(user.updateTime)">&nbsp;&nbsp;(edited)</span>

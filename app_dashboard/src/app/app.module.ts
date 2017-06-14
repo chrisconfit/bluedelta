@@ -52,6 +52,15 @@ import { EditUserFormComponent } from '../components/user-master/user-index/user
 import { UserItemImageComponent } from '../components/user-master/user-index/user-item/user-item-image/user-item-image';
 import { UserItemButtonsComponent } from '../components/user-master/user-index/user-item/user-item-buttons/user-item-buttons';
 import { UserItemDetailsComponent } from '../components/user-master/user-index/user-item/user-item-details/user-item-details';
+import { JeansProvider } from '../providers/jeans/jeans';
+import { JeanMasterComponent } from '../components/jean-master/jean-master';
+import { JeanIndexComponent } from '../components/jean-master/jean-index/jean-index';
+import { CreateJeanFormComponent } from '../components/jean-master/create-jean-form/create-jean-form';
+import { JeanItemComponent } from '../components/jean-master/jean-index/jean-item/jean-item';
+import { EditJeanFormComponent } from '../components/jean-master/jean-index/jean-item/edit-jean-form/edit-jean-form';
+import { JeanItemButtonsComponent } from '../components/jean-master/jean-index/jean-item/jean-item-buttons/jean-item-buttons';
+import { JeanItemDetailsComponent } from '../components/jean-master/jean-index/jean-item/jean-item-details/jean-item-details';
+import { JeanItemImageComponent } from '../components/jean-master/jean-index/jean-item/jean-item-image/jean-item-image';
 
 
 
@@ -91,6 +100,14 @@ import { UserItemDetailsComponent } from '../components/user-master/user-index/u
     UserItemImageComponent,
     UserItemButtonsComponent,
     UserItemDetailsComponent,
+    JeanMasterComponent,
+    JeanIndexComponent,
+    CreateJeanFormComponent,
+    JeanItemComponent,
+    EditJeanFormComponent,
+    JeanItemButtonsComponent,
+    JeanItemDetailsComponent,
+    JeanItemImageComponent,
   ],
   imports: [
     BrowserModule,
@@ -128,7 +145,8 @@ import { UserItemDetailsComponent } from '../components/user-master/user-index/u
     UsersActions,
     ButtonsProvider,
     OrdersProvider,
-    UsersProvider
+    UsersProvider,
+    JeansProvider
   ]
 })
 export class AppModule {}
