@@ -2038,7 +2038,7 @@ export class DefaultApi {
             'application/json'
         ];
 
-        // authentication (sigv4) required
+        // authentication (blue-delta-userPool-authorizer) required
         if (this.configuration.apiKey) {
             headers.set('Authorization', this.configuration.apiKey);
         }
@@ -2156,7 +2156,7 @@ export class DefaultApi {
             'application/json'
         ];
 
-        // authentication (sigv4) required
+        // authentication (blue-delta-userPool-authorizer) required
         if (this.configuration.apiKey) {
             headers.set('Authorization', this.configuration.apiKey);
         }

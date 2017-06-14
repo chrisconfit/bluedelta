@@ -13,7 +13,7 @@
 import * as models from './models';
 
 export interface Button {
-    buttonId: string;
+    buttonId?: string;
 
     name?: string;
 
