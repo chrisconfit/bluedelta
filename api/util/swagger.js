@@ -8,7 +8,7 @@ var spawn = require('child_process').spawn;
 let swaggerDir = path.join(__dirname,'..','swagger');
 let apiSdkDir = path.join(swaggerDir,'generated');
 let appSdkDir = path.join(__dirname,'..','..','app_dashboard','src','services','blue-delta-sdk');
-let appClientSdkDir = path.join(__dirname,'..','..','app_client','services','blue-delta-sdk');
+let appClientSdkDir = path.join(__dirname,'..','..','public','lib','blue-delta-sdk');
 
 function createSdk() {
   // Create generated directory if it does not exist
@@ -61,7 +61,7 @@ function createClientSdk() {
 
     return new Promise((resolve, reject) => {
         // Run Swagger codegen locally to generate SDK files
-        let cmd = spawn('swagger-codegen', ['generate', '-i', swaggerDir + '/BlueDeltaAPI-exported.yml', '-l', 'javascript-closure-angular', '-o', apiSdkDir]);
+        let cmd = spawn('swagger-codegen', ['generate', '-i', swaggerDir + '/BlueDeltaAPI-exported.yml', '-l', 'javascript', '-o', apiSdkDir]);
         cmd.stdout.on('data', data => {
             process.stdout.write(data);
         });

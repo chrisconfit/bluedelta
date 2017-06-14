@@ -36,3 +36,4 @@ node_modules
 .DS_Store?.DS_Store
 .idea
 api/dist
+app_dashboard/www/build
