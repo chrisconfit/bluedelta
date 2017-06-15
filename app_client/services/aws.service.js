@@ -54,36 +54,37 @@
     
 		function _getAWSCredentials(idToken){
 			console.log(idToken);
-			var defer = $q.defer();
-			var logins = {};
-			logins['cognito-idp.' + AWSConfig.REGION + '.amazonaws.com/' + AWSConfig.USER_POOL_ID]=idToken;
-			
-			AWS.config.update({
-				region: AWSConfig.REGION,
-				credentials: new AWS.CognitoIdentityCredentials({
-					IdentityPoolId: AWSConfig.IDENTITY_POOL_ID,
-					Logins : logins
-				})
+			logins = {}
+			var authenticator = 'cognito-idp.'+AWSConfig.REGION+'.amazonaws.com/'+AWSConfig.USER_POOL_ID;
+			logins[authenticator] = idToken
+
+			AWS.config.update({ region: AWSConfig.REGION });
+
+            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: AWSConfig.IDENTITY_POOL_ID,
+                Logins : logins
 			});
-			
-	    if (AWS.config.credentials.needsRefresh()){
-	      AWS.config.credentials.clearCachedId();
-	      AWS.config.credentials.get(function(err){
-	        if (err) {
-	          defer.reject(err);
-	        }
-	        defer.resolve();
-	      });
-	    } else {
-	      AWS.config.credentials.get(function(err){
-	        if (err) {
-	          defer.reject(err);
-	        }
-	        defer.resolve();
-	      });
-	    }
-			
-			return defer.promise;
+
+			return AWS.config.credentials.getPromise();
+
+	    // if (AWS.config.credentials.needsRefresh()){
+	    //   AWS.config.credentials.clearCachedId();
+	    //   AWS.config.credentials.get(function(err){
+	    //     if (err) {
+	    //       defer.reject(err);
+	    //     }
+	    //     defer.resolve();
+	    //   });
+	    // } else {
+	    //   AWS.config.credentials.get(function(err){
+	    //     if (err) {
+	    //       defer.reject(err);
+	    //     }
+	    //     defer.resolve();
+	    //   });
+	    // }
+			//
+			// return defer.promise;
 			
 		}
 			
@@ -380,15 +381,14 @@
     saveImageTos3 = function (image, userTokens){
 			
 			var defer = $q.defer();
-			var userIdentityID = _parseIdentityId(userTokens.idToken.jwtToken);
 			_getAWSCredentials(userTokens.idToken.jwtToken).then(
 
 				//Got credentials.. now save image
 				function(){
 
 					var bucketName = 'blue-delta-api-development-stack-userdatabucket-12z57hiicf3xy';
-          var s3bucket = new AWS.S3({region: AWSConfig.REGION, params: {Bucket: bucketName}});
-          var params = {Key: encodeURIComponent(userIdentityID + "//") + "myfilename.png", Body: image};
+                    var s3bucket = new AWS.S3({region: AWSConfig.REGION, params: {Bucket: bucketName}});
+                    var params = {Key: AWS.config.credentials.identityId + "/" + "myfilename.png", Body: image};
 					
 					//This is throwing 403 error
 					s3bucket.upload(params, function(err, data){	      
