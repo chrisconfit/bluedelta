@@ -35,3 +35,9 @@ API.Client.Address.prototype.state;
  */
 API.Client.Address.prototype.zip;
 
+/**
+ * @type {!boolean}
+ * @export
+ */
+API.Client.Address.prototype.primary;
+

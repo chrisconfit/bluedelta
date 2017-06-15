@@ -13,7 +13,7 @@
 import * as models from './models';
 
 export interface Fabric {
-    fabricId: string;
+    fabricId?: string;
 
     name?: string;
 

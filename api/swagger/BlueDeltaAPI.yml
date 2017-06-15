@@ -548,6 +548,8 @@ definitions:
     properties:
       identityId:
         type: string
+      name:
+        type: string
       email:
         type: string
       phone_number:
@@ -583,6 +585,8 @@ definitions:
         type: string
       zip:
         type: string
+      primary:
+        type: boolean
 
   OrdersListResponse:
     required:
@@ -677,8 +681,8 @@ definitions:
           $ref: "#/definitions/Fabric"
 
   Fabric:
-    # required:
-    # - fabricId
+#    required:
+#    - fabricId
     properties:
       fabricId:
         type: string

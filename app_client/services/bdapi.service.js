@@ -10,6 +10,7 @@
 		// if($window.BlueDeltaApi){
 	  //   //Delete moment from window so it's not globally accessible.
 	  //   //  We can still get at it through _thirdParty however, more on why later
+
 	    $window._thirdParty = $window._thirdParty || {};
 	  //   $window._thirdParty.BlueDeltaApi = $window.BlueDeltaApi;
 	  //   try { delete $window.BlueDeltaApi; } catch (e) {$window.BlueDeltaApi = undefined;}

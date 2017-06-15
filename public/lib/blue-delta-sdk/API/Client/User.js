@@ -15,6 +15,12 @@ API.Client.User.prototype.identityId;
  * @type {!string}
  * @export
  */
+API.Client.User.prototype.name;
+
+/**
+ * @type {!string}
+ * @export
+ */
 API.Client.User.prototype.email;
 
 /**

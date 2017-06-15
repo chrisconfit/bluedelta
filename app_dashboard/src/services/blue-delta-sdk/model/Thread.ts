@@ -13,7 +13,7 @@
 import * as models from './models';
 
 export interface Thread {
-    threadId: string;
+    threadId?: string;
 
     name?: string;
 

@@ -10,24 +10,38 @@
 
 	  
     var vm = this;
-
-    // var api = new bdAPI.DefaultApi;
+    
+		vm.popups=popups;
+		vm.jean=jean;
+		vm.data={};
+		vm.jeans = [];
     aws.getCurrentUserFromLocalStorage().then(
     	function(result){
+	    	
 	    	bdAPI.defaultHeaders_['Authorization'] = result.idToken.getJwtToken();
 	    	vm.setUpClosetData();
+	    	
+	    	//Set Up user
+	    	var idTokenPayload = result.idToken.jwtToken.split('.')[1];
+				var userID = JSON.parse(atob(idTokenPayload)).sub;				
+				bdAPI.usersGet(userID).then(
+					function(result){
+						vm.user = result.data;	
+						$scope.$apply();
+						
+						//var user = result.data;
+						//user.name = "Chris LeFevre";
+						//bdAPI.usersUpdate(userID, user);
+					}, 
+					function(err){console.log(err)} 
+				);
     	},    	
     	function(err){
 	    	console.log('you are not authenticated...'+err);
     	}
     );
-    
-		vm.popups=popups;
-    vm.user = {};
-		vm.jeans = [];
-		vm.jean={};
-		vm.data={};
 		
+
 		//Utility function for setting up customizer data from JSON... 
 		vm.setupData = function (func, dataKey) {
 		  bdAPI.jsonData[func]()
@@ -39,18 +53,22 @@
       });
 		}
 
-
+		
+		var logError = function(err){console.log(err)};
+		
+		
 		//Set up Closet Data using JSON
 		vm.setUpClosetData = function(){
+	
+		
 			
-			//Get User data
-			console.log(bdAPI);
-			console.log(bdAPI.usersList());
+	
 			
-			vm.setupData('getGenders', 'genders'),
-			vm.setupData('getStyles', 'styles'),
-			vm.setupData('getFabrics', 'fabrics'),
-			vm.setupData('getThreads', 'threads'),
+			vm.setupData('getGenders', 'genders');
+			vm.setupData('getStyles', 'styles');
+			vm.setupData('getFabrics', 'fabrics');
+			vm.setupData('getThreads', 'threads');
+			
 			bdAPI.jsonData.getJeansByUser(1)
 		  .success(function(data) {
 				for (x=0; x<data.length; x++){
@@ -63,7 +81,7 @@
       
 		}
 		
-		vm.jean=jean;
+
 		
 	
 

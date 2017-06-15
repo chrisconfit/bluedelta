@@ -23,4 +23,6 @@ export interface Address {
 
     zip?: string;
 
+    primary?: boolean;
+
 }

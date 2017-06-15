@@ -5,7 +5,6 @@
   <div class="cft-g page-grid">
 	  
     <div class="cft-gi main">
-
 		  <div class="page-title">
 				<h1>{{vm.user.name}}'s Closet</h1>
 			</div>
@@ -14,7 +13,8 @@
 
       <div class="jean-closet">
 	      
-	      <div class="in-production">
+	      <!--Production-->
+	      <div ng-if="(vm.jeans | filter:{ status: 'production' }).length" class="production">
 		      <h3>In Production</h3>
 		      <div class="cft-g jean-grid">
 			      <div ng-repeat="jean in vm.jeans | filter:{ status: 'production' }" class="cft-gi">
@@ -30,7 +30,8 @@
 		      </div>
 	      </div>
 	      
-	      <div class="owned">
+	      <!--Owned-->
+	      <div ng-if="(vm.jeans | filter:{ status: 'complete' }).length" class="complete">
 		      <h3>Owned</h3>
 		      <div class="cft-g jean-grid">
 			      <div ng-repeat="jean in vm.jeans | filter:{ status: 'complete' }" class="cft-gi">
@@ -45,7 +46,8 @@
 		      </div>
 	      </div>
 	      
-				<div class="in-production">
+	      <!--Saved-->
+				<div ng-if="(vm.jeans | filter:{ status: 'saved' }).length" class="saved">
 		      <h3>Saved</h3>
 		      <div class="cft-g jean-grid">
 			      <div ng-repeat="jean in vm.jeans | filter:{ status: 'saved' }" class="cft-gi">
@@ -59,16 +61,22 @@
 		      </div>
 	      </div>
 	      
+	      <!--No Jeans-->
+	      <div ng-if="vm.jeans.length == 0" class="no-jeans">
+				  <p>There are no jeans in your closet. <a href="/customizer">Create your first pair!</a></p>
+	      </div>
+	      
       </div><!--/.jean-closet-->
       
     </div><!--/.main
     
     --><div class="cft-gi sidebar">
+	    
 	    <div class="user-card">
 		    <h3 class="box-title">Your Profile</h3>
 		    <div class="box-content">
 			    <h4>{{vm.user.name}}</h4>
-			    <h5>{{vm.user.addresses[0].city}}, {{vm.user.addresses[0].state}}</h5>
+			    <h5 ng-repeat="add in vm.user.address | filter:{primary:'true'} | limitTo:1">{{add.city}}, {{add.state}}</h5>
 			    <a href="">Edit Account info <i class="fa fa-edit"></i></a>
 		    </div>
 	    </div>
