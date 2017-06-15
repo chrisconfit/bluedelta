@@ -53,6 +53,24 @@
 			return $http.get('/data/genders.json');
 		};
 
+
+		BlueDeltaApi.jsonData.getJeanById = function(id, callback){
+			$http.get('/data/chris-jeans.json').then(function(response){
+				var jeans = response.data;
+				for(j=0; j<response.data.length; j++){
+
+					if (response.data[j].id == id){
+						console.log('jean found');
+						var ret = response.data[j];
+					}
+				}
+				
+				callback(ret);
+
+			});
+		}
+
+
 	  return BlueDeltaApi;
   }
 

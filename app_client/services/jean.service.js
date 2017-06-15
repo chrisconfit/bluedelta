@@ -14,7 +14,7 @@
 		};
 		
 		createNew = function(jean){
-			if (!jean){
+			if (!jean || jean.constructor != Object){
 				this.data = {
 					"gender" : 1,
 					"style" : 1,

@@ -88,8 +88,6 @@
 			      }
 			    });
 			
-			    s3 = new AWS.S3; // we can now create our service object
-			
 			    defer.resolve();
 			  } else {
 			    defer.reject('There was a problem logging in with Facebook.');
@@ -310,7 +308,7 @@
           // example: var s3 = new AWS.S3();
         });
       }else{
-	      defer.reject("User does not exist");
+	      defer.reject("User is not logged in...");
       }
       
       return defer.promise;
@@ -330,7 +328,7 @@
       return defer.promise;
     }
     
-
+		
     changePassword = function(cognitoUser, oldPassword, newPassword) {
       cognitoUser.changePassword(oldPassword, newPassword, function(err, result) {
         if (err) {
@@ -341,8 +339,34 @@
       });
     }
     
-    
-    
+    saveImageTos3 = function (image){
+	    console.log('saveto');
+	    
+			var albumBucketName = 'blue-delta-api-development-stack-userdatabucket-12z57hiicf3xy';
+			var bucketRegion = 'us-east-1';
+			var IdentityPoolId = AWSConfig.IDENTITY_POOL_ID;
+			
+			AWS.config.update({
+				region: bucketRegion,
+				credentials: new AWS.CognitoIdentityCredentials({
+					IdentityPoolId: IdentityPoolId
+				})
+			});
+			
+			var s3 = new AWS.S3({
+				apiVersion: '2006-03-01',
+				params: {Bucket: albumBucketName}
+			});
+			
+	   
+	    console.log(s3);
+	    
+			//TODO: Save image
+			
+
+    }
+ 
+     
       
     
     return {
@@ -364,7 +388,8 @@
       signUserOutGlobally: signUserOutGlobally,
       getCurrentUserFromLocalStorage: getCurrentUserFromLocalStorage,
       confirmRegisteredUnauthenticatedUser: confirmRegisteredUnauthenticatedUser,
-      signCurrentUserOut:signCurrentUserOut
+      signCurrentUserOut:signCurrentUserOut,
+      saveImageTos3 : saveImageTos3
     };
   }
 })();

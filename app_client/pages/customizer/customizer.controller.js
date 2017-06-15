@@ -4,8 +4,8 @@
     .module('bdApp')
     .controller('customizerCtrl', customizerCtrl);
 
-  customizerCtrl.$inject = ['$q','$filter','$timeout','$location', '$window', '$routeParams', 'meanData', 'jean', '$scope', 'popups'];
-  function customizerCtrl($q, $filter, $timeout, $location, $window, $routeParams, meanData, jean, $scope, popups) {
+  customizerCtrl.$inject = ['$q','$filter','$timeout','$location', '$window', '$routeParams', 'bdAPI', 'jean', '$scope', 'popups', 'aws'];
+  function customizerCtrl($q, $filter, $timeout, $location, $window, $routeParams, bdAPI, jean, $scope, popups, aws) {
     var vm = this;
 		
 
@@ -46,19 +46,96 @@
 		//popups
 		vm.popups = popups;
 		
-	
 
+		function parseURLkey(key){
+			switch(key){
+				case "g":
+	      return "gender";
+	      break;
+	      
+	      case "s":
+	      return "style";
+	      break;
+	      
+	      case "f":
+	      return "fabric";
+	      break;
+	      
+	      case "tt":
+	      return "top_thread";
+	      break;
+	      
+	      case "tb":
+	      return "bottom_thread";
+	      break;
+	      
+	      case "ta":
+	      return "accent_thread";
+	      
+	      default: return false;
+			}
+		}
+		
+		function jeanKeytoURL(key){
+			switch(key){
+				case "gender":
+	      return "g";
+	      break;
+	      
+	      case "style":
+	      return "s";
+	      break;
+	      
+	      case "fabric":
+	      return "f";
+	      break;
+	      
+	      case "top_thread":
+	      return "tt";
+	      break;
+	      
+	      case "bottom_thread":
+	      return "tb";
+	      break;
+	      
+	      case "accent_thread":
+	      return "ta";
+	      
+	      default: return false;
+			}
+		}
+		
+		console.log($routeParams);
+		
 		//Set up jean data from parameter
 		if ($routeParams.jean_id && $routeParams.action=='copy'){
-			//Copy Jean
-			jean.createNew($routeParams.jean_id);
+			if ($routeParams.jean_id.indexOf(":")>0){
+				jean.createNew();
+				jeanData = $routeParams.jean_id.split(":");
+				for(var d=0; d<jeanData.length; d++){
+					var parts= jeanData[d].match(/([A-Za-z]+)([0-9]+)/);
+					if (!parts) continue;
+					var jeanKey = parseURLkey(parts[1]);
+					if (jeanKey) jean.data[jeanKey] = parseInt(parts[2]);					
+				}
+			}else{
+				//Copy Jean from ID	
+				jean.createNew($routeParams.jean_id);
+			}
 			
+		//Lookup Jean by Id
 		}else if ($routeParams.jean_id && !$routeParams.action){
 			//Edit Jean
-			meanData.getJeanById($routeParams.jean_id, function(data){
-				jean.data=data;
+			bdAPI.jsonData.getJeanById($routeParams.jean_id, function(data){
+				if (data){
+					jean.data=data;	
+				}else{
+					//jean id doesn't exist
+					jean.createNew();
+				}
 			});
 			
+		//New Jean
 		}else{
 			//New Jean
 			if(Object.keys(jean.data).length === 0 && jean.data.constructor === Object){
@@ -68,6 +145,24 @@
 		
 		vm.jean=jean;
 		
+		
+		
+		
+		
+		
+		//SHARE JEAN
+		vm.jeanToUrl = function(){
+			var url = document.location.origin+"/customizer/d";
+			for (var property in vm.jean.data) {
+		    if (vm.jean.data.hasOwnProperty(property)) {
+					var urlKey = jeanKeytoURL(property);
+					if (urlKey) url += ":"+urlKey+vm.jean.data[property];
+		    }
+			}
+			url += "/copy";
+			console.log(url);
+
+		}
 	
     /*
 	  vm.jean.selectStyle = function(id){
@@ -183,8 +278,6 @@
 
 			if (dataInfo.length < 1) return false; //Return false for the "List" Panel
 			
-		//	console.log(dataKey);
-			
 			var dataKey = (jeanKey == "gender" || jeanKey == "style" ? jeanKey+"s" : $filter('filter')(vm.panel, {jeanKey: jeanKey})[0].dataKey);
 			var dataSet = vm.data[dataKey];
 
@@ -192,7 +285,6 @@
 			if (typeof dataById == 'undefined') return false; //Return false when dataSet is undefined...
 			selected = dataById[0];
 			
-			console.log(selected);
 			if (!attr) return selected;
 			else return selected[attr];	
 			
@@ -204,7 +296,7 @@
 			
 		vm.getData = function (func, dataKey) {
 			var d = $q.defer();	   
-		  meanData[func]()
+		  bdAPI.jsonData[func]()
 		  .then(function(res){
 		    vm.data[dataKey]=res.data;
 		    d.resolve(true);
@@ -230,37 +322,56 @@
 		});
 		
 		
+		//Thumbnail		
+  	function loadImage(src, cntxt) {
+      return $q(function(resolve,reject) {
+        var image = new Image();
+        image.src = src;
+        image.onload = function() {
+          cntxt.drawImage(image,0,0,600,696);
+          resolve(image);
+        };
+        image.onerror = function(e) {
+          reject(e);
+        };
+      })
+    }
+    
+    vm.saveJean = function(){
+	    console.log("save");
+	    aws.getCurrentUserFromLocalStorage().then(
+		    function(result){
+			    var userData = result;
+			    vm.createThumb().then(
+				    function(imageURL){
+					   	aws.saveImageTos3(imageURL);
+				    }
+			    );
+		    },
+		    function(err){
+			    //TODO: properly notify
+					alert('you must be logged in to save!');
+		    }
+	    );
+    }
+    
+    
 		vm.createThumb = function(){
 	  	var canvas = document.createElement('canvas');
 	  	canvas.width=600;
 	  	canvas.height=600;
-	  	
 	  	var cntxt = canvas.getContext('2d');	
 	  	var promises = [];
-			
-	    function loadImage(src) {
-        return $q(function(resolve,reject) {
-          var image = new Image();
-          image.src = src;
-          image.onload = function() {
-            cntxt.drawImage(image,0,0,600,696);
-            resolve(image);
-          };
-          image.onerror = function(e) {
-            reject(e);
-          };
-        })
-	    }
-	    
+    
 	    var imagesElements = document.getElementsByClassName("zoomed-image");
 	    for(var i=0; i<imagesElements.length; i++){
 		    var image = imagesElements[i];	
-	      promises.push(loadImage(image.src));
+	      promises.push(loadImage(image.src, cntxt));
 	    }
 
 	    return $q.all(promises).then(function(results) {
 	      var dataUrl = canvas.toDataURL('image/jpeg');
-	      window.open(dataUrl);
+				return dataUrl;
 	    });
 			
   	}

@@ -4,8 +4,8 @@
     .module('bdApp')
     .controller('closetCtrl', closetCtrl);
 
-  closetCtrl.$inject = ['$location', 'jean','popups', '$filter', 'aws', 'bdAPI'];
-  function closetCtrl($location, jean, popups, $filter, aws, bdAPI) {
+  closetCtrl.$inject = ['$location', 'jean','popups', '$filter', 'aws', 'bdAPI', '$scope'];
+  function closetCtrl($location, jean, popups, $filter, aws, bdAPI, $scope) {
 	  
 
 	  
