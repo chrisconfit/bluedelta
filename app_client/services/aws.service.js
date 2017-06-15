@@ -53,7 +53,6 @@
     }
     
 		function _getAWSCredentials(idToken){
-			console.log(idToken);
 			var defer = $q.defer();
 			var logins = {};
 			logins['cognito-idp.' + AWSConfig.REGION + '.amazonaws.com/' + AWSConfig.USER_POOL_ID]=idToken;
@@ -381,14 +380,22 @@
 			
 			var defer = $q.defer();
 			var userIdentityID = _parseIdentityId(userTokens.idToken.jwtToken);
+			
+			console.log("userIdentityID: "+ userIdentityID);
+			
 			_getAWSCredentials(userTokens.idToken.jwtToken).then(
 
 				//Got credentials.. now save image
 				function(){
-
+					
 					var bucketName = 'blue-delta-api-development-stack-userdatabucket-12z57hiicf3xy';
           var s3bucket = new AWS.S3({region: AWSConfig.REGION, params: {Bucket: bucketName}});
+          
+          console.log(AWSConfig.REGION);
+          
           var params = {Key: encodeURIComponent(userIdentityID + "//") + "myfilename.png", Body: image};
+					
+					console.log(params);
 					
 					//This is throwing 403 error
 					s3bucket.upload(params, function(err, data){	      

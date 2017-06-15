@@ -1,45 +1,58 @@
 <navigation></navigation>
 
-<div class="container">
+<div class="page-container container">
   
-  <h1>Register</h1>
+  <div class="page-title">
+	  <h1>Register</h1>
+  </div>
   
-	<div class="step-1" ng-if="vm.formStep == 1">
-		<p class="lead">Already a member? Please <a href="login">log in</a> instead.</p>
-	  <form class="register-form" ng-submit="vm.registerUser()">
-	    <div ng-class="{vm.credentials.name:active}" class="input-group">
-	      <label for="name">Full name</label>
-	      <input type="text" class="form-control" id="name" ng-model="vm.credentials.name">
-	    </div>
-	    <div ng-class="{vm.credentials.password:email}" class="input-group">
-	      <label for="email">Email address</label>
-	      <input type="email" class="form-control" id="email" ng-model="vm.credentials.email">
-	    </div>
-	    <div ng-class="{vm.credentials.password:active}" class="input-group">
-	      <label for="password">Password</label>
-	      <input type="password" class="form-control" id="password" ng-model="vm.credentials.password">
-	    </div>
-	    <div ng-class="{vm.credentials.passwordConfirm:active}" class="input-group">
-	      <label for="password-confirm">Confirm Password</label>
-	      <input type="password" class="form-control" id="password-confirm" ng-model="vm.credentials.passwordConfirm">
-	    </div>
-			<button type="submit" class="btn btn-default">Register!</button>
-	  </form>
-	</div>
+  <div class="cft-g form-container-grid">
+	  
+	  <div class="cft-gi">
+		  
+			<div class="step-1" ng-if="vm.formStep == 1">
+				<p class="lead">Already a member? Please <a href="login">log in</a> instead.</p>
+			  <form novalidate class="cft-form register-form" ng-submit="vm.registerUser()">
+			    <div ng-class="{vm.credentials.name:active}" class="input-group">
+			      <label for="name">Full name</label>
+			      <input type="text" class="form-control" id="name" ng-model="vm.credentials.name">
+			    </div>
+			    <div ng-class="{vm.credentials.password:email}" class="input-group">
+			      <label for="email">Email address</label>
+			      <input type="text" class="form-control" id="email" ng-model="vm.credentials.email">
+			    </div>
+			    <div ng-class="{vm.credentials.password:active}" class="input-group">
+			      <label for="password">Password</label>
+			      <input type="password" class="form-control" id="password" ng-model="vm.credentials.password">
+			    </div>
+			    <div ng-class="{vm.credentials.passwordConfirm:active}" class="input-group">
+			      <label for="password-confirm">Confirm Password</label>
+			      <input type="password" class="form-control" id="password-confirm" ng-model="vm.credentials.passwordConfirm">
+			    </div>
+					<button type="submit" class="btn btn-default">Register!</button>
+			  </form>
+			</div>
   
-  <div class="step-2" ng-if="vm.formStep == 2">
-	  <p class="lead">A confirmation code has been sent to {{vm.credentials.email}}. Enter the code below to confirm your account.</p>
-  	<form class="confirm-form" ng-if="vm.formStep == 2" ng-submit="vm.confirmUser()">	  
-	    <div class="form-group">
-	      <label for="code">Confirmation Code</label>
-	      <input type="text" class="form-control" id="confirm" placeholder="Enter your confirmation code" ng-model="vm.credentials.code">
-	    </div>
-	    <a href="" ng-click="vm.resendCode()">Resend Confirmation Code</a>
-	    <button type="submit" class="btn btn-default">Confirm!</button>
-	  </form>  
-  </div>		
-  
-  <div class="message-block" ng-show="vm.messages.message">
-  	<p class="form-messages {{vm.messages.type}}" ng-bind-html="vm.messages.message"></p>
-	</div>
+		  <div class="step-2" ng-if="vm.formStep == 2">
+			  <p class="lead">A confirmation code has been sent to {{vm.credentials.email}}. Enter the code below to confirm your account.</p>
+		  	<form class="cft-form confirm-form" ng-if="vm.formStep == 2" ng-submit="vm.confirmUser()">	  
+			    <div class="input-group">
+			      <label for="code">Confirmation Code</label>
+			      <input type="text" class="form-control" id="confirm" placeholder="Enter your confirmation code" ng-model="vm.credentials.code">
+			    </div>
+
+			    <button type="submit" class="btn btn-default">Confirm!</button>
+					<a class="resend-code-link" href="" ng-click="vm.resendCode()">Resend Confirmation Code</a>
+			  </form>  
+		  </div>		
+		  
+	  </div><!--
+		  
+		--><div class="cft-gi">
+		  <div class="message-block" ng-show="vm.messages.message">
+		  	<p class="form-messages {{vm.messages.type}}" ng-bind-html="vm.messages.message"></p>
+			</div>
+		</div>
+		
+  </div>
 </div>

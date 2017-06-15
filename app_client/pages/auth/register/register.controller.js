@@ -40,17 +40,68 @@
 		}
 		
 		
+		//Validate Registration Form
+		vm.validateRegistrationForm = function () {
+			console.log("validatingf...");
+						
+			function validatePassword(password){
+				//console.log(vm.credentials.password.length > 5);
+				//contains numbers
+				//console.log(vm.credentials.password.search(/\d/)>-1);
+				//contains lowercase letters
+				//console.log(vm.credentials.password.search(/[a-z]/) > -1);
+				//contains uppercase letters
+				//console.log(vm.credentials.password.search(/[A-Z]/) > -1);
+				
+				//RE to test all
+				var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,50}$/;
+				return re.test(password);
+			}			
+								
+			function validateEmail(email) {
+		    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		    return re.test(email);
+			}
+
+			
+			if (!vm.credentials.email || !vm.credentials.name || !vm.credentials.password || !vm.credentials.passwordConfirm){
+				console.log("this one!");
+				console.log(vm.credentials);
+				vm.messages.set("All fields are required", "error");
+				return false;
+			}
+			
+			if (!validatePassword(vm.credentials.password)){
+				vm.messages.set("A valid password must: <ul><li>Be between 6 and 50 characters</li><li>Contain at least one number</li><li>Contain at least one uppercase letter</li><li>Contain at least one lowercase letter</li><li>Contain at least one special character (\"!,@,#,$,%,^,&, or *\")</li>");	
+			}
+			
+			if (vm.credentials.password !== vm.credentials.passwordConfirm){
+				vm.messages.set("Password and Confirmation do not match", "error");
+				return false;
+			}
+			
+			if(!validateEmail(vm.credentials.email)){
+				vm.messages.set("Please Enter a valid E-mail address", "error");
+				return false;
+			}
+			
+			return true;
+			
+		}
 		//Register User
     vm.registerUser = function () {
 	    vm.messages.reset();
-      aws.signupForApplication(vm.credentials.email, vm.credentials.password).then(
-      	function(){
-					vm.formStep = 2;	      	
-	      },   
-	      function(err){
-			    vm.messages.set(err.message, "error");
-		    }
-		  );
+	    
+	    if (vm.validateRegistrationForm()){
+	      aws.signupForApplication(vm.credentials.email, vm.credentials.password).then(
+	      	function(){
+						vm.formStep = 2;	      	
+		      },   
+		      function(err){
+				    vm.messages.set(err.message, "error");
+			    }
+			  );
+		  }
     };
     					
 		//Confirm User with Registration Code				
@@ -61,6 +112,7 @@
 					vm.setMessage($sce.trustAsHtml("Your Account has been confirmed. <a href='/login'>Click here to login</a>"), "success");
 	      },   
 	      function(err){
+		      if (err.message == "Missing required key 'ConfirmationCode' in params") err.message = "Please enter confirmation code";
 			    vm.setMessage(err.message, "error");
 		    }
 		  );
