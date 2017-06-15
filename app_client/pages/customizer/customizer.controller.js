@@ -344,7 +344,14 @@
 			    var userData = result;
 			    vm.createThumb().then(
 				    function(imageURL){
-					   	aws.saveImageTos3(imageURL);
+					  	aws.saveImageTos3(imageURL, userData).then(
+					  		function(){
+						  		console.log('creds refreshed');
+						  	}, 
+								function(err){
+									console.log(err)
+								}
+							);
 				    }
 			    );
 		    },

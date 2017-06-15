@@ -717,13 +717,15 @@ body {
   background: #939393;
 }
 
-form.login-form, form.register-form {
+form.login-form, form.register-form, form.cft-form {
+  background: #f1f1f1;
+  padding: 15px;
   max-width: 500px;
 }
-form.login-form .form-group, form.register-form .form-group {
+form.login-form .input-group, form.register-form .input-group, form.cft-form .input-group {
   margin-bottom: 15px;
 }
-form.login-form .form-group label, form.register-form .form-group label {
+form.login-form .input-group label, form.register-form .input-group label, form.cft-form .input-group label {
   display: block;
   font-size: 12px;
   margin-bottom: 5px;
@@ -731,11 +733,16 @@ form.login-form .form-group label, form.register-form .form-group label {
   font-weight: 700;
   color: #6a6a6a;
 }
-form.login-form .form-group input, form.register-form .form-group input {
+form.login-form .input-group input, form.register-form .input-group input, form.cft-form .input-group input {
   display: block;
   width: 100%;
+  border: 0;
 }
-form.login-form button.btn, form.login-form button.btn-secondary, form.register-form button.btn, form.register-form button.btn-secondary {
+form.login-form button:focus, form.login-form input:focus, form.login-form textarea:focus, form.login-form select:focus, form.register-form button:focus, form.register-form input:focus, form.register-form textarea:focus, form.register-form select:focus, form.cft-form button:focus, form.cft-form input:focus, form.cft-form textarea:focus, form.cft-form select:focus {
+  outline-color: rgba(0, 73, 100, 0.4);
+  outline-offset: 0px;
+}
+form.login-form button.btn, form.login-form button.btn-secondary, form.register-form button.btn, form.register-form button.btn-secondary, form.cft-form button.btn, form.cft-form button.btn-secondary {
   margin-top: 10px;
   padding: 8px 20px;
 }

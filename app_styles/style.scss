@@ -291,9 +291,11 @@ body{
 	
 	
 //Login/Register
-form.login-form, form.register-form{
+form.login-form, form.register-form, form.cft-form{
+	background:$lightGrey;
+	padding:15px;
 	max-width:500px;
-	.form-group{
+	.input-group{
 		margin-bottom:15px;
 		label{
 			display:block;
@@ -306,7 +308,20 @@ form.login-form, form.register-form{
 		input{
 			display:block;
 			width:100%;
+			border:0;
+			&:focus{
+//				outline-width: 2px;
+	//			outline-style: solid;
+
+			}
 		}
+	}
+	button, input, textarea, select{
+		&:focus{
+			outline-color: rgba($blue,.4);
+			outline-offset: 0px;
+		}
+		
 	}
 	button.btn{
 		margin-top:10px;
@@ -407,7 +422,7 @@ form.login-form, form.register-form{
 		width:100%;
 		position: relative;
 		.box-content{
-			background:#f1f1f1;
+			background:$lightGrey;
 			padding:20px;
 		}
 		.box-title{

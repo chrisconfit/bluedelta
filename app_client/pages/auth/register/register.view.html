@@ -7,19 +7,23 @@
 	<div class="step-1" ng-if="vm.formStep == 1">
 		<p class="lead">Already a member? Please <a href="login">log in</a> instead.</p>
 	  <form class="register-form" ng-submit="vm.registerUser()">
-	    <div class="form-group">
+	    <div ng-class="{vm.credentials.name:active}" class="input-group">
 	      <label for="name">Full name</label>
-	      <input type="text" class="form-control" id="name" placeholder="Enter your name" ng-model="vm.credentials.name">
+	      <input type="text" class="form-control" id="name" ng-model="vm.credentials.name">
 	    </div>
-	    <div class="form-group">
+	    <div ng-class="{vm.credentials.password:email}" class="input-group">
 	      <label for="email">Email address</label>
-	      <input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="vm.credentials.email">
+	      <input type="email" class="form-control" id="email" ng-model="vm.credentials.email">
 	    </div>
-	    <div class="form-group">
+	    <div ng-class="{vm.credentials.password:active}" class="input-group">
 	      <label for="password">Password</label>
-	      <input type="password" class="form-control" id="password" placeholder="Password" ng-model="vm.credentials.password">
+	      <input type="password" class="form-control" id="password" ng-model="vm.credentials.password">
 	    </div>
-	    <button type="submit" class="btn btn-default">Register!</button>
+	    <div ng-class="{vm.credentials.passwordConfirm:active}" class="input-group">
+	      <label for="password-confirm">Confirm Password</label>
+	      <input type="password" class="form-control" id="password-confirm" ng-model="vm.credentials.passwordConfirm">
+	    </div>
+			<button type="submit" class="btn btn-default">Register!</button>
 	  </form>
 	</div>
   

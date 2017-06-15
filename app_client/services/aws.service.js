@@ -38,17 +38,54 @@
     }
 
     function _buildAttributeList(attributeBuilder, obj) {
-        var attrList = [];
-        var attrToAdd;
-        for (var key in obj) {
-          attrToAdd = attributeBuilder(key, obj[key]);
-          attrList.push(attrToAdd);
-        }
-        return attrList;
+      var attrList = [];
+      var attrToAdd;
+      for (var key in obj) {
+        attrToAdd = attributeBuilder(key, obj[key]);
+        attrList.push(attrToAdd);
       }
+      return attrList;
+    }
+      
+    function _parseIdentityId(jwt){
+	    var idTokenPayload = jwt.split('.')[1];
+			return JSON.parse(atob(idTokenPayload)).sub;				
+    }
     
+		function _getAWSCredentials(idToken){
+			console.log(idToken);
+			var defer = $q.defer();
+			var logins = {};
+			logins['cognito-idp.' + AWSConfig.REGION + '.amazonaws.com/' + AWSConfig.USER_POOL_ID]=idToken;
 			
+			AWS.config.update({
+				region: AWSConfig.REGION,
+				credentials: new AWS.CognitoIdentityCredentials({
+					IdentityPoolId: AWSConfig.IDENTITY_POOL_ID,
+					Logins : logins
+				})
+			});
 			
+	    if (AWS.config.credentials.needsRefresh()){
+	      AWS.config.credentials.clearCachedId();
+	      AWS.config.credentials.get(function(err){
+	        if (err) {
+	          defer.reject(err);
+	        }
+	        defer.resolve();
+	      });
+	    } else {
+	      AWS.config.credentials.get(function(err){
+	        if (err) {
+	          defer.reject(err);
+	        }
+	        defer.resolve();
+	      });
+	    }
+			
+			return defer.promise;
+			
+		}
 			
     getUserFromLocalStorage = function(username) {
       var cognitoUser = _getCognitoUser(username, _getUserPool());
@@ -284,10 +321,8 @@
     getCurrentUserFromLocalStorage = function() {
 
 	    var defer = $q.defer();
-	    
       var cognitoUser = _getUserPool().getCurrentUser();
       
-    
       if (cognitoUser != null) {
         cognitoUser.getSession(function(err, session) {
         	
@@ -304,8 +339,6 @@
           //var loginKey = 'cognito-idp.'+AWSConfig.REGION+'.amazonaws.com/'+AWSConfig.USER_POOL_ID;
           defer.resolve(session);
           
-					// Instantiate aws sdk service objects now that the credentials have been updated.
-          // example: var s3 = new AWS.S3();
         });
       }else{
 	      defer.reject("User is not logged in...");
@@ -338,31 +371,47 @@
         console.log('call result: ' + result);
       });
     }
+   
     
-    saveImageTos3 = function (image){
-	    console.log('saveto');
-	    
-			var albumBucketName = 'blue-delta-api-development-stack-userdatabucket-12z57hiicf3xy';
-			var bucketRegion = 'us-east-1';
-			var IdentityPoolId = AWSConfig.IDENTITY_POOL_ID;
+    
+    
+    
+    //Save an image to s3 Bucket
+    saveImageTos3 = function (image, userTokens){
 			
-			AWS.config.update({
-				region: bucketRegion,
-				credentials: new AWS.CognitoIdentityCredentials({
-					IdentityPoolId: IdentityPoolId
-				})
-			});
+			var defer = $q.defer();
+			var userIdentityID = _parseIdentityId(userTokens.idToken.jwtToken);
+			_getAWSCredentials(userTokens.idToken.jwtToken).then(
+
+				//Got credentials.. now save image
+				function(){
+
+					var bucketName = 'blue-delta-api-development-stack-userdatabucket-12z57hiicf3xy';
+          var s3bucket = new AWS.S3({region: AWSConfig.REGION, params: {Bucket: bucketName}});
+          var params = {Key: encodeURIComponent(userIdentityID + "//") + "myfilename.png", Body: image};
+					
+					//This is throwing 403 error
+					s3bucket.upload(params, function(err, data){	      
+						if (err) {
+							console.log('Failed to upload');
+							console.log(err);
+							defer.reject(err);
+						}
+						else {
+							console.log('Successfully uploaded image to S3.');
+							console.log(data);
+						}
+    			});
+    			
+				},
+				
+				//Can't get AWS Credentials
+				function(err){
+					defer.reject(err);
+				}
+			);
 			
-			var s3 = new AWS.S3({
-				apiVersion: '2006-03-01',
-				params: {Bucket: albumBucketName}
-			});
-			
-	   
-	    console.log(s3);
-	    
-			//TODO: Save image
-			
+			return defer.promise;
 
     }
  
