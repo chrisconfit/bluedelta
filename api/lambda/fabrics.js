@@ -32,7 +32,7 @@ function Update(event, context) {
     let input = JSON.parse(event.body);
     return FabricsTable.get(event.pathParameters.fabricId).then((data) => {
         input.createTime = data.createTime;
-        input.fabricId = event.params.fabricId;
+        input.fabricId = event.pathParameters.fabricId;
         return FabricsTable.put(input);
     })
 }

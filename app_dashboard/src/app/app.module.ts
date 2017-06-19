@@ -73,6 +73,12 @@ import { FabricItemImageComponent } from '../components/fabric-master/fabric-ind
 
 import { FabricsProvider } from '../providers/fabrics/fabrics';
 import { EditFabricFormComponent } from "../components/fabric-master/fabric-index/fabric-item/edit-fabric-form/edit-fabric-form";
+import { OrderMasterComponent } from '../components/order-master/order-master';
+import { OrderIndexComponent } from '../components/order-index/order-index';
+import { CreateOrderFormComponent } from '../components/create-order-form/create-order-form';
+import { OrderItemComponent } from '../components/order-item/order-item';
+import { EditOrderFormComponent } from '../components/edit-order-form/edit-order-form';
+import { OrderItemButtonsComponent } from '../components/order-item-buttons/order-item-buttons';
 
 
 
@@ -128,7 +134,13 @@ import { EditFabricFormComponent } from "../components/fabric-master/fabric-inde
     FabricItemButtonsComponent,
     FabricItemDetailsComponent,
     FabricItemImageComponent,
-    EditFabricFormComponent
+    EditFabricFormComponent,
+    OrderMasterComponent,
+    OrderIndexComponent,
+    CreateOrderFormComponent,
+    OrderItemComponent,
+    EditOrderFormComponent,
+    OrderItemButtonsComponent
   ],
   imports: [
     BrowserModule,
@@ -168,7 +180,8 @@ import { EditFabricFormComponent } from "../components/fabric-master/fabric-inde
     OrdersProvider,
     UsersProvider,
     ThreadsProvider,
-    FabricsProvider
+    FabricsProvider,
+    OrdersProvider
   ]
 })
 export class AppModule {}

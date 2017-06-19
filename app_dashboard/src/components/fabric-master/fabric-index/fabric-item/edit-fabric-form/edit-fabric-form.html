@@ -2,15 +2,24 @@
   <div *ngIf="fabricService.itemIdMarkedForEdit === fabric.fabricId">
       <ion-item>
         <ion-label>Name</ion-label>
-        <ion-input type="text" formControlName="name"></ion-input>
+        <ion-input type="text"    formControlName="name"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label>Layer</ion-label>
-        <ion-input formControlName="layer"></ion-input>
+        <ion-label>Weight</ion-label>
+        <ion-input type="number"  formControlName="weight"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label>Thumb</ion-label>
-        <ion-input formControlName="thumb"></ion-input>
+        <ion-label>Description</ion-label>
+        <ion-input type="text"    formControlName="description"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Materials</ion-label>
+        <ion-input type="text"    formControlName="materials"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Supplier</ion-label>
+        <ion-input type="text"    formControlName="supplier"></ion-input>
       </ion-item>
   </div>
 </form>
+

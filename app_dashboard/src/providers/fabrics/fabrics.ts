@@ -56,8 +56,8 @@ export class FabricsProvider {
   createItemWithAuth(fabricItem: Fabric):void {
     console.log('fabricItem', fabricItem);
     this.exitItemCreate();
-    fabricItem = new FabricModel(fabricItem.fabricId, fabricItem.name, fabricItem.weight, fabricItem.description, fabricItem.materials, fabricItem.supplier);
-    console.log('fabricItem', fabricItem);
+    // fabricItem = new FabricModel(fabricItem.fabricId, fabricItem.name, fabricItem.weight, fabricItem.description, fabricItem.materials, fabricItem.supplier);
+    // console.log('fabricItem', fabricItem);
     this.list = [ ...this.list, fabricItem ];
     this.userPoolsAuthClient.getClient()[this.modelName + 'sCreate'](fabricItem).subscribe(
       (data) => {        
@@ -66,7 +66,7 @@ export class FabricsProvider {
         console.log(`${this.providerName} create success data`, data);
         this.list = [ ...this.list ].map(v => {
           if (!v.fabricId) {
-            v.threadId = data.fabricId;
+            v.fabricId = data.fabricId;
             v.createTime = data.createTime;
           }
           return v;
@@ -93,7 +93,7 @@ export class FabricsProvider {
       .subscribe(
         (data) => {
           console.log(`${this.providerName} delete success data`, data);
-          this.list = [ ...this.list ].filter(v => v.threadId !== this.itemIdMarkedForDelete);
+          this.list = [ ...this.list ].filter(v => v.fabricId !== this.itemIdMarkedForDelete);
           this.dismissLoader();
           this.initialized = true;
           this.itemIdMarkedForDelete = null;
@@ -130,7 +130,7 @@ export class FabricsProvider {
   }
 
   editItemWithAuth(item: any, newValues: any):void {
-    this.itemIdMarkedForEdit = item.threadId;
+    this.itemIdMarkedForEdit = item.fabricId;
     this.userPoolsAuthClient.getClient()[this.modelName + 'sUpdate'](this.itemIdMarkedForEdit, newValues.value)
       .subscribe(
           (data) => {
@@ -138,11 +138,13 @@ export class FabricsProvider {
             this.initialized = true;
             this.itemIdMarkedForEdit = null;
             this.list = [ ...this.list ].map(v => {
-              if (v.threadId === data.threadId) {
+              if (v.fabricId === data.fabricId) {
                 v.updateTime = data.updateTime;
                 if (v.name !== data.name) v.name = data.name;
-                if (v.thumb !== data.thumb) v.thumb = data.thumb;
-                if (v.layer !== data.layer) v.layer = data.layer;
+                if (v.weight !== data.weight) v.weight = data.weight;
+                if (v.description !== data.description) v.description = data.description;
+                if (v.materials !== data.materials) v.materials = data.materials;
+                if (v.supplier !== data.supplier) v.supplier = data.supplier;
               }
               return v;
             });
@@ -175,16 +177,21 @@ export class FabricsProvider {
 
 
   createNewItemForm(item?) {
-    let name = '', thumb = '', layer = '';
+    // name weight description materials supplier
+    let name = '', weight = 0, description = '', materials = '', supplier = '';
     if (item) {
-      name  = item.name;
-      thumb = item.thumb;
-      layer = item.layer;
+      name        = item.name;
+      weight      = item.weight;
+      description = item.description;
+      materials   = item.materials;
+      supplier    = item.supplier;
     }
     return this.formBuilder.group({
       name: [name, Validators.required],
-      thumb: [thumb],
-      layer: [layer]
+      weight: [weight],
+      description: [description],
+      materials: [materials],
+      supplier: [supplier]
     });
   }
 
