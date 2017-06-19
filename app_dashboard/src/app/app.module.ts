@@ -33,16 +33,12 @@ import { ButtonItemImageComponent } from '../components/button-master/button-ind
 import { VendorsPage } from "../pages/vendors/vendors";
 import { ProfilePage } from "../pages/profile/profile";
 import { AdminsPage } from "../pages/admins/admins";
-import { OrdersIndexComponent } from '../components/orders-list-master/orders-index/orders-index';
-import { OrdersListItemComponent } from '../components/orders-list-master/orders-index/orders-list-item/orders-list-item';
-import { OrdersListMasterComponent } from '../components/orders-list-master/orders-list-master';
+
 import { OrdersPage } from '../pages/orders/orders';
 import { CustomersPage } from '../pages/customers/customers';
 import { ButtonsProvider } from "../providers/buttons/buttons";
 import { OrdersProvider } from "../providers/orders/orders";
-import { CreateOrderFormComponent } from '../components/orders-list-master/create-order-form/create-order-form';
-import { EditOrderFormComponent } from '../components/orders-list-master/orders-index/orders-list-item/edit-order-form/edit-order-form';
-import { OrderItemDetailsComponent } from '../components/orders-list-master/orders-index/orders-list-item/order-item-details/order-item-details';
+
 import { UsersProvider } from '../providers/users/users';
 import { UserMasterComponent } from '../components/user-master/user-master';
 import { UserIndexComponent } from '../components/user-master/user-index/user-index';
@@ -74,11 +70,8 @@ import { FabricItemImageComponent } from '../components/fabric-master/fabric-ind
 import { FabricsProvider } from '../providers/fabrics/fabrics';
 import { EditFabricFormComponent } from "../components/fabric-master/fabric-index/fabric-item/edit-fabric-form/edit-fabric-form";
 import { OrderMasterComponent } from '../components/order-master/order-master';
-import { OrderIndexComponent } from '../components/order-index/order-index';
-import { CreateOrderFormComponent } from '../components/create-order-form/create-order-form';
-import { OrderItemComponent } from '../components/order-item/order-item';
-import { EditOrderFormComponent } from '../components/edit-order-form/edit-order-form';
-import { OrderItemButtonsComponent } from '../components/order-item-buttons/order-item-buttons';
+
+
 
 
 
@@ -104,12 +97,6 @@ import { OrderItemButtonsComponent } from '../components/order-item-buttons/orde
     ButtonItemDetailsComponent,
     ButtonItemButtonsComponent,
     ButtonItemImageComponent,
-    OrdersIndexComponent,
-    OrdersListItemComponent,
-    OrdersListMasterComponent,
-    CreateOrderFormComponent,
-    EditOrderFormComponent,
-    OrderItemDetailsComponent,
     UserMasterComponent,
     UserIndexComponent,
     CreateUserFormComponent,
@@ -136,11 +123,6 @@ import { OrderItemButtonsComponent } from '../components/order-item-buttons/orde
     FabricItemImageComponent,
     EditFabricFormComponent,
     OrderMasterComponent,
-    OrderIndexComponent,
-    CreateOrderFormComponent,
-    OrderItemComponent,
-    EditOrderFormComponent,
-    OrderItemButtonsComponent
   ],
   imports: [
     BrowserModule,
