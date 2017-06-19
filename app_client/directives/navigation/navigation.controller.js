@@ -11,8 +11,8 @@
 		vm.drops={};
 		vm.drops.acct=false;
 		vm.mobileMenu = false;
-		
-		vm.isLoggedIn = JSON.parse($window.localStorage.isLoggedIn);	
+	
+		vm.isLoggedIn = $window.localStorage.isLoggedIn ? JSON.parse($window.localStorage.isLoggedIn) : false;	
 		vm.logout = function(){			
 			aws.signCurrentUserOut();
 			if ($location.path() == "/")

@@ -19,7 +19,7 @@
 	
 		
 		//User detection
-		vm.isLoggedIn = JSON.parse($window.localStorage.isLoggedIn);
+		vm.isLoggedIn = ($window.localStorage.isLoggedIn ? JSON.parse($window.localStorage.isLoggedIn) : false);
 
 		//Detect Orientation		
 		function landscapeDetect() {
