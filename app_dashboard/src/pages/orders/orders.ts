@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { OrdersListMasterComponent } from '../../components/orders-list-master/orders-list-master';
+
 import { ResourceProvider } from "../../providers/resource/resource.provider";
 import { AccountSignupPage } from "../account-signup/account-signup";
 import { AccountSigninPage } from "../account-signin/account-signin";

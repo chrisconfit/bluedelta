@@ -1,0 +1,4 @@
+<button ion-button *ngIf="fabricService.itemIdMarkedForEdit === fabric.fabricId" (click)="fabricService.exitItemEditMode()"><ion-icon name="arrow-back"></ion-icon></button>
+<button ion-button *ngIf="fabricService.itemIdMarkedForEdit !== fabric.fabricId" (click)="fabricService.startItemEdit(fabric)"><ion-icon name="clipboard"></ion-icon></button>
+<button ion-button *ngIf="fabricService.itemIdMarkedForEdit !== fabric.fabricId" (click)="fabricService.deleteItemWithAuth(fabric.fabricId)"><ion-icon name="close-circle"></ion-icon></button>
+<button ion-button *ngIf="fabricService.itemIdMarkedForEdit === fabric.fabricId" (click)="fabricService.editItemWithAuth(fabric, fabricService.itemEdit)" [disabled]="!fabricService.itemEdit?.valid"><ion-icon name="checkmark"></ion-icon></button>

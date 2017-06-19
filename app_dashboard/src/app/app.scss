@@ -43,7 +43,7 @@ button[type="submit"], .button-md {
     }
 }
 
-user-item ion-item:hover {
+user-item ion-item:hover, button-item ion-item:hover {
     background-color: #dedede;
 }
 

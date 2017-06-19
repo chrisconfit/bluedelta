@@ -32,7 +32,7 @@ function Update(event, context) {
     let input = JSON.parse(event.body);
     return ThreadsTable.get(event.pathParameters.threadId).then((data) => {
         input.createTime = data.createTime;
-        input.threadId = event.params.threadId;
+        input.threadId = event.pathParameters.threadId;
         return ThreadsTable.put(input);
     })
 }

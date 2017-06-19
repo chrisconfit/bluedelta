@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UserPoolsAuthorizerClient, CustomAuthorizerClient } from "../../services/blue-delta-api.service";
 import { LoadingController, AlertController, ToastController } from "ionic-angular";
-import { Order, OrderItem, Transaction } from "../../services/blue-delta-sdk/index";
-
+import { Fabric } from "../../services/blue-delta-sdk/index";
+import { FabricModel } from "../../models/fabric.model";
 
 
 @Injectable()
-export class OrdersProvider {
-  providerName = 'OrdersProvider';
-  modelName = 'order';
+export class FabricsProvider {
+  providerName = 'FabricsProvider';
+  modelName = 'fabric';
   private itemEdit: FormGroup|null;
   private loader = null;
   private itemCreate: FormGroup|null;
@@ -39,6 +39,7 @@ export class OrdersProvider {
       (data) => {
         this.dismissLoader();
         this.initialized = true;
+        console.log(`${this.providerName} list success data`, data);
         this.list = data.items;
       },
       (err) => {
@@ -46,39 +47,42 @@ export class OrdersProvider {
         this.initialized = true; 
         this.displayAlert('Error encountered',
           `An error occurred when trying to load the ${this.modelName}s. Please check the console logs for more information.`)
+        console.log('error from load fabric list', err);
         this.presentToast('Error Loading Items');
       }
     );
   };
 
-  createItemWithAuth(orderItem: Order):void {
+  createItemWithAuth(fabricItem: Fabric):void {
+    console.log('fabricItem', fabricItem);
     this.exitItemCreate();
-    // orderItem = new OrderModel(orderItem.orderId, orderItem.name, orderItem.weight, orderItem.description, orderItem.materials, orderItem.supplier);
-    // console.log('orderItem', orderItem);
-    this.list = [ ...this.list, orderItem ];
-    this.userPoolsAuthClient.getClient()[this.modelName + 'Create'](orderItem).subscribe(
+    // fabricItem = new FabricModel(fabricItem.fabricId, fabricItem.name, fabricItem.weight, fabricItem.description, fabricItem.materials, fabricItem.supplier);
+    // console.log('fabricItem', fabricItem);
+    this.list = [ ...this.list, fabricItem ];
+    this.userPoolsAuthClient.getClient()[this.modelName + 'sCreate'](fabricItem).subscribe(
       (data) => {        
         this.dismissLoader();
         this.initialized = true;
         console.log(`${this.providerName} create success data`, data);
         this.list = [ ...this.list ].map(v => {
-          if (!v.orderId) {
-            v.orderId = data.orderId;
+          if (!v.fabricId) {
+            v.fabricId = data.fabricId;
             v.createTime = data.createTime;
           }
           return v;
         });
         this.itemInCreation = false;
         this.itemCreate = this.createNewItemForm();
-        this.presentToast('Order Successfully Created!');
+        this.presentToast('Fabric Successfully Created!');
       },
       (err) => {
         this.dismissLoader();
         this.initialized = true; 
         this.displayAlert('Error encountered',
-          `An error occurred when trying to create Order. Please check the console logs for more information.`);
+          `An error occurred when trying to create Fabric. Please check the console logs for more information.`)
+        console.log('error from create fabric', err);
         this.itemInCreation = false;
-        this.presentToast('Error Creating Order');
+        this.presentToast('Error Creating Fabric');
       }
     );
   }
@@ -89,20 +93,20 @@ export class OrdersProvider {
       .subscribe(
         (data) => {
           console.log(`${this.providerName} delete success data`, data);
-          this.list = [ ...this.list ].filter(v => v.orderId !== this.itemIdMarkedForDelete);
+          this.list = [ ...this.list ].filter(v => v.fabricId !== this.itemIdMarkedForDelete);
           this.dismissLoader();
           this.initialized = true;
           this.itemIdMarkedForDelete = null;
-          this.presentToast('Order Successfully Deleted');
+          this.presentToast('Fabric Successfully Deleted');
         },
         (err) => {
           this.dismissLoader();
           this.initialized = true; 
           this.displayAlert('Error encountered',
-            `An error occurred when trying to delete order ${itemId}. Please check the console logs for more information.`)
+            `An error occurred when trying to delete fabric ${itemId}. Please check the console logs for more information.`)
           console.log(`${this.providerName} delete error`, err);
           this.itemIdMarkedForDelete = null;
-          this.presentToast('Error Deleting Order');
+          this.presentToast('Error Deleting Fabric');
         }
     );
   }
@@ -119,13 +123,14 @@ export class OrdersProvider {
             this.dismissLoader();
             this.initialized = true;
             this.displayAlert('Error encountered',
-              `An error occurred when trying to get order ${itemId}. Please check the console logs for more information.`)
+              `An error occurred when trying to get fabric ${itemId}. Please check the console logs for more information.`)
+            console.log(`${this.providerName} get error`, err);
           }
       );
   }
 
   editItemWithAuth(item: any, newValues: any):void {
-    this.itemIdMarkedForEdit = item.orderId;
+    this.itemIdMarkedForEdit = item.fabricId;
     this.userPoolsAuthClient.getClient()[this.modelName + 'sUpdate'](this.itemIdMarkedForEdit, newValues.value)
       .subscribe(
           (data) => {
@@ -133,11 +138,13 @@ export class OrdersProvider {
             this.initialized = true;
             this.itemIdMarkedForEdit = null;
             this.list = [ ...this.list ].map(v => {
-              if (v.orderId === data.orderId) {
+              if (v.fabricId === data.fabricId) {
                 v.updateTime = data.updateTime;
-                if (v.userId !== data.userId) v.userId = data.userId;
-                if (v.orderItems !== data.orderItems) v.orderItems = data.orderItems;
-                if (v.transaction !== data.transaction) v.transaction = data.transaction;
+                if (v.name !== data.name) v.name = data.name;
+                if (v.weight !== data.weight) v.weight = data.weight;
+                if (v.description !== data.description) v.description = data.description;
+                if (v.materials !== data.materials) v.materials = data.materials;
+                if (v.supplier !== data.supplier) v.supplier = data.supplier;
               }
               return v;
             });
@@ -148,25 +155,16 @@ export class OrdersProvider {
             this.initialized = true;
             this.displayAlert('Error encountered',
               `An error occurred when trying to edit item ${this.itemIdMarkedForEdit}. Please check the console logs for more information.`)
+              console.log(`${this.providerName} edit error`, err);
               this.itemIdMarkedForEdit = null;
               this.presentToast('Unable to Edit Item');
           }
       );
   }
 
-  addItemToOrder() {
-
-  }
-
-  removeItemFromOrder() {
-    
-  }
-
-  
-
-  startItemEdit(order: Order) {
-    this.itemIdMarkedForEdit = order.orderId;
-    this.itemEdit = this.createNewItemForm(order);
+  startItemEdit(fabric: Fabric) {
+    this.itemIdMarkedForEdit = fabric.fabricId;
+    this.itemEdit = this.createNewItemForm(fabric);
   }
 
   exitItemEditMode() {
@@ -180,16 +178,20 @@ export class OrdersProvider {
 
   createNewItemForm(item?) {
     // name weight description materials supplier
-    let userId = '', orderItems = [], transaction = '';
+    let name = '', weight = 0, description = '', materials = '', supplier = '';
     if (item) {
-      userId          = item.userId;
-      orderItems      = item.orderItems;
-      transaction     = item.transaction;
+      name        = item.name;
+      weight      = item.weight;
+      description = item.description;
+      materials   = item.materials;
+      supplier    = item.supplier;
     }
     return this.formBuilder.group({
-      userId:     [userId],
-      orderItems: [orderItems],
-      transaction:  [transaction]
+      name: [name, Validators.required],
+      weight: [weight],
+      description: [description],
+      materials: [materials],
+      supplier: [supplier]
     });
   }
 
@@ -229,6 +231,7 @@ export class OrdersProvider {
     this.itemInCreation = true;
   }
 
+ 
 
   presentToast(message) {
     let toast = this.toastCtrl.create({
@@ -238,4 +241,5 @@ export class OrdersProvider {
     });
     toast.present();
   }
+
 }
