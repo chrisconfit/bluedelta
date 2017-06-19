@@ -53,36 +53,38 @@
     }
     
 		function _getAWSCredentials(idToken){
-			var defer = $q.defer();
-			var logins = {};
-			logins['cognito-idp.' + AWSConfig.REGION + '.amazonaws.com/' + AWSConfig.USER_POOL_ID]=idToken;
-			
-			AWS.config.update({
-				region: AWSConfig.REGION,
-				credentials: new AWS.CognitoIdentityCredentials({
-					IdentityPoolId: AWSConfig.IDENTITY_POOL_ID,
-					Logins : logins
-				})
+
+			logins = {}
+			var authenticator = 'cognito-idp.'+AWSConfig.REGION+'.amazonaws.com/'+AWSConfig.USER_POOL_ID;
+			logins[authenticator] = idToken;
+
+			AWS.config.update({ region: AWSConfig.REGION });
+
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: AWSConfig.IDENTITY_POOL_ID,
+        Logins : logins
 			});
-			
-	    if (AWS.config.credentials.needsRefresh()){
-	      AWS.config.credentials.clearCachedId();
-	      AWS.config.credentials.get(function(err){
-	        if (err) {
-	          defer.reject(err);
-	        }
-	        defer.resolve();
-	      });
-	    } else {
-	      AWS.config.credentials.get(function(err){
-	        if (err) {
-	          defer.reject(err);
-	        }
-	        defer.resolve();
-	      });
-	    }
-			
-			return defer.promise;
+
+			return AWS.config.credentials.getPromise();
+
+	    // if (AWS.config.credentials.needsRefresh()){
+	    //   AWS.config.credentials.clearCachedId();
+	    //   AWS.config.credentials.get(function(err){
+	    //     if (err) {
+	    //       defer.reject(err);
+	    //     }
+	    //     defer.resolve();
+	    //   });
+	    // } else {
+	    //   AWS.config.credentials.get(function(err){
+	    //     if (err) {
+	    //       defer.reject(err);
+	    //     }
+	    //     defer.resolve();
+	    //   });
+	    // }
+			//
+			// return defer.promise;
 			
 		}
 			
@@ -143,9 +145,10 @@
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
 					defer.resolve(result);
-					console.log('access token + ' + result.getAccessToken().getJwtToken());
 					//Use the idToken for Logins Map when Federating User Pools with Cognito Identity or when passing through an Authorization Header to an API Gateway Authorizer
-					console.log('idToken + ' + result.idToken.jwtToken);
+					console.log("signed in...");
+					$window.localStorage.isLoggedIn = true;
+					console.log($window.localStorage);
         },
         onFailure: function(err) {
           defer.reject(err);
@@ -306,12 +309,14 @@
     signCurrentUserOut = function() {
 	  	var cognitoUser = _getUserPool().getCurrentUser();
       if (cognitoUser != null) {
-          cognitoUser.signOut();
+        cognitoUser.signOut();
+				$window.localStorage.isLoggedIn = false;
       }
     }
 
 
     signUserOutGlobally = function(cognitoUser) {
+	    $window.localStorage.isLoggedIn = false;
       cognitoUser.globalSignOut();
     }
 		
@@ -330,7 +335,8 @@
             defer.reject(err);
             return defer.promise;
           }
-					
+          
+          $window.localStorage.isLoggedIn = true;
 					AWS.config.credentials = new AWS.CognitoIdentityCredentials({
             IdentityPoolId : AWSConfig.IDENTITY_POOL_ID
           });
@@ -345,7 +351,38 @@
       
       return defer.promise;
     }
+    
+    
 		
+		isLoggedIn = function() {
+			var cognitoUser = _getUserPool().getCurrentUser();
+			return cognitoUser ? true: false;
+		}
+		
+		agetCurrentUserFromLocalStorage = function() {
+
+			var cognitoUser = _getUserPool().getCurrentUser();
+			if (cognitoUser != null) {
+
+				cognitoUser.getSession(function(err, session) {
+												
+					if (err){
+						return false;
+						console.log(err);
+					}
+
+					AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+          	IdentityPoolId : AWSConfig.IDENTITY_POOL_ID
+        	});
+					
+					//User is logged in
+					return session;
+				});
+			}
+			
+			else{return false;}
+		}
+
 		
     confirmRegisteredUnauthenticatedUser = function(userName, confirmationCode) {
 	    
@@ -376,28 +413,30 @@
     
     
     //Save an image to s3 Bucket
-    saveImageTos3 = function (image, userTokens){
+    saveImageTos3 = function (imageURL, userTokens){
+			
+		function dataURItoBlob(dataURI) {
+			var binary = atob(dataURI.split(',')[1]);
+			var array = [];
+			for(var i = 0; i < binary.length; i++) {
+			  array.push(binary.charCodeAt(i));
+			}
+			return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+		}
+			
 			
 			var defer = $q.defer();
-			var userIdentityID = _parseIdentityId(userTokens.idToken.jwtToken);
 			
-			console.log("userIdentityID: "+ userIdentityID);
-			
+
 			_getAWSCredentials(userTokens.idToken.jwtToken).then(
 
 				//Got credentials.. now save image
 				function(){
-					
+					var blobData = dataURItoBlob(imageURL);
 					var bucketName = 'blue-delta-api-development-stack-userdatabucket-12z57hiicf3xy';
-          var s3bucket = new AWS.S3({region: AWSConfig.REGION, params: {Bucket: bucketName}});
-          
-          console.log(AWSConfig.REGION);
-          
-          var params = {Key: encodeURIComponent(userIdentityID + "//") + "myfilename.png", Body: image};
-					
-					console.log(params);
-					
-					//This is throwing 403 error
+					var s3bucket = new AWS.S3({region: AWSConfig.REGION, params: {Bucket: bucketName}});
+					var params = {Key: AWS.config.credentials.identityId + "/" + "myfilename.png", Body: blobData};
+
 					s3bucket.upload(params, function(err, data){	      
 						if (err) {
 							console.log('Failed to upload');
@@ -406,7 +445,8 @@
 						}
 						else {
 							console.log('Successfully uploaded image to S3.');
-							console.log(data);
+							console.log(data.Location);
+							var jeanThumbURL = data.Location;
 						}
     			});
     			
@@ -445,7 +485,8 @@
       getCurrentUserFromLocalStorage: getCurrentUserFromLocalStorage,
       confirmRegisteredUnauthenticatedUser: confirmRegisteredUnauthenticatedUser,
       signCurrentUserOut:signCurrentUserOut,
-      saveImageTos3 : saveImageTos3
+      saveImageTos3 : saveImageTos3,
+      isLoggedIn:isLoggedIn
     };
   }
 })();

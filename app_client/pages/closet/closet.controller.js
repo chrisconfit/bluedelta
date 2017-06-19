@@ -4,22 +4,34 @@
     .module('bdApp')
     .controller('closetCtrl', closetCtrl);
 
-  closetCtrl.$inject = ['$location', 'jean','popups', '$filter', 'aws', 'bdAPI', '$scope'];
-  function closetCtrl($location, jean, popups, $filter, aws, bdAPI, $scope) {
+  closetCtrl.$inject = ['$location', 'jean','popups', '$filter', 'aws', 'bdAPI', '$scope', 'jsonData'];
+  function closetCtrl($location, jean, popups, $filter, aws, bdAPI, $scope, jsonData) {
 	  
 
 	  
-    var vm = this;
-    
-		vm.popups=popups;
+    var vm = this;   
+   
+		popups.closeAll();
+		vm.popups=popups.get();
+		
+		console.log(vm.popups);
 		vm.jean=jean;
-		vm.data={};
-		vm.jeans = [];
+		vm.data=jsonData.getData();
+		console.log(vm.data);
+		vm.jeans = vm.data.jeansList;
+		
+
+		vm.onload=function(){
+			$scope.vm = vm;	
+		}
+		
+		
+		
     aws.getCurrentUserFromLocalStorage().then(
     	function(result){
 	    	
 	    	bdAPI.defaultHeaders_['Authorization'] = result.idToken.getJwtToken();
-	    	vm.setUpClosetData();
+
 	    	
 	    	//Set Up user
 	    	var idTokenPayload = result.idToken.jwtToken.split('.')[1];
@@ -42,76 +54,25 @@
     );
 		
 
-		//Utility function for setting up customizer data from JSON... 
-		vm.setupData = function (func, dataKey) {
-		  bdAPI.jsonData[func]()
-		   .success(function(data) {
-        vm.data[dataKey] = data;
-      })
-      .error(function (e) {
-        console.log(e);
-      });
-		}
+	
 
 		
 		var logError = function(err){console.log(err)};
 		
 		
-		//Set up Closet Data using JSON
-		vm.setUpClosetData = function(){
-	
 		
-			
-	
-			
-			vm.setupData('getGenders', 'genders');
-			vm.setupData('getStyles', 'styles');
-			vm.setupData('getFabrics', 'fabrics');
-			vm.setupData('getThreads', 'threads');
-			
-			bdAPI.jsonData.getJeansByUser(1)
-		  .success(function(data) {
-				for (x=0; x<data.length; x++){
-					vm.jeans.push(data[x]);
-				}
-      })
-      .error(function (e) {
-        console.log(e);
-      });
-      
-		}
 		
 
-		
-	
 
-
-
-
-
-		vm.dataLookup = function(jeanKey, id, attr){
-
-			if (typeof jeanKey == 'undefined' || typeof id == 'undefined') return false;
-			attr = attr||null;
-			
-			var dataKey = (jeanKey.includes("thread") ? "threads" : jeanKey+"s");
-			
-			var dataSet = vm.data[dataKey];
-			selected = $filter('filter')(dataSet, {id: id})[0];
-			if (!attr) return selected;
-			else return selected[attr];	
-		}
-		
 		vm.copyJean = function(){
-			vm.jean = jean.createNew(vm.jean);
+			vm.jean = jean.createNew(vm.displayJean);
 			$location.path('/customizer');
 		}
 		
+		vm.displayJean={};
 		vm.selectJean = function(jean){
-			console.log(jean);
-			console.log(vm.jean);
 			vm.popups.jeanProfile = true; 
-			vm.jean.data=jean
+			vm.displayJean.data=jean
 		}
 		
 	

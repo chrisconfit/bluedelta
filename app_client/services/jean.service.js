@@ -6,11 +6,12 @@
     .service('jean', jean);
 
   function jean() {
-		
+
    	data = {};
 		
 		set = function(property, value){
 			this.data[property] = value;
+			this.saved=false;
 		};
 		
 		createNew = function(jean){
@@ -24,6 +25,8 @@
 					"bottom_thread" : "1",
 					"id":Math.floor(Math.random() * 1000000000)
 				}
+				this.saved=false;
+				
 			}else{
 				this.data = {
 					"title" : "Copy of "+jean.data.title,

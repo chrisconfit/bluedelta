@@ -12,7 +12,7 @@
 			var chvm = this;
 			
 			//popups
-			chvm.popups = popups;
+			chvm.popups = popups.get();
 			chvm.jean = jean;
 			chvm.breakPoint = 800;
 			

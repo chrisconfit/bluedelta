@@ -1,0 +1,13 @@
+<form novalidate class="cft-form login-form" >
+  <div ng-class="{active: logvm.credentials.loginEmail.length}" class="input-group">
+    <input type="text" class="form-control" id="loginEmail" ng-model="logvm.credentials.loginEmail">
+    <label for="email">Email address</label>
+  </div>
+  <div ng-class="{active: logvm.credentials.loginPassword.length}" class="input-group">
+    <input type="password" class="form-control" id="loginPassword" ng-model="logvm.credentials.loginPassword">
+    <label for="password">Password</label>
+  </div>
+  <button type="submit" ng-click="logvm.login(logvm.credentials.loginEmail, logvm.credentials.loginPassword)" class="btn btn-default">Sign in!</button>
+  <button ng-click="logvm.loginFB()" class="btn">Log In with&nbsp;&nbsp;<i class="fa fa-facebook"></i></button>
+  <button ng-click="logvm.loginFB()" class="btn">Log In with&nbsp;&nbsp;<i class="fa fa-google-plus"></i></button>
+</form>

@@ -1,3 +1,4 @@
+{{vm.popups}}
 <div class="control-panel-inner template-{{vm.panel[vm.panelStep].panelTemplate}}">
 	
 		<div class="switch">					
@@ -80,14 +81,14 @@
 					</a>
 			  </div>
 			</div>
-			<a class="btn order" href="#">
+			<a class="btn order" ng-click="vm.placeOrder()" href="#">
 				Order
 			</a>
 		</div>
 		
 		<div ng-show="vm.panel[vm.panelStep].panelTemplate!='list'" class="active-item">
 			<a href="#" id="item-title" class="item-title {{vm.panel[vm.panelStep].jeanKey}}"
-				ng-click="vm.panel[vm.panelStep].jeanKey != 'fabric' || (vm.popups.infoPop=!vm.popups.infoPop)">
+				ng-click="vm.panel[vm.panelStep].jeanKey != 'fabric' || (vm.popups.infoPop=true)">
         {{vm.activeItem.name | displayName}}<i class="fa fa-question-circle"> </i>
 			</a>
 		</div>

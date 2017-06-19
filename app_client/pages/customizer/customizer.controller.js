@@ -4,10 +4,22 @@
     .module('bdApp')
     .controller('customizerCtrl', customizerCtrl);
 
-  customizerCtrl.$inject = ['$q','$filter','$timeout','$location', '$window', '$routeParams', 'bdAPI', 'jean', '$scope', 'popups', 'aws'];
-  function customizerCtrl($q, $filter, $timeout, $location, $window, $routeParams, bdAPI, jean, $scope, popups, aws) {
+  customizerCtrl.$inject = ['$q','$filter','$timeout','$location', '$window', '$routeParams', 'bdAPI', 'jean', '$scope', 'popups', 'aws', 'jsonData', 'messages'];
+  function customizerCtrl($q, $filter, $timeout, $location, $window, $routeParams, bdAPI, jean, $scope, popups, aws, jsonData, messages) {
+    
     var vm = this;
 		
+		//Set up shared messages service
+		messages.reset();
+		vm.messages=messages.get();
+	
+		//Set up shared popups service
+		popups.closeAll();
+		vm.popups = popups.get();
+	
+		
+		//User detection
+		vm.isLoggedIn = JSON.parse($window.localStorage.isLoggedIn);
 
 		//Detect Orientation		
 		function landscapeDetect() {
@@ -43,9 +55,17 @@
 		}, false);
 		
 		
-		//popups
-		vm.popups = popups;
 		
+		
+
+		
+		
+		
+		/*
+		*
+		* SET UP JEAN - Check route params for a data url or jean Id...
+		*
+		*/
 
 		function parseURLkey(key){
 			switch(key){
@@ -105,8 +125,6 @@
 			}
 		}
 		
-		console.log($routeParams);
-		
 		//Set up jean data from parameter
 		if ($routeParams.jean_id && $routeParams.action=='copy'){
 			if ($routeParams.jean_id.indexOf(":")>0){
@@ -163,13 +181,44 @@
 			console.log(url);
 
 		}
+		
+		
+		
+		
 	
     /*
-	  vm.jean.selectStyle = function(id){
-	    vm.jean.data.style =	id;	   
-	    //vm.form.nextStep();
-    }    
-		*/
+		*
+		* GET CUSTOMIZER DATA 
+		*
+		*/	
+		
+		vm.data = jsonData.getData();
+		
+		vm.dataLookup= function(key,value,attr){
+			key = jsonData.jeanKeyToDataKey(key);
+			return jsonData.dataLookup(key,value,attr) || null;
+		}
+		
+		$scope.$watch(function() {
+			return vm.jean.data;
+		}, function(current, original) {
+			vm.updateActiveItem();
+		}, true);
+		
+		$scope.$watch(function() {
+			return vm.data;
+		}, function(current, original) {
+			vm.updateActiveItem();
+		}, true);
+			
+		vm.activeItem={};
+		vm.updateActiveItem = function(){
+			var data = vm.data[vm.panel[vm.panelStep].dataKey];
+			var key = vm.jean.data[vm.panel[vm.panelStep].jeanKey];
+			var ret = $filter('filter')(data, {id: key});
+			if (ret) ret = ret[0];
+			vm.activeItem = ret||null;
+		}
 
 		
 		//Build Control Panel Steps
@@ -253,76 +302,44 @@
 			if (step+1 != vm.panel.length) vm.updateActiveItem();
 		}
 		
-		vm.activeItem={};
-		
-		vm.updateActiveItem = function(){
-			var data = vm.data[vm.panel[vm.panelStep].dataKey];
-			var key = vm.jean.data[vm.panel[vm.panelStep].jeanKey];
-			var ret = $filter('filter')(data, {id: key})[0];
-			vm.activeItem = ret;
-		}
-		
-		vm.styleByGender = function(gender){
-			return function(style){
-				return style["images_"+gender];
-		  }
-		};
-		
-				
-		vm.dataLookup = function(jeanKey, id, attr){
-			
-			if (typeof jeanKey == 'undefined' || typeof id == 'undefined') return false;
-			attr = attr||null;
-			
-			var dataInfo = $filter('filter')(vm.panel, {jeanKey: jeanKey});
 
-			if (dataInfo.length < 1) return false; //Return false for the "List" Panel
-			
-			var dataKey = (jeanKey == "gender" || jeanKey == "style" ? jeanKey+"s" : $filter('filter')(vm.panel, {jeanKey: jeanKey})[0].dataKey);
-			var dataSet = vm.data[dataKey];
+		
 
-			dataById = 	$filter('filter')(dataSet, {id: id});
-			if (typeof dataById == 'undefined') return false; //Return false when dataSet is undefined...
-			selected = dataById[0];
-			
-			if (!attr) return selected;
-			else return selected[attr];	
-			
-		}
-		
+
 				
-		/* GET CUSTOMIZER DATA */
-		vm.data = {};
-			
-		vm.getData = function (func, dataKey) {
-			var d = $q.defer();	   
-		  bdAPI.jsonData[func]()
-		  .then(function(res){
-		    vm.data[dataKey]=res.data;
-		    d.resolve(true);
-			});
-			return d.promise;
+		/*
+		*
+		* Place Order - 
+		*
+		*/
+				
+
+		vm.placeOrder=function(){
+			if(!vm.isLoggedIn){
+				popups.set('orderLogin',true);
+				return false;
+			}
+			else $location.path('/order');
 		}
-		
-		//Make sure that all data is in place before running updateActiveItem
-		$q.all([
-			vm.getData('getGenders', 'genders'),
-			vm.getData('getStyles', 'styles'),
-			vm.getData('getFabrics', 'fabrics'),
-			vm.getData('getThreads', 'threads'),
-		]).then(function(data) {
-		
-			//Update the active item any time the jean data changes
-			$scope.$watch(function() {
-			  return vm.jean.data;
-			}, function(current, original) {
-				vm.updateActiveItem();
-			}, true);
-			
-		});
+
+
+
+
+
+
+
 		
 		
-		//Thumbnail		
+		
+		
+		
+		
+		/*
+		*
+		* SAVE JEAN - Create thumbnail, save jean
+		*
+		*/	
+		
   	function loadImage(src, cntxt) {
       return $q(function(resolve,reject) {
         var image = new Image();
@@ -338,7 +355,7 @@
     }
     
     vm.saveJean = function(){
-	    console.log("save");
+
 	    aws.getCurrentUserFromLocalStorage().then(
 		    function(result){
 			    var userData = result;
@@ -346,14 +363,13 @@
 				    function(imageURL){
 					  	aws.saveImageTos3(imageURL, userData).then(
 					  		function(){
-						  		console.log('creds refreshed');
-						  	}, 
-								function(err){
-									console.log(err)
-								}
+						  		console.log('image saved');
+						  		vm.jean.saved=true;
+						  	}, function(err){console.log(err)}
 							);
 				    }
 			    );
+			    
 		    },
 		    function(err){
 			    //TODO: properly notify

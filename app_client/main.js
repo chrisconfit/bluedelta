@@ -1,6 +1,6 @@
 (function () {
 
-  angular.module('bdApp', ['ngRoute', 'ngAnimate','ngSanitize', 'angular-gestures']); 
+  angular.module('bdApp', ['ngRoute', 'ngAnimate','ngSanitize', 'ngCookies', 'angular-gestures']); 
   
   
   function config ($routeProvider, $locationProvider) {
@@ -25,6 +25,11 @@
         controller: 'closetCtrl',
         controllerAs: 'vm'
       })
+      .when('/order', {
+        templateUrl: '/pages/order/order.view.html',
+        controller: 'orderCtrl',
+        controllerAs: 'vm'
+      })
       .when('/customizer/:jean_id?/:action?', {
         templateUrl: '/pages/customizer/customizer.view.html',
         controller: 'customizerCtrl',
@@ -42,11 +47,14 @@
     
    }
 
-  function run($rootScope, $location, aws) {
+  function run($rootScope, $location, aws, jean, popups) {
+	  
     $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
 	    var locked = [
-		    '/closet'
+		    '/closet',
+		    '/order'
 	    ];
+	    
 	    if (locked.indexOf($location.path()) >= 0 ){
 		    aws.getCurrentUserFromLocalStorage().then(
 			    function(result){
@@ -57,13 +65,20 @@
 					}
 		    );
 	  	}
+	  	
+	  	//If there's no jean on the order screen.... redirect to the customizer page.
+	  	if($location.path().indexOf("/order") >= 0 && !Object.keys(jean.data).length){
+		  	$location.path('/');
+		  };
+		  
+		  
     });
   }
   
   angular
     .module('bdApp')
     .config(['$routeProvider', '$locationProvider', config])
-    .run(['$rootScope', '$location', 'aws', run])
+    .run(['$rootScope', '$location', 'aws', 'jean', 'popups', run])
 		.filter('spaceless',function() {
 	    return function(input) {
 	      if (input) {

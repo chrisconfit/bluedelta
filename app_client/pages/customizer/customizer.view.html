@@ -1,3 +1,4 @@
+{{vm.popups}}
 <div ng-show="vm.landscape" class="landscape-message">
 	<div class="text-container">
 		<div class="icon-container">
@@ -11,7 +12,8 @@
 <navigation></navigation>
 
 <div class="customizer-page-content">
-	<div ng-include="'/pages/customizer/inc.popups.html'"></div>
+<ng-include src="'/pages/customizer/inc.popups.html'"></ng-include>
+
 
 	<!--Pant Rendering-->
 	<div class="builder__stage">	

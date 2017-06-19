@@ -3,28 +3,21 @@
 
   angular
     .module('bdApp')
-    .service('bdAPI', bdAPI);
+    .service('jsonData', jsonData);
 
-  bdAPI.$inject = ['$window', '$http', '$httpParamSerializer', '$filter'];
-  function bdAPI ($window, $http, $httpParamSerializer, $filter) {
-
-	  $window._thirdParty = $window._thirdParty || {};
-	  $window._thirdParty.BlueDeltaApi =new API.Client.DefaultApi(angular.injector(["ng"]).get("$http"),
-    angular.injector(["ng"]).get("$httpParamSerializer"),
-    angular.injector(["ng"]));
-
-    var BlueDeltaApi = $window._thirdParty.BlueDeltaApi;
-		
-		//JSON Data
-		BlueDeltaApi.jsonData = {};
+  jsonData.$inject = ['$http','$filter', '$timeout'];
+  function jsonData ($http, $filter, $timeout) {
+	  
+		data = {};
+		$timeout
 		setupJsonData = function(key){
 			$http.get('/data/'+key+'.json').then(function(response){
-				BlueDeltaApi.jsonData[key] = response.data;
+				data[key] = response.data;
 			});
 		}
 		
 		jsonDataKeys = [
-			'chris-jeans',
+			'jeansList',
 			'profile',
 			'styles',
 			'threads',
@@ -33,11 +26,10 @@
 			'genders',
 			'tailors'
 		];
-		
+
 		for (d = 0; d < jsonDataKeys.length; d++) { 
 			setupJsonData(jsonDataKeys[d]);
-		}
-		
+		}			
 
 		var styleByGender = function(gender){
 			return function(style){
@@ -45,7 +37,7 @@
 		  }
 		};
 		
-		BlueDeltaApi.jeanKeyToDataKey = function(jeanKey){
+		var jeanKeyToDataKey = function(jeanKey){
 			var dataKey = false;
 			
 			switch(true){
@@ -62,12 +54,12 @@
 		}
 			
 				
-		BlueDeltaApi.dataLookup = function(dataKey, id, attr){
+		var dataLookup = function(dataKey, id, attr){
 			
 			attr = attr||null;
 	
 			if (typeof dataKey == 'undefined' || typeof id == 'undefined') return false;
-			var dataSet = BlueDeltaApi.jsonData[dataKey];
+			var dataSet = data[dataKey];
 			dataById = 	$filter('filter')(dataSet, {id: id});
 			if (typeof dataById == 'undefined') return false; //Return false when dataSet is undefined...
 			
@@ -80,7 +72,11 @@
 
 
 
-	  return BlueDeltaApi;
+	  return {
+		  getData:function(){return data;},
+		  jeanKeyToDataKey:jeanKeyToDataKey,
+			dataLookup:dataLookup
+		};
   }
 
 })();

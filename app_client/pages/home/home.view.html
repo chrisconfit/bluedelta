@@ -6,8 +6,8 @@
 	<div class="intro-text">
 		<div class="callouts">
 			<a href="customizer" class="btn callout">Get Started</a>
-			<a ng-hide="navvm.isLoggedIn" href="login" class="btn secondary callout">Sign In</a>
-			<a ng-show="navvm.isLoggedIn" href="closet" class="btn secondary callout">My Closet</a>
+			<a ng-if="!navvm.isLoggedIn" href="login" class="btn secondary callout">Sign In</a>
+			<a ng-if="navvm.isLoggedIn" href="closet" class="btn secondary callout">My Closet</a>
 		</div>
 	</div>
 </div>

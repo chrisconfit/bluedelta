@@ -3,17 +3,40 @@
 
   angular
     .module('bdApp')
-    .service('popups', popups);
+    .service('popups', ['$rootScope', popups]);
 
-  function popups() {
+  function popups($rootScope) {
 		
-    return {
-      denim : false,
-      hiw : false,
-      infoPop:false,
-      jeanProfile:false
-    };
+    var pops = {};
+        
+		var closeAll = function(){
+			for (var pop in pops) {
+			  if (pops.hasOwnProperty(pop)) {
+			    pops[pop]=false;
+			  }
+			}
+		}
     
+    var set = function(pop, status){
+	    if (!pops[pop]){
+		    pops[pop] = true;
+		    $rootScope.$broadcast('popupChange');
+	    }
+	    else{
+		  	var status = status || pops[pop];
+				pops[pop] = status;
+			}
+    }
+    
+    var get = function(){
+	    return pops;
+    }
+    
+    return {
+	    get:get,
+	    set:set,
+	    closeAll:closeAll
+    }
   }
 
 })();

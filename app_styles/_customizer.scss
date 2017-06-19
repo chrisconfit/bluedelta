@@ -1317,3 +1317,28 @@ a.overview-trigger{
 	}
 }
 
+.cft-g.login-reg-grid{
+	margin-left:-150px;
+	&>.cft-gi{
+		padding-left:150px;
+		vertical-align: top;
+		width:100%;
+	}
+	@include at-query($min, 700px){
+		&>.cft-gi{
+			position: relative;
+			width:50%;
+			&:last-child:before{
+				content:"";
+				left:75px;
+				top:0;
+				bottom:0;
+				width:1px;
+				position: absolute;
+				display:block;
+				background:$grey;
+				
+			}
+		}
+	}
+}

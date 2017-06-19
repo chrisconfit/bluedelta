@@ -8,16 +8,16 @@
 				<div class="cft-gi main">
  
 					<div class="jean-profile-data">
-						<h3>{{vm.jean.data.title}}</h3>
-						<p>Status:{{vm.jean.data.buildStatus}}</p>
-						<p>Estimated Arrival: {{vm.jean.data.birthday}}</p>
-						<p>Order#: {{vm.jean.data.orderNumber}}</p>
+						<h3>{{vm.displayJean.data.title}}</h3>
+						<p>Status:{{vm.displayJean.data.buildStatus}}</p>
+						<p>Estimated Arrival: {{vm.displayJean.data.birthday}}</p>
+						<p>Order#: {{vm.displayJean.data.orderNumber}}</p>
 					</div>
 					
 					<div class="jean-list closet">
 						<dl>
 							
-							<dt ng-repeat-start="(key, value) in vm.jean.data | listData">{{key | scoreToSpace}}:</dt><!--
+							<dt ng-repeat-start="(key, value) in vm.displayJean.data | listData">{{key | scoreToSpace}}:</dt><!--
 							--><dd ng-repeat-end>{{vm.dataLookup(key,value,"name")}}</dd>
 						</dl>
 					</div>
@@ -30,7 +30,7 @@
 				</div><!--
 				--><div class="cft-gi sidebar">
 					<div class="jean-card">
-						<img src="/images/thumbnails/{{vm.jean.data.id}}.jpg">
+						<img src="/images/thumbnails/{{vm.displayJean.data.id}}.jpg">
 						<div class="box-content">
 							<button class="btn">Re-Order</button>
 							<button ng-click="vm.copyJean()" class="btn">Copy</button>
