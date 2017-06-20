@@ -5,6 +5,7 @@ import { ResourceProvider } from "../../providers/resource/resource.provider";
 import { AccountSignupPage } from "../account-signup/account-signup";
 import { AccountSigninPage } from "../account-signin/account-signin";
 import { GlobalStateService } from "../../services/global-state.service";
+import { JeansProvider } from "../../providers/jeans/jeans";
 
 @Component({
   selector: 'page-customers',
@@ -23,7 +24,8 @@ export class CustomersPage {
     public navParams: NavParams,
     public buttonService: ButtonsProvider,
     public resourceService: ResourceProvider,
-    public globals: GlobalStateService) {
+    public globals: GlobalStateService,
+    public jeanService: JeansProvider) {
     
     this.selectedItem = navParams.get('item');
 

@@ -33,7 +33,8 @@ export class ThreadsProvider {
     this.itemCreate = this.createNewItemForm();
   }
 
-  loadItemsWithAuth(): void {
+  loadItemsWithAuth() {
+    let result;
     this.presentLoader();
     this.userPoolsAuthClient.getClient()[this.modelName + 'sList']().subscribe(
       (data) => {
@@ -41,6 +42,7 @@ export class ThreadsProvider {
         this.initialized = true;
         console.log(`${this.providerName} list success data`, data);
         this.list = data.items;
+        result = data.items;
       },
       (err) => {
         this.dismissLoader();
@@ -49,8 +51,10 @@ export class ThreadsProvider {
           `An error occurred when trying to load the ${this.modelName}s. Please check the console logs for more information.`)
         console.log('error from load thread list', err);
         this.presentToast('Error Loading Items');
+        result = err;
       }
     );
+    return result;
   };
 
   createItemWithAuth(threadItem: Thread):void {

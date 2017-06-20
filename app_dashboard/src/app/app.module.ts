@@ -70,6 +70,7 @@ import { FabricItemImageComponent } from '../components/fabric-master/fabric-ind
 import { FabricsProvider } from '../providers/fabrics/fabrics';
 import { EditFabricFormComponent } from "../components/fabric-master/fabric-index/fabric-item/edit-fabric-form/edit-fabric-form";
 import { OrderMasterComponent } from '../components/order-master/order-master';
+import { JeansProvider } from '../providers/jeans/jeans';
 
 
 
@@ -163,7 +164,8 @@ import { OrderMasterComponent } from '../components/order-master/order-master';
     UsersProvider,
     ThreadsProvider,
     FabricsProvider,
-    OrdersProvider
+    OrdersProvider,
+    JeansProvider
   ]
 })
 export class AppModule {}
