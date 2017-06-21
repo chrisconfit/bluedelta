@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {OrdersProvider} from "../../../../providers/orders/orders";
 
 /**
  * Generated class for the OrderItemComponent component.
@@ -11,12 +12,11 @@ import { Component } from '@angular/core';
   templateUrl: 'order-item.html'
 })
 export class OrderItemComponent {
+  @Input() order;
 
-  text: string;
-
-  constructor() {
-    console.log('Hello OrderItemComponent Component');
-    this.text = 'Hello World';
+  constructor(
+    public orderService: OrdersProvider
+  ) {
   }
 
 }

@@ -12,7 +12,7 @@
             <ion-icon name="log-in"></ion-icon>Sign In
         </button>
         <button ion-button icon-left (click)="globals.logout()" *ngIf="( resourceService.users$ | async ).currentUserId">
-            <ion-icon name="log-out"></ion-icon>Sign Out  
+            <ion-icon name="log-out"></ion-icon>Sign Out
         </button>
         <span style="color: white;" *ngIf="( resourceService.users$ | async ).currentUserId">
             {{ resourceService.getUserFirstName() + ' ' + resourceService.getUserLastName() }}
@@ -22,7 +22,7 @@
 </ion-header>
 
 <ion-content padding>
-  
 
-  
+  <order-master float-left margin></order-master>
+
 </ion-content>

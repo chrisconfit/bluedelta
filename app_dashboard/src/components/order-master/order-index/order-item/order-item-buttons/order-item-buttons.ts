@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {OrdersProvider} from "../../../../../providers/orders/orders";
 
 /**
  * Generated class for the OrderItemButtonsComponent component.
@@ -14,9 +15,9 @@ export class OrderItemButtonsComponent {
 
   text: string;
 
-  constructor() {
-    console.log('Hello OrderItemButtonsComponent Component');
-    this.text = 'Hello World';
+  constructor(
+    public orderService: OrdersProvider
+  ) {
   }
 
 }
