@@ -1,0 +1,49 @@
+<div>
+  <div align='center'>
+    <button float-left margin ion-button (click)="jeanService.loadItemsWithAuth()"><ion-icon name="refresh"></ion-icon></button>
+    <button float-left margin ion-button *ngIf="!jeanService.jeanInCreation" (click)="jeanService.startJeanCreate()"><ion-icon name="create"></ion-icon></button>
+  </div>
+</div>   
+<form [formGroup]="jeanService.jeanCreateForm">
+  <div *ngIf="jeanService.jeanInCreation">
+
+      <ion-item>
+        <ion-label>Thread</ion-label>
+        <ion-input type="text" formControlName="thread"></ion-input>
+      </ion-item>
+      {{ gaming?.button.name }}
+
+    <ion-select formControlName="gaming">
+      <ion-option value="{{ button }}" *ngFor="let button of jeanService.buttonList">{{ button.name }}</ion-option>
+      <!--<ion-option value="nes">NES</ion-option>
+      <ion-option value="n64">Nintendo64</ion-option>
+      <ion-option value="ps">PlayStation</ion-option>
+      <ion-option value="genesis">Sega Genesis</ion-option>
+      <ion-option value="saturn">Sega Saturn</ion-option>
+      <ion-option value="snes">SNES</ion-option>-->
+    </ion-select>
+
+      <ion-item>
+        <ion-label>Fabric</ion-label>
+        <ion-input formControlName="fabric"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Button</ion-label>
+        <ion-input formControlName="button"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Waist</ion-label>
+        <ion-input type="number" formControlName="waist"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Leg</ion-label>
+        <ion-input type="number" formControlName="leg"></ion-input>
+      </ion-item>
+
+      <button ion-button (click)="jeanService.exitJeanCreate()"><ion-icon name="arrow-back"></ion-icon></button>
+      <button ion-button (click)="jeanService.createItemWithAuth(jeanService.itemCreate.value)"><ion-icon name="checkmark"></ion-icon></button>
+  </div>
+</form>

@@ -71,6 +71,14 @@ import { FabricsProvider } from '../providers/fabrics/fabrics';
 import { EditFabricFormComponent } from "../components/fabric-master/fabric-index/fabric-item/edit-fabric-form/edit-fabric-form";
 import { OrderMasterComponent } from '../components/order-master/order-master';
 import { JeansProvider } from '../providers/jeans/jeans';
+import { JeanMasterComponent } from '../components/jean-master/jean-master';
+import { JeanIndexComponent } from '../components/jean-master/jean-index/jean-index';
+import { CreateJeanFormComponent } from '../components/jean-master/create-jean-form/create-jean-form';
+import { JeanItemComponent } from '../components/jean-master/jean-index/jean-item/jean-item';
+import { EditJeanFormComponent } from '../components/jean-master/jean-index/jean-item/edit-jean-form/edit-jean-form';
+import { JeanItemButtonsComponent } from '../components/jean-master/jean-index/jean-item/jean-item-buttons/jean-item-buttons';
+import { JeanItemDetailsComponent } from '../components/jean-master/jean-index/jean-item/jean-item-details/jean-item-details';
+import { JeanItemImageComponent } from '../components/jean-master/jean-index/jean-item/jean-item-image/jean-item-image';
 
 
 
@@ -124,6 +132,14 @@ import { JeansProvider } from '../providers/jeans/jeans';
     FabricItemImageComponent,
     EditFabricFormComponent,
     OrderMasterComponent,
+    JeanMasterComponent,
+    JeanIndexComponent,
+    CreateJeanFormComponent,
+    JeanItemComponent,
+    EditJeanFormComponent,
+    JeanItemButtonsComponent,
+    JeanItemDetailsComponent,
+    JeanItemImageComponent,
   ],
   imports: [
     BrowserModule,

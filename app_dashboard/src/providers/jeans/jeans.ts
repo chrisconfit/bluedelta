@@ -3,6 +3,7 @@ import { ButtonsProvider } from "../buttons/buttons";
 import { ThreadsProvider } from "../threads/threads";
 import { FabricsProvider } from "../fabrics/fabrics";
 import { UserPoolsAuthorizerClient } from "../../services/blue-delta-api.service";
+import { FormBuilder, Validators } from "@angular/forms";
 
 
 // TODO: write the buttons, fabrics, and threads provider methods in this provider, factor for fragility flexibility
@@ -18,14 +19,18 @@ export class JeansProvider {
     thread: {},
     measurement: {}
   };
+  jeanCreateForm;
+  jeanInCreation: boolean = false;
+
 
   constructor(
     public buttonService: ButtonsProvider,
     public fabricService: FabricsProvider,
     public threadService: ThreadsProvider,
-    public userPoolsAuthClient: UserPoolsAuthorizerClient
+    public userPoolsAuthClient: UserPoolsAuthorizerClient,
+    public formBuilder: FormBuilder
   ) {
-    console.log("IN THE CONSTRUCTOR FOR JEANS PROVIDER!!");
+    this.jeanCreateForm = this.createNewJeanForm('user');
     this.returnValidFunctionSig('button', 'list');
   }
 
@@ -141,8 +146,32 @@ export class JeansProvider {
     return validFuncs.split(' ').filter(v => v.includes(resourceName)).filter(v => v.includes(command)).join();
   }
 
-  getHttpFunction(resourceName, command) {
-    return this.userPoolsAuthClient.getClient()[resourceName + command];
+  getHttpFunction(validSig) {
+    return this.userPoolsAuthClient.getClient()[validSig];
   };
+
+  createNewJeanForm(user) {
+    let newJean = this._getDefaultJean(user);
+    let gaming = '';
+    return this.formBuilder.group({
+      thread:       [ newJean.thread,             Validators.required ],
+      fabric:       [ newJean.fabric,             Validators.required ],
+      button:       [ newJean.button,             Validators.required ],
+      waist:        [ newJean.measurement.waist,  Validators.required ],
+      leg:          [ newJean.measurement.leg,    Validators.required ],
+      gaming:       [ gaming ]
+    });
+  }
+
+  startJeanCreate() {
+    this.jeanInCreation = true;
+  }
+
+  exitJeanCreate() {
+    this.jeanInCreation = false;
+  }
+
+  
+
 
 }

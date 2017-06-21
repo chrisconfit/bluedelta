@@ -1,5 +1,5 @@
-<form [formGroup]="buttonService.itemEdit">
-    <div *ngIf="buttonService.itemIdMarkedForEdit === button.buttonId">
+<form [formGroup]="jeanService.itemEdit">
+    <div *ngIf="jeanService.itemIdMarkedForEdit === jean.jeanId">
         <ion-item>
         <ion-label>Name</ion-label>
         <ion-input type="text" formControlName="name" placeholder="Enter New Name"></ion-input>
