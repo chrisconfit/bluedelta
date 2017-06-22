@@ -6,6 +6,7 @@ import { UserPoolsAuthorizerClient } from "../../services/blue-delta-api.service
 import { FormBuilder, Validators } from "@angular/forms";
 
 
+
 // TODO: write the buttons, fabrics, and threads provider methods in this provider, factor for fragility flexibility
 
 @Injectable()
@@ -113,6 +114,7 @@ export class JeansProvider {
   }
 
   updateDefaultWaist(newVal: number) {
+    console.log(newVal);
     let newMeasurement  = { ...this.defaultJean.measurement, waist: newVal };
     this.defaultJean    = { ...this.defaultJean, measurement: newMeasurement };
   }
@@ -122,16 +124,19 @@ export class JeansProvider {
     this.defaultJean    = { ...this.defaultJean, measurement: newMeasurement };
   }
 
-  updateDefaultButton(selectedButton) {
-    this.defaultJean = { ...this.defaultJean, button: selectedButton };
+  updateDefaultButton(selectedButtonId) {
+    this.defaultJean = { ...this.defaultJean, button: [ ...this.buttonList ].filter(v => v.buttonId === selectedButtonId )[0] };
+    console.log('this.defaultJean', this.defaultJean);
   }
 
-  updateDefaultFabric(selectedFabric) {
-    this.defaultJean = { ...this.defaultJean, fabric: selectedFabric };
+  updateDefaultFabric(selectedFabricId) {
+    this.defaultJean = { ...this.defaultJean, fabric: [ ...this.fabricList ].filter(v => v.fabricId === selectedFabricId )[0] };
+    console.log('this.defaultJean', this.defaultJean);
   }
 
-  updateDefaultThread(selectedThread) {
-    this.defaultJean = { ...this.defaultJean, thread: selectedThread };
+  updateDefaultThread(selectedThreadId) {
+    this.defaultJean = { ...this.defaultJean, thread: [ ...this.threadList ].filter(v => v.threadId === selectedThreadId )[0] };
+    console.log('this.defaultJean', this.defaultJean);
   }
 
   returnValidFunctionSig(resourceName, command) {
@@ -152,14 +157,12 @@ export class JeansProvider {
 
   createNewJeanForm(user) {
     let newJean = this._getDefaultJean(user);
-    let gaming = '';
     return this.formBuilder.group({
       thread:       [ newJean.thread,             Validators.required ],
       fabric:       [ newJean.fabric,             Validators.required ],
       button:       [ newJean.button,             Validators.required ],
       waist:        [ newJean.measurement.waist,  Validators.required ],
-      leg:          [ newJean.measurement.leg,    Validators.required ],
-      gaming:       [ gaming ]
+      leg:          [ newJean.measurement.leg,    Validators.required ]
     });
   }
 
@@ -169,6 +172,16 @@ export class JeansProvider {
 
   exitJeanCreate() {
     this.jeanInCreation = false;
+  }
+
+  loadEmbeddedItems(buttonList, fabricList, threadList) {
+    this.buttonList = buttonList;
+    this.fabricList = fabricList;
+    this.threadList = threadList;
+  }
+
+  logShit(shitToLog) {
+    console.log('shitToLog', shitToLog);
   }
 
   

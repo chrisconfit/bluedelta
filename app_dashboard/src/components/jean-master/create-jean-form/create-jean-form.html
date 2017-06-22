@@ -1,6 +1,6 @@
 <div>
   <div align='center'>
-    <button float-left margin ion-button (click)="jeanService.loadItemsWithAuth()"><ion-icon name="refresh"></ion-icon></button>
+    <button float-left margin ion-button (click)="jeanService.loadEmbeddedItems(buttonService.list, fabricService.list, threadService.list)"><ion-icon name="refresh"></ion-icon></button>
     <button float-left margin ion-button *ngIf="!jeanService.jeanInCreation" (click)="jeanService.startJeanCreate()"><ion-icon name="create"></ion-icon></button>
   </div>
 </div>   
@@ -8,34 +8,34 @@
   <div *ngIf="jeanService.jeanInCreation">
 
       <ion-item>
-        <ion-label>Thread</ion-label>
-        <ion-input type="text" formControlName="thread"></ion-input>
+        <ion-select formControlName="thread" (ionChange)="jeanService.updateDefaultThread($event)">
+            <ion-option value="{{ thread.threadId }}" *ngFor="let thread of jeanService.threadList">{{ thread.name }}</ion-option>
+        </ion-select>
       </ion-item>
-      {{ gaming?.button.name }}
-
-    <ion-select formControlName="gaming">
-      <ion-option value="{{ button }}" *ngFor="let button of jeanService.buttonList">{{ button.name }}</ion-option>
-      <!--<ion-option value="nes">NES</ion-option>
-      <ion-option value="n64">Nintendo64</ion-option>
-      <ion-option value="ps">PlayStation</ion-option>
-      <ion-option value="genesis">Sega Genesis</ion-option>
-      <ion-option value="saturn">Sega Saturn</ion-option>
-      <ion-option value="snes">SNES</ion-option>-->
-    </ion-select>
-
+      
       <ion-item>
-        <ion-label>Fabric</ion-label>
-        <ion-input formControlName="fabric"></ion-input>
+        <ion-select formControlName="button" (ionChange)="jeanService.updateDefaultButton($event)">
+            <ion-option value="{{ button.buttonId }}" *ngFor="let button of jeanService.buttonList">{{ button.name }}</ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item>
-        <ion-label>Button</ion-label>
-        <ion-input formControlName="button"></ion-input>
+        <ion-select formControlName="fabric" (ionChange)="jeanService.updateDefaultFabric($event)">
+            <ion-option value="{{ fabric.fabricId }}" *ngFor="let fabric of jeanService.fabricList">{{ fabric.name }}</ion-option>
+        </ion-select>
       </ion-item>
+
+      <!--<ion-item>
+        <ion-range formControlName="waist" (ionChange)="jeanService.logShit(($event.ratio) )">
+          <ion-icon range-left small name="sunny"></ion-icon>
+          <ion-icon range-right name="sunny"></ion-icon>
+        </ion-range>
+      </ion-item>-->
+
 
       <ion-item>
         <ion-label>Waist</ion-label>
-        <ion-input type="number" formControlName="waist"></ion-input>
+        <ion-input (ionChange)="jeanService.updateDefaultWaist($event)" type="number" formControlName="waist"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -44,6 +44,6 @@
       </ion-item>
 
       <button ion-button (click)="jeanService.exitJeanCreate()"><ion-icon name="arrow-back"></ion-icon></button>
-      <button ion-button (click)="jeanService.createItemWithAuth(jeanService.itemCreate.value)"><ion-icon name="checkmark"></ion-icon></button>
+      <button ion-button (click)="jeanService.logShit(jeanService.jeanCreateForm.value)"><ion-icon name="checkmark"></ion-icon></button>
   </div>
 </form>
