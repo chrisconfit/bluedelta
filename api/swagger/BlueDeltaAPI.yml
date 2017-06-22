@@ -50,7 +50,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+       - blue-delta-userPool-authorizer: []
 
   /users/{userId}:
     delete:
@@ -66,7 +66,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+       - blue-delta-userPool-authorizer: []
     get:
       description: Returns a User
       operationId: users-Get
@@ -133,7 +133,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+       - blue-delta-userPool-authorizer: []
     post:
       description: Adds an Order
       operationId: order-Create
@@ -149,7 +149,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+       - blue-delta-userPool-authorizer: []
 
   /orders/{orderId}:
     delete:
@@ -165,7 +165,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+       - blue-delta-userPool-authorizer: []
     get:
       description: Returns an Order
       operationId: orders-Get
@@ -181,7 +181,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+       - blue-delta-userPool-authorizer: []
     post:
       description: Updates an Order
       operationId: orders-Update
@@ -198,7 +198,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       security:
-      - sigv4: []
+       - blue-delta-userPool-authorizer: []
 
   /buttons:
     get:
@@ -600,6 +600,7 @@ definitions:
   Order:
     required:
     - userId
+    - orderItems
     properties:
       orderId:
         type: string
