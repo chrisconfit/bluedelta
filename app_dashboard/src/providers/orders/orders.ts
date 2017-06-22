@@ -188,16 +188,20 @@ export class OrdersProvider {
   }
 
   startItemEdit(order: Order) {
-    this.itemIdMarkedForEdit = order.orderId;
-    this.itemEdit = this.createNewOrderForm(order);
+    this.orderIdMarkedForEdit = order.orderId;
+    this.orderEdit = this.createNewOrderForm(order);
   }
 
   exitItemEditMode() {
-    this.itemIdMarkedForEdit = null;
+    this.orderIdMarkedForEdit = null;
+  }
+
+  startItemCreate() {
+    this.orderInCreation = true;
   }
 
   exitItemCreate() {
-    this.itemInCreation = false;
+    this.orderInCreation = false;
   }
 
   _getDefaultOrderItem(user) {
@@ -268,9 +272,7 @@ export class OrdersProvider {
     alert.present();
   }
 
-  startItemCreate() {
-    this.itemInCreation = true;
-  }
+
 
 
   presentToast(message) {
