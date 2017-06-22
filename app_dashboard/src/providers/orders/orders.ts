@@ -176,9 +176,6 @@ export class OrdersProvider {
     this.orderInCreation = false;
   }
 
-
-
-
   _getDefaultOrder(user) {
     return {
       userId: user.userId,
