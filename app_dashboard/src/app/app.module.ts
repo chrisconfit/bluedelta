@@ -81,9 +81,15 @@ import { JeanItemImageComponent } from '../components/jean-master/jean-index/jea
 
 import { OrderMasterComponent } from '../components/order-master/order-master';
 import { OrderIndexComponent } from '../components/order-master/order-index/order-index';
-import {EditOrderFormComponent} from "../components/order-master/order-index/order-item/edit-order-form/edit-order-form";
-import {OrderItemComponent} from "../components/order-master/order-index/order-item/order-item";
-import {OrderItemButtonsComponent} from "../components/order-master/order-index/order-item/order-item-buttons/order-item-buttons";
+import { EditOrderFormComponent } from "../components/order-master/order-index/order-item/edit-order-form/edit-order-form";
+import { OrderItemComponent } from "../components/order-master/order-index/order-item/order-item";
+import { OrderItemButtonsComponent } from "../components/order-master/order-index/order-item/order-item-buttons/order-item-buttons";
+import { OrderItemImageComponent } from '../components/order-master/order-index/order-item/order-item-image/order-item-image';
+import { OrderItemDetailsComponent } from '../components/order-master/order-index/order-item/order-item-details/order-item-details';
+import { CreateOrderFormComponent } from "../components/order-master/create-order-form/create-order-form";
+
+
+
 
 
 @NgModule({
@@ -139,6 +145,7 @@ import {OrderItemButtonsComponent} from "../components/order-master/order-index/
     OrderItemComponent,
     OrderItemButtonsComponent,
     EditOrderFormComponent,
+    CreateOrderFormComponent,
 
     JeanMasterComponent,
     JeanIndexComponent,
@@ -148,6 +155,8 @@ import {OrderItemButtonsComponent} from "../components/order-master/order-index/
     JeanItemButtonsComponent,
     JeanItemDetailsComponent,
     JeanItemImageComponent,
+    OrderItemImageComponent,
+    OrderItemDetailsComponent,
   ],
   imports: [
     BrowserModule,

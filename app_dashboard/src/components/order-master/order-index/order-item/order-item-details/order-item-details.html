@@ -1,0 +1,5 @@
+<span *ngIf="orderService.itemIdMarkedForEdit !== order.orderId">{{ order.name }}</span><span *ngIf="order.updateTime">&nbsp;&nbsp;(edited)</span>
+<span *ngIf="order.orderId === orderService.itemIdBeingFetched">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
+<span *ngIf="order.orderId === orderService.itemIdMarkedForDelete">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
+<span *ngIf="!order.orderId">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
+<p>{{  order.createTime | date }}</p>

@@ -1,4 +1,4 @@
-<!-- Generated template for the OrderItemButtonsComponent component -->
-<div>
-  {{text}}
-</div>
+<button ion-button *ngIf="orderService.itemIdMarkedForEdit === order.orderId" (click)="orderService.exitItemEditMode()"><ion-icon name="arrow-back"></ion-icon></button>
+<button ion-button *ngIf="orderService.itemIdMarkedForEdit !== order.orderId" (click)="orderService.startItemEdit(button)"><ion-icon name="clipboard"></ion-icon></button>
+<button ion-button *ngIf="orderService.itemIdMarkedForEdit !== order.orderId" (click)="orderService.deleteItemWithAuth(order.orderId)"><ion-icon name="close-circle"></ion-icon></button>
+<button ion-button *ngIf="orderService.itemIdMarkedForEdit === order.orderId" (click)="orderService.editItemWithAuth(order, orderService.itemEdit)" [disabled]="!orderService.itemEdit?.valid"><ion-icon name="checkmark"></ion-icon></button>

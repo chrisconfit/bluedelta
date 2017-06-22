@@ -1,4 +1,8 @@
-<!-- Generated template for the OrderItemComponent component -->
-<div>
-  {{text}}
-</div>
+<ion-item>
+  
+  <order-item-image item-left [order]="order"></order-item-image>
+  <order-item-details float-left *ngIf="orderService.itemIdMarkedForEdit !== order.orderId" [order]="order"></order-item-details>
+  <edit-order-form [order]="order"></edit-order-form>
+  <order-item-buttons float-right [order]="order"></order-item-buttons>
+  
+</ion-item>

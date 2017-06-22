@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UserPoolsAuthorizerClient, CustomAuthorizerClient } from "../../services/blue-delta-api.service";
 import { LoadingController, AlertController, ToastController } from "ionic-angular";
 import { Order, OrderItem, Transaction } from "../../services/blue-delta-sdk/index";
+import { _getDefaultMeasurement, _getDefaultThread, _getDefaultFabric, _getDefaultButton } from "./helpers";
 
 
 
@@ -19,6 +20,17 @@ export class OrdersProvider {
   itemIdMarkedForDelete: string|null = null;
   itemIdMarkedForEdit: string|null = null;
   itemIdBeingFetched: string|null = null;
+  orderCreateForm;
+  orderInCreation = {
+    orderId: null,
+    userId: null,
+    orderItems: [],
+    transaction: {
+      transactionId: null,
+      status: null
+    }
+  };
+
 
   
   constructor(  
@@ -29,8 +41,8 @@ export class OrdersProvider {
     public formBuilder: FormBuilder,
     public toastCtrl: ToastController
   ) {
-    this.itemEdit = this.createNewItemForm();
-    this.itemCreate = this.createNewItemForm();
+    this.itemEdit = this.createNewOrderForm('');
+    this.itemCreate = this.createNewOrderForm('');
   }
 
   loadItemsWithAuth(): void {
@@ -69,7 +81,7 @@ export class OrdersProvider {
           return v;
         });
         this.itemInCreation = false;
-        this.itemCreate = this.createNewItemForm();
+        this.itemCreate = this.createNewOrderForm('');
         this.presentToast('Order Successfully Created!');
       },
       (err) => {
@@ -154,19 +166,30 @@ export class OrdersProvider {
       );
   }
 
-  addItemToOrder() {
-
+  addItemToStagedOrder(orderItem) {
+    this.orderInCreation = { 
+      ...this.orderInCreation, 
+      orderItems: [ ...this.orderInCreation.orderItems, orderItem ] 
+    }
   }
 
-  removeItemFromOrder() {
-    
+  removeItemFromStagedOrder(itemToRemove) {
+    this.orderInCreation = { 
+      ...this.orderInCreation, 
+      orderItems: [ ...this.orderInCreation.orderItems ].filter(v => v !== itemToRemove)
+    }
   }
 
-  
+  _getDefaultTransaction(user) {
+    return {
+      transactionId: null,
+      status: null
+    };
+  }
 
   startItemEdit(order: Order) {
     this.itemIdMarkedForEdit = order.orderId;
-    this.itemEdit = this.createNewItemForm(order);
+    this.itemEdit = this.createNewOrderForm(order);
   }
 
   exitItemEditMode() {
@@ -177,19 +200,40 @@ export class OrdersProvider {
     this.itemInCreation = false;
   }
 
+  _getDefaultOrderItem(user) {
+    return {
+      jean: this._getDefaultJean(user),
+      status: null,
+      tracking: null
+    };
+  }
 
-  createNewItemForm(item?) {
-    // name weight description materials supplier
-    let userId = '', orderItems = [], transaction = '';
-    if (item) {
-      userId          = item.userId;
-      orderItems      = item.orderItems;
-      transaction     = item.transaction;
+
+  _getDefaultOrder(user) {
+    return {
+      userId: user.userId,
+      orderItems: [ this._getDefaultOrderItem(user) ],
+      transaction: this._getDefaultTransaction(user)
     }
+  }
+
+
+
+
+  _getDefaultJean(user) {
+    return {
+      button: _getDefaultButton(user),
+      fabric: _getDefaultFabric(user),
+      thread: _getDefaultThread(user),
+      measurement: _getDefaultMeasurement(user)
+    };
+  }
+
+  createNewOrderForm(user) {
+    let newOrder = this._getDefaultOrder(user);
     return this.formBuilder.group({
-      userId:     [userId],
-      orderItems: [orderItems],
-      transaction:  [transaction]
+      orderItems:   [ newOrder.orderItems, Validators.required ],
+      transaction:  [ newOrder.transaction, Validators.required ]
     });
   }
 
@@ -206,7 +250,6 @@ export class OrdersProvider {
     }
     this.loader.present();
   }
-
 
   getAlertController() {
     return this.alertCtrl;
