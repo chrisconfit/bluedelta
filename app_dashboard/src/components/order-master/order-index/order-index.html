@@ -1,4 +1,3 @@
-<!-- Generated template for the OrderIndexComponent component -->
-<div>
-  {{text}}
-</div>
+<ion-list>
+  <order-item [order]="order" *ngFor="let order of orderService.list"></order-item>
+</ion-list>

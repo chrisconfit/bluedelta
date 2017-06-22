@@ -4,6 +4,7 @@ import { FabricsProvider } from "../../../providers/fabrics/fabrics";
 import { ButtonsProvider } from "../../../providers/buttons/buttons";
 import { ThreadsProvider } from "../../../providers/threads/threads";
 
+
 @Component({
   selector: 'create-jean-form',
   templateUrl: 'create-jean-form.html'

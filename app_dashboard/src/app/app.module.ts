@@ -69,7 +69,6 @@ import { FabricItemImageComponent } from '../components/fabric-master/fabric-ind
 
 import { FabricsProvider } from '../providers/fabrics/fabrics';
 import { EditFabricFormComponent } from "../components/fabric-master/fabric-index/fabric-item/edit-fabric-form/edit-fabric-form";
-import { OrderMasterComponent } from '../components/order-master/order-master';
 import { JeansProvider } from '../providers/jeans/jeans';
 import { JeanMasterComponent } from '../components/jean-master/jean-master';
 import { JeanIndexComponent } from '../components/jean-master/jean-index/jean-index';
@@ -80,8 +79,11 @@ import { JeanItemButtonsComponent } from '../components/jean-master/jean-index/j
 import { JeanItemDetailsComponent } from '../components/jean-master/jean-index/jean-item/jean-item-details/jean-item-details';
 import { JeanItemImageComponent } from '../components/jean-master/jean-index/jean-item/jean-item-image/jean-item-image';
 
-
-
+import { OrderMasterComponent } from '../components/order-master/order-master';
+import { OrderIndexComponent } from '../components/order-master/order-index/order-index';
+import {EditOrderFormComponent} from "../components/order-master/order-index/order-item/edit-order-form/edit-order-form";
+import {OrderItemComponent} from "../components/order-master/order-index/order-item/order-item";
+import {OrderItemButtonsComponent} from "../components/order-master/order-index/order-item/order-item-buttons/order-item-buttons";
 
 
 @NgModule({
@@ -131,7 +133,13 @@ import { JeanItemImageComponent } from '../components/jean-master/jean-index/jea
     FabricItemDetailsComponent,
     FabricItemImageComponent,
     EditFabricFormComponent,
+
     OrderMasterComponent,
+    OrderIndexComponent,
+    OrderItemComponent,
+    OrderItemButtonsComponent,
+    EditOrderFormComponent,
+
     JeanMasterComponent,
     JeanIndexComponent,
     CreateJeanFormComponent,

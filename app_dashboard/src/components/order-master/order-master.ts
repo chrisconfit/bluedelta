@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {OrdersProvider} from "../../providers/orders/orders";
 
 /**
  * Generated class for the OrderMasterComponent component.
@@ -14,9 +15,9 @@ export class OrderMasterComponent {
 
   text: string;
 
-  constructor() {
-    console.log('Hello OrderMasterComponent Component');
-    this.text = 'Hello World';
+  constructor(
+    public orderService: OrdersProvider
+  ) {
   }
 
 }

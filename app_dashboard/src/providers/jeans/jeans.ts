@@ -35,8 +35,14 @@ export class JeansProvider {
     this.returnValidFunctionSig('button', 'list');
   }
 
+  loadEmbeddedItems(buttonList, fabricList, threadList) {
+    this.buttonList = buttonList;
+    this.fabricList = fabricList;
+    this.threadList = threadList;
+  };
+
   loadAllJeanResources() {
-    this.buttonList = this.loadButtons(); 
+    this.buttonList = this.loadButtons();
     this.fabricList = this.loadFabrics();
     this.threadList = this.loadThreads();
   }
@@ -174,17 +180,15 @@ export class JeansProvider {
     this.jeanInCreation = false;
   }
 
-  loadEmbeddedItems(buttonList, fabricList, threadList) {
-    this.buttonList = buttonList;
-    this.fabricList = fabricList;
-    this.threadList = threadList;
-  }
+
+  
 
   logShit(shitToLog) {
     console.log('shitToLog', shitToLog);
   }
 
   
+
 
 
 }
