@@ -1,3 +1,10 @@
+const _getDefaultTransaction = (user) => {
+    return {
+        transactionId: null,
+        status: null
+    }
+}
+
 const _getDefaultButton = (user) => {
     let _defaultName = (user): string => (user.commonButton) ? user.commonButton.name : 'Brass Button';
     let _defaultThumb = (user): string => (user.commonButton) ? user.commonButton.thumb : 'brass_button.png';
@@ -24,6 +31,8 @@ const _getDefaultFabric = (user) => {
     }
 }
 
+
+
 const _getDefaultThread = (user) => {
     let _defaultName = (user): string => (user.commonThread) ? user.commonThread.name : 'Brown Thread';
     let _defaultThumb = (user): string => (user.commonThread) ? user.commonThread.thumb : 'brown_thread.png';
@@ -45,11 +54,33 @@ const _getDefaultMeasurement = (user) => {
     }
 }
 
+const _getDefaultJean = (user) => {
+    return {
+        button: _getDefaultButton(user),
+        fabric: _getDefaultFabric(user),
+        thread: _getDefaultThread(user),
+        measurement: _getDefaultMeasurement(user)
+    }
+}
+
+const _getDefaultOrderItem = (user) => {
+    return {
+        jean: _getDefaultJean(user),
+        status: null,
+        tracking: null
+    }
+}
+
+
+
 export {
+    _getDefaultTransaction,
     _getDefaultButton,
     _getDefaultFabric,
     _getDefaultMeasurement,
-    _getDefaultThread
+    _getDefaultThread,
+    _getDefaultJean,
+    _getDefaultOrderItem
 }
 
 
