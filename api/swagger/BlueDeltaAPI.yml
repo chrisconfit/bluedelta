@@ -548,7 +548,13 @@ definitions:
     properties:
       identityId:
         type: string
-      name:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      gender:
+        type: string
+      vendors_used:
         type: string
       email:
         type: string
