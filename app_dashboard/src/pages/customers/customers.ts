@@ -57,6 +57,7 @@ export class CustomersPage {
   ionViewWillEnter() {
     //TODO: Check user authentication on load
     console.log("on LOAD view");
+    console.log('user last load time', this.userService.usersLastLoadTime);
     this.userService.loadItemsWithAuth();
   }
 }

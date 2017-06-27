@@ -8,6 +8,7 @@ import { UserModel } from "../../models/user.model";
 
 @Injectable()
 export class UsersProvider {
+  usersLastLoadTime: number|null;
   providerName = 'UsersProvider';
   modelName = 'user';
   private itemEdit: FormGroup|null;
@@ -41,6 +42,7 @@ export class UsersProvider {
         this.initialized = true;
         console.log(`${this.providerName} list success data`, data);
         this.list = data.items;
+        this.usersLastLoadTime = new Date().getTime();
       },
       (err) => {
         this.dismissLoader();
