@@ -30,8 +30,10 @@ export class UsersProvider {
     public formBuilder: FormBuilder,
     public toastCtrl: ToastController
   ) {
+    console.log('This is in the constuctor!!!!');
     this.itemEdit = this.createNewItemForm();
     this.itemCreate = this.createNewItemForm();
+    console.log('this.itemCreate', this.itemCreate);
   }
 
   loadItemsWithAuth(): void {
@@ -56,6 +58,7 @@ export class UsersProvider {
   };
 
   createItemWithAuth(userItem: User):void {
+    console.log('userItem', userItem);
     this.exitItemCreate();
     userItem = new UserModel(userItem.identityId, userItem.email, userItem.phoneNumber, userItem.addresses, userItem.jeans);
     this.list = [ ...this.list, userItem ];

@@ -20,6 +20,10 @@
       <ion-input formControlName="firstName"></ion-input>
     </ion-item>
     <ion-item>
+      <ion-label>Addresses</ion-label>
+      <ion-input formControlName="addresses"></ion-input>
+    </ion-item>
+    <ion-item>
       <ion-label>Last Name</ion-label>
       <ion-input formControlName="lastName"></ion-input>
     </ion-item>
@@ -30,6 +34,10 @@
     <ion-item>
       <ion-label>Referral</ion-label>
       <ion-input formControlName="referral"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Vendors Used</ion-label>
+      <ion-input formControlName="vendorsUsed"></ion-input>
     </ion-item>
       <button ion-button (click)="userService.exitItemCreate()"><ion-icon name="arrow-back"></ion-icon></button>
       <button ion-button (click)="userService.createItemWithAuth(userService.itemCreate.value)"><ion-icon name="checkmark"></ion-icon></button>

@@ -6,8 +6,8 @@ import { AccountSignupPage } from "../account-signup/account-signup";
 import { AccountSigninPage } from "../account-signin/account-signin";
 import { GlobalStateService } from "../../services/global-state.service";
 import { JeansProvider } from "../../providers/jeans/jeans";
-import {OrdersProvider} from "../../providers/orders/orders";
-import {UsersProvider} from "../../providers/users/users";
+import { OrdersProvider } from "../../providers/orders/orders";
+import { UsersProvider } from "../../providers/users/users";
 
 @Component({
   selector: 'page-customers',
