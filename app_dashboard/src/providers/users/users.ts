@@ -20,9 +20,9 @@ export class UsersProvider {
   itemIdMarkedForEdit: string|null = null;
   itemIdBeingFetched: string|null = null;
 
-  
-  constructor(  
-    private customAuthClient: CustomAuthorizerClient, 
+
+  constructor(
+    private customAuthClient: CustomAuthorizerClient,
     private userPoolsAuthClient: UserPoolsAuthorizerClient,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
@@ -44,7 +44,7 @@ export class UsersProvider {
       },
       (err) => {
         this.dismissLoader();
-        this.initialized = true; 
+        this.initialized = true;
         this.displayAlert('Error encountered',
           `An error occurred when trying to load the ${this.modelName}s. Please check the console logs for more information.`)
         console.log('error from load order list', err);
@@ -58,7 +58,7 @@ export class UsersProvider {
     userItem = new UserModel(userItem.identityId, userItem.email, userItem.phoneNumber, userItem.addresses, userItem.jeans);
     this.list = [ ...this.list, userItem ];
     this.userPoolsAuthClient.getClient()[this.modelName + 'sCreate'](userItem).subscribe(
-      (data) => {        
+      (data) => {
         this.dismissLoader();
         this.initialized = true;
         console.log(`${this.providerName} create success data`, data);
@@ -75,7 +75,7 @@ export class UsersProvider {
       },
       (err) => {
         this.dismissLoader();
-        this.initialized = true; 
+        this.initialized = true;
         this.displayAlert('Error encountered',
           `An error occurred when trying to create User. Please check the console logs for more information.`)
         console.log('error from create user', err);
@@ -99,7 +99,7 @@ export class UsersProvider {
         },
         (err) => {
           this.dismissLoader();
-          this.initialized = true; 
+          this.initialized = true;
           this.displayAlert('Error encountered',
             `An error occurred when trying to delete user ${itemId}. Please check the console logs for more information.`)
           console.log(`${this.providerName} delete error`, err);
@@ -175,16 +175,27 @@ export class UsersProvider {
 
 
   createNewItemForm(item?) {
-    let email = '', phoneNumber = '', addresses = '';
+    let email = '', phoneNumber = '', addresses = '', gender = '', firstName = '', lastName = '', referral = '', vendorsUsed = '' ;
     if (item) {
       email  = item.email;
       phoneNumber = item.phoneNumber;
       addresses = item.addresses;
+      gender = item.gender;
+      firstName = item.firstName;
+      lastName = item.lastName;
+      referral = item.referral;
+      vendorsUsed = item.vendorsUsed;
     }
+
     return this.formBuilder.group({
       email: [email, Validators.required],
       phoneNumber: [phoneNumber],
       addresses: [addresses],
+      gender: [gender],
+      firstName: [firstName],
+      lastName: [lastName],
+      referral: [referral],
+      vendorsUsed: [vendorsUsed]
     });
   }
 
@@ -224,7 +235,7 @@ export class UsersProvider {
     this.itemInCreation = true;
   }
 
- 
+
 
   presentToast(message) {
     let toast = this.toastCtrl.create({

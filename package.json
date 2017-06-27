@@ -13,6 +13,7 @@
     "express-jwt": "^3.0.1",
     "express-jwt-permissions": "^0.5.0",
     "gulp-util": "^3.0.8",
+    "ionic-debug-console": "^0.1.0",
     "jade": "~1.9.1",
     "jsonwebtoken": "^5.0.4",
     "mongo-sanitize": "^1.0.0",
