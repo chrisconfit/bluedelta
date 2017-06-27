@@ -46,7 +46,7 @@ export class OrdersProvider {
     public toastCtrl: ToastController
   ) {
     this.itemEdit = this.createNewOrderForm('');
-    this.itemCreate = this.createNewOrderForm('');
+    this.orderCreateForm = this.createNewOrderForm('');
   }
 
   loadItemsWithAuth(): void {
@@ -64,7 +64,7 @@ export class OrdersProvider {
   };
 
   createItemWithAuth(orderItem: Order):void {
-    this.exitItemCreate();
+    this.exitOrderCreate();
     this.list = [ ...this.list, orderItem ];
     this.userPoolsAuthClient.getClient()[this.modelName + 'Create'](orderItem).subscribe(
       (data) => {        
@@ -168,11 +168,11 @@ export class OrdersProvider {
     this.orderIdMarkedForEdit = null;
   }
 
-  startItemCreate() {
+  startOrderCreate() {
     this.orderInCreation = true;
   }
 
-  exitItemCreate() {
+  exitOrderCreate() {
     this.orderInCreation = false;
   }
 

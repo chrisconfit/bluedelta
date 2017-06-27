@@ -1,7 +1,7 @@
 <div>
   <div align='center'>
     <button float-left margin ion-button (click)="orderService.loadEmbeddedItems(buttonService.list, fabricService.list, threadService.list)"><ion-icon name="refresh"></ion-icon></button>
-    <button float-left margin ion-button *ngIf="!orderService.orderInCreation" (click)="orderService.startJeanCreate()"><ion-icon name="create"></ion-icon></button>
+    <button float-left margin ion-button *ngIf="!orderService.orderInCreation" (click)="orderService.startOrderCreate()"><ion-icon name="create"></ion-icon></button>
   </div>
 </div>
 <form [formGroup]="orderService.orderCreateForm">
@@ -43,7 +43,7 @@
         <ion-input type="number" formControlName="leg"></ion-input>
       </ion-item>
 
-      <button ion-button (click)="orderService.exitJeanCreate()"><ion-icon name="arrow-back"></ion-icon></button>
+      <button ion-button (click)="orderService.exitOrderCreate()"><ion-icon name="arrow-back"></ion-icon></button>
       <button ion-button (click)="orderService.logShit(orderService.orderCreateForm.value)"><ion-icon name="checkmark"></ion-icon></button>
   </div>
 </form>
