@@ -1,11 +1,12 @@
 <div>
   <div align='center'>
-    <button float-left margin ion-button (click)="orderService.loadEmbeddedItems(buttonService.list, fabricService.list, threadService.list)"><ion-icon name="refresh"></ion-icon></button>
+    <button float-left margin ion-button (click)="orderService.loadJeanResources()"><ion-icon name="refresh"></ion-icon></button>
     <button float-left margin ion-button *ngIf="!orderService.orderInCreation" (click)="orderService.startOrderCreate()"><ion-icon name="create"></ion-icon></button>
   </div>
 </div>
 <form [formGroup]="orderService.orderCreateForm">
   <div *ngIf="orderService.orderInCreation">
+
 
       <ion-item>
         <ion-select formControlName="thread" (ionChange)="orderService.updateDefaultThread($event)">

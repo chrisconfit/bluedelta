@@ -8,6 +8,7 @@ import { Config } from "../../config/config";
 import { AccountForgotPasswordPage } from "../account-forgot-password/account-forgot-password";
 import { ResourceProvider } from "../../providers/resource/resource.provider";
 import { UsersActions } from "../../reducers/users/users.actions";
+import { OrdersProvider } from "../../providers/orders/orders";
 
 
 @Component({
@@ -45,6 +46,7 @@ export class AccountSigninPage {
       this.login();
       this.resourceService.initialized = true;
     }
+    
   }
 
   onForgotPassword(form) {

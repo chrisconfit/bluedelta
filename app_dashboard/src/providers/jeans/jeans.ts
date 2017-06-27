@@ -180,15 +180,9 @@ export class JeansProvider {
     this.jeanInCreation = false;
   }
 
-
-  
-
   logShit(shitToLog) {
     console.log('shitToLog', shitToLog);
   }
-
-  
-
 
 
 }

@@ -2,13 +2,17 @@ import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UserPoolsAuthorizerClient, CustomAuthorizerClient } from "../../services/blue-delta-api.service";
 import { LoadingController, AlertController, ToastController } from "ionic-angular";
-import { Order, OrderItem, Transaction } from "../../services/blue-delta-sdk/index";
+import { Order, OrderItem } from "../../services/blue-delta-sdk/index";
 import { _getDefaultOrderItem, _getDefaultTransaction } from "./helpers";
 
 
 
 @Injectable()
 export class OrdersProvider {
+  threadList;
+  fabricList;
+  buttonList;
+  orderList: Order[];
   modelName = 'order';
   private itemEdit: FormGroup|null;
   private loader = null;
@@ -184,6 +188,57 @@ export class OrdersProvider {
     }
   }
 
+  loadJeanResources() {
+    this.buttonList = this.fetchButtons();
+    this.threadList = this.fetchThreads();
+    this.fabricList = this.fetchFabrics();
+  }
+
+
+  fetchButtons() {
+    this.userPoolsAuthClient.getClient().buttonsList().subscribe(
+      (data) => {
+        return data.items;
+      },
+      (err) => {
+        this.presentToast('Error Loading Buttons');
+      }
+    );
+  }
+
+  fetchFabrics(): void {
+    this.userPoolsAuthClient.getClient().fabricsList().subscribe(
+      (data) => {
+        return data.items;
+      },
+      (err) => {
+        this.presentToast('Error Loading Fabrics');
+      }
+    );
+  }
+
+  fetchThreads() {
+    this.userPoolsAuthClient.getClient().threadsList().subscribe(
+      (data) => {
+        return data.items;
+      },
+      (err) => {
+        this.presentToast('Error Loading Threads');
+      }
+    );
+  }
+
+  loadOrders() {
+    this.userPoolsAuthClient.getClient().ordersList().subscribe(
+      (data) => {
+        this.orderList = data.items;
+      },
+      (err) => {
+        this.presentToast('Error Loading Orders');
+      }
+    );
+  }
+
 
   createNewOrderForm(user) {
     let newOrder = this._getDefaultOrder(user);
@@ -210,6 +265,7 @@ export class OrdersProvider {
   getAlertController() {
     return this.alertCtrl;
   }
+
 
   displayAlert(title, subtitle, functionToRunWhenOkButtonIsPressed=null) {
     let okFunction = () => {};
