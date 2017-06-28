@@ -59,20 +59,9 @@ export class UsersProvider {
         user = { ...user, phoneNumber: newPhoneNumber };
     }
 
-    addJeansTouserJeans(): void {
+    addJeanToUserJeans(user: User, newJean: Jean): void {
 
     }
 
 }
-export interface User {
-    identityId: string;
-    email?: string;
-    firstName?: string;
-    lastName?: string;
-    gender?: string;
-    referral?: string;
-    vendorsUsed?: string;
-    phoneNumber?: string;
-    addresses?: Array<models.Address>;
-    jeans?: Array<models.Jean>;
-}
+
