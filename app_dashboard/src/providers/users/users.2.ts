@@ -1,0 +1,78 @@
+import { Injectable } from '@angular/core';
+import { User, Address } from "../../services/blue-delta-sdk/index";
+
+
+
+@Injectable()
+export class UsersProvider {
+
+    constructor() {
+
+    }
+
+    userAddressUnique(user: User, address: Address): boolean {
+        let res = (user.addresses.indexOf(address) === -1);
+        return res;
+    }
+  
+    addAddressToUserAddresses(user: User, newAddress: Address, uniqueAddressValidator): void {
+        if !(uniqueAddressValidator(user, newAddress)) return;
+        user = { ...user, addresses: [ user.addresses, newAddress ] };
+    }
+
+    validEmailFormat(emailAddress: string): boolean {
+        function hasAtSymbol(emailToTest: string): boolean {
+            return (emailToTest.split('').indexOf('@') !== -1);
+        }
+        function hasValidExtension(emailToTest: string): boolean {
+            return /(\.[a-zA-Z0-9]{1,5})/.test(emailToTest);
+        }
+        return (hasAtSymbol(emailAddress) && hasValidExtension(emailAddress));
+    }
+
+    setUserEmail(user: User, newEmail: string, emailValidator): void {
+        if !(emailValidator(newEmail)) return;
+        user = { ...user, email: newEmail };
+    }
+
+    setUserFirstName(user: User, newFirstName: string): void {
+        user = { ...user, firstName: newFirstName };
+    }
+
+    setUserLastName(user: User, newLastName: string): void {
+        user = { ...user, lastName: newLastName };
+    }
+
+    setUserGender(user: User, newGender: string): void {
+        user = { ...user, gender: newGender };
+    }
+
+    setUserReferral(user: User, newReferral: string): void {
+        user = { ...user, referall: newReferall };
+    }
+
+    setUserVendorsUsed(user: User, newVendorsUsed: string): void {
+        user = { ...user, vendorsUsed: newVendorsUsed };
+    }
+
+    setUserPhoneNumber(user: User, newPhoneNumber: string): void {
+        user = { ...user, phoneNumber: newPhoneNumber };
+    }
+
+    addJeansTouserJeans(): void {
+
+    }
+
+}
+export interface User {
+    identityId: string;
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    gender?: string;
+    referral?: string;
+    vendorsUsed?: string;
+    phoneNumber?: string;
+    addresses?: Array<models.Address>;
+    jeans?: Array<models.Jean>;
+}
