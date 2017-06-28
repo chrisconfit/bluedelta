@@ -2,18 +2,17 @@ import { Injectable } from '@angular/core';
 
 
 
-
 @Injectable()
 export class OrdersProvider {
 
 
-  constructor(  
-    
+  constructor(
+
   ) {
-    
+
   }
 
-  
+
 }
 
 export interface Transaction {
@@ -24,21 +23,21 @@ export interface Transaction {
 export interface Order {
     orderId?: string;
     userId: string;
-    orderItems?: Array<models.OrderItem>;
-    transaction?: models.Transaction;
+    orderItems?: Array<OrderItem>;
+    transaction?: Transaction;
 }
 
 export interface OrderItem {
-    jean: models.Jean;
+    jean: Jean;
     status?: string;
     tracking?: string;
 }
 
 export interface Jean {
-    measurement?: models.Measurement;
-    thread?: models.Thread;
-    fabric?: models.Fabric;
-    button?: models.Button;
+    measurement?: Measurement;
+    thread?: Thread;
+    fabric?: Fabric;
+    button?: Button;
 }
 
 export interface Measurement {
@@ -80,8 +79,8 @@ export interface User {
     referral?: string;
     vendorsUsed?: string;
     phoneNumber?: string;
-    addresses?: Array<models.Address>;
-    jeans?: Array<models.Jean>;
+    addresses?: Array<Address>;
+    jeans?: Array<Jean>;
 }
 
 export interface Address {

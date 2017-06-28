@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User, Address } from "../../services/blue-delta-sdk/index";
-
-
+import {Jean} from "../orders/orders.2";
 
 @Injectable()
 export class UsersProvider {
@@ -14,9 +13,9 @@ export class UsersProvider {
         let res = (user.addresses.indexOf(address) === -1);
         return res;
     }
-  
+
     addAddressToUserAddresses(user: User, newAddress: Address, uniqueAddressValidator): void {
-        if !(uniqueAddressValidator(user, newAddress)) return;
+        if (!uniqueAddressValidator(user, newAddress)) return;
         user = { ...user, addresses: [ user.addresses, newAddress ] };
     }
 
@@ -31,7 +30,7 @@ export class UsersProvider {
     }
 
     setUserEmail(user: User, newEmail: string, emailValidator): void {
-        if !(emailValidator(newEmail)) return;
+        if (!emailValidator(newEmail)) return;
         user = { ...user, email: newEmail };
     }
 
@@ -48,7 +47,7 @@ export class UsersProvider {
     }
 
     setUserReferral(user: User, newReferral: string): void {
-        user = { ...user, referall: newReferall };
+        user = { ...user, referral: newReferral };
     }
 
     setUserVendorsUsed(user: User, newVendorsUsed: string): void {
@@ -59,6 +58,7 @@ export class UsersProvider {
         user = { ...user, phoneNumber: newPhoneNumber };
     }
 
+    //This won't be needed since we're going to reference a users jeans from orders... TBD
     addJeanToUserJeans(user: User, newJean: Jean): void {
 
     }
