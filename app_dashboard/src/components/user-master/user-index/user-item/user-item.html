@@ -1,8 +1,8 @@
 <ion-item>
-  
+
   <user-item-image item-left [user]="user"></user-item-image>
   <user-item-details float-left *ngIf="userService.itemIdMarkedForEdit !== user.identityId" [user]="user"></user-item-details>
   <edit-user-form [user]="user"></edit-user-form>
   <user-item-buttons float-right [user]="user"></user-item-buttons>
-  
+
 </ion-item>

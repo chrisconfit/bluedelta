@@ -8,25 +8,25 @@
   <div *ngIf="orderService.orderInCreation">
 
 
-      <ion-item>
+<!--      <ion-item>
         <ion-select formControlName="thread" (ionChange)="orderService.updateDefaultThread($event)">
             <ion-option value="{{ thread.threadId }}" *ngFor="let thread of orderService.threadList">{{ thread.name }}</ion-option>
         </ion-select>
-      </ion-item>
-      
-      <ion-item>
+      </ion-item>-->
+
+<!--      <ion-item>
         <ion-select formControlName="button" (ionChange)="orderService.updateDefaultButton($event)">
             <ion-option value="{{ button.buttonId }}" *ngFor="let button of orderService.buttonList">{{ button.name }}</ion-option>
         </ion-select>
-      </ion-item>
+      </ion-item>-->
 
-      <ion-item>
+<!--      <ion-item>
         <ion-select formControlName="fabric" (ionChange)="orderService.updateDefaultFabric($event)">
             <ion-option value="{{ fabric.fabricId }}" *ngFor="let fabric of orderService.fabricList">{{ fabric.name }}</ion-option>
         </ion-select>
-      </ion-item>
+      </ion-item>-->
 
-      <ion-item>
+      <!--<ion-item>
         <ion-range formControlName="waist" (ionChange)="orderService.logShit(($event.ratio) )">
           <ion-icon range-left small name="sunny"></ion-icon>
           <ion-icon range-right name="sunny"></ion-icon>
@@ -42,7 +42,7 @@
       <ion-item>
         <ion-label>Leg</ion-label>
         <ion-input type="number" formControlName="leg"></ion-input>
-      </ion-item>
+      </ion-item>-->
 
       <button ion-button (click)="orderService.exitOrderCreate()"><ion-icon name="arrow-back"></ion-icon></button>
       <button ion-button (click)="orderService.logShit(orderService.orderCreateForm.value)"><ion-icon name="checkmark"></ion-icon></button>
