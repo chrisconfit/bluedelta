@@ -15,7 +15,25 @@ API.Client.User.prototype.identityId;
  * @type {!string}
  * @export
  */
-API.Client.User.prototype.name;
+API.Client.User.prototype.firstName;
+
+/**
+ * @type {!string}
+ * @export
+ */
+API.Client.User.prototype.lastName;
+
+/**
+ * @type {!string}
+ * @export
+ */
+API.Client.User.prototype.gender;
+
+/**
+ * @type {!string}
+ * @export
+ */
+API.Client.User.prototype.vendorsUsed;
 
 /**
  * @type {!string}
