@@ -3,3 +3,4 @@
 <span *ngIf="order.orderId === orderService.itemIdMarkedForDelete">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
 <span *ngIf="!order.orderId">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
 <p>{{  order.createTime | date }}</p>
+<p *ngIf="order.orderItems">{{ order.orderItems }}</p>
