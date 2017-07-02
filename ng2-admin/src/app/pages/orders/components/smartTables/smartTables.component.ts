@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { SmartTablesService } from './smartTables.service';
 import { LocalDataSource } from 'ng2-smart-table';
 
@@ -13,41 +12,49 @@ export class SmartTables {
   query: string = '';
 
   settings = {
-    add: {
-      addButtonContent: '<i class="ion-ios-plus-outline"></i>',
-      createButtonContent: '<i class="ion-checkmark"></i>',
-      cancelButtonContent: '<i class="ion-close"></i>',
+    mode: 'external',
+    pager: {
+      perPage: 20
     },
-    edit: {
-      editButtonContent: '<i class="ion-edit"></i>',
-      saveButtonContent: '<i class="ion-checkmark"></i>',
-      cancelButtonContent: '<i class="ion-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="ion-trash-a"></i>',
-      confirmDelete: true
-    },
+    actions: false,
     columns: {
       id: {
         title: 'ID',
         type: 'number'
       },
-      firstName: {
-        title: 'First Name',
+      customer: {
+        title: 'Customer',
         type: 'string'
       },
-      lastName: {
-        title: 'Last Name',
+      vendor: {
+        title: 'Vendor',
         type: 'string'
       },
-      email: {
-        title: 'Email',
+      rep: {
+        title: 'Rep',
         type: 'string'
       },
-      phone: {
-        title: 'Phone',
+      orderDate: {
+        title: 'Order Date',
         type: 'string'
       },
+      orderStatus: {
+        title: 'Order Status',
+        type: 'string'
+      },
+      paymentStatus: {
+        title: 'Payment Status',
+        type: 'string'
+      },
+      Actions: //or something
+        {
+          title:'Order Details',
+          type:'html',
+          valuePrepareFunction:(cell,row)=>{
+            return `<a class="details-link" title="Order Details" href="/#/pages/orders/details/${row.id}">View <span>&rsaquo;&rsaquo;</span></a>`
+          },
+          filter:false
+        },
     }
   };
 

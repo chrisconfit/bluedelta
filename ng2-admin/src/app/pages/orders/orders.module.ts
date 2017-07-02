@@ -9,7 +9,11 @@ import { routing } from './orders.routing';
 import { Orders } from './orders.component';
 import { SmartTables } from './components/smartTables/smartTables.component';
 import { SmartTablesService } from './components/smartTables/smartTables.service';
+
 import { BlockForm } from './components/blockForm/blockForm.component';
+import { OrderDetailsComponent } from './components/orderDetails/orderDetails.component';
+
+import { JeanDetailsComponent } from './components/jeanDetails/jeanDetails.component';
 
 @NgModule({
   imports: [
@@ -23,7 +27,9 @@ import { BlockForm } from './components/blockForm/blockForm.component';
   declarations: [
     Orders,
     SmartTables,
-    BlockForm
+    BlockForm,
+    OrderDetailsComponent,
+    JeanDetailsComponent
   ],
   providers: [
     SmartTablesService

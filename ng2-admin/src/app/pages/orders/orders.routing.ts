@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { Orders } from './orders.component';
 import { SmartTables } from './components/smartTables/smartTables.component';
 import { BlockForm } from './components/blockForm/blockForm.component';
+import { OrderDetailsComponent } from './components/orderDetails/orderDetails.component';
 
 // noinspection TypeScriptValidateTypes
 const routes: Routes = [
@@ -11,7 +12,8 @@ const routes: Routes = [
     component: Orders,
     children: [
       { path: 'list', component: SmartTables },
-      { path: 'new', component: BlockForm }
+      { path: 'new', component: BlockForm },
+      { path: 'details/:id', component: OrderDetailsComponent }
     ]
   }
 ];
