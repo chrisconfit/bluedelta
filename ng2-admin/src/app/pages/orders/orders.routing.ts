@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { Orders } from './orders.component';
 import { SmartTables } from './components/smartTables/smartTables.component';
 import { BlockForm } from './components/blockForm/blockForm.component';
-import { OrderDetailsComponent } from './components/orderDetails/orderDetails.component';
+import { OrderDetailsComponent } from './orderDetails/orderDetails.component';
 
 // noinspection TypeScriptValidateTypes
 const routes: Routes = [

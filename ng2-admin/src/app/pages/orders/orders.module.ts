@@ -9,11 +9,14 @@ import { routing } from './orders.routing';
 import { Orders } from './orders.component';
 import { SmartTables } from './components/smartTables/smartTables.component';
 import { SmartTablesService } from './components/smartTables/smartTables.service';
-
 import { BlockForm } from './components/blockForm/blockForm.component';
-import { OrderDetailsComponent } from './components/orderDetails/orderDetails.component';
 
+import { OrderDetailsComponent } from './orderDetails/orderDetails.component';
 import { JeanDetailsComponent } from './components/jeanDetails/jeanDetails.component';
+import { OrderInfoComponent } from './components/orderInfo/orderInfo.component';
+import { OrderInfoService } from './components/orderInfo/orderInfo.service';
+import { OrderProfileComponent } from './components/orderProfile/orderProfile.component';
+import { OrderTimelineComponent } from './components/orderTimeline/orderTimeline.component';
 
 @NgModule({
   imports: [
@@ -29,10 +32,14 @@ import { JeanDetailsComponent } from './components/jeanDetails/jeanDetails.compo
     SmartTables,
     BlockForm,
     OrderDetailsComponent,
-    JeanDetailsComponent
+    JeanDetailsComponent,
+    OrderInfoComponent,
+    OrderProfileComponent,
+    OrderTimelineComponent
   ],
   providers: [
-    SmartTablesService
+    SmartTablesService,
+    OrderInfoService
   ]
 })
 export class OrdersModule {
