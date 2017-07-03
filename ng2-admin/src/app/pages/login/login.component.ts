@@ -20,8 +20,7 @@ export class Login {
   public userData: IUserLogin;
 
   constructor(
-    public fb:FormBuilder,
-    protected userLoginService:UserLoginService
+    public fb:FormBuilder
   ) {
     this.form = fb.group({
       'email': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
@@ -42,7 +41,7 @@ export class Login {
   }
 
   login(): void {
-    this.userLoginService.signIn(this.userData)
+    UserLoginService.signIn(this.userData)
       .then(() => {
         // Login was successful
       })
