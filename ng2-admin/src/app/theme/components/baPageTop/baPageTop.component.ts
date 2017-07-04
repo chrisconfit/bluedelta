@@ -1,6 +1,13 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {GlobalState} from '../../../global.state';
+import {
+  IUserLogin,
+  UserLoginService,
+  CognitoUtil,
+  UserState,
+  UserRegistrationService
+} from '../../../../services/account-management.service';
 
 @Component({
   selector: 'ba-page-top',
@@ -9,8 +16,9 @@ import {GlobalState} from '../../../global.state';
 })
 export class BaPageTop {
 
-  public isScrolled:boolean = false;
-  public isMenuCollapsed:boolean = false;
+  public isScrolled: boolean = false;
+  public isMenuCollapsed: boolean = false;
+  currentUsername: string;
 
   constructor(private _state:GlobalState) {
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
@@ -24,7 +32,15 @@ export class BaPageTop {
     return false;
   }
 
+  signOut() {
+    UserLoginService.signOut();
+  }
+
   public scrolledChanged(isScrolled) {
     this.isScrolled = isScrolled;
+  }
+
+  ngOnInit() {
+    this.currentUsername = CognitoUtil.getUsername();
   }
 }

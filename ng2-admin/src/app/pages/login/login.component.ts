@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   IUserLogin,
   UserLoginService,
@@ -15,13 +16,16 @@ import {
 })
 export class Login {
 
-  public form:FormGroup;
-  public submitted:boolean = false;
-  public userData: IUserLogin;
+  public form: FormGroup;
+  public submitted: boolean = false;
+  public userData: IUserLogin = {
+    username: "user1",
+    password: "Test123!"
+  };
+  parentRouter: Router;
 
-  constructor(
-    public fb:FormBuilder
-  ) {
+  constructor(public fb: FormBuilder,
+              public _router: Router,) {
     this.form = fb.group({
       'email': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
       'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
@@ -29,24 +33,33 @@ export class Login {
 
     this.userData.username = this.form.controls['email'].value;
     this.userData.password = this.form.controls['password'].value;
+    this.parentRouter = _router;
   }
 
-  public onSubmit(values:Object):void {
-    this.submitted = true;
-    if (this.form.valid) {
-      this.login()
-      // your code goes here
-      // console.log(values);
+  onSignIn(form) {
+    // this.signInButtonClicked = true;
+    // this.forgotPasswordButtonClicked = false;
+
+    if (form && form.valid) {
+      this.login();
+      // this.resourceService.initialized = true;
     }
+
   }
 
   login(): void {
     UserLoginService.signIn(this.userData)
       .then(() => {
         // Login was successful
+        this.parentRouter.navigateByUrl('/dashboard');
       })
       .catch((err: Error): void => {
         // Login was unsuccessful
-      })
+        console.log('bad login');
+      });
+  }
+
+  ngOnInit() {
+
   }
 }

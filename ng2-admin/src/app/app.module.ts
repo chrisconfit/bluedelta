@@ -5,6 +5,13 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
+import {
+  IUserLogin,
+  UserLoginService,
+  CognitoUtil,
+  UserState,
+  UserRegistrationService
+} from '../services/account-management.service';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -21,7 +28,8 @@ import { PagesModule } from './pages/pages.module';
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
-  GlobalState
+  GlobalState,
+
 ];
 
 export type StoreType = {
@@ -50,7 +58,9 @@ export type StoreType = {
     routing
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    CognitoUtil,
+    UserLoginService
   ]
 })
 

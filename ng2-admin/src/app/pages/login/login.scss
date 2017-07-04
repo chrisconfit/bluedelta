@@ -1,1 +1,64 @@
 @import '../../theme/sass/auth';
+
+.auth-block {
+  background-color: $primary;
+}
+
+.logo {
+  padding-bottom: 20px;
+  margin: 0 auto;
+}
+
+.login-logo {
+  margin: 0 auto;
+}
+
+label {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+form {
+  margin: 0 auto;
+}
+
+.form-control {
+  background-color: #ffffff;
+}
+
+.form-control:focus {
+  background-color: #ffffff;
+  border: 1px solid #0d6aad;
+}
+
+.form-group {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.submit-buttons {
+  padding-top: 10px;
+}
+
+.button-wrapper {
+  margin: 0 auto;
+}
+
+button {
+  color: #fff !important;
+  background-color: #3f3f3f !important;
+}
+
+button:first-child {
+  margin-right: 10px;
+  background-color: #0a942a !important;
+}
+
+.dashboard-text {
+  margin-top: -10px;
+  font-family: "proxima-nova", "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 200;
+  font-style: italic;
+}
