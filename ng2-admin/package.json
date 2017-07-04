@@ -83,6 +83,8 @@
     "normalize.css": "6.0.0",
     "roboto-fontface": "0.7.0",
     "rxjs": "5.4.0",
+    "sjcl": "^1.0.6",
+    "sw-toolbox": "3.6.0",
     "zone.js": "0.8.11"
   },
   "devDependencies": {
