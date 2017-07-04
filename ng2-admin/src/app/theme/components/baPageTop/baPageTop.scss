@@ -33,9 +33,15 @@
     float: left;
     outline: none !important;
     line-height: 60px;
+    //background-color: #00364a;
 
     span {
       color: $primary;
+    }
+
+    img {
+      width: auto;
+      max-height: 50px;
     }
   }
 
@@ -45,7 +51,7 @@
 
   .user-profile {
     float: right;
-    min-width: 230px;
+    /*min-width: 230px;*/
     margin-top: 10px;
   }
 

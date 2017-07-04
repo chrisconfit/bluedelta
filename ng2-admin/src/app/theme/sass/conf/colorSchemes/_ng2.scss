@@ -1,4 +1,4 @@
-$default: #ffffff; // default colors for layout
+$default: #000000; // default colors for layout
 $body-bg: #F0F3F4; // default bg color
 
 $default-text: $default; // default text color layout (usually is the same as $default)
@@ -15,7 +15,8 @@ $input-background: rgba(255, 255, 255, 0.1); // input border color for hover
 $dropdown-text: #7d7d7d; // dropdown text color
 
 // sidebar colors
-$sidebar: #282828;
+//$sidebar: #282828;
+$sidebar: #004964;
 $sidebar-text: #ffffff;
 
 // specific components colors

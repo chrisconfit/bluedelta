@@ -6,7 +6,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 @Component({
   selector: 'smart-tables',
   templateUrl: './smartTables.html',
-  styleUrls: ['./smartTables.scss']
+  //styleUrls: ['./smartTables.scss']
 })
 export class SmartTables {
 

@@ -89,6 +89,32 @@
     }
   }
 
+  /*
+  *
+  *CUSTOM CSS FROM ADMINLTE / CONFIT
+  *
+  */
+
+  .box.box-default {
+    border-top-color: #d2d6de;
+  }
+
+  .box {
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  }
+
+  .card {
+    background-color: #fff;
+  }
+
+  /* END CUSTOM CSS */
+
   @media (min-width: 1200px) {
     .menu-collapsed {
       @include layout-collapsed();
