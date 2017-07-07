@@ -1,5 +1,6 @@
 import {Component, Input, EventEmitter, Output, AfterViewInit} from '@angular/core';
 import { OrderInfoService } from './orderInfo.service';
+import { DatePickerOptions, DateModel } from 'ng2-datepicker';
 
 @Component({
   selector: 'orderInfo',
@@ -19,14 +20,18 @@ export class OrderInfoComponent {
       orderType: 'Blue Delta',
       fittingDate: '07/01/2017',
       dueDate: '08/01/2017',
-      jeanDob: '07/01/2017'
-    }
-    ];
+      jeanDob: '07/01/2017',
+    },
+  ];
+
+  date: DateModel;
+  options: DatePickerOptions;
 
   public arrayOfKeys;
 
   constructor() {
     this.arrayOfKeys = Object.keys(this.orderInfoService);
+    this.options = new DatePickerOptions();
   }
 
   onClick() {
