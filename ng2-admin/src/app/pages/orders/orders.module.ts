@@ -11,6 +11,7 @@ import { SmartTables } from './components/smartTables/smartTables.component';
 import { SmartTablesService } from './components/smartTables/smartTables.service';
 import { BlockForm } from './components/blockForm/blockForm.component';
 import { DatePickerModule } from 'ng2-datepicker';
+import { MomentModule } from 'angular2-moment';
 
 import { OrderDetailsComponent } from './orderDetails/orderDetails.component';
 import { JeanDetailsComponent } from './components/jeanDetails/jeanDetails.component';
@@ -29,6 +30,7 @@ import { JeanDetailsEditComponent } from './components/jeanDetailsEdit/jeanDetai
     Ng2SmartTableModule,
     HttpModule,
     DatePickerModule,
+    MomentModule,
   ],
   declarations: [
     Orders,

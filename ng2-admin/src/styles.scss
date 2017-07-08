@@ -1,3 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 /* Custom CSS */
 @import './app/theme/css/AdminLTE.min.css';
+
+.datepicker-container[_ngcontent-c11] .datepicker-input-container[_ngcontent-c11] .datepicker-input[_ngcontent-c11] {
+  width: 75% !important;
+}
+
+.datepicker-input-icon {
+  //display: none !important;
+}

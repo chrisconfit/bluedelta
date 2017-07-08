@@ -1,39 +1,80 @@
 <div class="widgets">
   <div class="box box-default">
     <div class="box-header">
-      <h3 class="box-title">Edit Jean Build</h3> <a class="pull-right fa fa-edit" href="#"></a>
+      <h3 class="box-title">Jean Build</h3>
+      <span *ngIf="!editMode" (click)="editJean(jeanBuild)" class="text-light-blue pull-right fa fa-edit"></span>
+      <span *ngIf="editMode" (click)="saveJean(jeanBuild)" class="text-light-blue pull-right fa fa-save"></span>
+      <span style="margin-right: 16px;" *ngIf="editMode" (click)="reset()" class="text-light-blue pull-right fa fa-undo"></span>
     </div>
     <div class="box-body">
-      <ul class="list-group list-group-unbordered">
+
+      <ul *ngFor="let item of jeanBuild" class="list-group list-group-unbordered">
+        <ng-template [ngTemplateOutlet]="getTemplate(item)"
+                     [ngOutletContext]="{ $implicit: item}"></ng-template>
+      </ul>
+
+      <ng-template #displayTmpl let-jeanBuild>
         <li class="list-group-item">
-          <b>Gender</b> <a href="#" class="pull-right">Male</a>
+          <b>Gender</b> <span class="pull-right">{{jeanBuild.gender}}</span>
         </li>
         <li class="list-group-item">
-          <b>Style</b> <a href="#" class="pull-right">Straight</a>
+          <b>Style</b> <span class="pull-right">{{jeanBuild.style}}</span>
         </li>
         <li class="list-group-item">
-          <b>Fabric</b> <a href="#" class="pull-right">8oz. Raw Denim Classic Indigo</a>
+          <b>Fabric</b> <span class="pull-right">{{jeanBuild.fabric}}</span>
         </li>
         <li class="list-group-item">
-          <b>Accent Thread</b> <a href="#" class="pull-right">Gold</a>
+          <b>Accent Thread</b> <span class="pull-right">{{jeanBuild.accentThread}}</span>
         </li>
         <li class="list-group-item">
-          <b>Top Thread</b> <a href="#" class="pull-right">Gold</a>
+          <b>Top Thread</b> <span class="pull-right">{{jeanBuild.topThread}}</span>
         </li>
         <li class="list-group-item">
-          <b>Bottom Thread</b> <a href="#" class="pull-right">Gold</a>
+          <b>Bottom Thread</b> <span class="pull-right">{{jeanBuild.bottomThread}}</span>
         </li>
         <li class="list-group-item">
-          <b>Rivets</b> <a href="#" class="pull-right">Yes</a>
+          <b>Rivets</b> <span class="pull-right">{{jeanBuild.rivets}}</span>
         </li>
         <li class="list-group-item">
-          <b>Fake Pocket</b> <a href="#" class="pull-right">No</a>
+          <b>Fake Pocket</b> <span class="pull-right">{{jeanBuild.fakePocket}}</span>
         </li>
         <li class="list-group-item">
           <p><b>Order Notes</b></p>
-          <p>If possible, I would like these jeans to be monogrammed with my name. Let me know if there is an extra cost for this.</p>
+          <p>{{jeanBuild.orderNotes}}</p>
         </li>
-      </ul>
+      </ng-template>
+
+      <ng-template #editTmpl let-jeanBuild>
+        <li class="list-group-item">
+          <b>Gender</b> <span class="pull-right"><input type="text" placeholder="{{jeanBuild.gender}}" /></span>
+        </li>
+        <li class="list-group-item">
+          <b>Style</b> <span class="pull-right"><input type="text" placeholder="{{jeanBuild.style}}" /></span>
+        </li>
+        <li class="list-group-item">
+          <b>Fabric</b> <span class="pull-right"><input type="text" placeholder="{{jeanBuild.fabric}}" /></span>
+        </li>
+        <li class="list-group-item">
+          <b>Accent Thread</b> <span class="pull-right"><input type="text" placeholder="{{jeanBuild.accentThread}}" /></span>
+        </li>
+        <li class="list-group-item">
+          <b>Top Thread</b> <span class="pull-right"><input type="text" placeholder="{{jeanBuild.topThread}}" /></span>
+        </li>
+        <li class="list-group-item">
+          <b>Bottom Thread</b> <span class="pull-right"><input type="text" placeholder="{{jeanBuild.bottomThread}}" /></span>
+        </li>
+        <li class="list-group-item">
+          <b>Rivets</b> <span class="pull-right"><input type="text" placeholder="{{jeanBuild.rivets}}" /></span>
+        </li>
+        <li class="list-group-item">
+          <b>Fake Pocket</b> <span class="pull-right"><input type="text" placeholder="{{jeanBuild.fakePocket}}" /></span>
+        </li>
+        <li class="list-group-item">
+          <p><b>Order Notes</b></p>
+          <p><textarea rows="5" class="w-100">{{jeanBuild.orderNotes}}</textarea></p>
+        </li>
+      </ng-template>
+
     </div>
   </div>
 </div>
