@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef, OnInit } from '@angular/core';
+import { Component, ViewContainerRef, OnInit, enableProdMode } from '@angular/core';
 import * as $ from 'jquery';
 
 import { GlobalState } from './global.state';
@@ -13,6 +13,9 @@ import {
   UserState,
   UserRegistrationService
 } from '../services/account-management.service';
+if (window.location.href.indexOf('localhost') === 0) {
+  enableProdMode();
+}
 
 /*
  * App Component
