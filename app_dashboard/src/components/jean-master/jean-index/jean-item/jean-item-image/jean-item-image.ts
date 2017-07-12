@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { JeansProvider } from "../../../../../providers/jeans/jeans";
 
 @Component({
   selector: 'jean-item-image',
@@ -7,7 +8,9 @@ import { Component, Input } from '@angular/core';
 export class JeanItemImageComponent {
   @Input() jean;
 
-  constructor() {
+  constructor(
+    public jeanService: JeansProvider
+  ) {
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { JeansProvider } from "../../providers/jeans/jeans";
 
 @Component({
   selector: 'jean-master',
@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
 })
 export class JeanMasterComponent {
 
-  
-
-  constructor() {    
+  constructor(
+    public jeanService: JeansProvider
+  ) {
   }
 
 }

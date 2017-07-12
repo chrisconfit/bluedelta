@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-
+import { JeansProvider } from "../../../../providers/jeans/jeans";
 
 @Component({
   selector: 'jean-item',
@@ -7,9 +7,10 @@ import { Component, Input } from '@angular/core';
 })
 export class JeanItemComponent {
   @Input() jean;
-  
 
-  constructor() {
+  constructor(
+    public jeanService: JeansProvider
+  ) {    
   }
 
 }

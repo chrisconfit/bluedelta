@@ -1,25 +1,44 @@
 import { Injectable } from '@angular/core';
-
-
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UserPoolsAuthorizerClient, CustomAuthorizerClient } from "../../services/blue-delta-api.service";
-import { LoadingController, AlertController } from "ionic-angular";
+import { LoadingController, AlertController, ToastController } from "ionic-angular";
+import { Order, OrderItem } from "../../services/blue-delta-sdk/index";
+import { _getDefaultOrderItem, _getDefaultTransaction } from "./helpers";
+
 
 
 @Injectable()
 export class OrdersProvider {
-  providerName = 'OrdersProvider';
+  threadList;
+  fabricList;
+  buttonList;
+  orderList: Order[];
   modelName = 'order';
-
-
-  private itemEdit: FormGroup;
+  private itemEdit: FormGroup|null;
   private loader = null;
-  private itemCreate: FormGroup;
+  private itemCreate: FormGroup|null;
   initialized = false;
-
+  itemInCreation: boolean = false;
   list: any = [];
-  itemIdMarkedForDelete: string;
-  itemIdMarkedForEdit: string;
+  itemIdMarkedForDelete: string|null = null;
+  itemIdMarkedForEdit: string|null = null;
+  itemIdBeingFetched: string|null = null;
+  orderCreateForm;
+  defaultOrder = {
+    orderId: null,
+    userId: null,
+    orderItems: [],
+    transaction: {
+      transactionId: null,
+      status: null
+    }
+  };
+  orderInCreation: boolean = false;
+  orderIdMarkedForEdit: string|null = null;
+  orderEdit;
+
+  
+
 
   
   constructor(  
@@ -27,133 +46,226 @@ export class OrdersProvider {
     private userPoolsAuthClient: UserPoolsAuthorizerClient,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public toastCtrl: ToastController
   ) {
-    this.itemEdit = this.createNewItemForm();
-    this.itemCreate = this.createNewItemForm();
+    this.itemEdit = this.createNewOrderForm('');
+    this.orderCreateForm = this.createNewOrderForm('');
   }
 
   loadItemsWithAuth(): void {
-    console.log('orders load items ran');
+    this.presentLoader();
     this.userPoolsAuthClient.getClient()[this.modelName + 'sList']().subscribe(
       (data) => {
-        console.log('orders load items ran');
         this.dismissLoader();
-        this.initialized = true;
-        console.log(`${this.providerName} list success data`, data);
-        this.list = data;
+        this.list = data.items;
       },
       (err) => {
         this.dismissLoader();
-        this.initialized = true; 
-        this.displayAlert('Error encountered',
-          `An error occurred when trying to load the ${this.modelName}s. Please check the console logs for more information.`)
-        console.log('error from load order list', err);
+        this.presentToast('Error Loading Items');
       }
     );
   };
 
-  createItemWithAuth(item):void {
-    this.list = [ ...this.list, item ];
-    this.userPoolsAuthClient.getClient()[this.modelName + 'Create'](item).subscribe(
+  createItemWithAuth(orderItem: Order):void {
+    this.exitOrderCreate();
+    this.list = [ ...this.list, orderItem ];
+    this.userPoolsAuthClient.getClient()[this.modelName + 'Create'](orderItem).subscribe(
       (data) => {        
-        this.dismissLoader();
-        this.initialized = true;
-        console.log(`${this.providerName} create success data`, data);
-        this.list = [ ...this.list ].map(v => (!v.orderId) ? data : v);
+        this.list = [ ...this.list ].map(v => {
+          if (!v.orderId) {
+            v.orderId = data.orderId;
+            v.createTime = data.createTime;
+          }
+          return v;
+        });
+        this.itemInCreation = false;
+        this.itemCreate = this.createNewOrderForm('');
+        this.presentToast('Order Successfully Created!');
       },
       (err) => {
         this.dismissLoader();
-        this.initialized = true; 
-        this.displayAlert('Error encountered',
-          `An error occurred when trying to create Order. Please check the console logs for more information.`)
-        console.log('error from create order', err);
+        this.itemInCreation = false;
+        this.presentToast('Error Creating Order');
       }
     );
   }
 
   deleteItemWithAuth(itemId: string) {
     this.itemIdMarkedForDelete = itemId;
-    this.userPoolsAuthClient.getClient()[this.modelName + 'Delete'](itemId)
+    this.userPoolsAuthClient.getClient()[this.modelName + 'sDelete'](itemId)
       .subscribe(
         (data) => {
-          console.log(`${this.providerName} delete success data`, data);
-          this.list = [ ...this.list ].filter(v => v.itemId !== this.itemIdMarkedForDelete);
+          this.list = [ ...this.list ].filter(v => v.orderId !== this.itemIdMarkedForDelete);
           this.dismissLoader();
-          this.initialized = true;
+          this.itemIdMarkedForDelete = null;
+          this.presentToast('Order Successfully Deleted');
         },
         (err) => {
           this.dismissLoader();
-          this.initialized = true; 
-          this.displayAlert('Error encountered',
-            `An error occurred when trying to delete order ${itemId}. Please check the console logs for more information.`)
-          console.log(`${this.providerName} delete error`, err);
+          this.itemIdMarkedForDelete = null;
+          this.presentToast('Error Deleting Order');
         }
     );
   }
 
   getItemWithAuth(itemId: string) {
+    this.itemIdBeingFetched = itemId;
     this.userPoolsAuthClient.getClient()[this.modelName + 'sGet'](itemId)
       .subscribe(
           (data) => {
-            console.log(`${this.providerName} get success data`, data);
             this.dismissLoader();
-            this.initialized = true;
           },
           (err) => {
             this.dismissLoader();
-            this.initialized = true;
-            this.displayAlert('Error encountered',
-              `An error occurred when trying to get order ${itemId}. Please check the console logs for more information.`)
-            console.log(`${this.providerName} get error`, err);
+            this.presentToast('Error Getting Order');
           }
       );
   }
 
   editItemWithAuth(item: any, newValues: any):void {
     this.itemIdMarkedForEdit = item.orderId;
-    this.userPoolsAuthClient.getClient()[this.modelName + 'sUpdate'](item.orderId, newValues.value)
+    this.userPoolsAuthClient.getClient()[this.modelName + 'sUpdate'](this.itemIdMarkedForEdit, newValues.value)
       .subscribe(
           (data) => {
-            console.log(`${this.providerName} edit success data`, data);
-            this.dismissLoader();
-            this.initialized = true;
+            this.itemIdMarkedForEdit = null;
+            this.list = [ ...this.list ].map(v => {
+              if (v.orderId === data.orderId) {
+                v.updateTime = data.updateTime;
+                if (v.userId !== data.userId) v.userId = data.userId;
+                if (v.orderItems !== data.orderItems) v.orderItems = data.orderItems;
+                if (v.transaction !== data.transaction) v.transaction = data.transaction;
+              }
+              return v;
+            });
+            this.presentToast('Successfully Edited Item');
           },
           (err) => {
-            this.dismissLoader();
-            this.initialized = true;
-            this.displayAlert('Error encountered',
-              `An error occurred when trying to edit order ${item}. Please check the console logs for more information.`)
-              console.log(`${this.providerName} get error`, err);
+              this.itemIdMarkedForEdit = null;
+              this.presentToast('Unable to Edit Item');
           }
       );
   }
 
-
-  createNewItemForm(item?) {
-    let name = '', layer = '', thumb = '';
-    if (item) {
-      name  = item.name;
-      layer = item.layer;
-      thumb = item.thumb;
+  addItemToStagedOrder(orderItem) {
+    this.defaultOrder = { 
+      ...this.defaultOrder, 
+      orderItems: [ ...this.defaultOrder.orderItems, orderItem ] 
     }
+  }
+
+  removeItemFromStagedOrder(itemToRemove) {
+    this.defaultOrder = { 
+      ...this.defaultOrder, 
+      orderItems: [ ...this.defaultOrder.orderItems ].filter(v => v !== itemToRemove)
+    }
+  }
+
+
+
+  startItemEdit(order: Order) {
+    this.orderIdMarkedForEdit = order.orderId;
+    this.orderEdit = this.createNewOrderForm(order);
+  }
+
+  exitItemEditMode() {
+    this.orderIdMarkedForEdit = null;
+  }
+
+  startOrderCreate() {
+    this.orderInCreation = true;
+  }
+
+  exitOrderCreate() {
+    this.orderInCreation = false;
+  }
+
+  _getDefaultOrder(user) {
+    return {
+      userId: user.userId,
+      orderItems: [ _getDefaultOrderItem(user) ],
+      transaction: _getDefaultTransaction(user)
+    }
+  }
+
+  loadJeanResources() {
+    this.buttonList = this.fetchButtons();
+    this.threadList = this.fetchThreads();
+    this.fabricList = this.fetchFabrics();
+  }
+
+
+  fetchButtons() {
+    this.userPoolsAuthClient.getClient().buttonsList().subscribe(
+      (data) => {
+        return data.items;
+      },
+      (err) => {
+        this.presentToast('Error Loading Buttons');
+      }
+    );
+  }
+
+  fetchFabrics(): void {
+    this.userPoolsAuthClient.getClient().fabricsList().subscribe(
+      (data) => {
+        return data.items;
+      },
+      (err) => {
+        this.presentToast('Error Loading Fabrics');
+      }
+    );
+  }
+
+  fetchThreads() {
+    this.userPoolsAuthClient.getClient().threadsList().subscribe(
+      (data) => {
+        return data.items;
+      },
+      (err) => {
+        this.presentToast('Error Loading Threads');
+      }
+    );
+  }
+
+  loadOrders() {
+    this.userPoolsAuthClient.getClient().ordersList().subscribe(
+      (data) => {
+        this.orderList = data.items;
+      },
+      (err) => {
+        this.presentToast('Error Loading Orders');
+      }
+    );
+  }
+
+
+  createNewOrderForm(user) {
+    let newOrder = this._getDefaultOrder(user);
     return this.formBuilder.group({
-      name: [name, Validators.required],
-      layer: [layer],
-      thumb: [thumb]
+      orderItems:   [ newOrder.orderItems, Validators.required ],
+      transaction:  [ newOrder.transaction, Validators.required ]
     });
   }
 
   dismissLoader() {
-    if (this.loader != null) {
+    if (this.loader) {
       this.loader.dismiss();
     }
     this.loader = null;
   }
 
+  presentLoader() {
+    if (!this.loader) {
+      this.loader = this.loadingCtrl.create();
+    }
+    this.loader.present();
+  }
+
   getAlertController() {
     return this.alertCtrl;
   }
+
 
   displayAlert(title, subtitle, functionToRunWhenOkButtonIsPressed=null) {
     let okFunction = () => {};
@@ -168,4 +280,12 @@ export class OrdersProvider {
     alert.present();
   }
 
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      position: 'bottom',
+      duration: 2000
+    });
+    toast.present();
+  }
 }

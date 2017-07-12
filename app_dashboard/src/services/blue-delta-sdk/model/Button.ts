@@ -21,4 +21,7 @@ export interface Button {
 
     layer?: string;
 
+    createTime?: any;
+    updateTime?: any;
+
 }
