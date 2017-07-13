@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { JeansProvider } from "../../../../../providers/jeans/jeans";
 
 
 @Component({
@@ -8,7 +9,9 @@ import { Component, Input } from '@angular/core';
 export class EditJeanFormComponent {
   @Input() jean;
 
-  constructor() {
+  constructor(
+    public jeanService: JeansProvider
+  ) {
   }
 
 }

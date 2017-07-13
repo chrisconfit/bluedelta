@@ -11,7 +11,6 @@ export class JeanIndexComponent {
   constructor(
     public jeanService: JeansProvider
   ) {
-    
   }
 
 }

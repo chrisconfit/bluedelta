@@ -1,0 +1,5 @@
+  <span *ngIf="threadService.itemIdMarkedForEdit !== thread.threadId">{{ thread.name }}</span><span *ngIf="thread.updateTime">&nbsp;&nbsp;(edited)</span>
+  <span *ngIf="thread.threadId === threadService.itemIdBeingFetched">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
+  <span *ngIf="thread.threadId === threadService.itemIdMarkedForDelete">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
+  <span *ngIf="!thread.threadId">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
+  <p>{{  thread.createTime | date }}</p>

@@ -5,6 +5,9 @@ import { ResourceProvider } from "../../providers/resource/resource.provider";
 import { AccountSignupPage } from "../account-signup/account-signup";
 import { AccountSigninPage } from "../account-signin/account-signin";
 import { GlobalStateService } from "../../services/global-state.service";
+import { JeansProvider } from "../../providers/jeans/jeans";
+import { OrdersProvider } from "../../providers/orders/orders";
+import { UsersProvider } from "../../providers/users/users";
 
 @Component({
   selector: 'page-customers',
@@ -19,15 +22,18 @@ export class CustomersPage {
   items: Array<{title: string, note: string, icon: string}>;
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public buttonService: ButtonsProvider,
     public resourceService: ResourceProvider,
-    public globals: GlobalStateService) {
-    
+    public globals: GlobalStateService,
+    public jeanService: JeansProvider,
+    public userService: UsersProvider
+  ) {
+
     this.selectedItem = navParams.get('item');
 
-    
+
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     'american-football', 'boat', 'bluetooth', 'build'];
 
@@ -46,5 +52,12 @@ export class CustomersPage {
     this.navCtrl.push(CustomersPage, {
       item: item
     });
+  }
+
+  ionViewWillEnter() {
+    //TODO: Check user authentication on load
+    console.log("on LOAD view");
+    console.log('user last load time', this.userService.usersLastLoadTime);
+    this.userService.loadItemsWithAuth();
   }
 }

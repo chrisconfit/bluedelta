@@ -1,0 +1,26 @@
+<div>
+  <div align='center'>
+    <button float-left margin ion-button (click)="threadService.loadItemsWithAuth()"><ion-icon name="refresh"></ion-icon></button>
+    <button float-left margin ion-button *ngIf="!threadService.itemInCreation" (click)="threadService.startItemCreate()"><ion-icon name="create"></ion-icon></button>
+  </div>
+</div>
+
+<form [formGroup]="threadService.itemCreate">
+  <div *ngIf="threadService.itemInCreation">
+      <ion-item>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Layer</ion-label>
+        <ion-input formControlName="layer"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Thumb</ion-label>
+        <ion-input formControlName="thumb"></ion-input>
+      </ion-item>
+      <button ion-button (click)="threadService.exitItemCreate()"><ion-icon name="arrow-back"></ion-icon></button>
+      <button ion-button (click)="threadService.createItemWithAuth(threadService.itemCreate.value)"><ion-icon name="checkmark"></ion-icon></button>
+  </div>
+  
+</form>

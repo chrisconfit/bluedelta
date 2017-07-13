@@ -1,241 +1,188 @@
 import { Injectable } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { UserPoolsAuthorizerClient, CustomAuthorizerClient } from "../../services/blue-delta-api.service";
-import { LoadingController, AlertController, ToastController } from "ionic-angular";
-import { Jean } from "../../services/blue-delta-sdk/index";
-import { JeanModel } from "../../models/jean.model";
+import { ButtonsProvider } from "../buttons/buttons";
+import { ThreadsProvider } from "../threads/threads";
+import { FabricsProvider } from "../fabrics/fabrics";
+import { UserPoolsAuthorizerClient } from "../../services/blue-delta-api.service";
+import { FormBuilder, Validators } from "@angular/forms";
 
+
+
+// TODO: write the buttons, fabrics, and threads provider methods in this provider, factor for fragility flexibility
 
 @Injectable()
 export class JeansProvider {
-  providerName = 'JeansProvider';
-  modelName = 'jean';
-  private itemEdit: FormGroup|null;
-  private loader = null;
-  private itemCreate: FormGroup|null;
-  initialized = false;
-  itemInCreation: boolean = false;
-  list: any = [];
-  itemIdMarkedForDelete: string|null = null;
-  itemIdMarkedForEdit: string|null = null;
-  itemIdBeingFetched: string|null = null;
+  buttonList = [];
+  fabricList = [];
+  threadList = [];
+  defaultJean = {
+    button: {},
+    fabric: {},
+    thread: {},
+    measurement: {}
+  };
+  jeanCreateForm;
+  jeanInCreation: boolean = false;
 
-  
-  constructor(  
-    private customAuthClient: CustomAuthorizerClient, 
-    private userPoolsAuthClient: UserPoolsAuthorizerClient,
-    public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController,
-    public formBuilder: FormBuilder,
-    public toastCtrl: ToastController
+
+  constructor(
+    public buttonService: ButtonsProvider,
+    public fabricService: FabricsProvider,
+    public threadService: ThreadsProvider,
+    public userPoolsAuthClient: UserPoolsAuthorizerClient,
+    public formBuilder: FormBuilder
   ) {
-    this.itemEdit = this.createNewItemForm();
-    this.itemCreate = this.createNewItemForm();
+    this.jeanCreateForm = this.createNewJeanForm('user');
+    this.returnValidFunctionSig('button', 'list');
   }
 
-  loadItemsWithAuth(): void {
-    this.presentLoader();
-    this.userPoolsAuthClient.getClient().
-    [this.modelName + 'sList']().subscribe(
-      (data) => {
-        this.dismissLoader();
-        this.initialized = true;
-        console.log(`${this.providerName} list success data`, data);
-        this.list = data.items;
-      },
-      (err) => {
-        this.dismissLoader();
-        this.initialized = true; 
-        this.displayAlert('Error encountered',
-          `An error occurred when trying to load the ${this.modelName}s. Please check the console logs for more information.`)
-        console.log('error from load order list', err);
-        this.presentToast('Error Loading Items');
-      }
-    );
+  loadEmbeddedItems(buttonList, fabricList, threadList) {
+    this.buttonList = buttonList;
+    this.fabricList = fabricList;
+    this.threadList = threadList;
   };
 
-  createItemWithAuth(jeanItem: Jean):void {
-    this.exitItemCreate();
-    jeanItem = new JeanModel(jeanItem.jeanId, jeanItem.measurement, jeanItem.thread, jeanItem.fabric, jeanItem.button);
-    this.list = [ ...this.list, jeanItem ];
-    this.userPoolsAuthClient.getClient()[this.modelName + 'sCreate'](jeanItem).subscribe(
-      (data) => {        
-        this.dismissLoader();
-        this.initialized = true;
-        console.log(`${this.providerName} create success data`, data);
-        this.list = [ ...this.list ].map(v => {
-          if (!v.buttonId) {
-            v.buttonId = data.buttonId;
-            v.createTime = data.createTime;
-          }
-          return v;
-        });
-        this.itemInCreation = false;
-        this.itemCreate = this.createNewItemForm();
-        this.presentToast('Jean Successfully Created!');
-      },
-      (err) => {
-        this.dismissLoader();
-        this.initialized = true; 
-        this.displayAlert('Error encountered',
-          `An error occurred when trying to create Jean. Please check the console logs for more information.`)
-        console.log('error from create jean', err);
-        this.itemInCreation = false;
-        this.presentToast('Error Creating Jean');
-      }
-    );
+  loadAllJeanResources() {
+    this.buttonList = this.loadButtons();
+    this.fabricList = this.loadFabrics();
+    this.threadList = this.loadThreads();
   }
 
-  deleteItemWithAuth(itemId: string) {
-    this.itemIdMarkedForDelete = itemId;
-    this.userPoolsAuthClient.getClient()[this.modelName + 'sDelete'](itemId)
-      .subscribe(
-        (data) => {
-          console.log(`${this.providerName} delete success data`, data);
-          this.list = [ ...this.list ].filter(v => v.identityId !== this.itemIdMarkedForDelete);
-          this.dismissLoader();
-          this.initialized = true;
-          this.itemIdMarkedForDelete = null;
-          this.presentToast('Jean Successfully Deleted');
-        },
-        (err) => {
-          this.dismissLoader();
-          this.initialized = true; 
-          this.displayAlert('Error encountered',
-            `An error occurred when trying to delete jean ${itemId}. Please check the console logs for more information.`)
-          console.log(`${this.providerName} delete error`, err);
-          this.itemIdMarkedForDelete = null;
-          this.presentToast('Error Deleting Jean');
-        }
-    );
-  }
-
-  getItemWithAuth(itemId: string) {
-    this.itemIdBeingFetched = itemId;
-    this.userPoolsAuthClient.getClient()[this.modelName + 'sGet'](itemId)
-      .subscribe(
-          (data) => {
-            this.dismissLoader();
-            this.initialized = true;
-          },
-          (err) => {
-            this.dismissLoader();
-            this.initialized = true;
-            this.displayAlert('Error encountered',
-              `An error occurred when trying to get order ${itemId}. Please check the console logs for more information.`)
-            console.log(`${this.providerName} get error`, err);
-          }
-      );
-  }
-
-  editItemWithAuth(item: any, newValues: any):void {
-    this.itemIdMarkedForEdit = item.jeanId;
-    this.userPoolsAuthClient.getClient()[this.modelName + 'sUpdate'](this.itemIdMarkedForEdit, newValues.value)
-      .subscribe(
-          (data) => {
-            this.dismissLoader();
-            this.initialized = true;
-            this.itemIdMarkedForEdit = null;
-            this.list = [ ...this.list ].map(v => {
-              if (v.jeanId === data.jeanId) {
-                v.updateTime = data.updateTime;
-                if (v.measurement !== data.measurement) v.measurement = data.measurement;
-                if (v.thread !== data.thread) v.thread = data.thread;
-                if (v.fabric !== data.fabric) v.fabric = data.fabric;
-                if (v.button !== data.button) v.button = data.button;
-              }
-              return v;
-            });
-            this.presentToast('Successfully Edited Item');
-            // this.list = [ ...this.list, data ]
-          },
-          (err) => {
-            this.dismissLoader();
-            this.initialized = true;
-            this.displayAlert('Error encountered',
-              `An error occurred when trying to edit item ${this.itemIdMarkedForEdit}. Please check the console logs for more information.`)
-              console.log(`${this.providerName} edit error`, err);
-              this.itemIdMarkedForEdit = null;
-              this.presentToast('Unable to Edit Item');
-          }
-      );
-  }
-
-  startItemEdit(jean: Jean) {
-    this.itemIdMarkedForEdit = jean.jeanId;
-    this.itemEdit = this.createNewItemForm(jean);
-  }
-
-  exitItemEditMode() {
-    this.itemIdMarkedForEdit = null;
-  }
-
-  exitItemCreate() {
-    this.itemInCreation = false;
-  }
-
-
-  createNewItemForm(item?) {
-    let measurement = '', thread = '', fabric = '', button = '';
-    if (item) {
-      measurement  = item.measurement;
-      thread = item.thread;
-      fabric = item.fabric;
-      button = item.button;
+  loadButtons() {
+    if (this.buttonService.list.length > 0) {
+      return this.buttonService.list;
+    } else {
+      return this.buttonService.loadItemsWithAuth();
     }
+  }
+
+  loadFabrics() {
+    if (this.fabricService.list.length > 0) {
+      return this.fabricService.list;
+    } else {
+      return this.fabricService.loadItemsWithAuth();
+    }
+  }
+
+  loadThreads() {
+    if (this.threadService.list.length > 0) {
+      return this.threadService.list;
+    } else {
+      return this.threadService.loadItemsWithAuth();
+    }
+  }
+
+
+
+  _getDefaultJean(user) {
+    return {
+      button: this._getDefaultButton(user),
+      fabric: this._getDefaultFabric(user),
+      thread: this._getDefaultThread(user),
+      measurement: this._getDefaultMeasurement(user)
+    };
+  }
+
+  _getDefaultMeasurement(user) {
+    return {
+      userId: user.userId,
+      waist: this._getDefaultWaist(user),
+      leg: this._getDefaultLeg(user)
+    };
+  }
+
+  _getDefaultButton(user) {
+    // TODO: query existing user to return most common button or default
+    return 'Brass Button'
+  }
+
+  _getDefaultFabric(user) {
+    // TODO: query existing user to return most common fabric or default
+    return 'Denim';
+  }
+
+  _getDefaultThread(user) {
+    // TODO: query existing user to return most common fabric or default
+    return 'Brown Thread';
+  }
+
+  _getDefaultWaist(user) {
+    // TODO: query existing user to return most common waist, for now, return 32
+    return 32;
+  }
+
+  _getDefaultLeg(user) {
+    // TODO: query existing user to return most common measurement, for now, return 32
+    return 32;
+  }
+
+  updateDefaultJean(newJean) {
+    this.defaultJean = { ...this.defaultJean, button: newJean.button, fabric: newJean.fabric, thread: newJean.thread, measurement: newJean.measurement };
+  }
+
+  updateDefaultWaist(newVal: number) {
+    console.log(newVal);
+    let newMeasurement  = { ...this.defaultJean.measurement, waist: newVal };
+    this.defaultJean    = { ...this.defaultJean, measurement: newMeasurement };
+  }
+
+  updateDefaultLeg(newVal: number) {
+    let newMeasurement  = { ...this.defaultJean.measurement, leg: newVal };
+    this.defaultJean    = { ...this.defaultJean, measurement: newMeasurement };
+  }
+
+  updateDefaultButton(selectedButtonId) {
+    this.defaultJean = { ...this.defaultJean, button: [ ...this.buttonList ].filter(v => v.buttonId === selectedButtonId )[0] };
+    console.log('this.defaultJean', this.defaultJean);
+  }
+
+  updateDefaultFabric(selectedFabricId) {
+    this.defaultJean = { ...this.defaultJean, fabric: [ ...this.fabricList ].filter(v => v.fabricId === selectedFabricId )[0] };
+    console.log('this.defaultJean', this.defaultJean);
+  }
+
+  updateDefaultThread(selectedThreadId) {
+    this.defaultJean = { ...this.defaultJean, thread: [ ...this.threadList ].filter(v => v.threadId === selectedThreadId )[0] };
+    console.log('this.defaultJean', this.defaultJean);
+  }
+
+  returnValidFunctionSig(resourceName, command) {
+    let firstLetter = command.split('')[0];
+    let capFirstLetter = firstLetter.toUpperCase();
+    command = command.replace(firstLetter, capFirstLetter);
+    let validFuncs = 'buttonsCreate buttonsDelete buttonsGet buttonsList buttonsUpdate '
+                   + 'fabricsCreate fabricsDelete fabricsGet fabricsList fabricsUpdate '
+                   + 'threadsCreate threadsDelete threadsGet threadsList threadsUpdate '
+                   + 'usersCreate usersDelete usersGet usersList usersUpdate '
+                   + 'orderCreate ordersDelete ordersGet ordersList ordersUpdate ordersListByUser';
+    return validFuncs.split(' ').filter(v => v.includes(resourceName)).filter(v => v.includes(command)).join();
+  }
+
+  getHttpFunction(validSig) {
+    return this.userPoolsAuthClient.getClient()[validSig];
+  };
+
+  createNewJeanForm(user) {
+    let newJean = this._getDefaultJean(user);
     return this.formBuilder.group({
-      measurement: [measurement, Validators.required],
-      thread: [thread],
-      fabric: [fabric],
-      button: [button]
+      thread:       [ newJean.thread,             Validators.required ],
+      fabric:       [ newJean.fabric,             Validators.required ],
+      button:       [ newJean.button,             Validators.required ],
+      waist:        [ newJean.measurement.waist,  Validators.required ],
+      leg:          [ newJean.measurement.leg,    Validators.required ]
     });
   }
 
-  dismissLoader() {
-    if (this.loader) {
-      this.loader.dismiss();
-    }
-    this.loader = null;
+  startJeanCreate() {
+    this.jeanInCreation = true;
   }
 
-  presentLoader() {
-    if (!this.loader) {
-      this.loader = this.loadingCtrl.create();
-    }
-    this.loader.present();
+  exitJeanCreate() {
+    this.jeanInCreation = false;
   }
 
-
-  getAlertController() {
-    return this.alertCtrl;
+  logShit(shitToLog) {
+    console.log('shitToLog', shitToLog);
   }
 
-  displayAlert(title, subtitle, functionToRunWhenOkButtonIsPressed=null) {
-    let okFunction = () => {};
-    if (functionToRunWhenOkButtonIsPressed != null) {
-      okFunction = functionToRunWhenOkButtonIsPressed;
-    }
-    let alert = this.getAlertController().create({
-      title: title,
-      subTitle: subtitle,
-      buttons: [{ text: 'OK', handler: okFunction }]
-    });
-    alert.present();
-  }
-
-  startItemCreate() {
-    this.itemInCreation = true;
-  }
-
- 
-
-  presentToast(message) {
-    let toast = this.toastCtrl.create({
-      message: message,
-      position: 'bottom',
-      duration: 2000
-    });
-    toast.present();
-  }
 
 }
