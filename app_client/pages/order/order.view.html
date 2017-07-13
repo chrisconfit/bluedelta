@@ -1,6 +1,6 @@
 <navigation></navigation>
 <ng-include  src="'/pages/order/popups.html'"></ng-include>
-{{vm.jean}}
+
 <div class="container page-container">
 
   <div class="cft-g page-grid">
@@ -32,7 +32,7 @@
 						<a href="" ng-click="vm.chooseFitType(2)" ng-class="{checked:vm.orderForm.data.fitType==2}" class="check-box"></a> 
 						<span class="check-label">I'll get fitted at a Blue Delta Partner 
 							<span ng-if="!vm.orderForm.data.tailor && vm.orderForm.data.fitType==2"><a ng-click="vm.popups.tailors=true" href="">(choose)</a></span> 
-							<span ng-if="vm.orderForm.data.tailor">({{vm.orderForm.data.tailor}})</span>
+							<span ng-if="vm.orderForm.data.tailor">({{vm.orderForm.data.tailor.location}})</span>
 						</span>
 					</div>
 					<div class="single-option" ng-class="{selected:vm.orderForm.data.fitType==3}">
@@ -108,7 +108,7 @@
 						</div>
 						
 						<div ng-if="vm.orderForm.data.fitType==2" class="clone-message">
-							<h3>You are getting fitted at one of our trusted partners ({{vm.orderForm.data.tailor}})</h3>
+							<h3>You are getting fitted at one of our trusted partners ({{vm.orderForm.data.tailor.location}})</h3>
 							<p>After submitting your order, we will be in touch to schedule a fitting.</p>
 						</div>
 						
@@ -129,11 +129,10 @@
     </div><!--/.main
     
     --><div class="cft-gi sidebar">
-	    
 	    <div class="jean-card">
 		    <h3 class="box-title">Your Jean</h3>
 		    <div class="box-content">
-			    <img src="http://placehold.it/500x500.jpg">
+			    <img src="{{vm.jean.image}}">
 		    </div>
 	    </div>
 

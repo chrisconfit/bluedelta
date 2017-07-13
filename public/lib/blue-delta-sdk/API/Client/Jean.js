@@ -21,7 +21,19 @@ API.Client.Jean.prototype.measurement;
  * @type {!API.Client.Thread}
  * @export
  */
-API.Client.Jean.prototype.thread;
+API.Client.Jean.prototype.topThread;
+
+/**
+ * @type {!API.Client.Thread}
+ * @export
+ */
+API.Client.Jean.prototype.bottomThread;
+
+/**
+ * @type {!API.Client.Thread}
+ * @export
+ */
+API.Client.Jean.prototype.accentThread;
 
 /**
  * @type {!API.Client.Fabric}

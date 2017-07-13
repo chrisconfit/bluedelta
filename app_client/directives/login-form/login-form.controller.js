@@ -42,11 +42,9 @@
 		    console.log('valid');
 	      aws.authenticateCognitoUser(email,password).then(
 					function(result){
-						console.log('res');
+						if ($scope.callback) $scope.callback();
 						if ($scope.redirect) $location.path($scope.redirect);
-						else	$location.path('/closet');
-							
-							
+						if (!$scope.callback && $scope.redirect)	$location.path('/closet');
 					},
 					function(err){
 						if (err.message == "Incorrect username or password.") err.message = "Incorrect Email address or password."

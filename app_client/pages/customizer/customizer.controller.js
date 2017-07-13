@@ -17,11 +17,8 @@
 		popups.closeAll();
 		vm.popups = popups.get();
 	
-		
-		//User detection
-		vm.isLoggedIn = JSON.parse($window.localStorage.isLoggedIn);
 
-		//Detect Orientation		
+		//Detect Orientation			
 		function landscapeDetect() {
 		  var ua = navigator.userAgent.toLowerCase();
 		  var isAndroid = ua.indexOf("android") > -1; // Detect Android devices
@@ -56,148 +53,16 @@
 		
 		
 		
-		
-
-		
-		
-		
-		/*
-		*
-		* SET UP JEAN - Check route params for a data url or jean Id...
-		*
-		*/
-
-		function parseURLkey(key){
-			switch(key){
-				case "g":
-	      return "gender";
-	      break;
-	      
-	      case "s":
-	      return "style";
-	      break;
-	      
-	      case "f":
-	      return "fabric";
-	      break;
-	      
-	      case "tt":
-	      return "top_thread";
-	      break;
-	      
-	      case "tb":
-	      return "bottom_thread";
-	      break;
-	      
-	      case "ta":
-	      return "accent_thread";
-	      
-	      default: return false;
-			}
-		}
-		
-		function jeanKeytoURL(key){
-			switch(key){
-				case "gender":
-	      return "g";
-	      break;
-	      
-	      case "style":
-	      return "s";
-	      break;
-	      
-	      case "fabric":
-	      return "f";
-	      break;
-	      
-	      case "top_thread":
-	      return "tt";
-	      break;
-	      
-	      case "bottom_thread":
-	      return "tb";
-	      break;
-	      
-	      case "accent_thread":
-	      return "ta";
-	      
-	      default: return false;
-			}
-		}
-		
-		//Set up jean data from parameter
-		if ($routeParams.jean_id && $routeParams.action=='copy'){
-			if ($routeParams.jean_id.indexOf(":")>0){
-				jean.createNew();
-				jeanData = $routeParams.jean_id.split(":");
-				for(var d=0; d<jeanData.length; d++){
-					var parts= jeanData[d].match(/([A-Za-z]+)([0-9]+)/);
-					if (!parts) continue;
-					var jeanKey = parseURLkey(parts[1]);
-					if (jeanKey) jean.data[jeanKey] = parseInt(parts[2]);					
-				}
-			}else{
-				//Copy Jean from ID	
-				jean.createNew($routeParams.jean_id);
-			}
-			
-		//Lookup Jean by Id
-		}else if ($routeParams.jean_id && !$routeParams.action){
-			//Edit Jean
-			bdAPI.jsonData.getJeanById($routeParams.jean_id, function(data){
-				if (data){
-					jean.data=data;	
-				}else{
-					//jean id doesn't exist
-					jean.createNew();
-				}
-			});
-			
-		//New Jean
-		}else{
-			//New Jean
-			if(Object.keys(jean.data).length === 0 && jean.data.constructor === Object){
-				jean.createNew();
-			}			
-		}
-		
-		vm.jean=jean;
+		//Set up Jean
+		vm.jean = {"data":jean.setup()};
 		
 		
-		
-		
-		
-		
-		//SHARE JEAN
-		vm.jeanToUrl = function(){
-			var url = document.location.origin+"/customizer/d";
-			for (var property in vm.jean.data) {
-		    if (vm.jean.data.hasOwnProperty(property)) {
-					var urlKey = jeanKeytoURL(property);
-					if (urlKey) url += ":"+urlKey+vm.jean.data[property];
-		    }
-			}
-			url += "/copy";
-			console.log(url);
-
-		}
-		
-		
-		
-		
-	
     /*
 		*
 		* GET CUSTOMIZER DATA 
 		*
 		*/	
-		
 		vm.data = jsonData.getData();
-		
-		vm.dataLookup= function(key,value,attr){
-			key = jsonData.jeanKeyToDataKey(key);
-			return jsonData.dataLookup(key,value,attr) || null;
-		}
 		
 		$scope.$watch(function() {
 			return vm.jean.data;
@@ -312,34 +177,33 @@
 		* Place Order - 
 		*
 		*/
-				
-
+		vm.orderCallback = function(){
+			vm.saveCallback(function(){
+				$location.path('/order')
+			});
+		}		
+		
 		vm.placeOrder=function(){
-			if(!vm.isLoggedIn){
-				popups.set('orderLogin',true);
+			if(!aws.isLoggedIn()){
+				vm.authCallback = vm.orderCallback;
+				popups.set('loginOrRegister',true);
 				return false;
 			}
-			else $location.path('/order');
+			else {
+				vm.saveCallback(function(){
+					$location.path('/order')
+				});
+			}
 		}
 
-
-
-
-
-
-
-		
-		
-		
-		
-		
+	
 		
 		/*
 		*
 		* SAVE JEAN - Create thumbnail, save jean
 		*
 		*/	
-		
+				
   	function loadImage(src, cntxt) {
       return $q(function(resolve,reject) {
         var image = new Image();
@@ -353,31 +217,6 @@
         };
       })
     }
-    
-    vm.saveJean = function(){
-
-	    aws.getCurrentUserFromLocalStorage().then(
-		    function(result){
-			    var userData = result;
-			    vm.createThumb().then(
-				    function(imageURL){
-					  	aws.saveImageTos3(imageURL, userData).then(
-					  		function(){
-						  		console.log('image saved');
-						  		vm.jean.saved=true;
-						  	}, function(err){console.log(err)}
-							);
-				    }
-			    );
-			    
-		    },
-		    function(err){
-			    //TODO: properly notify
-					alert('you must be logged in to save!');
-		    }
-	    );
-    }
-    
     
 		vm.createThumb = function(){
 	  	var canvas = document.createElement('canvas');
@@ -395,9 +234,54 @@
 	    return $q.all(promises).then(function(results) {
 	      var dataUrl = canvas.toDataURL('image/jpeg');
 				return dataUrl;
-	    });
-			
+	    });	
   	}
+				
+    vm.saveCallback = function(callback){
+	    popups.closeAll();
+	    vm.savingBar = true;
+	    vm.createThumb().then( function(imageURL){
+		    var userData = aws.getCurrentUserFromLocalStorage();
+				if (userData){
+					console.log("U:"+userData);
+					aws.saveImageTos3(imageURL, userData).then(
+						function(result){
+				  		vm.savingBar = false;
+							jean.set('saved', true);
+				  		jean.set('saved_at',new Date());
+				  		jean.set('image',result);
+							jean.save();
+				  		if (callback) callback(result);
+				  	}, function(err){console.log(err)}
+					);
+				}else{
+					//Turn off saving bar and force login agian....
+					vm.savingBar = false;
+					vm.authCallback = vm.saveCallback;
+					popups.set('loginOrRegister',true);
+				}
+	    });
+    }
+    
+    vm.saveJean = function(){
+			if(!aws.isLoggedIn()){
+				vm.authCallback = vm.saveCallback;
+				popups.set('loginOrRegister',true);
+				return false;
+			}
+			else{
+		  	vm.saveCallback();
+    	}
+  	}
+    
+    
+    //init auth callback
+    vm.authCallback = vm.orderCallback;
+    
+    
+    
+    
+
 
 		
   }

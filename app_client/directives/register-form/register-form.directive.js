@@ -11,6 +11,10 @@
       restrict: 'AE',
       templateUrl: '/directives/register-form/register-form.template.html',
       controller: 'registerFormCtrl as regvm',
+      scope : {
+				redirect : "=?",
+	      callback : "=?"
+      }
     };
     
   }

@@ -1,12 +1,12 @@
 
-<div ng-show="vm.popups.jeanProfile" ng-click="vm.popups.jeanProfile = false" id="how-it-works" class="popup-window">
+<div ng-show="vm.popups.jeanProfile" ng-click="vm.popups.jeanProfile = false" class="popup-window">
 	<div class="popup-content" ng-click="$event.stopPropagation()">
 		<a class="popup-closer" href="" ng-click="vm.popups.jeanProfile = false"></a>
 		<div class="popup-content-inner">
 			
 			<div class="cft-g jean-profile-grid">
 				<div class="cft-gi main">
- 
+					
 					<div class="jean-profile-data">
 						<h3>{{vm.displayJean.data.title}}</h3>
 						<p>Status:{{vm.displayJean.data.buildStatus}}</p>
@@ -15,11 +15,7 @@
 					</div>
 					
 					<div class="jean-list closet">
-						<dl>
-							
-							<dt ng-repeat-start="(key, value) in vm.displayJean.data | listData">{{key | scoreToSpace}}:</dt><!--
-							--><dd ng-repeat-end>{{vm.dataLookup(key,value,"name")}}</dd>
-						</dl>
+						<jean-list jean="vm.displayJean"></jean-list>						
 					</div>
 					
 					<label>Alterations/Comments</label>
@@ -38,6 +34,52 @@
 					</div>
 				</div>
 			</div>
+		</div><!--./popup-content-inner-->
+	</div>
+</div>
+
+<div ng-show="vm.popups.editUser" ng-init="vm.form.user = vm.user" ng-click="vm.popups.editUser = false" class="popup-window">
+	<div class="popup-content" ng-click="$event.stopPropagation()">
+		<a class="popup-closer" href="" ng-click="vm.popups.editUser = false"></a>
+		<div class="popup-content-inner">
+
+			<h3>Basic Information</h3>
+			<div class="input-container">
+				<label>Name:</label>
+				<span>{{vm.user.name}}</span>
+			</div>
+
+
+			<div class="input-container">
+				<label>Email:</label>
+				<div ng-if="!vm.userForm.editing.email">
+					<span>{{vm.user.email}}</span>
+					<i class="fa fa-pencil" ng-click="vm.userForm.editing.email=true;"></i>
+				</div>
+				<div ng-if="vm.userForm.editing.email">
+					<input type="text" ng-model="vm.user.email">
+					<i class="fa fa-close" ng-click="vm.userForm.cancel('email')"></i>
+					<i class="fa fa-check" ng-click="vm.userForm.save('email')"></i>
+				</div>
+			</div>
+			
+			<div class="input-container">
+				<label>Phone:</label>{{field}}
+				<div ng-if="!vm.userForm.editing.phoneNumber">
+					<span>{{vm.user.phoneNumber}}</span>
+					<i class="fa fa-pencil" ng-click="vm.userForm.editing.phoneNumber=true;"></i>
+				</div>
+				<div ng-if="vm.userForm.editing.phoneNumber">
+					<input type="text" ng-model="vm.user.phoneNumber">
+					<i class="fa fa-close" ng-click="vm.userForm.cancel('phoneNumber')"></i>
+					<i class="fa fa-check" ng-click="vm.userForm.save('phoneNumber')"></i>
+				</div>
+			</div>
+		
+			<div class="message-block" ng-show="vm.messages.message">
+	  		<p class="form-messages {{vm.messages.type}}" ng-bind-html="vm.messages.message"></p>
+			</div>
+			
 		</div><!--./popup-content-inner-->
 	</div>
 </div>

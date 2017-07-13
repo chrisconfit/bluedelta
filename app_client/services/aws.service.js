@@ -146,9 +146,7 @@
         onSuccess: function (result) {
 					defer.resolve(result);
 					//Use the idToken for Logins Map when Federating User Pools with Cognito Identity or when passing through an Authorization Header to an API Gateway Authorizer
-					console.log("signed in...");
 					$window.localStorage.isLoggedIn = true;
-					console.log($window.localStorage);
         },
         onFailure: function(err) {
           defer.reject(err);
@@ -323,33 +321,19 @@
 		
 
     getCurrentUserFromLocalStorage = function() {
-
-	    var defer = $q.defer();
       var cognitoUser = _getUserPool().getCurrentUser();
-      
       if (cognitoUser != null) {
-        cognitoUser.getSession(function(err, session) {
-        	
-        	//TODO: Decide if further error handling is necessary...
+      	return cognitoUser.getSession(function(err, session) {
           if (err) {
-            defer.reject(err);
-            return defer.promise;
+	          console.log(err);
+	          return false;
           }
-          
-          $window.localStorage.isLoggedIn = true;
-					AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            IdentityPoolId : AWSConfig.IDENTITY_POOL_ID
-          });
-	          
-          //var loginKey = 'cognito-idp.'+AWSConfig.REGION+'.amazonaws.com/'+AWSConfig.USER_POOL_ID;
-          defer.resolve(session);
-          
+          return session;
         });
       }else{
-	      defer.reject("User is not logged in...");
+	      console.log("You are not logged in");
+	      return false;
       }
-      
-      return defer.promise;
     }
     
     
@@ -438,16 +422,8 @@
 					var params = {Key: AWS.config.credentials.identityId + "/" + "myfilename.png", Body: blobData};
 
 					s3bucket.upload(params, function(err, data){	      
-						if (err) {
-							console.log('Failed to upload');
-							console.log(err);
-							defer.reject(err);
-						}
-						else {
-							console.log('Successfully uploaded image to S3.');
-							console.log(data.Location);
-							var jeanThumbURL = data.Location;
-						}
+						if (err) defer.reject(err);
+						else  defer.resolve(data.Location);						
     			});
     			
 				},

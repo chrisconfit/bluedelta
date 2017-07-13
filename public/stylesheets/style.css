@@ -2109,11 +2109,13 @@ div[style-chooser] .cft-g.chooser-grid#gender-chooser > .cft-gi, gender-chooser 
   margin-left: -10px;
 }
 .action .cft-gi {
+  position: relative;
   width: 50%;
   padding-left: 10px;
   margin-bottom: 10px;
 }
 .action .cft-gi .btn, .action .cft-gi .btn-secondary {
+  position: relative;
   background: #41778b;
 }
 .action .cft-gi .btn i, .action .cft-gi .btn-secondary i {
@@ -2514,6 +2516,108 @@ a.overview-trigger i {
     display: block;
     background: #bac2c5;
   }
+}
+
+.social-actions {
+  visibility: hidden;
+  position: absolute;
+  opacity: 0;
+  background: #004964;
+  padding: 8px 10px;
+  top: 0;
+  right: 0;
+  left: 10px;
+  -webkit-transition: all 300ms ease;
+  -moz-transition: all 300ms ease;
+  -ms-transition: all 300ms ease;
+  -o-transition: all 300ms ease;
+  transition: all 300ms ease;
+}
+.social-actions.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0%, -100%);
+}
+.social-actions ul {
+  text-align: center;
+}
+.social-actions ul li {
+  list-style-type: none;
+  display: inline-block;
+  cursor: pointer;
+}
+.social-actions ul li:not(:last-child) {
+  margin-right: 15px;
+}
+.social-actions ul li i {
+  color: #fff;
+}
+.social-actions.helper {
+  background: transparent;
+  right: auto;
+  left: 0px;
+  top: 80px;
+  height: 20px;
+  padding: 0;
+}
+.social-actions.helper.active {
+  left: -40px;
+  transform: none;
+}
+.social-actions.helper ul {
+  background: #41778b;
+}
+.social-actions.helper ul li {
+  width: 40px;
+  display: block;
+  margin: 0;
+  height: 40px;
+  position: relative;
+}
+.social-actions.helper ul li i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.saving-notification {
+  z-index: 9999999;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: all 700ms ease;
+  -moz-transition: all 700ms ease;
+  -ms-transition: all 700ms ease;
+  -o-transition: all 700ms ease;
+  transition: all 700ms ease;
+  margin-top: 0;
+  transition-delay: 1s;
+  -o-transition-delay: 1s;
+  -moz-transition-delay: 1s;
+  -webkit-transition-delay: 1s;
+  background: rgba(69, 173, 81, 0.75);
+  padding: 10px;
+  position: fixed;
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.saving-notification.active {
+  transition-delay: 0s;
+  -o-transition-delay: 0s;
+  -moz-transition-delay: 0s;
+  -webkit-transition-delay: 0s;
+  visibility: visible;
+  opacity: 1;
+  margin-top: -52px;
+}
+.saving-notification h3 {
+  color: #fff;
+  margin: 0;
 }
 
 .cft-g.form-grid > .cft-gi {

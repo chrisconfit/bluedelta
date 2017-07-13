@@ -55,20 +55,13 @@
 		    '/order'
 	    ];
 	    
-	    if (locked.indexOf($location.path()) >= 0 ){
-		    aws.getCurrentUserFromLocalStorage().then(
-			    function(result){
-				    return true;
-				  },
-				  function(err){
-					  $location.path('/login');
-					}
-		    );
+	    if (locked.indexOf($location.path()) >= 0 && !aws.isLoggedIn() ){
+				$location.path('/login');
 	  	}
 	  	
 	  	//If there's no jean on the order screen.... redirect to the customizer page.
 	  	if($location.path().indexOf("/order") >= 0 && !Object.keys(jean.data).length){
-		  	$location.path('/');
+		  	$location.path('/customizer');
 		  };
 		  
 		  
@@ -106,25 +99,7 @@
 		  }  
 		})
 		
-		.filter('listData',function() {
-			return function(input){
-				var retObj = {}; 
-				var display = [
-					'fabric',
-					'accent_thread',
-					'top_thread',
-					'bottom_thread',
-					'gender',
-					'style'
-				];
-			
-				for (key in input){
-					if (display.indexOf(key)>=0)
-						retObj[key] = input[key];			
-				}
-				return retObj;
-		  }  
-		})
+
 		
 		
 		

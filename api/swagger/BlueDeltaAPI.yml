@@ -772,7 +772,11 @@ definitions:
         type: string
       measurement:
         $ref: "#/definitions/Measurement"
-      thread:
+      top_thread:
+        $ref: "#/definitions/Thread"
+      bottom_thread:
+        $ref: "#/definitions/Thread"
+      accent_thread:
         $ref: "#/definitions/Thread"
       fabric:
         $ref: "#/definitions/Fabric"

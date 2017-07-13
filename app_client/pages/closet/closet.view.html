@@ -18,7 +18,7 @@
 				      <div class="jean-card">
 								<img ng-click="vm.selectJean(jean)" src="/images/thumbnails/{{jean.id}}.jpg">
 								<div class="box-content">
-						      <h4 ng-click="vm.popups.jeanProfile = true; vm.jean.data=jean">{{jean.title}}</h4>
+						      <h4 ng-click="vm.selectJean(jean)">{{jean.title}}</h4>
 									<h5>{{jean.buildStatus}}</h5>
 									<h5>EST ARRIVAL: {{jean.birthday | date : "shortDate" : "CST" }}</h5>
 								</div>
@@ -33,9 +33,9 @@
 		      <div class="cft-g jean-grid">
 			      <div ng-repeat="jean in vm.data.jeansList | filter:{ status: 'complete' }" class="cft-gi">
 				      <div class="jean-card">
-					      <img ng-click="vm.popups.jeanProfile = true; vm.jean.data=jean" src="/images/thumbnails/{{jean.id}}.jpg">
+					      <img ng-click="vm.selectJean(jean)" src="/images/thumbnails/{{jean.id}}.jpg">
 								<div class="box-content">
-					      	<h4 ng-click="vm.popups.jeanProfile = true; vm.jean.data=jean">{{jean.title}}</h4>
+					      	<h4 ng-click="vm.selectJean(jean)">{{jean.title}}</h4>
 									<h5>Born: {{jean.birthday | date : "longDate" : "CST" }}</h5>
 								</div>
 				      </div>
@@ -51,7 +51,7 @@
 				      <div class="jean-card">
 					      <img src="/images/thumbnails/{{jean.id}}.jpg">
 								<div class="box-content">
-									<a href="/customizer/{{jean.id}}">Edit</a> | <a href="#">Order</a> 
+									<a href="/customizer/{{jean.id}}">Edit</a> | <a href="/customizer/{{jean.id}}">Order</a> 
 								</div>
 				      </div>
 			      </div>
@@ -68,13 +68,12 @@
     </div><!--/.main
     
     --><div class="cft-gi sidebar">
-	    
 	    <div class="user-card">
 		    <h3 class="box-title">Your Profile</h3>
 		    <div class="box-content">
 			    <h4>{{vm.user.name}}</h4>
 			    <h5 ng-repeat="add in vm.user.address | filter:{primary:'true'} | limitTo:1">{{add.city}}, {{add.state}}</h5>
-			    <a href="">Edit Account info <i class="fa fa-edit"></i></a>
+			    <a ng-click="vm.popups.editUser=true" href="">Edit Account info <i class="fa fa-edit"></i></a>
 		    </div>
 	    </div>
     </div><!--/.sidebar-->

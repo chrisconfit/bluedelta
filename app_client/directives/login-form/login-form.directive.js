@@ -11,9 +11,10 @@
       restrict: 'AE',
       templateUrl: '/directives/login-form/login-form.template.html',
       controller: 'loginFormCtrl as logvm',
-      link: function ($scope, element, attrs) {
-        $scope.redirect = attrs.redirect;
-  		}
+      scope : {
+				redirect : "=?",
+	      callback : "=?"
+      }
     };
     
   }

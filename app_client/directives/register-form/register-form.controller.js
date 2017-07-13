@@ -10,7 +10,6 @@
     var regvm = this;
     
 		regvm.messages=messages.get();
-		console.log(regvm.messages);
 		
 		regvm.credentials = {
       name : "",
@@ -73,7 +72,9 @@
 	    if (regvm.validateRegistrationForm()){
 	      aws.signupForApplication(regvm.credentials.email, regvm.credentials.password).then(
 	      	function(){
-						console.log('we are registering...');      	
+						if ($scope.callback) $scope.callback();
+						if ($scope.redirect) $location.path($scope.redirect);
+						if (!$scope.callback && $scope.redirect)	$location.path('/customizer');    	
 		      },   
 		      function(err){
 				    messages.set(err.message, "error");

@@ -1,19 +1,17 @@
 	<!--Order Login-->
-	<div ng-show="vm.popups.orderLogin"	ng-click="vm.popups.orderLogin = false" id="how-it-works" class="popup-window">
-		<div class="popup-content orderLogin-popup" ng-click="$event.stopPropagation()">
-			<a class="popup-closer" href="" ng-click="vm.popups.orderLogin = false"></a>
+	<div ng-show="vm.popups.loginOrRegister"	ng-click="vm.popups.loginOrRegister = false" class="popup-window">
+		<div class="popup-content loginOrRegister-popup" ng-click="$event.stopPropagation()">
+			<a class="popup-closer" href="" ng-click="vm.popups.loginOrRegister = false"></a>
 			<div class="popup-content-inner">
-				<h3 class="popup-title">Order</h3>
-				<h4 class="popup-sub-title">Login or Register to Continue</h4>
+				<h3 class="popup-title">Login or Register to Continue</h3>
 				<div class="cft-g login-reg-grid">
 					<div class="cft-gi">
 						<h4>Log In</h4>
-						<login-form redirect="/order"></login-form>
+						<login-form callback="vm.authCallback"></login-form>
 					</div><!--
-						
 					--><div class="cft-gi">
 						<h4>Register</h4>
-						<register-form></register-form>
+						<register-form callback="vm.authCallback"></register-form>
 					</div>
 				</div>
 				<div class="message-block" ng-show="vm.messages.message">

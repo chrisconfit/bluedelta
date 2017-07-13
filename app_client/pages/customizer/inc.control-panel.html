@@ -1,4 +1,3 @@
-{{vm.popups}}
 <div class="control-panel-inner template-{{vm.panel[vm.panelStep].panelTemplate}}">
 	
 		<div class="switch">					
@@ -8,7 +7,6 @@
 				</li>
 			</ul>
 		</div>
-				
 				
 		<div class="build-step-stage {{vm.panelDir}} {{vm.panel[vm.panelStep].panelTemplate}}">			
 			<div class="step-container template-{{step.panelTemplate}}" ng-class="(step.panelTemplate != 'chooser' ? 'fade':'chooser-anim')" ng-repeat="step in vm.panel" ng-show="vm.panel[vm.panelStep] == step">	
@@ -56,22 +54,20 @@
 							Overview <i ng-class="(vm.overviewOn ? 'fa-angle-down' : 'fa-angle-up')" class="fa"></i>
 						</a>
 						<div class="jean-list" ng-class="(vm.overviewOn ? 'show' :'hide')">
-							<dl>
-								<dt ng-repeat-start="(key, value) in vm.jean.data | listData" >{{key | scoreToSpace}}:</dt><!--
-								--><dd ng-repeat-end>{{vm.dataLookup(key,value,"name")}}</dd>
-							</dl>
+							<jean-list jean="vm.jean"></jean-list>
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
-		</div>
+		</div><!--/.build-step-stage-->
 		
 		
 		<div class="action" >
 			<div class="cft-g action-grid">
 				<div class="cft-gi">
-					<a class="btn" ng-click="vm.jeanToUrl()" href="#">
+					<social-actions jean="vm.jean" display="vm.displaySocial"></social-actions>
+					<a class="btn" ng-click="vm.displaySocial = !vm.displaySocial" href="#">
 						Share <i class="fa fa-share" aria-hidden="true"></i>
 					</a>
 			  </div><!--

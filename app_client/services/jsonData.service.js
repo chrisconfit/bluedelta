@@ -54,12 +54,15 @@
 		}
 			
 				
-		var dataLookup = function(dataKey, id, attr){
-			
+		var dataLookup = function(jeanKey, id, attr){
+
 			attr = attr||null;
-	
-			if (typeof dataKey == 'undefined' || typeof id == 'undefined') return false;
+			
+			if (typeof jeanKey == 'undefined' || typeof id == 'undefined') return false;
+			var dataKey = jeanKeyToDataKey(jeanKey);
 			var dataSet = data[dataKey];
+			//console.log("dataSetVV");
+			//console.log(dataSet);
 			dataById = 	$filter('filter')(dataSet, {id: id});
 			if (typeof dataById == 'undefined') return false; //Return false when dataSet is undefined...
 			
@@ -70,12 +73,16 @@
 			
 		}
 
-
+		var getJeanById = function(id, callback){
+			console.log(data.jeansList);
+			callback();
+		}
 
 	  return {
 		  getData:function(){return data;},
 		  jeanKeyToDataKey:jeanKeyToDataKey,
-			dataLookup:dataLookup
+			dataLookup:dataLookup,
+			getJeanById : getJeanById
 		};
   }
 

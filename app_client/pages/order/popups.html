@@ -9,14 +9,14 @@
 			<div class="check-list">
 				<ul class="tailor-list">
 					<li  ng-repeat="check in vm.data.tailors | orderBy : 'location'">
-						<input id="tailor_{{check.id}}" ng-checked="vm.orderForm.data.tailor==check.id" 
-						ng-click="vm.orderForm.data.tailor==check.id ? vm.orderForm.data.tailor=null : vm.orderForm.data.tailor=check.id"
+						<input id="tailor_{{check.id}}" ng-checked="vm.orderForm.data.tailor==check" 
+						ng-click="vm.orderForm.data.tailor==check ? vm.orderForm.data.tailor=null : vm.orderForm.data.tailor=check"
 						value="{{check.id}}" type="checkbox">
 						<label for="tailor_{{check.id}}">{{check.location}}</label>
 					</li>
 				</ul>
 			</div>
-			
+						
 			<button ng-click="vm.popups.tailors=false" class="btn" ng-class="{disabled : vm.orderForm.data.tailor==null}">Choose Tailor</button>	
 		</div><!--./popup-content-inner-->
 	</div>
