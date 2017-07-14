@@ -13,6 +13,8 @@ goog.require('API.Client.Button');
 goog.require('API.Client.ButtonsListResponse');
 goog.require('API.Client.Fabric');
 goog.require('API.Client.FabricsListResponse');
+goog.require('API.Client.Jean');
+goog.require('API.Client.JeansListResponse');
 goog.require('API.Client.Order');
 goog.require('API.Client.OrdersListResponse');
 goog.require('API.Client.Thread');
@@ -542,6 +544,221 @@ API.Client.DefaultApi.prototype.fabricsUpdate = function(fabricId, fabric, opt_e
     url: path,
     json: true,
     data: fabric,
+        params: queryParameters,
+    headers: headerParams
+  };
+
+  if (opt_extraHttpRequestParams) {
+    httpRequestParams = angular.extend(httpRequestParams, opt_extraHttpRequestParams);
+  }
+
+  return (/** @type {?} */ (this.http_))(httpRequestParams);
+}
+
+/**
+ * 
+ * 
+ * @param {!string} userId 
+ * @param {!Jean} jean 
+ * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
+ * @return {!angular.$q.Promise<!API.Client.Jean>}
+ */
+API.Client.DefaultApi.prototype.jeansCreate = function(userId, jean, opt_extraHttpRequestParams) {
+  /** @const {string} */
+  var path = this.basePath_ + '/users/{userId}/jeans'
+      .replace('{' + 'userId' + '}', String(userId));
+
+  /** @type {!Object} */
+  var queryParameters = {};
+
+  /** @type {!Object} */
+  var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'userId' is set
+  if (!userId) {
+    throw new Error('Missing required parameter userId when calling jeansCreate');
+  }
+  // verify required parameter 'jean' is set
+  if (!jean) {
+    throw new Error('Missing required parameter jean when calling jeansCreate');
+  }
+  /** @type {!Object} */
+  var httpRequestParams = {
+    method: 'POST',
+    url: path,
+    json: true,
+    data: jean,
+        params: queryParameters,
+    headers: headerParams
+  };
+
+  if (opt_extraHttpRequestParams) {
+    httpRequestParams = angular.extend(httpRequestParams, opt_extraHttpRequestParams);
+  }
+
+  return (/** @type {?} */ (this.http_))(httpRequestParams);
+}
+
+/**
+ * 
+ * 
+ * @param {!string} userId 
+ * @param {!string} jeanId 
+ * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
+ * @return {!angular.$q.Promise}
+ */
+API.Client.DefaultApi.prototype.jeansDelete = function(userId, jeanId, opt_extraHttpRequestParams) {
+  /** @const {string} */
+  var path = this.basePath_ + '/users/{userId}/jeans/{jeanId}'
+      .replace('{' + 'userId' + '}', String(userId))
+      .replace('{' + 'jeanId' + '}', String(jeanId));
+
+  /** @type {!Object} */
+  var queryParameters = {};
+
+  /** @type {!Object} */
+  var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'userId' is set
+  if (!userId) {
+    throw new Error('Missing required parameter userId when calling jeansDelete');
+  }
+  // verify required parameter 'jeanId' is set
+  if (!jeanId) {
+    throw new Error('Missing required parameter jeanId when calling jeansDelete');
+  }
+  /** @type {!Object} */
+  var httpRequestParams = {
+    method: 'DELETE',
+    url: path,
+    json: true,
+            params: queryParameters,
+    headers: headerParams
+  };
+
+  if (opt_extraHttpRequestParams) {
+    httpRequestParams = angular.extend(httpRequestParams, opt_extraHttpRequestParams);
+  }
+
+  return (/** @type {?} */ (this.http_))(httpRequestParams);
+}
+
+/**
+ * 
+ * 
+ * @param {!string} userId 
+ * @param {!string} jeanId 
+ * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
+ * @return {!angular.$q.Promise<!API.Client.Jean>}
+ */
+API.Client.DefaultApi.prototype.jeansGet = function(userId, jeanId, opt_extraHttpRequestParams) {
+  /** @const {string} */
+  var path = this.basePath_ + '/users/{userId}/jeans/{jeanId}'
+      .replace('{' + 'userId' + '}', String(userId))
+      .replace('{' + 'jeanId' + '}', String(jeanId));
+
+  /** @type {!Object} */
+  var queryParameters = {};
+
+  /** @type {!Object} */
+  var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'userId' is set
+  if (!userId) {
+    throw new Error('Missing required parameter userId when calling jeansGet');
+  }
+  // verify required parameter 'jeanId' is set
+  if (!jeanId) {
+    throw new Error('Missing required parameter jeanId when calling jeansGet');
+  }
+  /** @type {!Object} */
+  var httpRequestParams = {
+    method: 'GET',
+    url: path,
+    json: true,
+            params: queryParameters,
+    headers: headerParams
+  };
+
+  if (opt_extraHttpRequestParams) {
+    httpRequestParams = angular.extend(httpRequestParams, opt_extraHttpRequestParams);
+  }
+
+  return (/** @type {?} */ (this.http_))(httpRequestParams);
+}
+
+/**
+ * 
+ * 
+ * @param {!string} userId 
+ * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
+ * @return {!angular.$q.Promise<!API.Client.JeansListResponse>}
+ */
+API.Client.DefaultApi.prototype.jeansListByUser = function(userId, opt_extraHttpRequestParams) {
+  /** @const {string} */
+  var path = this.basePath_ + '/users/{userId}/jeans'
+      .replace('{' + 'userId' + '}', String(userId));
+
+  /** @type {!Object} */
+  var queryParameters = {};
+
+  /** @type {!Object} */
+  var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'userId' is set
+  if (!userId) {
+    throw new Error('Missing required parameter userId when calling jeansListByUser');
+  }
+  /** @type {!Object} */
+  var httpRequestParams = {
+    method: 'GET',
+    url: path,
+    json: true,
+            params: queryParameters,
+    headers: headerParams
+  };
+
+  if (opt_extraHttpRequestParams) {
+    httpRequestParams = angular.extend(httpRequestParams, opt_extraHttpRequestParams);
+  }
+
+  return (/** @type {?} */ (this.http_))(httpRequestParams);
+}
+
+/**
+ * 
+ * 
+ * @param {!string} userId 
+ * @param {!string} jeanId 
+ * @param {!Jean} jean 
+ * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
+ * @return {!angular.$q.Promise<!API.Client.Jean>}
+ */
+API.Client.DefaultApi.prototype.jeansUpdate = function(userId, jeanId, jean, opt_extraHttpRequestParams) {
+  /** @const {string} */
+  var path = this.basePath_ + '/users/{userId}/jeans/{jeanId}'
+      .replace('{' + 'userId' + '}', String(userId))
+      .replace('{' + 'jeanId' + '}', String(jeanId));
+
+  /** @type {!Object} */
+  var queryParameters = {};
+
+  /** @type {!Object} */
+  var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'userId' is set
+  if (!userId) {
+    throw new Error('Missing required parameter userId when calling jeansUpdate');
+  }
+  // verify required parameter 'jeanId' is set
+  if (!jeanId) {
+    throw new Error('Missing required parameter jeanId when calling jeansUpdate');
+  }
+  // verify required parameter 'jean' is set
+  if (!jean) {
+    throw new Error('Missing required parameter jean when calling jeansUpdate');
+  }
+  /** @type {!Object} */
+  var httpRequestParams = {
+    method: 'POST',
+    url: path,
+    json: true,
+    data: jean,
         params: queryParameters,
     headers: headerParams
   };
@@ -1364,6 +1581,86 @@ API.Client.DefaultApi.prototype.usersUpdate = function(userId, user, opt_extraHt
     json: true,
     data: user,
         params: queryParameters,
+    headers: headerParams
+  };
+
+  if (opt_extraHttpRequestParams) {
+    httpRequestParams = angular.extend(httpRequestParams, opt_extraHttpRequestParams);
+  }
+
+  return (/** @type {?} */ (this.http_))(httpRequestParams);
+}
+
+/**
+ * 
+ * 
+ * @param {!string} userId 
+ * @param {!string} jeanId 
+ * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
+ * @return {!angular.$q.Promise}
+ */
+API.Client.DefaultApi.prototype.usersUserIdJeansJeanIdOptions = function(userId, jeanId, opt_extraHttpRequestParams) {
+  /** @const {string} */
+  var path = this.basePath_ + '/users/{userId}/jeans/{jeanId}'
+      .replace('{' + 'userId' + '}', String(userId))
+      .replace('{' + 'jeanId' + '}', String(jeanId));
+
+  /** @type {!Object} */
+  var queryParameters = {};
+
+  /** @type {!Object} */
+  var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'userId' is set
+  if (!userId) {
+    throw new Error('Missing required parameter userId when calling usersUserIdJeansJeanIdOptions');
+  }
+  // verify required parameter 'jeanId' is set
+  if (!jeanId) {
+    throw new Error('Missing required parameter jeanId when calling usersUserIdJeansJeanIdOptions');
+  }
+  /** @type {!Object} */
+  var httpRequestParams = {
+    method: 'OPTIONS',
+    url: path,
+    json: true,
+            params: queryParameters,
+    headers: headerParams
+  };
+
+  if (opt_extraHttpRequestParams) {
+    httpRequestParams = angular.extend(httpRequestParams, opt_extraHttpRequestParams);
+  }
+
+  return (/** @type {?} */ (this.http_))(httpRequestParams);
+}
+
+/**
+ * 
+ * 
+ * @param {!string} userId 
+ * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
+ * @return {!angular.$q.Promise}
+ */
+API.Client.DefaultApi.prototype.usersUserIdJeansOptions = function(userId, opt_extraHttpRequestParams) {
+  /** @const {string} */
+  var path = this.basePath_ + '/users/{userId}/jeans'
+      .replace('{' + 'userId' + '}', String(userId));
+
+  /** @type {!Object} */
+  var queryParameters = {};
+
+  /** @type {!Object} */
+  var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'userId' is set
+  if (!userId) {
+    throw new Error('Missing required parameter userId when calling usersUserIdJeansOptions');
+  }
+  /** @type {!Object} */
+  var httpRequestParams = {
+    method: 'OPTIONS',
+    url: path,
+    json: true,
+            params: queryParameters,
     headers: headerParams
   };
 
