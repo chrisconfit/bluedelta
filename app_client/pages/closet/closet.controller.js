@@ -4,10 +4,11 @@
     .module('bdApp')
     .controller('closetCtrl', closetCtrl);
 
-  closetCtrl.$inject = ['$location', 'jean','popups', 'aws', 'bdAPI', '$scope', 'jsonData', 'messages'];
-  function closetCtrl($location, jean, popups, aws, bdAPI, $scope, jsonData, messages) {
+  closetCtrl.$inject = ['$location', 'jean','popups', 'aws', 'bdAPI', '$scope', 'jsonData', 'messages', 'loader'];
+  function closetCtrl($location, jean, popups, aws, bdAPI, $scope, jsonData, messages, loader) {
 	  
 
+	  loader.show("Getting your profile information...");
 	  
     var vm = this;   
 		
@@ -31,6 +32,7 @@
 		//Edit User
 		vm.userForm = {};
 		vm.userForm.editing={};
+		vm.userForm.saving={};
 		vm.userForm.feedback={
 			"type":"",
 			"message":"",
@@ -79,28 +81,23 @@
 		
 		
 		vm.userForm.save = function(field){
+			
 			if (vm.userForm.validate(field, vm.user[field])){
-				
-				messages.reset();
-				
+				vm.userForm.saving[field] = true;
 				bdAPI.usersUpdate(vm.user.identityId, vm.user).then(
 					function(result){
+						vm.userForm.saving[field] = false;
 						vm.userForm.editing[field] = false;
-						vm.userForm.data[field] = vm.user[field]; 	
-						messages.set("User updated", "success");
+						vm.userForm.data[field] = vm.user[field];
+						$scope.$apply();
 					},
 					function(err){
 						console.log(err);
-						messages.set(err.message, "error");
 					}	
-				)
-				
-				
+				)	
 			}
 		}
-		
-		
-		
+				
     var user = aws.getCurrentUserFromLocalStorage();
     if (user){
 	    bdAPI.defaultHeaders_['Authorization'] = user.idToken.getJwtToken();
@@ -108,9 +105,27 @@
 			var userID = JSON.parse(atob(idTokenPayload)).sub;	
 			bdAPI.usersGet(userID).then(
 				function(result){
+					
+					loader.hide();
+			
 					vm.user = result.data;	
+					console.log(vm.user);
 					vm.userForm.data = angular.copy(result.data);
 					$scope.$apply();
+/*					
+					console.log(vm.user);
+					vm.user.name = "Chris LeFevre";
+					
+					console.log(vm.data.jeansList);
+					
+					
+					
+					bdAPI.usersUpdate(vm.user.identityId, vm.user).then(function(res){
+						console.log("updated...");
+						console.log(res);
+					})
+					*/
+					
 				}, 
 				function(err){console.log(err)} 
 			);
@@ -141,6 +156,12 @@
 			vm.displayJean.data=jean
 		}
 		
+		
+		
+	
+			
+
+
 	
 		
 		//Get User

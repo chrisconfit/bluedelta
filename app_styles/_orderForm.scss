@@ -92,7 +92,7 @@ $duration: .4s;
   -webkit-transition: border-color ease $duration/2;
   transition: border-color ease $duration/2;
   cursor:pointer;
-
+	
   &::before, &::after {
 	  @include box-sizing(border-box);
 	  position: absolute;
@@ -138,6 +138,11 @@ $duration: .4s;
     animation: dothatopcheck $duration ease 0s forwards;
   }
 }
+
+.check-box.small{
+	@include transform(scale(.7));
+}
+
 
 ul.tailor-list{
 	padding:0;

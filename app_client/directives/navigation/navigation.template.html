@@ -58,3 +58,15 @@
 		</nav>
 	</div>
 </div>
+
+<div class="loadingDiv {{navvm.loader.type}}" ng-class="{active: navvm.loader.active}">
+	<div class="loadingDiv-content">
+		<h3 ng-if="navvm.loader.message">{{navvm.loader.message}}</h3>
+		<i class="loading-icon fa {{navvm.loader.icon}}"></i>
+	</div>
+</div>
+
+<div class="saving-notification" ng-class="{active:navvm.savingBar.active}">
+	<h3 ng-if="navvm.savingBar.active"><i class="fa {{navvm.savingBar.icon}}" aria-hidden="true"></i> {{navvm.savingBar.message}}</h3>
+	<h3 ng-if="!navvm.savingBar.active">{{navvm.savingBar.confirmed}}</h3>
+</div>

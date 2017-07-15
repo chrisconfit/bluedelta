@@ -4,10 +4,14 @@
     .module('bdApp')
     .controller('customizerCtrl', customizerCtrl);
 
-  customizerCtrl.$inject = ['$q','$filter','$timeout','$location', '$window', '$routeParams', 'bdAPI', 'jean', '$scope', 'popups', 'aws', 'jsonData', 'messages'];
-  function customizerCtrl($q, $filter, $timeout, $location, $window, $routeParams, bdAPI, jean, $scope, popups, aws, jsonData, messages) {
+  customizerCtrl.$inject = ['$q','$filter','$timeout','$location', '$window', '$routeParams', 'bdAPI', 'jean', '$scope', 'popups', 'aws', 'jsonData', 'messages', 'loader'];
+  function customizerCtrl($q, $filter, $timeout, $location, $window, $routeParams, bdAPI, jean, $scope, popups, aws, jsonData, messages, loader) {
+	  
     
     var vm = this;
+		
+		//Setup Loader		
+		vm.loader = loader.get();
 		
 		//Set up shared messages service
 		messages.reset();
@@ -239,14 +243,14 @@
 				
     vm.saveCallback = function(callback){
 	    popups.closeAll();
-	    vm.savingBar = true;
+	    loader.show('saver');
 	    vm.createThumb().then( function(imageURL){
 		    var userData = aws.getCurrentUserFromLocalStorage();
 				if (userData){
 					console.log("U:"+userData);
 					aws.saveImageTos3(imageURL, userData).then(
 						function(result){
-				  		vm.savingBar = false;
+				  		loader.hide('saver');
 							jean.set('saved', true);
 				  		jean.set('saved_at',new Date());
 				  		jean.set('image',result);

@@ -18,7 +18,7 @@
 				      <div class="jean-card">
 								<img ng-click="vm.selectJean(jean)" src="/images/thumbnails/{{jean.id}}.jpg">
 								<div class="box-content">
-						      <h4 ng-click="vm.selectJean(jean)">{{jean.title}}</h4>
+						      <h4 ng-click="vm.selectJean(jean)">{{jean.name}}</h4>
 									<h5>{{jean.buildStatus}}</h5>
 									<h5>EST ARRIVAL: {{jean.birthday | date : "shortDate" : "CST" }}</h5>
 								</div>
@@ -35,7 +35,7 @@
 				      <div class="jean-card">
 					      <img ng-click="vm.selectJean(jean)" src="/images/thumbnails/{{jean.id}}.jpg">
 								<div class="box-content">
-					      	<h4 ng-click="vm.selectJean(jean)">{{jean.title}}</h4>
+					      	<h4 ng-click="vm.selectJean(jean)">{{jean.name}}</h4>
 									<h5>Born: {{jean.birthday | date : "longDate" : "CST" }}</h5>
 								</div>
 				      </div>

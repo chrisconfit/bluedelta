@@ -169,11 +169,13 @@
     }
 		
 
-    signupForApplication = function(emailAddress, password) {
+    signupForApplication = function(emailAddress, name, password) {
 	    
 	    var defer = $q.defer();
 	    
-      var attributeList = _buildAttributeList(_buildAttribute, {email: emailAddress});
+      var attributeList = _buildAttributeList(_buildAttribute, {email: emailAddress, name: name});
+      console.log(attributeList);
+      return false;
       var cognitoUser;
       _getUserPool().signUp(emailAddress, password, attributeList, null, function(err, result) {
         if (err) defer.reject(err);

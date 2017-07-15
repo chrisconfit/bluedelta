@@ -4,9 +4,9 @@
     .module('bdApp')
     .controller('registerFormCtrl', registerFormCtrl);
 
-  registerFormCtrl.$inject = ['$location', 'aws', '$sce', 'messages'];
+  registerFormCtrl.$inject = ['$scope', '$location', 'aws', '$sce', 'messages'];
   
-  function registerFormCtrl($location, aws, $sce, messages) {
+  function registerFormCtrl($scope, $location, aws, $sce, messages) {
     var regvm = this;
     
 		regvm.messages=messages.get();
@@ -70,11 +70,11 @@
 	    messages.reset();
 	    
 	    if (regvm.validateRegistrationForm()){
-	      aws.signupForApplication(regvm.credentials.email, regvm.credentials.password).then(
-	      	function(){
+	      aws.signupForApplication(regvm.credentials.email, regvm.credentials.name, regvm.credentials.password).then(
+	      	function(result){
 						if ($scope.callback) $scope.callback();
 						if ($scope.redirect) $location.path($scope.redirect);
-						if (!$scope.callback && $scope.redirect)	$location.path('/customizer');    	
+						if (!$scope.callback && !$scope.redirect)	$location.path('/login');    
 		      },   
 		      function(err){
 				    messages.set(err.message, "error");

@@ -5,8 +5,8 @@
     .module('bdApp')
     .service('bdAPI', bdAPI);
 
-  bdAPI.$inject = ['$window', '$http', '$httpParamSerializer', '$filter'];
-  function bdAPI ($window, $http, $httpParamSerializer, $filter) {
+  bdAPI.$inject = ['$window', '$http', '$httpParamSerializer', '$filter','$q'];
+  function bdAPI ($window, $http, $httpParamSerializer, $filter, $q) {
 
 	  $window._thirdParty = $window._thirdParty || {};
 	  $window._thirdParty.BlueDeltaApi =new API.Client.DefaultApi(angular.injector(["ng"]).get("$http"),
@@ -78,7 +78,33 @@
 			
 		}
 
-
+		var cleanUser = function(user){
+			var temp = JSON.stringify(user);
+			temp = temp.replace(/\"\"/g, null);
+			user = JSON.parse(temp);
+			return user;
+		}
+		
+		//Save User
+		BlueDeltaApi.saveUser = function(user){
+			var defer = $q.defer();
+			user = cleanUser(user);
+			if (!user.identityId) defer.reject("No identity Id");
+			else{
+				BlueDeltaApi.usersUpdate(user.identityId, user).then(
+					function(result){
+						console.log("got it");
+						defer.resolve(result);
+					},
+					function(err){
+						console.log("Error saving user:");
+						console.log(err);
+						defer.reject(err);
+					}	
+				)
+			}
+			return defer.promise;	
+		}
 
 	  return BlueDeltaApi;
   }
