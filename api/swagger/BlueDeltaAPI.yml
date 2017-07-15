@@ -119,6 +119,93 @@ paths:
       security:
       - blue-delta-userPool-authorizer: []
 
+  /users/{userId}/jeans:
+    get:
+      description: Returns List of 'Jeans' by 'User'
+      operationId: jeans-ListByUser
+      parameters:
+      - $ref: "#/parameters/UserId"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/JeansListResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+      - blue-delta-userPool-authorizer: []
+    post:
+      description: Adds a Jean
+      operationId: jeans-Create
+      parameters:
+      - $ref: "#/parameters/UserId"
+      - $ref: "#/parameters/Jean"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Jean"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+      - blue-delta-userPool-authorizer: []
+
+  /users/{userId}/jeans/{jeanId}:
+    delete:
+      description: Deletes a Jean from a User
+      operationId: jeans-Delete
+      parameters:
+      - $ref: "#/parameters/UserId"
+      - $ref: "#/parameters/JeanId"
+      responses:
+        "200":
+          description: Success
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+      - blue-delta-userPool-authorizer: []
+    get:
+      description: Returns a Jean
+      operationId: jeans-Get
+      parameters:
+      - $ref: "#/parameters/UserId"
+      - $ref: "#/parameters/JeanId"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Jean"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+      - blue-delta-userPool-authorizer: []
+    post:
+      description: Updates a Jean
+      operationId: jeans-Update
+      parameters:
+      - $ref: "#/parameters/UserId"
+      - $ref: "#/parameters/JeanId"
+      - $ref: "#/parameters/Jean"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Jean"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+      - blue-delta-userPool-authorizer: []
+
   /orders:
     get:
       description: Returns List of 'Orders'
@@ -479,12 +566,23 @@ parameters:
   User:
     in: "body"
     name: "body"
-    # required: true
+    required: true
     schema:
       $ref: "#/definitions/User"
   UserId:
     in: "path"
     name: "userId"
+    required: true
+    type: string
+  Jean:
+    in: "body"
+    name: "body"
+    required: true
+    schema:
+      $ref: "#/definitions/Jean"
+  JeanId:
+    in: "path"
+    name: "jeanId"
     required: true
     type: string
   Order:
@@ -688,6 +786,7 @@ definitions:
           $ref: "#/definitions/Fabric"
 
   Fabric:
+    type: object
 #    required:
 #    - fabricId
     properties:
@@ -716,6 +815,7 @@ definitions:
           $ref: "#/definitions/Thread"
 
   Thread:
+    type: object
     # required:
     # - threadId
     properties:
@@ -738,8 +838,8 @@ definitions:
           $ref: "#/definitions/Measurement"
   
   Measurement:
-    required:
-    - measurementId
+#    required:
+#    - measurementId
     properties:
       measurementId:
         type: string
@@ -765,8 +865,8 @@ definitions:
           $ref: "#/definitions/Jean"
           
   Jean:
-    required:
-    - jeanId
+#    required:
+#    - jeanId
     properties:
       jeanId:
         type: string

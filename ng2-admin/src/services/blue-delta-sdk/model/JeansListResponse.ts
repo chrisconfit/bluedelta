@@ -12,13 +12,7 @@
 
 import * as models from './models';
 
-export interface Measurement {
-    measurementId?: string;
-
-    userId?: string;
-
-    waist?: number;
-
-    leg?: number;
+export interface JeansListResponse {
+    items: Array<models.Jean>;
 
 }

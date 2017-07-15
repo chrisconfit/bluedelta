@@ -13,11 +13,15 @@
 import * as models from './models';
 
 export interface Jean {
-    jeanId: string;
+    jeanId?: string;
 
     measurement?: models.Measurement;
 
-    thread?: models.Thread;
+    topThread?: models.Thread;
+
+    bottomThread?: models.Thread;
+
+    accentThread?: models.Thread;
 
     fabric?: models.Fabric;
 

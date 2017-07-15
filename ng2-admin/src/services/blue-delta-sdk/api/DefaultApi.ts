@@ -265,6 +265,91 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param userId 
+     * @param jean 
+     */
+    public jeansCreate(userId: string, jean: models.Jean, extraHttpRequestParams?: any): Observable<models.Jean> {
+        return this.jeansCreateWithHttpInfo(userId, jean, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     * @param jeanId 
+     */
+    public jeansDelete(userId: string, jeanId: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.jeansDeleteWithHttpInfo(userId, jeanId, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     * @param jeanId 
+     */
+    public jeansGet(userId: string, jeanId: string, extraHttpRequestParams?: any): Observable<models.Jean> {
+        return this.jeansGetWithHttpInfo(userId, jeanId, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     */
+    public jeansListByUser(userId: string, extraHttpRequestParams?: any): Observable<models.JeansListResponse> {
+        return this.jeansListByUserWithHttpInfo(userId, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     * @param jeanId 
+     * @param jean 
+     */
+    public jeansUpdate(userId: string, jeanId: string, jean: models.Jean, extraHttpRequestParams?: any): Observable<models.Jean> {
+        return this.jeansUpdateWithHttpInfo(userId, jeanId, jean, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
      * @param order 
      */
     public orderCreate(order: models.Order, extraHttpRequestParams?: any): Observable<models.Order> {
@@ -616,6 +701,39 @@ export class DefaultApi {
      */
     public usersUpdate(userId: string, user: models.User, extraHttpRequestParams?: any): Observable<models.User> {
         return this.usersUpdateWithHttpInfo(userId, user, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     * @param jeanId 
+     */
+    public usersUserIdJeansJeanIdOptions(userId: string, jeanId: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.usersUserIdJeansJeanIdOptionsWithHttpInfo(userId, jeanId, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     */
+    public usersUserIdJeansOptions(userId: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.usersUserIdJeansOptionsWithHttpInfo(userId, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -1225,6 +1343,251 @@ export class DefaultApi {
             method: RequestMethod.Post,
             headers: headers,
             body: fabric == null ? '' : JSON.stringify(fabric), // https://github.com/angular/angular/issues/10612
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     * @param jean 
+     */
+    public jeansCreateWithHttpInfo(userId: string, jean: models.Jean, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/users/${userId}/jeans`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'userId' is not null or undefined
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling jeansCreate.');
+        }
+        // verify required parameter 'jean' is not null or undefined
+        if (jean === null || jean === undefined) {
+            throw new Error('Required parameter jean was null or undefined when calling jeansCreate.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'application/json'
+        ];
+
+        // authentication (blue-delta-userPool-authorizer) required
+        if (this.configuration.apiKey) {
+            headers.set('Authorization', this.configuration.apiKey);
+        }
+
+        headers.set('Content-Type', 'application/json');
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Post,
+            headers: headers,
+            body: jean == null ? '' : JSON.stringify(jean), // https://github.com/angular/angular/issues/10612
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     * @param jeanId 
+     */
+    public jeansDeleteWithHttpInfo(userId: string, jeanId: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/users/${userId}/jeans/${jeanId}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'userId' is not null or undefined
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling jeansDelete.');
+        }
+        // verify required parameter 'jeanId' is not null or undefined
+        if (jeanId === null || jeanId === undefined) {
+            throw new Error('Required parameter jeanId was null or undefined when calling jeansDelete.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        // authentication (blue-delta-userPool-authorizer) required
+        if (this.configuration.apiKey) {
+            headers.set('Authorization', this.configuration.apiKey);
+        }
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Delete,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     * @param jeanId 
+     */
+    public jeansGetWithHttpInfo(userId: string, jeanId: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/users/${userId}/jeans/${jeanId}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'userId' is not null or undefined
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling jeansGet.');
+        }
+        // verify required parameter 'jeanId' is not null or undefined
+        if (jeanId === null || jeanId === undefined) {
+            throw new Error('Required parameter jeanId was null or undefined when calling jeansGet.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'application/json'
+        ];
+
+        // authentication (blue-delta-userPool-authorizer) required
+        if (this.configuration.apiKey) {
+            headers.set('Authorization', this.configuration.apiKey);
+        }
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Get,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     */
+    public jeansListByUserWithHttpInfo(userId: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/users/${userId}/jeans`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'userId' is not null or undefined
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling jeansListByUser.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'application/json'
+        ];
+
+        // authentication (blue-delta-userPool-authorizer) required
+        if (this.configuration.apiKey) {
+            headers.set('Authorization', this.configuration.apiKey);
+        }
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Get,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     * @param jeanId 
+     * @param jean 
+     */
+    public jeansUpdateWithHttpInfo(userId: string, jeanId: string, jean: models.Jean, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/users/${userId}/jeans/${jeanId}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'userId' is not null or undefined
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling jeansUpdate.');
+        }
+        // verify required parameter 'jeanId' is not null or undefined
+        if (jeanId === null || jeanId === undefined) {
+            throw new Error('Required parameter jeanId was null or undefined when calling jeansUpdate.');
+        }
+        // verify required parameter 'jean' is not null or undefined
+        if (jean === null || jean === undefined) {
+            throw new Error('Required parameter jean was null or undefined when calling jeansUpdate.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'application/json'
+        ];
+
+        // authentication (blue-delta-userPool-authorizer) required
+        if (this.configuration.apiKey) {
+            headers.set('Authorization', this.configuration.apiKey);
+        }
+
+        headers.set('Content-Type', 'application/json');
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Post,
+            headers: headers,
+            body: jean == null ? '' : JSON.stringify(jean), // https://github.com/angular/angular/issues/10612
             search: queryParameters
         });
 
@@ -2167,6 +2530,85 @@ export class DefaultApi {
             method: RequestMethod.Post,
             headers: headers,
             body: user == null ? '' : JSON.stringify(user), // https://github.com/angular/angular/issues/10612
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     * @param jeanId 
+     */
+    public usersUserIdJeansJeanIdOptionsWithHttpInfo(userId: string, jeanId: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/users/${userId}/jeans/${jeanId}`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'userId' is not null or undefined
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling usersUserIdJeansJeanIdOptions.');
+        }
+        // verify required parameter 'jeanId' is not null or undefined
+        if (jeanId === null || jeanId === undefined) {
+            throw new Error('Required parameter jeanId was null or undefined when calling usersUserIdJeansJeanIdOptions.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Options,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     */
+    public usersUserIdJeansOptionsWithHttpInfo(userId: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/users/${userId}/jeans`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'userId' is not null or undefined
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling usersUserIdJeansOptions.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Options,
+            headers: headers,
             search: queryParameters
         });
 
