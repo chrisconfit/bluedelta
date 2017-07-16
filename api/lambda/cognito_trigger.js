@@ -9,6 +9,9 @@ function handler(event, context) {
 
     if (event.triggerSource && event.triggerSource === 'PostConfirmation_ConfirmSignUp') {
 	     	
+	     	
+	     	console.log(event);
+	     	
 	     	let attrs = event.request.userAttributes;
 	    	let newUser = {identityId: attrs.sub};
 	    	
@@ -21,17 +24,21 @@ function handler(event, context) {
             },
             body: JSON.stringify(newUser),
         };
-        return users.Get(payload)
-            .then((data) => {
-                console.log('User already exists in datastore : (' + data.userId + ')');
-            })
-            .catch((err) => {
-                if (err.statusCode == 404) {
-                    return UsersTable.put(JSON.parse(payload.body));
-                } else {
-                    throw err;
-                }
-            });
+        
+        console.log(payload);
+        console.log(users.Get(payload));
+        
+        users.Get(payload)
+        .then((data) => {
+            console.log('User already exists in datastore : (' + data.userId + ')');
+        })
+        .catch((err) => {
+            if (err.statusCode == 404) {
+              return UsersTable.put(JSON.parse(payload.body));
+            } else {
+	            throw err;
+            }
+        });
     }
 }
 
