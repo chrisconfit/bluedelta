@@ -22,10 +22,6 @@ function handler(event, context) {
             body: JSON.stringify(newUser),
         };
         
-        console.log(event);
-        console.log(payload);
-
-        
         users.Get(payload)
         .then((data) => {
             console.log('User already exists in datastore : (' + data.userId + ')');
