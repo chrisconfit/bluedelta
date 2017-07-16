@@ -8,10 +8,6 @@ let UsersTable = new data.UsersTable();
 function handler(event, context) {
 
     if (event.triggerSource && event.triggerSource === 'PostConfirmation_ConfirmSignUp') {
-	     	
-	     	
-	     	console.log(event);
-	     	
 	     	let attrs = event.request.userAttributes;
 	    	let newUser = {identityId: attrs.sub};
 	    	
@@ -24,9 +20,6 @@ function handler(event, context) {
             },
             body: JSON.stringify(newUser),
         };
-        
-        console.log(payload);
-        console.log(users.Get(payload));
         
         users.Get(payload)
         .then((data) => {
