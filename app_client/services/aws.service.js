@@ -175,7 +175,7 @@
 	    
       var attributeList = _buildAttributeList(_buildAttribute, {email: emailAddress, name: name});
       console.log(attributeList);
-      return false;
+      //return false;
       var cognitoUser;
       _getUserPool().signUp(emailAddress, password, attributeList, null, function(err, result) {
         if (err) defer.reject(err);
@@ -273,21 +273,44 @@
       });
     }
 
-    forgotPasswordFlow = function(cognitoUser) {
+    forgotPassword = function(userName) {
+	    var defer = $q.defer();
+	    var cognitoUser = _getCognitoUser(userName, _getUserPool());
       cognitoUser.forgotPassword({
         onSuccess: function (result) {
-            console.log('call result: ' + result);
+	        console.log("forgotPassword success... for some reason the email didn't send...");
+	        console.log(result);
+		      defer.reject(result);
         },
         onFailure: function(err) {
-            alert(err);
+          console.log(err);
+          defer.reject(err);
         },
         
         inputVerificationCode: function() {
-            var verificationCode = prompt('Please input verification code ' ,'');
-            var newPassword = prompt('Enter new password ' ,'');
-            cognitoUser.confirmPassword(verificationCode, newPassword, this);
+					defer.resolve("email sent");
         }
       });
+      
+      return defer.promise;
+    }
+    
+    setNewPassword = function(userName, verificationCode, newPassword){
+			var cognitoUser = _getCognitoUser(userName, _getUserPool());
+			var defer = $q.defer();
+      cognitoUser.confirmPassword(verificationCode, newPassword, {
+	      onSuccess: function (result) {
+		      console.log("setNewPass success!!");
+	        console.log(result);
+		      defer.resolve(result);
+        },
+        onFailure: function(err) {
+	        console.log("setNewPass error!!");
+          console.log(err);
+          defer.reject(err);
+        },
+      });
+      return defer.promise;
     }
 
     deleteUser = function(cognitoUser) {
@@ -456,7 +479,8 @@
       resendConfirmationCode: resendConfirmationCode,
       confirmRegistration: confirmRegistration,
       changePassword: changePassword,
-      forgotPasswordFlow: forgotPasswordFlow,
+      forgotPassword: forgotPassword,
+      setNewPassword: setNewPassword,
       deleteUser: deleteUser,
       signUserOut: signUserOut,
       signUserOutGlobally: signUserOutGlobally,

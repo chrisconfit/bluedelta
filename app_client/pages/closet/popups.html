@@ -58,51 +58,48 @@
 		<a class="popup-closer" href="" ng-click="vm.popups.editUser = false"></a>
 		<div class="popup-content-inner">
 		
-			<div class="user-pop-group">
+			<div class="user-pop-group user-form" ng-init="inputs = [{label:'Email', field:'email'},{label:'Phone', field:'phone'}]">
 				
 				<h3>Basic Information</h3>
+				
 				<div class="input-container">
 					<label>Name:</label>
-					<span>{{vm.user.name}}</span>
+					<span class="user-value">{{vm.user.name}}</span>
 				</div>
-				
-				<div class="input-container">		
-					<label>Email:</label>
-					<span ng-if="!vm.userForm.editing.email">
-						{{vm.user.email}}
-						<i class="fa fa-pencil" ng-click="vm.userForm.editing.email=true;"></i>
+			
+				<div class="input-container" ng-repeat="i in inputs">
+					
+					<label>{{i.label}}:</label>
+					
+					<span ng-if="!vm.userForm.editing[i.field]">
+						<span class="user-value editable" ng-if="vm.user[i.field]">
+							{{vm.user[i.field]}}
+							<i class="fa fa-pencil" ng-click="vm.userForm.editing[i.field]=true;"></i>
+						</span>
+						<span ng-if="!vm.user[i.field]"  class="empty-value-button" ng-click="vm.userForm.editing[i.field]=true;">
+							Add {{i.label}} <i class="fa fa-add-plus-circle"></i>
+						</span>
 					</span>
-					<div class="input-group icon-control" ng-if="vm.userForm.editing.email">
-						<input type="text" ng-model="vm.user.email">
+					
+					<div class="input-group icon-control" ng-if="vm.userForm.editing[i.field]">
+						<input type="text" ng-model="vm.user[i.field]">
 						<div class="icon-controls">
-							<i class="fa fa-undo" ng-click="vm.userForm.cancel('email')"></i>
-							<i class="fa" ng-class="vm.userForm.saving.email ? 'fa-circle-o-notch fa-spin' : 'fa-check' " ng-click="vm.userForm.save('email')"></i>
+							<i class="fa fa-undo" ng-click="vm.userForm.cancel(i.field)"></i>
+							<i class="fa" ng-class="vm.userForm.saving[i.field] ? 'fa-circle-o-notch fa-spin' : 'fa-check' " ng-click="vm.userForm.save(i.field)"></i>
 						</div>
 					</div>
 				</div>
+
 				
-				<div class="input-container">		
-					<label>Phone Number:</label>
-					<span ng-if="!vm.userForm.editing.phoneNumber">
-						{{vm.user.phoneNumber}}
-						<i class="fa fa-pencil" ng-click="vm.userForm.editing.phoneNumber=true;"></i>
-					</span>
-					<div class="input-group icon-control" ng-if="vm.userForm.editing.phoneNumber">
-						<input type="text" ng-model="vm.user.phoneNumber">
-						<div class="icon-controls">
-							<i class="fa fa-undo" ng-click="vm.userForm.cancel('phoneNumber')"></i>
-							<i class="fa fa-check" ng-click="vm.userForm.save('phoneNumber')"></i>
-						</div>
-					</div>
-				</div>
-						
+				
+										
 				<div class="message-block" ng-show="vm.messages.message">
 		  		<p class="form-messages {{vm.messages.type}}" ng-bind-html="vm.messages.message"></p>
 				</div>
 				
 			</div>
 			
-			<div class="user-pop-group">
+			<div class="user-pop-group add-form">
 				<ng-include  src="'/pages/closet/addresses.html'"></ng-include>				
 			</div>
 			

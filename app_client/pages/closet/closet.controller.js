@@ -98,12 +98,13 @@
 			}
 		}
 				
-    var user = aws.getCurrentUserFromLocalStorage();
-    if (user){
-	    bdAPI.defaultHeaders_['Authorization'] = user.idToken.getJwtToken();
-	    var idTokenPayload = user.idToken.jwtToken.split('.')[1];
-			var userID = JSON.parse(atob(idTokenPayload)).sub;	
-			bdAPI.usersGet(userID).then(
+    var cognitoUser = aws.getCurrentUserFromLocalStorage();
+    if (cognitoUser){
+	    
+	    bdAPI.defaultHeaders_['Authorization'] = cognitoUser.idToken.getJwtToken();
+	    var idTokenPayload = cognitoUser.idToken.jwtToken.split('.')[1];
+			var identityID = JSON.parse(atob(idTokenPayload)).sub;	
+			bdAPI.usersGet(identityID).then(
 				function(result){
 					
 					loader.hide();
@@ -111,21 +112,18 @@
 					vm.user = result.data;	
 					console.log(vm.user);
 					vm.userForm.data = angular.copy(result.data);
-					$scope.$apply();
-/*					
+					$scope.$apply();					
+					
 					console.log(vm.user);
-					vm.user.name = "Chris LeFevre";
-					
-					console.log(vm.data.jeansList);
-					
-					
-					
+				/*
+					vm.user.address=[];
+				
 					bdAPI.usersUpdate(vm.user.identityId, vm.user).then(function(res){
 						console.log("updated...");
 						console.log(res);
 					})
 					*/
-					
+				
 				}, 
 				function(err){console.log(err)} 
 			);

@@ -809,10 +809,14 @@ body {
   line-height: 4rem;
 }
 .input-group.icon-control {
+  padding-right: 50px;
+  margin-bottom: 15px;
+  display: inline-block;
+  width: 300px;
   margin-bottom: 15px;
 }
 .input-group.icon-control input {
-  width: calc(100% - 55px);
+  width: 100%;
 }
 .input-group.icon-control .icon-controls {
   position: absolute;
@@ -2998,6 +3002,66 @@ ul.tailor-list {
   line-height: 32px;
   font-size: 2.4rem;
   line-height: 3.2rem;
+}
+
+.user-pop-group {
+  max-width: 600px;
+}
+.user-pop-group:not(:last-of-type) {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #bac2c5;
+}
+.user-pop-group i {
+  color: #41778b;
+  font-size: 14px;
+}
+
+.user-form label {
+  width: 100px;
+  display: inline-block;
+}
+.user-form .input-container {
+  margin-bottom: 7px;
+}
+.user-form .input-group.icon-control {
+  margin-bottom: 0;
+}
+.user-form .empty-value-button {
+  color: #004964;
+}
+
+.add-form span.add-line {
+  display: block;
+}
+.add-form .single-address {
+  background: #e8edef;
+  width: 100%;
+  position: relative;
+  padding: 5px 50px;
+}
+.add-form .single-address:not(:last-child) {
+  margin-bottom: 15px;
+}
+@media screen and (min-width: 500px) {
+  .add-form .single-address {
+    width: 375px;
+  }
+}
+.add-form .single-address a.check-box {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: -15px;
+}
+.add-form .single-address .icon-controls {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -14px;
+}
+.add-form .address-action-link:first-of-type {
+  margin-right: 20px;
 }
 
 .loadingDiv {

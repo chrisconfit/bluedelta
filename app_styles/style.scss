@@ -379,9 +379,13 @@ body{
 	}
 	
 	&.icon-control{
+		padding-right:50px;
+		margin-bottom: 15px;
+    display: inline-block;
+    width: 300px;
 		margin-bottom:15px;
 		input{
-			width:calc(100% - 55px);
+			width:100%;
 		}
 		.icon-controls{
 			position:absolute;
@@ -679,7 +683,6 @@ form.cft-form{
 	}
 }
 
-
 .box-title{
 	color:#fff;
 	background:$blue;
@@ -721,6 +724,67 @@ form.cft-form{
 	}
 }
 
+.user-pop-group{
+	max-width:600px;
+	&:not(:last-of-type){
+		margin-bottom:15px;
+		padding-bottom:15px;
+		border-bottom:1px solid $grey;
+	}
+	i{
+		color:$teal;
+		font-size:14px;
+	}
+}
+
+.user-form{
+	label{
+		width:100px;
+		display:inline-block;
+	}
+	.input-container{
+		margin-bottom:7px;
+	}
+	.input-group.icon-control{
+		margin-bottom:0;
+	}
+	.empty-value-button{
+		color:$blue;
+	}
+}
+
+.add-form{
+	span.add-line{
+		display:block;
+	}
+	.single-address{
+		background:$greyBlue;
+		&:not(:last-child){
+			margin-bottom:15px;
+		}
+		width:100%;
+		@include at-query($min, 500px){
+			width:375px;
+		}
+		position:relative;
+		padding:5px 50px;
+		a.check-box{
+			position:absolute;
+			top:50%;
+			left:0;
+			margin-top:-15px;
+		}
+		.icon-controls{
+			position: absolute;
+			right:10px;
+			top:50%;
+			margin-top:-14px;
+		}
+	}
+	.address-action-link:first-of-type{
+		margin-right:20px;
+	}
+}
 
 //Loading Div
 .loadingDiv{
