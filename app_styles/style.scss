@@ -322,7 +322,10 @@ body{
 	
 }
 
-
+.login-actions a{
+	margin-top:7px;
+	display:block;
+}
 
 		
 
@@ -404,6 +407,7 @@ body{
 }
 
 form.cft-form{
+	margin-top:20px;
 	button.btn{
 		padding: 8px 20px;
 		display:inline-block;
@@ -671,6 +675,13 @@ form.cft-form{
 }
 
 .box-content{
+	.btn{
+		display:block;
+		width:100%;
+		&:not(:last-child){
+			margin-bottom:10px;
+		}
+	}
 	background:$lightGrey;
 	padding:10px;
 	h4{

@@ -54,3 +54,9 @@
 	</div>
 
 </div>
+
+
+<div class="saving-notification" ng-class="{active:vm.savingBar}">
+	<h3 ng-if="vm.savingBar"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> Saving...</h3>
+	<h3 ng-if="!vm.savingBar">Jean Saved!</h3>
+</div>

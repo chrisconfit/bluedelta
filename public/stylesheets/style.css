@@ -743,6 +743,11 @@ body {
   }
 }
 
+.login-actions a {
+  margin-top: 7px;
+  display: block;
+}
+
 .input-group {
   position: relative;
   margin-bottom: 25px;
@@ -831,6 +836,9 @@ body {
   margin-right: 0;
 }
 
+form.cft-form {
+  margin-top: 20px;
+}
 form.cft-form button.btn, form.cft-form button.btn-secondary {
   padding: 8px 20px;
   display: inline-block;
@@ -2943,6 +2951,13 @@ ul.tailor-list {
 .box-content {
   background: #f1f1f1;
   padding: 10px;
+}
+.box-content .btn, .box-content .btn-secondary {
+  display: block;
+  width: 100%;
+}
+.box-content .btn:not(:last-child), .box-content .btn-secondary:not(:last-child) {
+  margin-bottom: 10px;
 }
 .box-content h4 {
   font-size: 18px;

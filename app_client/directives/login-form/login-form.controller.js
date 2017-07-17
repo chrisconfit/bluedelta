@@ -120,8 +120,11 @@
 			messages.reset();
 	    if (logvm.validateForgot2()){
 				aws.setNewPassword(logvm.credentials.loginEmail, logvm.credentials.loginVerifcation, logvm.credentials.newPassword).then(
-					function(result){
-						console.log(result);
+					function(){
+						//Password reset successfully...
+						messages.set("Password reset successfully. Try logging in.", "success");
+						logvm.forgotPassword = false;
+						logvm.forgotPassword2 = false;
 					},
 					function(err){
 						messages.set(err.message,"error");

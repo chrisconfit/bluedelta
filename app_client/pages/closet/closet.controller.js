@@ -81,7 +81,7 @@
 		
 		
 		vm.userForm.save = function(field){
-			
+			if (vm.user[field] == "") vm.user[field] = null;
 			if (vm.userForm.validate(field, vm.user[field])){
 				vm.userForm.saving[field] = true;
 				bdAPI.usersUpdate(vm.user.identityId, vm.user).then(

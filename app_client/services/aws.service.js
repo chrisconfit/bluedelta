@@ -280,25 +280,7 @@
 	    var cognitoUser = _getCognitoUser(userName, _getUserPool());
 	    
 	    
-	    
 	    cognitoUser.forgotPassword({
-        onSuccess: function (result) {
-            console.log('call result: ');console.log(result);
-            defer.resolve(result);
-        },
-        onFailure: function(err) {
-	        	defer.reject(err);
-            console.log(err);
-        },
-        inputVerificationCode: function() {
-            var verificationCode = prompt('Please input verification code ' ,'');
-            var newPassword = prompt('Enter new password ' ,'');
-            cognitoUser.confirmPassword(verificationCode, newPassword, this);
-        }
-			});	
-			/*
-	    
-      cognitoUser.forgotPassword({
         onSuccess: function (result) {
 	        console.log("forgotPassword success... for some reason the email didn't send...");
 	        console.log(result);
@@ -314,32 +296,19 @@
 					defer.resolve("email sent");
         }
       });
-      */
+      
       return defer.promise;
     }
     
     setNewPassword = function(userName, verificationCode, newPassword){
-	    console.log("args");
-	    console.log(userName, verificationCode, newPassword);
-	    
 			var cognitoUser = _getCognitoUser(userName, _getUserPool());
-			console.log("user");
-			console.log(cognitoUser);
-			
 			var defer = $q.defer();
-			console.log(cognitoUser.confirmPassword);
-			
-			
-		
 			
       cognitoUser.confirmPassword(verificationCode, newPassword, {
 	      onSuccess: function (result) {
-		      console.log("setNewPass success!!");
-	        console.log(result);
-		      defer.resolve(result);
+		      defer.resolve();
         },
         onFailure: function(err) {
-	        console.log("setNewPass error!!");
           console.log(err);
           defer.reject(err);
         },

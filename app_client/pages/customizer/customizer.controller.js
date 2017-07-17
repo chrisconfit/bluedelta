@@ -240,17 +240,18 @@
 				return dataUrl;
 	    });	
   	}
+		
+		vm.savingBar = false;
 				
     vm.saveCallback = function(callback){
 	    popups.closeAll();
-	    loader.show('saver');
+			vm.savingBar = true;
 	    vm.createThumb().then( function(imageURL){
 		    var userData = aws.getCurrentUserFromLocalStorage();
 				if (userData){
-					console.log("U:"+userData);
 					aws.saveImageTos3(imageURL, userData).then(
 						function(result){
-				  		loader.hide('saver');
+				  		vm.savingBar = false;
 							jean.set('saved', true);
 				  		jean.set('saved_at',new Date());
 				  		jean.set('image',result);
