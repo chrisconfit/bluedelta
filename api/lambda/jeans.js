@@ -31,7 +31,7 @@ function Delete(event, context){
     return UsersTable.get(event.pathParameters.userId).then(
         (data) => {
             if (data.jeans) {
-                data.jeans = data.jeans.filter( (jean) => !(jean.jeanId === event.pathParameters.jeanId));
+                data.jeans = data.jeans.filter( (jean) => { return !(jean.jeanId == parseInt(event.pathParameters.jeanId)) });
                 return UsersTable.put(data);
             }
         }
@@ -41,8 +41,9 @@ function Delete(event, context){
 function Get(event, context) {
     return UsersTable.get(event.pathParameters.userId).then(
         (data) => {
+            console.log(data);
             return new Promise((resolve, reject) => {
-                var jean = data.jeans.find( (jean) => jean.jeanId === event.pathParameters.jeanId );
+                var jean = data.jeans.find( (jean) => { return jean.jeanId == parseInt(event.pathParameters.jeanId) });
                 if (jean) {
                     resolve(jean)
                 } else {
@@ -69,7 +70,7 @@ function Update(event, context) {
         (data) => {
             input.id = event.pathParameters.jeanId;
             if (data.jeans) {
-                data.jeans = data.jeans.filter( (jean) => !(jean.jeanId === event.pathParameters.jeanId) );
+                data.jeans = data.jeans.filter( (jean) => { return !(jean.jeanId === parseInt(event.pathParameters.jeanId)) } );
                 data.jeans.push(input);
             }
 

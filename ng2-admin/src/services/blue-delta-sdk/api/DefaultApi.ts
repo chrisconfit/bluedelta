@@ -1433,11 +1433,6 @@ export class DefaultApi {
         let produces: string[] = [
         ];
 
-        // authentication (blue-delta-userPool-authorizer) required
-        if (this.configuration.apiKey) {
-            headers.set('Authorization', this.configuration.apiKey);
-        }
-
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
             headers: headers,
