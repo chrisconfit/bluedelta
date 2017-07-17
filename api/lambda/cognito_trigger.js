@@ -8,7 +8,6 @@ let UsersTable = new data.UsersTable();
 function handler(event, context) {
 
     if (event.triggerSource && event.triggerSource === 'PostConfirmation_ConfirmSignUp') {
-
 	     	let attrs = event.request.userAttributes;
 	    	let newUser = {identityId: attrs.sub};
 	    	
@@ -22,9 +21,10 @@ function handler(event, context) {
             body: JSON.stringify(newUser),
         };
         
-        users.Get(payload)
+
+        return users.Get(payload)
         .then((data) => {
-            console.log('User already exists in datastore : (' + data.userId + ')');
+          console.log('User already exists in datastore : (' + data.userId + ')');
         })
         .catch((err) => {
             if (err.statusCode == 404) {

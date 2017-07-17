@@ -67,16 +67,23 @@ function wrapFunction(func) {
 function wrapCognitoFunction(func) {
   return (event, context, callback) => {
     try {
-      func(event, context).then((data) => {
+      var promise = func(event, context);
+      if (promise) {
+        promise.then((data) => {
+          callback(null, event);
+        }).catch((lambdaError) => {
+          callback(lambdaError, event);
+        });
+      } else {
+        console.log("No promise to process - assuming OK?");
         callback(null, event);
-      }).catch((lambdaError) => {
-        callback(lambdaError, event);
-      });
+      }
     } catch (e) {
       callback(e, event);
     }
   };
 }
+
 
 function wrapModule(mod) {
   let out = {};
