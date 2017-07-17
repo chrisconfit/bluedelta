@@ -168,8 +168,6 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-      security:
-      - blue-delta-userPool-authorizer: []
     get:
       description: Returns a Jean
       operationId: jeans-Get
