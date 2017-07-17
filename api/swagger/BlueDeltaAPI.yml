@@ -870,6 +870,8 @@ definitions:
     properties:
       jeanId:
         type: string
+      image:
+      	type: string
       measurement:
         $ref: "#/definitions/Measurement"
       top_thread:
