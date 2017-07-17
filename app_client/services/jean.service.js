@@ -3,9 +3,9 @@
 
   angular
     .module('bdApp')
-    .service('jean', ['$routeParams', 'bdAPI', jean]);
+    .service('jean', ['$routeParams', 'bdAPI', '$q', 'aws', jean]);
 
-  function jean($routeParams, bdAPI) {
+  function jean($routeParams, bdAPI, $q, aws) {
 
    	data = {};
 		
@@ -22,8 +22,7 @@
 					"fabric" : "1004",
 					"accent_thread" : "1",
 					"top_thread" : "1",
-					"bottom_thread" : "1",
-					"id":Math.floor(Math.random() * 1000000000)
+					"bottom_thread" : "1"
 					
 				}
 				this.saved=false;
@@ -36,8 +35,7 @@
 					"fabric" : jean.data.fabric,
 					"accent_thread" : jean.data.accent_thread,
 					"top_thread" : jean.data.top_thread,
-					"bottom_thread" : jean.data.bottom_thread,
-					"id":Math.floor(Math.random() * 1000000000)
+					"bottom_thread" : jean.data.bottom_thread
 				}
 			}
 		};
@@ -73,6 +71,36 @@
 	      
 	      case "ta":
 	      return "accent_thread";
+	      
+	      default: return false;
+			}
+		}
+		
+		
+		function jeanKeytoURL(key){
+			switch(key){
+				case "gender":
+	      return "g";
+	      break;
+	      
+	      case "style":
+	      return "s";
+	      break;
+	      
+	      case "fabric":
+	      return "f";
+	      break;
+	      
+	      case "top_thread":
+	      return "tt";
+	      break;
+	      
+	      case "bottom_thread":
+	      return "tb";
+	      break;
+	      
+	      case "accent_thread":
+	      return "ta";
 	      
 	      default: return false;
 			}
@@ -133,8 +161,138 @@
 			return this.data;
 		}
 		
-		var save = function(jean){
-			console.log("saving jean...");	
+		
+		function loadImage(src, cntxt) {
+      return $q(function(resolve,reject) {
+        var image = new Image();
+        image.src = src;
+        image.onload = function() {
+          cntxt.drawImage(image,0,0,600,696);
+          resolve(image);
+        };
+        image.onerror = function(e) {
+          reject(e);
+        };
+      })
+    }
+    
+		createThumb = function(){
+	  	var canvas = document.createElement('canvas');
+	  	canvas.width=600;
+	  	canvas.height=600;
+	  	var cntxt = canvas.getContext('2d');	
+	  	var promises = [];
+			var images = [
+				'/images/components/fabrics/g'+this.data.gender+'/s2/f'+this.data.fabric+'.jpg',
+				'/images/components/threads/g'+this.data.gender+'/s2/tb/'+this.data.bottom_thread+'.png',
+				'/images/components/threads/g'+this.data.gender+'/s2/tt/'+this.data.top_thread+'.png',
+				'/images/components/threads/g'+this.data.gender+'/s2/ta/'+this.data.accent_thread+'.png'
+			];
+			
+	    for(var i=0; i<images.length; i++){
+	      promises.push(loadImage(images[i], cntxt));
+	    }
+
+	    return $q.all(promises).then(function(results) {
+	      var dataUrl = canvas.toDataURL('image/jpeg');
+				return dataUrl;
+	    });	
+  	}
+
+		
+		
+		getDataCode = function(){
+			var url = "";
+			
+			for (var property in this.data) {
+			  if (this.data.hasOwnProperty(property)) {
+					var urlKey = jeanKeytoURL(property);
+					if (urlKey) url += "_"+urlKey+this.data[property];
+			  }
+			}	
+			
+			url = url.replace(/(^[_\s]+)|([_\s]+$)/g, '');
+			return url;
+		}
+		
+		
+		var save = function(){
+			
+			var defer = $q.defer();
+			
+			var jean = this.data;
+			console.log("jean");
+			console.log(jean);
+			var filename = this.getDataCode();
+			filename += ".jpg";
+			
+			this.createThumb().then( function(imageURL){
+		    var userData = aws.getCurrentUserFromLocalStorage();
+				bdAPI.defaultHeaders_['Authorization'] = userData.idToken.getJwtToken();
+				var idTokenPayload = userData.idToken.jwtToken.split('.')[1];
+				var identityID = JSON.parse(atob(idTokenPayload)).sub;	
+
+				console.log(userData);
+				
+				if (userData){		
+					aws.saveImageTos3(imageURL, userData, filename).then(
+						function(result){	
+				  		
+				  		jean.image = result;
+							console.log(jean);
+							
+							if (jean.jeanId){
+								//Update existing Jean...
+								bdAPI.jeansUpdate(userId, jeanId, jean).then(
+									function(result){
+										defer.resolve(result);
+									},
+									function(err){
+										console.log(err);
+										defer.reject(err);
+									}
+								);
+							}else{
+								//Create New Jean...
+								bdAPI.jeansCreate(identityID, jean).then(
+									function(result){
+										defer.resolve(result);
+									},
+									function(err){
+										console.log(err);
+										defer.reject(err);
+									}
+								);
+							}
+							
+				  	}, function(err){
+					  	console.log(err);
+					  	defer.reject(err.message);
+					  }
+					);
+				}else{
+					defer.reject("You are not logged in...");
+				}
+				
+				
+	    });
+			
+			return defer.promise;
+			
+			
+			/*
+			if (jean.id !== null){
+				jeansUpdate(userId, jean.id, jean).then(function(result){
+					console.log(result);
+				});	
+			}
+			else{
+				jeansCreate(userId, jean).then(function(result){
+					console.log(result);
+					
+				});	
+			}
+			*/
 		}
 		
     return {
@@ -143,9 +301,10 @@
 	    setup : setup,
       data : data,
       set : set,
-      createNew :createNew
-    };
-    
+      createNew :createNew,
+      getDataCode: getDataCode,
+      createThumb: createThumb
+     }
   }
 
 })();

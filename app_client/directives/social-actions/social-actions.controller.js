@@ -12,43 +12,9 @@
 			var sovm = this;
 			sovm.jean = jean;
 			
-			function jeanKeytoURL(key){
-				switch(key){
-					case "gender":
-		      return "g";
-		      break;
-		      
-		      case "style":
-		      return "s";
-		      break;
-		      
-		      case "fabric":
-		      return "f";
-		      break;
-		      
-		      case "top_thread":
-		      return "tt";
-		      break;
-		      
-		      case "bottom_thread":
-		      return "tb";
-		      break;
-		      
-		      case "accent_thread":
-		      return "ta";
-		      
-		      default: return false;
-				}
-			}
 			
 			sovm.jeanToUrl = function(){
-				var url = document.location.origin+"/customizer/d";
-				for (var property in sovm.jean.data) {
-			    if (sovm.jean.data.hasOwnProperty(property)) {
-						var urlKey = jeanKeytoURL(property);
-						if (urlKey) url += ":"+urlKey+sovm.jean.data[property];
-			    }
-				}				
+				var url = document.location.origin+"/customizer/d";	
 				url += "/copy";
 				return url;
 			}

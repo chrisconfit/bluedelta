@@ -425,7 +425,7 @@
     
     
     //Save an image to s3 Bucket
-    saveImageTos3 = function (imageURL, userTokens){
+    saveImageTos3 = function (imageURL, userTokens, filename){
 			
 		function dataURItoBlob(dataURI) {
 			var binary = atob(dataURI.split(',')[1]);
@@ -447,7 +447,7 @@
 					var blobData = dataURItoBlob(imageURL);
 					var bucketName = 'blue-delta-api-development-stack-userdatabucket-12z57hiicf3xy';
 					var s3bucket = new AWS.S3({region: AWSConfig.REGION, params: {Bucket: bucketName}});
-					var params = {Key: AWS.config.credentials.identityId + "/" + "myfilename.png", Body: blobData};
+					var params = {Key: AWS.config.credentials.identityId + "/" + filename, Body: blobData};
 
 					s3bucket.upload(params, function(err, data){	      
 						if (err) defer.reject(err);

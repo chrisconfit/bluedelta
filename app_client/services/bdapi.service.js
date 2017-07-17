@@ -85,6 +85,7 @@
 			return user;
 		}
 		
+
 		//Save User
 		BlueDeltaApi.saveUser = function(user){
 			var defer = $q.defer();

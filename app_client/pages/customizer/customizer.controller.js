@@ -178,7 +178,7 @@
 				
 		/*
 		*
-		* Place Order - 
+		* Control Panel actions
 		*
 		*/
 		vm.orderCallback = function(){
@@ -200,72 +200,15 @@
 			}
 		}
 
-	
-		
-		/*
-		*
-		* SAVE JEAN - Create thumbnail, save jean
-		*
-		*/	
-				
-  	function loadImage(src, cntxt) {
-      return $q(function(resolve,reject) {
-        var image = new Image();
-        image.src = src;
-        image.onload = function() {
-          cntxt.drawImage(image,0,0,600,696);
-          resolve(image);
-        };
-        image.onerror = function(e) {
-          reject(e);
-        };
-      })
-    }
-    
-		vm.createThumb = function(){
-	  	var canvas = document.createElement('canvas');
-	  	canvas.width=600;
-	  	canvas.height=600;
-	  	var cntxt = canvas.getContext('2d');	
-	  	var promises = [];
-    
-	    var imagesElements = document.getElementsByClassName("zoomed-image");
-	    for(var i=0; i<imagesElements.length; i++){
-		    var image = imagesElements[i];	
-	      promises.push(loadImage(image.src, cntxt));
-	    }
-
-	    return $q.all(promises).then(function(results) {
-	      var dataUrl = canvas.toDataURL('image/jpeg');
-				return dataUrl;
-	    });	
-  	}
-		
 		vm.savingBar = false;
-				
+			
     vm.saveCallback = function(callback){
 	    popups.closeAll();
 			vm.savingBar = true;
-	    vm.createThumb().then( function(imageURL){
-		    var userData = aws.getCurrentUserFromLocalStorage();
-				if (userData){
-					aws.saveImageTos3(imageURL, userData).then(
-						function(result){
-				  		vm.savingBar = false;
-							jean.set('saved', true);
-				  		jean.set('saved_at',new Date());
-				  		jean.set('image',result);
-							jean.save();
-				  		if (callback) callback(result);
-				  	}, function(err){console.log(err)}
-					);
-				}else{
-					//Turn off saving bar and force login agian....
-					vm.savingBar = false;
-					vm.authCallback = vm.saveCallback;
-					popups.set('loginOrRegister',true);
-				}
-	    });
+			jean.save().then(function(result){
+				vm.savingBar = false;
+				console.log(result);
+			});
     }
     
     vm.saveJean = function(){
@@ -279,9 +222,8 @@
     	}
   	}
     
-    
-    //init auth callback
-    vm.authCallback = vm.orderCallback;
+    //Set default auth callback
+		vm.authCallback = vm.orderCallback;
     
     
     

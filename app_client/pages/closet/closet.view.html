@@ -8,7 +8,7 @@
 		  <div class="page-title">
 				<h1>{{vm.user.name}}'s Closet</h1>
 			</div>
-
+{{vm.user.jeans}}
       <div class="jean-closet">	      
 	      <!--Production-->
 	      <div ng-if="(vm.data.jeansList | filter:{ status: 'production' }).length" class="production">
