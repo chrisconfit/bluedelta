@@ -5,8 +5,8 @@
     .module('bdApp')
     .service('bdAPI', bdAPI);
 
-  bdAPI.$inject = ['$window', '$http', '$httpParamSerializer', '$filter','$q'];
-  function bdAPI ($window, $http, $httpParamSerializer, $filter, $q) {
+  bdAPI.$inject = ['$window', '$http', '$httpParamSerializer', '$filter','$q', 'aws'];
+  function bdAPI ($window, $http, $httpParamSerializer, $filter, $q, aws) {
 
 	  $window._thirdParty = $window._thirdParty || {};
 	  $window._thirdParty.BlueDeltaApi =new API.Client.DefaultApi(angular.injector(["ng"]).get("$http"),
@@ -85,7 +85,13 @@
 			return user;
 		}
 		
-
+		BlueDeltaApi.setupHeaders = function(userData){
+			this.defaultHeaders_['Authorization'] = userData.idToken.getJwtToken();
+			var idTokenPayload = userData.idToken.jwtToken.split('.')[1];
+			var identityID = JSON.parse(atob(idTokenPayload)).sub;	
+			return identityID;
+		}
+		
 		//Save User
 		BlueDeltaApi.saveUser = function(user){
 			var defer = $q.defer();

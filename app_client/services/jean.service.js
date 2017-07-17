@@ -110,30 +110,54 @@
 		//Set up jean data from parameter
 		var setup = function(){
 			
-			//Copy or Create from Data
-			if ($routeParams.jean_id && $routeParams.action=='copy'){
-
-				//Create Jean from data
-				if ($routeParams.jean_id.indexOf(":")>0){
+			//Data URL
+			if ($routeParams.jeanId && !$routeParams.userId){
+				if ($routeParams.jeanId.indexOf(":")>0){
 					this.createNew();
-					jeanData = $routeParams.jean_id.split(":");
+					jeanData = $routeParams.jeanId.split(":");
 					for(var d=0; d<jeanData.length; d++){
 						var parts= jeanData[d].match(/([A-Za-z]+)([0-9]+)/);
 						if (!parts) continue;
 						var jeanKey = parseURLkey(parts[1]);
 						if (jeanKey) this.data[jeanKey] = parseInt(parts[2]);					
 					}
-					
 				}
+			}
+			
+			//Copy or Edit Jean
+			else if ($routeParams.jeanId && $routeParams.userId){
 				
-				//Copy Jean from ID	
-				else{	
-					this.createNew($routeParams.jean_id);
+				//First get Jean			
+				bdAPI.jeansGet($routeParams.userId, $routeParams.jeanId).then(
+					function(result){
+						console.log(result);
+					}, 
+					function(err){
+						console.log(err)
+					}
+				);
+				
+				var userData = aws.getCurrentUserFromLocalStorage();
+
+				if(userData){
+					var identityId = bdAPI.setupHeaders(userData);
+					if (identityId == $routeParams.userId){
+						
+						//Edit Jean
+						console.log($routeParams);
+						
+						
+					}else{
+						//Copy Jean
+						
+					}
 				}
+			}
 				
+				/*
 				
 			//Lookup Jean by Id
-			}else if ($routeParams.jean_id && !$routeParams.action){
+			}else if ($routeParams.jeanId){
 
 				//Edit Jean TODO: Change out with real API function to look up by ID...
 				bdAPI.jsonData.getJeanById($routeParams.jean_id, function(data){
@@ -146,12 +170,17 @@
 				});
 				
 			//New Jean or Existing Data.
-			}else{
+			}
+			
+			*/
+			else{
 				//New Jean
 				if(Object.keys(this.data).length === 0 && this.data.constructor === Object) this.createNew();
 				
 				//If there's already data in place we'll use that.
 			}
+			
+			
 			//Return Jean data...
 			return this.data;
 		}
@@ -228,6 +257,7 @@
 			
 			this.createThumb().then( function(imageURL){
 		    var userData = aws.getCurrentUserFromLocalStorage();
+		    
 				bdAPI.defaultHeaders_['Authorization'] = userData.idToken.getJwtToken();
 				var idTokenPayload = userData.idToken.jwtToken.split('.')[1];
 				var identityID = JSON.parse(atob(idTokenPayload)).sub;	
@@ -237,9 +267,7 @@
 				if (userData){		
 					aws.saveImageTos3(imageURL, userData, filename).then(
 						function(result){	
-				  		
-				  		jean.image = result;
-							console.log(jean);
+				  		jean.imageURL = result;
 							
 							if (jean.jeanId){
 								//Update existing Jean...

@@ -30,7 +30,7 @@
         controller: 'orderCtrl',
         controllerAs: 'vm'
       })
-      .when('/customizer/:jean_id?/:action?', {
+      .when('/customizer/:jeanId?/:userId?', {
         templateUrl: '/pages/customizer/customizer.view.html',
         controller: 'customizerCtrl',
         controllerAs: 'vm'

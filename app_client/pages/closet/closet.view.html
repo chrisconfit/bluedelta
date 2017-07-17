@@ -42,16 +42,16 @@
 			      </div>
 		      </div>
 	      </div>
-	      
+	      {{vm.user.jeans}}
 	      <!--Saved-->
-				<div ng-if="(vm.data.jeansList | filter:{ status: 'saved' }).length" class="saved">
+				<div ng-if="(vm.user.jeans | filter:{ ordered : '!true' }).length" class="saved">
 		      <h3>Saved</h3>
 		      <div class="cft-g jean-grid">
-			      <div ng-repeat="jean in vm.data.jeansList | filter:{ status: 'saved' }" class="cft-gi">
+			      <div ng-repeat="jean in vm.user.jeans | filter:{ ordered : '!true' }" class="cft-gi">
 				      <div class="jean-card">
-					      <img src="/images/thumbnails/{{jean.id}}.jpg">
+					      <img src="{{jean.imageURL}}">
 								<div class="box-content">
-									<a href="/customizer/{{jean.id}}">Edit</a> | <a href="/customizer/{{jean.id}}">Order</a> 
+									<a href="/customizer/{{jean.jeanId}}/{{vm.user.identityId}}">Edit</a> | <a href="vm.orderJean(jean)">Order</a> 
 								</div>
 				      </div>
 			      </div>
