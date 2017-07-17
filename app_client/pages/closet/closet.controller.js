@@ -115,14 +115,14 @@
 					$scope.$apply();					
 					
 					console.log(vm.user);
-				/*
-					vm.user.address=[];
+				
+					vm.user.jeans=[];
 				
 					bdAPI.usersUpdate(vm.user.identityId, vm.user).then(function(res){
 						console.log("updated...");
 						console.log(res);
 					})
-					*/
+					
 				
 				}, 
 				function(err){console.log(err)} 
