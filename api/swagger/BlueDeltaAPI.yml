@@ -464,7 +464,7 @@ paths:
   /ping:
     get:
       description: Unsecured ping
-      operationId: ping-PingOperation
+      operationId: ping-List
       responses:
         "200":
           description: Success
@@ -501,7 +501,7 @@ parameters:
   Button:
     in: "body"
     name: "body"
-    # required: true
+    required: true
     schema:
       $ref: "#/definitions/Button"
   ButtonId:
@@ -767,6 +767,8 @@ definitions:
       measurement:
         $ref: "#/definitions/Measurement"
       thread:
+        $ref: "#/definitions/Thread"
+      main_thread:
         $ref: "#/definitions/Thread"
       fabric:
         $ref: "#/definitions/Fabric"
