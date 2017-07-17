@@ -76,12 +76,14 @@ function wrapCognitoFunction(func) {
         });
       } else {
         console.log("No promise to process - assuming OK?");
+        callback(null, event);
       }
     } catch (e) {
       callback(e, event);
     }
   };
 }
+
 
 function wrapModule(mod) {
   let out = {};
