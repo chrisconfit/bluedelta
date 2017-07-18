@@ -13,10 +13,6 @@
 import * as models from './models';
 
 export interface Measurement {
-    measurementId?: string;
-
-    userId?: string;
-
     waist?: number;
 
     seat-down?: number;
@@ -52,7 +48,5 @@ export interface Measurement {
     leg-opening?: number;
 
     desired-fit?: number;
-
-    leg?: number;
 
 }

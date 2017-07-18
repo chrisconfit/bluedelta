@@ -6,18 +6,6 @@ goog.provide('API.Client.Measurement');
 API.Client.Measurement = function() {}
 
 /**
- * @type {!string}
- * @export
- */
-API.Client.Measurement.prototype.measurementId;
-
-/**
- * @type {!string}
- * @export
- */
-API.Client.Measurement.prototype.userId;
-
-/**
  * @type {!number}
  * @export
  */
@@ -124,10 +112,4 @@ API.Client.Measurement.prototype.legOpening;
  * @export
  */
 API.Client.Measurement.prototype.desiredFit;
-
-/**
- * @type {!number}
- * @export
- */
-API.Client.Measurement.prototype.leg;
 
