@@ -837,7 +837,7 @@ body {
 }
 
 form.cft-form {
-  margin-top: 20px;
+  margin-top: 25px;
 }
 form.cft-form button.btn, form.cft-form button.btn-secondary {
   padding: 8px 20px;
@@ -2661,6 +2661,7 @@ a.overview-trigger i {
 }
 
 .fit-options {
+  margin-bottom: 30px;
   background: #f1f1f1;
 }
 .fit-options .single-option {
@@ -2858,7 +2859,15 @@ ul.tailor-list {
   }
 }
 
+.address-block {
+  margin: 25px 0;
+  padding: 25px 0;
+  border-top: 1px solid #bac2c5;
+  border-bottom: 1px solid #bac2c5;
+}
+
 .form-messages {
+  margin: 10px 0;
   padding: 10px;
   border: 1px solid #802323;
   background: rgba(193, 82, 82, 0.3);
@@ -2944,7 +2953,7 @@ ul.tailor-list {
   margin: 0;
   display: block;
 }
-.jean-card h3, .jean-card h4, .jean-card h5 {
+.jean-card h3:not(.box-title), .jean-card h4:not(.box-title), .jean-card h5:not(.box-title) {
   margin-bottom: 5px;
 }
 
@@ -3019,6 +3028,10 @@ ul.tailor-list {
   line-height: 3.2rem;
 }
 
+.delete-jean {
+  margin: 0;
+}
+
 .user-pop-group {
   max-width: 600px;
 }
@@ -3032,7 +3045,7 @@ ul.tailor-list {
   font-size: 14px;
 }
 
-.user-form label {
+.user-form label.fixed-width {
   width: 100px;
   display: inline-block;
 }

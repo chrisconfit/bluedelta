@@ -12,26 +12,28 @@
     var vm = this;
     vm.popups=popups.get();
    
-		vm.jean=jean.data;
-		console.log(jean);
+		jean.setup().then(function(result){
+			vm.jean = result;
+			if (vm.jean.jeanId){
+				$location.path('/order/'+vm.jean.jeanId);
+			}
+		})
 		
 		vm.orderForm={};
 		vm.orderForm.step=1;
 		
 		vm.orderForm.data = {}
+		
 		vm.chooseFitType = function(type){
 			vm.orderForm.data.fitType = type;
-			
 			if (type == 2 && !vm.orderForm.data.tailor){
 				vm.popups.tailors=true;
-			}
-			
+			}	
 		}
 		
 		vm.tailorLocations=[];
 		
 		vm.data=jsonData.getData();
-		console.log(vm.data);
 		
 		vm.orderForm.nextStep = function(){
 			
@@ -59,20 +61,21 @@
 			
 		}
 
+
+/*
 		window.onbeforeunload = function() {
 		    return 'You have unsaved changes!';
 		}
-				
+	*/			
 		
 		
-		vm.jeans = [];
-   /* 
+		
+   
     var user = aws.getCurrentUserFromLocalStorage();
+
     if (user){
-	    bdAPI.defaultHeaders_['Authorization'] = user.idToken.getJwtToken();
-	    var idTokenPayload = user.idToken.jwtToken.split('.')[1];
-			var userID = JSON.parse(atob(idTokenPayload)).sub;	
-			bdAPI.usersGet(userID).then(
+	    var identityID = bdAPI.setupHeaders(user);
+			bdAPI.usersGet(identityID).then(
 				function(result){
 					vm.user = result.data;	
 					$scope.$apply();
@@ -80,10 +83,11 @@
 				function(err){console.log(err)} 
 			);
     }else{
-	    $location.path('/');
+	    //redirect if not logged in
+	    $location.path('/login');
 		}	
 
-		*/
+		
 
 	
 

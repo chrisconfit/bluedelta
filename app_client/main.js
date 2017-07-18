@@ -25,7 +25,7 @@
         controller: 'closetCtrl',
         controllerAs: 'vm'
       })
-      .when('/order', {
+      .when('/order/:jeanId?/:userId?', {
         templateUrl: '/pages/order/order.view.html',
         controller: 'orderCtrl',
         controllerAs: 'vm'
@@ -49,6 +49,26 @@
 
   function run($rootScope, $location, aws, jean, popups) {
 	  
+	  /*
+	  $location.update_path = function (path, keep_previous_path_in_history) {
+      if ($location.path() == path) return;
+
+      var routeToKeep = $route.current;
+      var unsubscribe = $rootScope.$on('$locationChangeSuccess', function () {
+        if (routeToKeep) {
+          $route.current = routeToKeep;
+          routeToKeep = null;
+        }
+        unsubscribe();
+        unsubscribe = null;
+      });
+
+      $location.path(path);
+      if (!keep_previous_path_in_history) $location.replace();
+    };
+		*/
+	  
+	  
     $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
 	    var locked = [
 		    '/closet',
@@ -58,12 +78,12 @@
 	    if (locked.indexOf($location.path()) >= 0 && !aws.isLoggedIn() ){
 				$location.path('/login');
 	  	}
-	  	
+	  	/*
 	  	//If there's no jean on the order screen.... redirect to the customizer page.
 	  	if($location.path().indexOf("/order") >= 0 && !Object.keys(jean.data).length){
 		  	$location.path('/customizer');
 		  };
-		  
+		  */
 		  
     });
   }

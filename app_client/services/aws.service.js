@@ -263,15 +263,26 @@
       });
     }
 
-    changePassword = function(cognitoUser, oldPassword, newPassword) {
-      cognitoUser.changePassword(oldPassword, newPassword, function(err, result) {
-        if (err) {
-            alert(err);
-            return;
-        }
-        console.log('call result: ' + result);
-      });
-    }
+    changePassword = function(username, oldPassword, newPassword) {
+	    var defer = $q.defer();
+	    var cognitoUser = _getCognitoUser(username, _getUserPool());
+			if (cognitoUser != null) {
+				cognitoUser.getSession(function(err, session) {
+			    if (err) {
+						defer.reject(err);
+			    }else{
+				  	cognitoUser.changePassword(oldPassword, newPassword, function(err, result) {
+			        if (err) defer.reject(err);
+			        else defer.resolve(result);
+			    	});  
+			    }
+				});
+			} else defer.reject("You are not logged in.");
+			return defer.promise;		   
+		}
+	    
+	    
+     
 
 
 		
@@ -413,16 +424,6 @@
     }
     
 		
-    changePassword = function(cognitoUser, oldPassword, newPassword) {
-      cognitoUser.changePassword(oldPassword, newPassword, function(err, result) {
-        if (err) {
-            alert(err);
-            return;
-        }
-        console.log('call result: ' + result);
-      });
-    }
-   
     
     
     

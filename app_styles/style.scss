@@ -407,7 +407,7 @@ body{
 }
 
 form.cft-form{
-	margin-top:20px;
+	margin-top:25px;
 	button.btn{
 		padding: 8px 20px;
 		display:inline-block;
@@ -595,6 +595,7 @@ form.cft-form{
 
 
 .form-messages{
+	margin:10px 0;
 	padding:10px;
 	border:1px solid #802323;
 	background:rgba(193, 82, 82, 0.3);
@@ -670,7 +671,9 @@ form.cft-form{
 		display:block;
 	}
 	h3,h4,h5{
-		margin-bottom:5px;
+		&:not(.box-title){
+			margin-bottom:5px;
+		}
 	}
 }
 
@@ -735,6 +738,9 @@ form.cft-form{
 	}
 }
 
+.delete-jean{
+	margin:0;
+}
 .user-pop-group{
 	max-width:600px;
 	&:not(:last-of-type){
@@ -749,7 +755,7 @@ form.cft-form{
 }
 
 .user-form{
-	label{
+	label.fixed-width{
 		width:100px;
 		display:inline-block;
 	}

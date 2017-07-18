@@ -40,7 +40,7 @@ function Delete(event, context){
 
 function Get(event, context) {
     return UsersTable.get(event.pathParameters.userId).then(
-        (data) => {
+        (data) => {	
             return new Promise((resolve, reject) => {
                 var jean = data.jeans.find( (jean) => jean.jeanId === event.pathParameters.jeanId );
                 if (jean) {

@@ -9,8 +9,7 @@
 			<div class="page-title">
 				<h1>Order <span class="sub-title">- Get your perfect fit</span></h1>
 			</div>
-			
-			
+
 			<!--Step 1-->
 			<div class="order-step-1" ng-if="vm.orderForm.step==1">
       	<p>Every single pair of Blue Delta Jeans is tailored to your body. To ensure we are getting a perfect fit, there are 3 ways you can order your jeans:</p>
@@ -51,50 +50,43 @@
 			<div class="order-step-2" ng-if="vm.orderForm.step==2">
 				<h3>Shipping Information</h3> 
 				<p>Each pair of Blue Delta Jeans is made to fit and will take 4 - 6 weeks to arrive at your doorstep.</p>
-				<form class="cft-form">
-					<div class="cft-g form-grid">
-						<div class="cft-gi">
-							<div ng-class="{active:vm.orderForm.data.phone}" class="input-group">
-								<input ng-model="vm.orderForm.data.phone" type="text">
-								<label>Phone Number</label>
-							</div>
-						</div><!--
-						--><div class="cft-gi">
-							<div ng-class="{active:vm.orderForm.data.add1}" class="input-group">
-								<input ng-model="vm.orderForm.data.add1" type="text">
-								<label>Address Line 1</label>
-							</div>
-						</div><!--
-						--><div class="cft-gi">
-							<div ng-class="{active:vm.orderForm.data.add2}" class="input-group">
-								<input ng-model="vm.orderForm.data.add2" type="text">
-								<label>Address Line 2</label>
-							</div>
-						</div><!--
-						--><div class="cft-gi">
-							<div ng-class="{active:vm.orderForm.data.city}" class="input-group">
-								<input ng-model="vm.orderForm.data.city" type="text">
-								<label>City</label>
-							</div>
-						</div><!--
-						--><div class="cft-gi">
-							<div ng-if="vm.orderForm.data.country !== 'US'" ng-class="{active:vm.orderForm.data.region}" class="input-group">
-								<input ng-model="vm.orderForm.data.region" ng-model="vm.orderForm.data.region" type="text">
-								<label>State/Region</label>
-							</div>
-							<ng-include ng-if="vm.orderForm.data.country == 'US'" src="'/pages/order/states.html'"></ng-include>
-						</div><!--
-						--><div class="cft-gi">
-							<ng-include src="'/pages/order/countries.html'"></ng-include>
-						</div><!--
-						--><div class="cft-gi">
-							<div ng-class="{active:vm.orderForm.data.zip}" class="input-group">
-								<input ng-model="vm.orderForm.data.zip" type="text">
-								<label>Zip</label>
-							</div>
+				
+					<div class="personal-info">
+				
+				<div class="input-container">
+					<label>Name:</label>
+					<span class="user-value">{{vm.user.name}}</span>
+				</div>
+			
+				<div class="input-container">
+					<label>Phone:</label>
+					<span ng-if="!vm.orderForm.editing.phone">
+						<span class="user-value editable" ng-if="vm.user.phone">
+							{{vm.user.phone}}
+							<i class="fa fa-pencil" ng-click="vm.orderForm.editing.phone=true;"></i>
+						</span>
+						<span ng-if="!vm.user.phone"  class="empty-value-button" ng-click="vm.orderForm.editing.phone=true;">
+							Add Phone Number <i class="fa fa-add-plus-circle"></i>
+						</span>
+					</span>
+					
+					<div class="input-group icon-control" ng-if="vm.orderForm.editing.phone">
+						<input type="text" ng-model="vm.user.phone">
+						<div class="icon-controls">
+							<i class="fa fa-undo" ng-click="vm.orderForm.cancel(i.field)"></i>
+							<i class="fa" ng-class="orderForm.phone ? 'fa-circle-o-notch fa-spin' : 'fa-check' " ng-click="vm.orderForm.save('phone')"></i>
 						</div>
 					</div>
-					
+				</div>
+
+					</div>
+				
+				
+					<div class="address-block">
+						<strong>Address:</strong>
+						<address-choice user="vm.user"></address-choice>
+					</div>
+									
 					<div ng-class="{active:vm.orderForm.data.comments}" class="input-group">
 						<textarea ng-model="vm.orderForm.data.comments" ></textarea>
 						<label>Additional Comments</label>
@@ -132,7 +124,10 @@
 	    <div class="jean-card">
 		    <h3 class="box-title">Your Jean</h3>
 		    <div class="box-content">
-			    <img src="{{vm.jean.image}}">
+			    <img src="{{vm.jean.imageURL}}">
+					<div class="jean-list order">
+						<jean-list></jean-list>						
+					</div>
 		    </div>
 	    </div>
 

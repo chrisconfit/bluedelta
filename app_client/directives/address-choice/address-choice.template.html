@@ -1,25 +1,22 @@
-<div ng-controller="addFormCtrl">
-
-	<h3>Shipping Address</h3>
-	
-	<div ng-if="!editing" ng-repeat="add in vm.user.address | filter:{primary:'true'} | limitTo:1">
+<div class="add-form">	
+	<div ng-if="!editing" ng-repeat="add in user.address | filter:{primary:'true'} | limitTo:1">
 		<span class='add-line'>{{add.addressLine1}}</span>
 		<span class='add-line' ng-if="add.addressLine2">{{add.addressLine2}}</span>
 		<span class='add-line'>{{add.city}}, {{add.state}} {{add.zip}}</span>
 		<a href="" ng-click="startEditing()">Change</a>
 	</div>
-	<a ng-if="!vm.user.address.length && !editing" ng-click="startEditing(); open();">Add a Shipping Address</a>
+	<a ng-if="!user.address.length && !active" ng-click="startEditing(); open();">Add a Shipping Address</a>
 
 	<div ng-if="editing">
 		
-		<div ng-if="!active" class="single-address" ng-repeat="add in vm.user.address track by $index">
+		<div ng-if="!active" class="single-address" ng-repeat="add in user.address track by $index">
 			<a href="" ng-click="choosePrimary($index)" ng-class="{checked:add.primary}" class="check-box small"></a>
 			<span class='add-line'>{{add.addressLine1}}</span>
 			<span class='add-line' ng-if="add.addressLine2">{{add.addressLine2}}</span>
 			<span class='add-line'>{{add.city}}, {{add.state}} {{add.zip}}</span>
 			<div class="icon-controls">
 				<i ng-click="open($index)" class="fa fa-pencil"></i>
-				<i ng-if="vm.user.address.length>1" ng-click="remove($index)" class="fa fa-minus-circle"></i>
+				<i ng-if="user.address.length>1" ng-click="remove($index)" class="fa fa-minus-circle"></i>
 			</div>
 		</div>
 	

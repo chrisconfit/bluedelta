@@ -29,13 +29,12 @@
 				
 			}else{
 				this.data = {
-					"title" : "Copy of "+jean.data.title,
-					"gender" : jean.data.gender,
-					"style" : jean.data.style,
-					"fabric" : jean.data.fabric,
-					"accent_thread" : jean.data.accent_thread,
-					"top_thread" : jean.data.top_thread,
-					"bottom_thread" : jean.data.bottom_thread
+					"gender" : jean.gender,
+					"style" : jean.style,
+					"fabric" : jean.fabric,
+					"accent_thread" : jean.accent_thread,
+					"top_thread" : jean.top_thread,
+					"bottom_thread" : jean.bottom_thread
 				}
 			}
 		};
@@ -108,10 +107,18 @@
 		
 		
 		//Set up jean data from parameter
-		var setup = function(){
+		var setup = function(data){
+			var defer = $q.defer();
+			console.log($routeParams);
+			
+			//Set up jean from data
+			if (data){
+				this.data = data;
+				defer.resolve(this.data);
+			}
 			
 			//Data URL
-			if ($routeParams.jeanId && !$routeParams.userId){
+			else if ($routeParams.jeanId && !$routeParams.userId){
 				if ($routeParams.jeanId.indexOf(":")>0){
 					this.createNew();
 					jeanData = $routeParams.jeanId.split(":");
@@ -122,67 +129,52 @@
 						if (jeanKey) this.data[jeanKey] = parseInt(parts[2]);					
 					}
 				}
+				defer.resolve(this.data);
 			}
 			
 			//Copy or Edit Jean
 			else if ($routeParams.jeanId && $routeParams.userId){
+				var jean = this;
 				
-				//First get Jean			
-				bdAPI.jeansGet($routeParams.userId, $routeParams.jeanId).then(
+				//First get Jean
+				bdAPI.jeansGet($routeParams.userId, $routeParams.jeanId).then(					
 					function(result){
-						console.log(result);
+						var newJean = result.data;
+						var userData = aws.getCurrentUserFromLocalStorage();
+						if(userData){
+							var identityId = bdAPI.setupHeaders(userData);
+							if (identityId == $routeParams.userId){ //Edit Jean		
+								jean.data=newJean;
+							}
+							else{ //Copy Jean
+								jean.createNew(newJean);
+							}
+						}else{
+							//Not logged in... copy jean
+							jean.createNew(newJean);
+						}
+						console.log(jean);
+						defer.resolve(jean.data);
 					}, 
 					function(err){
-						console.log(err)
+						//Jean or user not found.. just create a blank jean...
+						console.log(err);
+						jean.createNew();
+						defer.resolve(jean.data);
 					}
 				);
-				
-				var userData = aws.getCurrentUserFromLocalStorage();
-
-				if(userData){
-					var identityId = bdAPI.setupHeaders(userData);
-					if (identityId == $routeParams.userId){
-						
-						//Edit Jean
-						console.log($routeParams);
-						
-						
-					}else{
-						//Copy Jean
-						
-					}
-				}
-			}
-				
-				/*
-				
-			//Lookup Jean by Id
-			}else if ($routeParams.jeanId){
-
-				//Edit Jean TODO: Change out with real API function to look up by ID...
-				bdAPI.jsonData.getJeanById($routeParams.jean_id, function(data){
-					if (data){
-						this.data=data;	
-					}else{
-						//jean id doesn't exist
-						this.createNew();
-					}
-				});
-				
-			//New Jean or Existing Data.
 			}
 			
-			*/
+			//New Jean
 			else{
-				//New Jean
-				if(Object.keys(this.data).length === 0 && this.data.constructor === Object) this.createNew();
-				
+				if(Object.keys(this.data).length === 0 && this.data.constructor === Object) this.createNew();		
+				defer.resolve(this.data);		
 				//If there's already data in place we'll use that.
 			}
 			
 			
 			//Return Jean data...
-			return this.data;
+			return defer.promise;
 		}
 		
 		
@@ -244,6 +236,19 @@
 			return url;
 		}
 		
+		var deleter = function (userId, jeanId, callback){
+			console.log(userId,jeanId,callback);
+			var userData = aws.getCurrentUserFromLocalStorage();
+			bdAPI.defaultHeaders_['Authorization'] = userData.idToken.getJwtToken();
+			bdAPI.jeansDelete(userId, jeanId).then(
+				function(result){
+					if (callback) callback(result);
+				},
+				function(err){
+					console.log(err);
+				}
+			)
+		}
 		
 		var save = function(){
 			
@@ -271,7 +276,7 @@
 							
 							if (jean.jeanId){
 								//Update existing Jean...
-								bdAPI.jeansUpdate(userId, jeanId, jean).then(
+								bdAPI.jeansUpdate(identityID, jean.jeanId, jean).then(
 									function(result){
 										defer.resolve(result);
 									},
@@ -323,7 +328,10 @@
 			*/
 		}
 		
+		
+		
     return {
+	    deleter : deleter,
 	    save : save,
 	    get : get,
 	    setup : setup,

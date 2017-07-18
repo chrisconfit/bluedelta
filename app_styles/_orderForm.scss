@@ -9,6 +9,7 @@
 	}
 }
 .fit-options{
+	margin-bottom:30px;
 	background:$lightGrey;
 	.single-option{
 		padding:15px;
@@ -164,4 +165,11 @@ ul.tailor-list{
 	li{
 		
 	}
+}
+
+.address-block{
+	margin:25px 0;
+	padding:25px 0;
+	border-top:1px solid $grey;
+	border-bottom:1px solid $grey;
 }

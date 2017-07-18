@@ -63,14 +63,12 @@
 				<h3>Basic Information</h3>
 				
 				<div class="input-container">
-					<label>Name:</label>
+					<label class='fixed-width'>Name:</label>
 					<span class="user-value">{{vm.user.name}}</span>
 				</div>
 			
 				<div class="input-container" ng-repeat="i in inputs">
-					
-					<label>{{i.label}}:</label>
-					
+					<label class='fixed-width'>{{i.label}}:</label>
 					<span ng-if="!vm.userForm.editing[i.field]">
 						<span class="user-value editable" ng-if="vm.user[i.field]">
 							{{vm.user[i.field]}}
@@ -80,7 +78,6 @@
 							Add {{i.label}} <i class="fa fa-add-plus-circle"></i>
 						</span>
 					</span>
-					
 					<div class="input-group icon-control" ng-if="vm.userForm.editing[i.field]">
 						<input type="text" ng-model="vm.user[i.field]">
 						<div class="icon-controls">
@@ -89,8 +86,25 @@
 						</div>
 					</div>
 				</div>
-
 				
+				<a href="" ng-if="!vm.passForm.editing" ng-click="vm.passForm.editing=true">Change Password</a>
+				<form class="cft-form" ng-if="vm.passForm.editing">
+					<div ng-class="{active: vm.passForm.currentPass.length}" class="input-group">
+						<input type="password" class="form-control" id="currentPass" ng-model="vm.passForm.currentPass">
+						<label for="currentPass">Current Password</label>
+					</div>
+					
+					<div ng-class="{active: vm.passForm.newPass.length}" class="input-group">
+						<input type="password" class="form-control" id="newPass" ng-model="vm.passForm.newPass">
+						<label for="newPass">New Password</label>
+					</div>
+					
+					<div ng-class="{active: vm.passForm.newPassConfirm.length}" class="input-group">
+						<input type="password" class="form-control" id="newPassConfirm" ng-model="vm.passForm.newPassConfirm">
+						<label for="newPassConfirm">Confirm New Password</label>
+					</div>
+					<button ng-click="vm.changePassword()"class="btn">Change Password</button> 	<button  ng-click="vm.passForm.clear()" class="btn">Close</button>
+				</form>
 				
 										
 				<div class="message-block" ng-show="vm.messages.message">
@@ -100,7 +114,7 @@
 			</div>
 			
 			<div class="user-pop-group add-form">
-				<ng-include  src="'/pages/closet/addresses.html'"></ng-include>				
+				<address-choice user="vm.user"></address-choice>
 			</div>
 			
 			

@@ -2,21 +2,24 @@
 
   angular
     .module('bdApp')
-    .directive('jeanList', ['jsonData', function(jsonData) {
+    .directive('jeanList', ['jean','jsonData', function(jean, jsonData) {
     	
 			return {
 	    	
 	      restrict: 'EA',
 				templateUrl: '/directives/jean-list/jean-list.template.html',
 	      scope : {
-	        jean : '=',
 	        fields : '=?'
 	      },
 	      
 	      link: function($scope){
+		      
 					$scope.data = jsonData.getData();
 					$scope.dataLookup = jsonData.dataLookup;
-					
+					jean.setup().then(function(result){
+						$scope.jean = result
+					});
+					console.log($scope.jean);
 					var defaultFields = [
 						'fabric',
 						'accent_thread',
@@ -25,7 +28,7 @@
 						'gender',
 						'style'
 					];
-					
+
 					$scope.fields = $scope.fields || defaultFields;
 
 					$scope.filterFields = function(data){

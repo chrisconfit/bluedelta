@@ -40,7 +40,6 @@
 		
 
 		vm.userForm.cancel = function(field){
-			console.log(field);
 			vm.userForm.editing[field] = false;
 			vm.user[field] = vm.userForm.data[field];
 		}
@@ -77,8 +76,7 @@
 			
 			else return true;
 		}
-		
-		
+
 		
 		vm.userForm.save = function(field){
 			if (vm.user[field] == "") vm.user[field] = null;
@@ -110,7 +108,7 @@
 					loader.hide();
 			
 					vm.user = result.data;	
-					console.log(vm.user);
+				
 					vm.userForm.data = angular.copy(result.data);
 					$scope.$apply();					
 /*
@@ -134,12 +132,71 @@
 	    	
 	
 				
-		var logError = function(err){console.log(err)};
+		/*
+		* Password Form
+		*/
+		vm.passForm = {
+			"editing" : false,
+			"currentPass" : "",
+			"newPass": "",
+			"newPassConfirm" : "",
+			"clear": function(){
+				vm.passForm.editing = false;
+				vm.passForm.currentPass = "";
+				vm.passForm.newPass = "";
+				vm.passForm.newPassConfirm = "";
+				messages.reset();
+			}
+		};
 		
 		
+		function validatePassword(password){
+			var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,50}$/;
+			return re.test(password);
+		}
 		
+		vm.validatePasswordForm = function(){
+		
+			if (!validatePassword(vm.passForm.newPass)){
+				messages.set("A valid password must: <ul><li>Be between 6 and 50 characters</li><li>Contain at least one number</li><li>Contain at least one uppercase letter</li><li>Contain at least one lowercase letter</li><li>Contain at least one special character (\"!,@,#,$,%,^,&, or *\")</li>");	
+			}
+			
+			if (vm.passForm.newPass !== vm.passForm.newPassConfirm){
+				messages.set("New Password and Confirmation do not match", "error");
+				return false;
+			}
+			
+			return true;	
+		}
+		
+		
+		//Register User
+
+ 
+    vm.changePassword = function () {
+	    messages.reset();
+	    if (vm.validatePasswordForm()){
+		    
+				aws.changePassword(vm.user.email, vm.passForm.currentPass, vm.passForm.newPass).then(
+					function(result){
+						vm.passForm.clear();
+						messages.set("Password successfully changed.", "success");
+					},
+					function(err){	
+						messages.set(err.message, "error");
+					}
+				);
+		  }
+    };	
 		
 
+		/*
+		
+		vm.orderJean = function(jeanData){
+			vm.jean = jean;
+			$location.path('/order/'+jeanData.jeanId+'/'+vm.user.identityId);
+		}
+*/
 
 		vm.copyJean = function(){
 			vm.jean = jean.createNew(vm.displayJean);
@@ -154,6 +211,29 @@
 		
 		
 		
+
+		function findJeanbyId(jeanId){
+			for (var j=0; j < vm.user.jeans.length; j++) {
+	      if (vm.user.jeans[j].jeanId === jeanId) {
+	        return {"index": j, "data" : vm.user.jeans[j]};
+	      }
+      }
+  	}
+
+		vm.deleteJean = function(jeanId){
+			jean.deleter(vm.user.identityId, jeanId, function(result){
+				var index = findJeanbyId(jeanId).index;
+				vm.user.jeans.splice(index, 1);
+				$scope.$apply();
+			});
+		}
+		
+		vm.orderJean = function(jeanData){
+			console.log("ordering");
+			jean.setup(jeanData);
+			//$location.path('/order/'+jeanData.jeanId+'/'+vm.user.identityId);
+			$location.path('/order');
+		}
 	
 			
 

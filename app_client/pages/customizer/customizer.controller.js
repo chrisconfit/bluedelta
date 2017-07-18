@@ -20,6 +20,25 @@
 		//Set up shared popups service
 		popups.closeAll();
 		vm.popups = popups.get();
+		
+		//Set up Jean
+		jean.setup().then(function(result){
+			vm.jean = jean.get();
+			
+			$scope.$watch(function() {
+				return vm.jean.data;
+			}, function(current, original) {
+				vm.updateActiveItem();
+			}, true);
+			
+			$scope.$watch(function() {
+				return vm.data;
+			}, function(current, original) {
+				vm.updateActiveItem();
+			}, true);
+			
+		})
+		
 	
 
 		//Detect Orientation			
@@ -57,9 +76,6 @@
 		
 		
 		
-		//Set up Jean
-		vm.jean = {"data":jean.setup()};
-		
 		
     /*
 		*
@@ -68,22 +84,12 @@
 		*/	
 		vm.data = jsonData.getData();
 		
-		$scope.$watch(function() {
-			return vm.jean.data;
-		}, function(current, original) {
-			vm.updateActiveItem();
-		}, true);
-		
-		$scope.$watch(function() {
-			return vm.data;
-		}, function(current, original) {
-			vm.updateActiveItem();
-		}, true);
-			
+
 		vm.activeItem={};
 		vm.updateActiveItem = function(){
+			if (!vm.jean) return false;
 			var data = vm.data[vm.panel[vm.panelStep].dataKey];
-			var key = vm.jean.data[vm.panel[vm.panelStep].jeanKey];
+			var key = vm.jean[vm.panel[vm.panelStep].jeanKey];
 			var ret = $filter('filter')(data, {id: key});
 			if (ret) ret = ret[0];
 			vm.activeItem = ret||null;
@@ -207,7 +213,7 @@
 			vm.savingBar = true;
 			jean.save().then(function(result){
 				vm.savingBar = false;
-				console.log(result);
+				if (callback) callback(result);
 			});
     }
     
