@@ -19,7 +19,6 @@
 					jean.setup().then(function(result){
 						$scope.jean = result
 					});
-					console.log($scope.jean);
 					var defaultFields = [
 						'fabric',
 						'accent_thread',

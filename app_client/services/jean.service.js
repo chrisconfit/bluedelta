@@ -289,6 +289,8 @@
 								//Create New Jean...
 								bdAPI.jeansCreate(identityID, jean).then(
 									function(result){
+										console.log("new jean created!!");
+										console.log(result);
 										defer.resolve(result);
 									},
 									function(err){

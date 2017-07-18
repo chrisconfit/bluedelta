@@ -14,8 +14,16 @@
    
 		jean.setup().then(function(result){
 			vm.jean = result;
-			if (vm.jean.jeanId){
-				$location.path('/order/'+vm.jean.jeanId);
+			console.log(vm.jean);
+
+			var userDetails = aws.getCurrentUserFromLocalStorage();
+			var identityId = bdAPI.setupHeaders(userDetails);
+			console.log("jean is set up");
+			console.log(vm.jean.jeanId);
+			console.log(identityId);
+			if (vm.jean.jeanId && identityId){
+				console.log("hm..")
+				$location.path('/order/'+vm.jean.jeanId+'/'+identityId);
 			}
 		})
 		
@@ -37,20 +45,16 @@
 		
 		vm.orderForm.nextStep = function(){
 			
-			console.log("running next step...");
-			
 			//Step 1 to Step 2
 			if (vm.orderForm.step==1){
 				
 				//Make sure we've got a fit type
 				if (!vm.orderForm.data.fitType){
-					console.log("no fit type");
 					return false;
 				}
 				
 				//If we're using a tailor, make sure we've got a tailor
 				if (vm.orderForm.data.fitType==2 && !vm.orderForm.data.tailor){
-					console.log("no tailor");
 					vm.popups.tailors=true;
 					return false;
 				}
