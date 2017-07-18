@@ -285,6 +285,41 @@ paths:
       security:
        - blue-delta-userPool-authorizer: []
 
+  /orders/{orderId}/comments:
+    get:
+      description: Returns a list of comments by order
+      operationId: comments-List
+      parameters:
+      - $ref: "#/parameters/OrderId"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/CommentsListResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+      - blue-delta-userPool-authorizer: []
+    post:
+      description: Creates a comment on an order
+      operationId: comments-Create
+      parameters:
+      - $ref: "#/parameters/OrderId"
+      - $ref: "#/parameters/Comment"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Comment"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+      - blue-delta-userPool-authorizer: []
+
   /buttons:
     get:
       description: Returns List of 'Buttons'
@@ -594,6 +629,12 @@ parameters:
     name: "orderId"
     required: true
     type: string
+  Comment:
+    in: "body"
+    name: "body"
+    required: true
+    schema:
+      $ref: "#/definitions/Comment"
   Button:
     in: "body"
     name: "body"
@@ -628,6 +669,25 @@ parameters:
     required: true
     type: string
 definitions:
+  CommentsListResponse:
+    required:
+    - items
+    properties:
+      items:
+        type: array
+        items:
+          $ref: "#/definitions/Comment"
+
+  Comment:
+    type: object
+    required:
+    - message
+    properties:
+      timestamp:
+        type: string
+      message:
+        type: string
+
   UsersListResponse:
     required:
     - items
@@ -700,6 +760,7 @@ definitions:
           $ref: "#/definitions/Order"
 
   Order:
+    type: object
     required:
     - userId
     - orderItems
@@ -708,12 +769,18 @@ definitions:
         type: string
       userId:
         type: string
+      shipping_address:
+        $ref: "#/definitions/Address"
       orderItems:
         type: array
         items:
           $ref: "#/definitions/OrderItem"
       transaction:
         $ref: "#/definitions/Transaction"
+      timeline:
+        type: array
+        items:
+          $ref: "#/definitions/Comment"
 
   OrderItemsListResponse:
     required:
@@ -725,6 +792,7 @@ definitions:
           $ref: "#/definitions/OrderItem"
 
   OrderItem:
+    type: object
     required:
     - jean
     properties:
@@ -733,6 +801,8 @@ definitions:
       status:
         type: string
       tracking:
+        type: string
+      notes:
         type: string
 
   TransactionsListResponse:
@@ -745,6 +815,7 @@ definitions:
           $ref: "#/definitions/Transaction"
 
   Transaction:
+    type: object
     properties:
       transactionId:
         type: string
@@ -762,8 +833,6 @@ definitions:
 
   Button:
     type: object
-    #required:
-    # - buttonId
     properties:
       buttonId:
         type: string
@@ -785,8 +854,6 @@ definitions:
 
   Fabric:
     type: object
-#    required:
-#    - fabricId
     properties:
       fabricId:
         type: string
@@ -814,8 +881,6 @@ definitions:
 
   Thread:
     type: object
-    # required:
-    # - threadId
     properties:
       threadId:
         type: string
@@ -836,14 +901,81 @@ definitions:
           $ref: "#/definitions/Measurement"
   
   Measurement:
-#    required:
-#    - measurementId
+    type: object
     properties:
       measurementId:
         type: string
       userId:
         type: string
       waist:
+        type: number
+        format: float
+        minimum: 0.0
+      seat-down:
+        type: number
+        format: float
+        minimum: 0.0
+      seat-right:
+        type: number
+        format: float
+        minimum: 0.0
+      rise:
+        type: number
+        format: float
+        minimum: 0.0
+      full-rise:
+        type: number
+        format: float
+        minimum: 0.0
+      thigh-upper-down:
+        type: number
+        format: float
+        minimum: 0.0
+      thigh-upper-right:
+        type: number
+        format: float
+        minimum: 0.0
+      thigh-middle-down:
+        type: number
+        format: float
+        minimum: 0.0
+      thigh-middle-right:
+        type: number
+        format: float
+        minimum: 0.0
+      thigh-lower-down:
+        type: number
+        format: float
+        minimum: 0.0
+      thigh-lower-right:
+        type: number
+        format: float
+        minimum: 0.0
+      outseam:
+        type: number
+        format: float
+        minimum: 0.0
+      knee-up:
+        type: number
+        format: float
+        minimum: 0.0
+      knee-right:
+        type: number
+        format: float
+        minimum: 0.0
+      calf-up:
+        type: number
+        format: float
+        minimum: 0.0
+      calf-right:
+        type: number
+        format: float
+        minimum: 0.0
+      leg-opening:
+        type: number
+        format: float
+        minimum: 0.0
+      desired-fit:
         type: number
         format: float
         minimum: 0.0
@@ -863,8 +995,7 @@ definitions:
           $ref: "#/definitions/Jean"
           
   Jean:
-#    required:
-#    - jeanId
+    type: object
     properties:
       jeanId:
         type: string
@@ -886,6 +1017,7 @@ definitions:
         $ref: "#/definitions/Button"
 
   ErrorResponse:
+    type: object
     required:
       - message
       - type
@@ -894,6 +1026,7 @@ definitions:
         type: string
       type:
         type: string
+
 securityDefinitions:
   blue-delta-custom-authorizer:
     type: "apiKey"

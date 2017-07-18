@@ -19,6 +19,40 @@ export interface Measurement {
 
     waist?: number;
 
+    seat-down?: number;
+
+    seat-right?: number;
+
+    rise?: number;
+
+    full-rise?: number;
+
+    thigh-upper-down?: number;
+
+    thigh-upper-right?: number;
+
+    thigh-middle-down?: number;
+
+    thigh-middle-right?: number;
+
+    thigh-lower-down?: number;
+
+    thigh-lower-right?: number;
+
+    outseam?: number;
+
+    knee-up?: number;
+
+    knee-right?: number;
+
+    calf-up?: number;
+
+    calf-right?: number;
+
+    leg-opening?: number;
+
+    desired-fit?: number;
+
     leg?: number;
 
 }

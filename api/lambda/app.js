@@ -8,6 +8,7 @@ let fabrics = rfr('fabrics');
 let jeans = rfr('jeans');
 let users = rfr('users');
 let orders = rfr('orders');
+let comments = rfr('comments');
 let ping = rfr('ping');
 
 var methods = {
@@ -40,6 +41,10 @@ var methods = {
     'GET': orders.Get,
     'POST': orders.Update,
     'DELETE': orders.Delete
+  },
+  '/orders/{orderId}/comments': {
+    'GET': comments.List,
+    'POST': comments.Create
   },
   '/buttons': {
     'GET': buttons.List,
