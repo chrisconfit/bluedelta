@@ -11,6 +11,8 @@ goog.provide('API.Client.DefaultApi');
 
 goog.require('API.Client.Button');
 goog.require('API.Client.ButtonsListResponse');
+goog.require('API.Client.Comment');
+goog.require('API.Client.CommentsListResponse');
 goog.require('API.Client.Fabric');
 goog.require('API.Client.FabricsListResponse');
 goog.require('API.Client.Jean');
@@ -292,6 +294,86 @@ API.Client.DefaultApi.prototype.buttonsUpdate = function(buttonId, button, opt_e
     json: true,
     data: button,
         params: queryParameters,
+    headers: headerParams
+  };
+
+  if (opt_extraHttpRequestParams) {
+    httpRequestParams = angular.extend(httpRequestParams, opt_extraHttpRequestParams);
+  }
+
+  return (/** @type {?} */ (this.http_))(httpRequestParams);
+}
+
+/**
+ * 
+ * 
+ * @param {!string} orderId 
+ * @param {!Comment} comment 
+ * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
+ * @return {!angular.$q.Promise<!API.Client.Comment>}
+ */
+API.Client.DefaultApi.prototype.commentsCreate = function(orderId, comment, opt_extraHttpRequestParams) {
+  /** @const {string} */
+  var path = this.basePath_ + '/orders/{orderId}/comments'
+      .replace('{' + 'orderId' + '}', String(orderId));
+
+  /** @type {!Object} */
+  var queryParameters = {};
+
+  /** @type {!Object} */
+  var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'orderId' is set
+  if (!orderId) {
+    throw new Error('Missing required parameter orderId when calling commentsCreate');
+  }
+  // verify required parameter 'comment' is set
+  if (!comment) {
+    throw new Error('Missing required parameter comment when calling commentsCreate');
+  }
+  /** @type {!Object} */
+  var httpRequestParams = {
+    method: 'POST',
+    url: path,
+    json: true,
+    data: comment,
+        params: queryParameters,
+    headers: headerParams
+  };
+
+  if (opt_extraHttpRequestParams) {
+    httpRequestParams = angular.extend(httpRequestParams, opt_extraHttpRequestParams);
+  }
+
+  return (/** @type {?} */ (this.http_))(httpRequestParams);
+}
+
+/**
+ * 
+ * 
+ * @param {!string} orderId 
+ * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
+ * @return {!angular.$q.Promise<!API.Client.CommentsListResponse>}
+ */
+API.Client.DefaultApi.prototype.commentsList = function(orderId, opt_extraHttpRequestParams) {
+  /** @const {string} */
+  var path = this.basePath_ + '/orders/{orderId}/comments'
+      .replace('{' + 'orderId' + '}', String(orderId));
+
+  /** @type {!Object} */
+  var queryParameters = {};
+
+  /** @type {!Object} */
+  var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'orderId' is set
+  if (!orderId) {
+    throw new Error('Missing required parameter orderId when calling commentsList');
+  }
+  /** @type {!Object} */
+  var httpRequestParams = {
+    method: 'GET',
+    url: path,
+    json: true,
+            params: queryParameters,
     headers: headerParams
   };
 
@@ -964,6 +1046,43 @@ API.Client.DefaultApi.prototype.ordersOptions = function(opt_extraHttpRequestPar
 
   /** @type {!Object} */
   var headerParams = angular.extend({}, this.defaultHeaders_);
+  /** @type {!Object} */
+  var httpRequestParams = {
+    method: 'OPTIONS',
+    url: path,
+    json: true,
+            params: queryParameters,
+    headers: headerParams
+  };
+
+  if (opt_extraHttpRequestParams) {
+    httpRequestParams = angular.extend(httpRequestParams, opt_extraHttpRequestParams);
+  }
+
+  return (/** @type {?} */ (this.http_))(httpRequestParams);
+}
+
+/**
+ * 
+ * 
+ * @param {!string} orderId 
+ * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
+ * @return {!angular.$q.Promise}
+ */
+API.Client.DefaultApi.prototype.ordersOrderIdCommentsOptions = function(orderId, opt_extraHttpRequestParams) {
+  /** @const {string} */
+  var path = this.basePath_ + '/orders/{orderId}/comments'
+      .replace('{' + 'orderId' + '}', String(orderId));
+
+  /** @type {!Object} */
+  var queryParameters = {};
+
+  /** @type {!Object} */
+  var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'orderId' is set
+  if (!orderId) {
+    throw new Error('Missing required parameter orderId when calling ordersOrderIdCommentsOptions');
+  }
   /** @type {!Object} */
   var httpRequestParams = {
     method: 'OPTIONS',

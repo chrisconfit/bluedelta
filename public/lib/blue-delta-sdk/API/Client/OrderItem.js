@@ -23,3 +23,9 @@ API.Client.OrderItem.prototype.status;
  */
 API.Client.OrderItem.prototype.tracking;
 
+/**
+ * @type {!string}
+ * @export
+ */
+API.Client.OrderItem.prototype.notes;
+

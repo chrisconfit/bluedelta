@@ -12,13 +12,9 @@
 
 import * as models from './models';
 
-export interface OrderItem {
-    jean: models.Jean;
+export interface Comment {
+    timestamp?: string;
 
-    status?: string;
-
-    tracking?: string;
-
-    notes?: string;
+    message: string;
 
 }

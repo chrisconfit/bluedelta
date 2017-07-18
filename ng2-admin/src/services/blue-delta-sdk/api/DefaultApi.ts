@@ -154,6 +154,39 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param orderId 
+     * @param comment 
+     */
+    public commentsCreate(orderId: string, comment: models.Comment, extraHttpRequestParams?: any): Observable<models.Comment> {
+        return this.commentsCreateWithHttpInfo(orderId, comment, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     * @param orderId 
+     */
+    public commentsList(orderId: string, extraHttpRequestParams?: any): Observable<models.CommentsListResponse> {
+        return this.commentsListWithHttpInfo(orderId, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
      * @param fabric 
      */
     public fabricsCreate(fabric: models.Fabric, extraHttpRequestParams?: any): Observable<models.Fabric> {
@@ -432,6 +465,22 @@ export class DefaultApi {
      */
     public ordersOptions(extraHttpRequestParams?: any): Observable<{}> {
         return this.ordersOptionsWithHttpInfo(extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
+     * 
+     * 
+     * @param orderId 
+     */
+    public ordersOrderIdCommentsOptions(orderId: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.ordersOrderIdCommentsOptionsWithHttpInfo(orderId, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -1068,6 +1117,100 @@ export class DefaultApi {
     /**
      * 
      * 
+     * @param orderId 
+     * @param comment 
+     */
+    public commentsCreateWithHttpInfo(orderId: string, comment: models.Comment, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/orders/${orderId}/comments`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'orderId' is not null or undefined
+        if (orderId === null || orderId === undefined) {
+            throw new Error('Required parameter orderId was null or undefined when calling commentsCreate.');
+        }
+        // verify required parameter 'comment' is not null or undefined
+        if (comment === null || comment === undefined) {
+            throw new Error('Required parameter comment was null or undefined when calling commentsCreate.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'application/json'
+        ];
+
+        // authentication (blue-delta-userPool-authorizer) required
+        if (this.configuration.apiKey) {
+            headers.set('Authorization', this.configuration.apiKey);
+        }
+
+        headers.set('Content-Type', 'application/json');
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Post,
+            headers: headers,
+            body: comment == null ? '' : JSON.stringify(comment), // https://github.com/angular/angular/issues/10612
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param orderId 
+     */
+    public commentsListWithHttpInfo(orderId: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/orders/${orderId}/comments`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'orderId' is not null or undefined
+        if (orderId === null || orderId === undefined) {
+            throw new Error('Required parameter orderId was null or undefined when calling commentsList.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            'application/json'
+        ];
+
+        // authentication (blue-delta-userPool-authorizer) required
+        if (this.configuration.apiKey) {
+            headers.set('Authorization', this.configuration.apiKey);
+        }
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Get,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
      * @param fabric 
      */
     public fabricsCreateWithHttpInfo(fabric: models.Fabric, extraHttpRequestParams?: any): Observable<Response> {
@@ -1433,11 +1576,6 @@ export class DefaultApi {
         let produces: string[] = [
         ];
 
-        // authentication (blue-delta-userPool-authorizer) required
-        if (this.configuration.apiKey) {
-            headers.set('Authorization', this.configuration.apiKey);
-        }
-
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
             headers: headers,
@@ -1480,11 +1618,6 @@ export class DefaultApi {
         let produces: string[] = [
             'application/json'
         ];
-
-        // authentication (blue-delta-userPool-authorizer) required
-        if (this.configuration.apiKey) {
-            headers.set('Authorization', this.configuration.apiKey);
-        }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
@@ -1848,6 +1981,43 @@ export class DefaultApi {
      * 
      * @param orderId 
      */
+    public ordersOrderIdCommentsOptionsWithHttpInfo(orderId: string, extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + `/orders/${orderId}/comments`;
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // verify required parameter 'orderId' is not null or undefined
+        if (orderId === null || orderId === undefined) {
+            throw new Error('Required parameter orderId was null or undefined when calling ordersOrderIdCommentsOptions.');
+        }
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+        ];
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Options,
+            headers: headers,
+            search: queryParameters
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
+
+    /**
+     * 
+     * 
+     * @param orderId 
+     */
     public ordersOrderIdOptionsWithHttpInfo(orderId: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/orders/${orderId}`;
 
@@ -1980,11 +2150,6 @@ export class DefaultApi {
         // to determine the Accept header
         let produces: string[] = [
         ];
-
-        // authentication (blue-delta-userPool-authorizer) required
-        if (this.configuration.apiKey) {
-            headers.set('Authorization', this.configuration.apiKey);
-        }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,

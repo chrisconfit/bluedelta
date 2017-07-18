@@ -12,13 +12,7 @@
 
 import * as models from './models';
 
-export interface OrderItem {
-    jean: models.Jean;
-
-    status?: string;
-
-    tracking?: string;
-
-    notes?: string;
+export interface CommentsListResponse {
+    items: Array<models.Comment>;
 
 }

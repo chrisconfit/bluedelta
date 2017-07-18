@@ -2,62 +2,90 @@
 let rfr = require('rfr');
 let data = rfr('data');
 let wrapper = rfr('wrapper');
+let buttons = rfr('buttons');
+let threads = rfr('threads');
+let fabrics = rfr('fabrics');
+let jeans = rfr('jeans');
 let users = rfr('users');
+let orders = rfr('orders');
+let comments = rfr('comments');
 let ping = rfr('ping');
+
+var methods = {
+  '/users': {
+    'GET': users.List,
+    'POST': users.Create
+  },
+  '/users/{userId}': {
+    'GET': users.Get,
+    'POST': users.Update,
+    'DELETE': users.Delete
+  },
+  '/users/{userId}/orders': {
+    'GET': orders.ListByUser
+  },
+  '/users/{userId}/jeans': {
+    'GET': jeans.List,
+    'POST': jeans.Create
+  },
+  '/users/{userId}/jeans/{jeanId}' : {
+    'GET': jeans.Get,
+    'POST': jeans.Update,
+    'DELETE': jeans.Delete
+  },
+  '/orders': {
+    'GET': orders.List,
+    'POST': orders.Create
+  },
+  '/orders/{orderId}': {
+    'GET': orders.Get,
+    'POST': orders.Update,
+    'DELETE': orders.Delete
+  },
+  '/orders/{orderId}/comments': {
+    'GET': comments.List,
+    'POST': comments.Create
+  },
+  '/buttons': {
+    'GET': buttons.List,
+    'POST': buttons.Create
+  },
+  '/buttons/{buttonId}': {
+    'GET': buttons.Get,
+    'POST': buttons.Update,
+    'DELETE': buttons.Delete
+  },
+  '/threads': {
+    'GET': threads.List,
+    'POST': threads.Create
+  },
+  '/threads/{threadId}': {
+    'GET': threads.Get,
+    'POST': threads.Update,
+    'DELETE': threads.Delete
+  },
+  '/fabrics': {
+    'GET': fabrics.List,
+    'POST': fabrics.Create
+  },
+  '/fabrics/{fabricId}': {
+    'GET': fabrics.Get,
+    'POST': fabrics.Update,
+    'DELETE': fabrics.Delete
+  },
+  '/ping': {
+    'GET': ping.PingOperation
+  }
+};
 
 function handler(event, context) {
 
-  console.log('EVENT!!!!!!', event);
-
-  function initialNarrowingByHttp(httpMethod) {
-    switch(httpMethod) {
-      case 'GET':
-        return (itemId) => {
-          if (itemId) return 'Get';
-          return 'List'
-        };
-      case 'POST':
-        return (itemId) => {
-          if (itemId) return 'Update';
-          return 'Create';
-        };
-      case 'DELETE':
-        return (itemId) => {
-          return 'Delete';
-        };
-    }
-  } // tested
-
-  function getLastEndpointResource(endpointPath) {
-    let resourceArray = endpointPath.split('/').filter(v => v.length > 1);
-    if (resourceArray.length > 1) return resourceArray[resourceArray.length - 1];
-    return resourceArray[0];
-  } // tested
-
-  function isACollection(resourceString) {
-    return (/(buttons|fabrics|jeans|measurements|orders|ping|threads|users)/.test(resourceString));
-  } // tested
-
-  function isAnId(resourceString) {
-    return !(/(buttons|fabrics|jeans|measurements|orders|ping|threads|users)/.test(resourceString));
-  } // tested
-
-  function getLastCollectionInEndpoint(endpointPath, validator) {
-    let collections = endpointPath.split('/').filter(v => v.length > 1 ).filter(v => validator(v));
-    if (collections.length > 1) return collections[collections.length - 1];
-    return collections[0];
-  } // tested
-
-
-  let lastCollection = getLastCollectionInEndpoint(event.path, isACollection);
-  let determineMethodByIdPresence = initialNarrowingByHttp(event.httpMethod);
-  let methodToCall = determineMethodByIdPresence( isAnId( getLastEndpointResource(event.path) ) );
-
-  
-  console.log('lastCollection',lastCollection);
-  console.log('methodToCall', methodToCall);
-  
-  return rfr(lastCollection)[methodToCall](event, context);
+  if (event.resource && event.httpMethod && methods[event.resource] && methods[event.resource][event.httpMethod]) {
+    console.log("Resource: " + event.resource);
+    console.log("HTTP Method: " + event.httpMethod);
+    console.log("Function: " + methods[event.resource][event.httpMethod]);
+    return methods[event.resource][event.httpMethod](event, context);
+  }
   //
   // if (event.operation && event.operation.startsWith('com.hatboysoftware.blue-delta')) {
   //   let offset = event.operation.lastIndexOf('.') + 1;

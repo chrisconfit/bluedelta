@@ -17,8 +17,12 @@ export interface Order {
 
     userId: string;
 
+    shippingAddress?: models.Address;
+
     orderItems: Array<models.OrderItem>;
 
     transaction?: models.Transaction;
+
+    timeline?: Array<models.Comment>;
 
 }
