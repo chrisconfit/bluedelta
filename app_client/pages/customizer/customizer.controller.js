@@ -213,6 +213,9 @@
 			vm.savingBar = true;
 			jean.save().then(function(result){
 				vm.savingBar = false;
+				var userData = aws.getCurrentUserFromLocalStorage();
+				var identityId = bdAPI.setupHeaders(userData);
+				$location.path('/customizer/'+vm.jean.jeanId+'/'+identityId);
 				if (callback) callback(result);
 			});
     }

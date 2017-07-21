@@ -253,8 +253,8 @@
 		var save = function(){
 			
 			var defer = $q.defer();
+			var jean = this;
 			
-			var jean = this.data;
 			console.log("jean");
 			console.log(jean);
 			var filename = this.getDataCode();
@@ -272,11 +272,11 @@
 				if (userData){		
 					aws.saveImageTos3(imageURL, userData, filename).then(
 						function(result){	
-				  		jean.imageURL = result;
-							
-							if (jean.jeanId){
+							//Add image to jean before saving...
+				  		jean.set("imageURL",result);
+							if (jean.data.jeanId){
 								//Update existing Jean...
-								bdAPI.jeansUpdate(identityID, jean.jeanId, jean).then(
+								bdAPI.jeansUpdate(identityID, jean.data.jeanId, jean.data).then(
 									function(result){
 										defer.resolve(result);
 									},
@@ -287,14 +287,13 @@
 								);
 							}else{
 								//Create New Jean...
-								bdAPI.jeansCreate(identityID, jean).then(
+								bdAPI.jeansCreate(identityID, jean.data).then(
 									function(result){
-										console.log("new jean created!!");
-										console.log(result);
+										//Add new id to jean
+										jean.set("jeanId",result.data.jeanId);
 										defer.resolve(result);
 									},
 									function(err){
-										console.log(err);
 										defer.reject(err);
 									}
 								);

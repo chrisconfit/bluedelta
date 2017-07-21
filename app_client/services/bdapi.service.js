@@ -84,8 +84,9 @@
 			user = JSON.parse(temp);
 			return user;
 		}
-		
-		BlueDeltaApi.setupHeaders = function(userData){
+				
+		BlueDeltaApi.setupHeaders = function(){
+			var userData = aws.getCurrentUserFromLocalStorage();
 			this.defaultHeaders_['Authorization'] = userData.idToken.getJwtToken();
 			var idTokenPayload = userData.idToken.jwtToken.split('.')[1];
 			var identityID = JSON.parse(atob(idTokenPayload)).sub;	
