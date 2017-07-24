@@ -36,7 +36,7 @@ function Update(event, context) {
     let input = JSON.parse(event.body);
     return OrdersTable.get(event.pathParameters.orderId).then((data) => {
         input.createTime = data.createTime;
-        input.orderId = event.orderId;
+        input.orderId = event.pathParameters.orderId;
         return OrdersTable.put(input);
     });
 }
