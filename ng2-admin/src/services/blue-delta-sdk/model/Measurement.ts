@@ -15,38 +15,38 @@ import * as models from './models';
 export interface Measurement {
     waist?: number;
 
-    seat-down?: number;
+    seatDown?: number;
 
-    seat-right?: number;
+    seatRight?: number;
 
     rise?: number;
 
-    full-rise?: number;
+    fullRise?: number;
 
-    thigh-upper-down?: number;
+    thighUpperDown?: number;
 
-    thigh-upper-right?: number;
+    thighUpperRight?: number;
 
-    thigh-middle-down?: number;
+    thighMiddleDown?: number;
 
-    thigh-middle-right?: number;
+    thighMiddleRight?: number;
 
-    thigh-lower-down?: number;
+    thighLowerDown?: number;
 
-    thigh-lower-right?: number;
+    thighLowerRight?: number;
 
     outseam?: number;
 
-    knee-up?: number;
+    kneeUp?: number;
 
-    knee-right?: number;
+    kneeRight?: number;
 
-    calf-up?: number;
+    calfUp?: number;
 
-    calf-right?: number;
+    calfRight?: number;
 
-    leg-opening?: number;
+    legOpening?: number;
 
-    desired-fit?: number;
+    desiredFit?: number;
 
 }
