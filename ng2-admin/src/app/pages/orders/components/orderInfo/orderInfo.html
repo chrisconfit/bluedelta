@@ -1,0 +1,111 @@
+<div class="widgets">
+  <div *ngFor="let order of orderInfoService">
+
+    <div class="box box-default">
+      <div class="box-header with-border">
+        <h3 class="box-title">Order Info</h3>
+      </div>
+
+      <div class="box-body">
+        <div class="form-group">
+          <label class="control-label" for="customer">Jean Price</label>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input id="jeanPrice" type="text" class="form-control" placeholder="{{order.jeanPrice}}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Vendor</label>
+          <select class="form-control select2" style="width: 100%;">
+            <option selected="selected">Blue Delta</option>
+            <option>Tom James</option>
+            <option>Tim Brown - FHG</option>
+            <option>Scott Toulas - Raphael Wardrobe Design</option>
+            <option>Cedric Hanis</option>
+            <option>Joseph Mapes</option>
+            <option>Greg Brown</option>
+            <option>Kipper Clothing</option>
+            <option>Roberto Revilla</option>
+            <option>Butler Custom Clothing</option>
+            <option>Brogue and Cuff</option>
+            <option>Florida Jean</option>
+            <option>Garrison Bespoke</option>
+            <option>Oliver Rowan Bespoke</option>
+            <option>Commonwealth Clothiers</option>
+            <option>Roosevelt and Co</option>
+            <option>Porter Wilson</option>
+            <option>Cedrick Harris</option>
+            <option>Haymakers</option>
+            <option>11th State</option>
+            <option>Langston</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Rep</label>
+          <select class="form-control select2" style="width: 100%;">
+            <option selected="selected">Nick Weaver</option>
+            <option>Josh West</option>
+            <option>Ellen Goucher</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Order Type</label>
+          <select class="form-control select2" style="width: 100%;">
+            <option selected="selected">Blue Delta</option>
+            <option>Vendor Fitted</option>
+            <option>Cloned from Non-BD Jean</option>
+            <option>Cloned from BD Jean</option>
+            <option>Re-Order</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Status</label>
+          <select class="form-control select2" style="width: 100%;">
+            <option selected="selected">Awaiting Payment</option>
+            <option>New</option>
+            <option>Awaiting Payment</option>
+            <option>Processing</option>
+            <option>Shipped</option>
+            <option>Completed</option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Fitting Date:</label>
+
+              <div class="input-group date">
+                <ng2-datepicker class="" [options]="options" [(ngModel)]="fittingDate"></ng2-datepicker>
+              </div>
+              <!-- /.input group -->
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Due Date:</label>
+
+              <div class="input-group date">
+                <ng2-datepicker class="" [options]="options" [(ngModel)]="dueDate"></ng2-datepicker>
+              </div>
+              <!-- /.input group -->
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label>Jean DOB:</label>
+
+          <div class="input-group date">
+            <ng2-datepicker class="" [options]="options" [(ngModel)]="jeanDobDate"></ng2-datepicker>
+          </div>
+          <!-- /.input group -->
+        </div>
+        <span (click)="saveOrder()" class="btn btn-success pull-right btn-flat btn-lg"><b>Save Order</b></span>
+      </div>
+    </div>
+  </div>
+</div>

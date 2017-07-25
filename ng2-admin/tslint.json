@@ -20,7 +20,6 @@
     "no-unused-expression": true,
     "one-line": [true, "check-catch", "check-else", "check-open-brace", "check-whitespace"],
     "quotemark": [true, "single", "avoid-escape"],
-    "semicolon": true,
     "typedef-whitespace": [
       true,
       {
@@ -31,7 +30,6 @@
         "variable-declaration": "nospace"
       }
     ],
-    "curly": true,
     "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
     "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-module", "check-separator", "check-type", "check-preblock"],
     "no-constant-condition": true,
@@ -63,7 +61,6 @@
       }
     ],
     "no-use-before-declare": true,
-    "array-bracket-spacing": [true, "never"],
     "block-spacing": [
       true,
       "always"
@@ -87,19 +84,10 @@
     ],
     "no-var-keyword": true,
     "prefer-const": true,
-    "trailing-comma": [
-      true,
-      {
-        "multiline": "always",
-        "singleline": "never"
-      }
-    ],
     "no-conditional-assignment": true,
-    "no-console": [true, "log"],
     "space-in-parens": ["error", "info", "never"],
     "number-literal-format": true,
     "no-invalid-template-strings": true,
-    "prefer-template": true,
     "no-unnecessary-callback-wrapper": true,
     "member-access": [true, "no-public"],
     "no-empty-interface": true,
@@ -114,7 +102,6 @@
     "object-literal-shorthand": true,
 
     "directive-selector": [true, "attribute", ["nga", "ngd", "ngt"], "camelCase"],
-    "component-selector": [true, "element", ["nga", "ngd", "ngt"], "kebab-case"],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,

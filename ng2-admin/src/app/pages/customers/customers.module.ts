@@ -10,6 +10,10 @@ import { Customers } from './customers.component';
 import { SmartTables } from './components/smartTables/smartTables.component';
 import { SmartTablesService } from './components/smartTables/smartTables.service';
 import { BlockForm } from './components/blockForm/blockForm.component';
+import { DataTables } from './components/dataTables/dataTables.component';
+import { DataTablesService } from './components/dataTables/dataTables.service';
+import { DataTableModule } from "angular2-datatable";
+import { DataFilterPipe } from './components/dataTables/data-filter.pipe';
 
 @NgModule({
   imports: [
@@ -18,15 +22,19 @@ import { BlockForm } from './components/blockForm/blockForm.component';
     NgaModule,
     routing,
     Ng2SmartTableModule,
-    HttpModule
+    HttpModule,
+    DataTableModule,
   ],
   declarations: [
     Customers,
     SmartTables,
-    BlockForm
+    BlockForm,
+    DataTables,
+    DataFilterPipe,
   ],
   providers: [
-    SmartTablesService
+    SmartTablesService,
+    DataTablesService,
   ]
 })
 export class CustomersModule {

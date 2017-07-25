@@ -5,6 +5,13 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
+import {
+  IUserLogin,
+  UserLoginService,
+  CognitoUtil,
+  UserState,
+  UserRegistrationService
+} from '../services/account-management.service';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -16,12 +23,17 @@ import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
+import {UsersProvider} from "../providers/users/users";
+import {CustomAuthorizerClient, UserPoolsAuthorizerClient} from "../services/blue-delta-api.service";
+import {HttpService} from "../services/http-service";
+import {OrdersProvider} from "../providers/orders/orders";
 
 
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
-  GlobalState
+  GlobalState,
+
 ];
 
 export type StoreType = {
@@ -50,12 +62,26 @@ export type StoreType = {
     routing
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    CognitoUtil,
+    UserLoginService,
+    UsersProvider,
+    OrdersProvider,
+    CustomAuthorizerClient,
+    HttpService,
+    UserPoolsAuthorizerClient,
+
   ]
 })
 
 export class AppModule {
 
-  constructor(public appState: AppState) {
+  constructor(
+    public appState: AppState,
+    public userService: UsersProvider,
+    public orderService: OrdersProvider,
+  ) {
+    // this.userService.loadItemsWithAuth();
+    // this.orderService.loadItemsWithAuth();
   }
 }
