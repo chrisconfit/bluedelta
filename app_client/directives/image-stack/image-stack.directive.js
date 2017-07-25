@@ -11,9 +11,12 @@
       restrict: 'AE',
       templateUrl: '/directives/image-stack/image-stack.template.html',
       controller: 'istackCtrl as isvm',
+      scope : {
+        jeanData : '='
+      },
       link: function(scope, ele, attrs, ctrl) {
 	      
-	      
+	     
 	     ele.on('touchstart', function(e){
 			 	scope.isvm.touchStart(e);	
 	     });	

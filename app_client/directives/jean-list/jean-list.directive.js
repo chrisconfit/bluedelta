@@ -2,7 +2,7 @@
 
   angular
     .module('bdApp')
-    .directive('jeanList', ['jean','jsonData', function(jean, jsonData) {
+    .directive('jeanList', ['jean', function(jean) {
     	
 			return {
 	    	
@@ -14,16 +14,16 @@
 	      
 	      link: function($scope){
 		      
-					$scope.data = jsonData.getData();
-					$scope.dataLookup = jsonData.dataLookup;
+					$scope.data = jean.getJsonData();
+					$scope.dataLookup = jean.dataLookup;
 					jean.setup().then(function(result){
 						$scope.jean = result
 					});
 					var defaultFields = [
 						'fabric',
-						'accent_thread',
-						'top_thread',
-						'bottom_thread',
+						'accentThread',
+						'topThread',
+						'bottomThread',
 						'gender',
 						'style'
 					];

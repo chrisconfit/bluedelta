@@ -4,11 +4,10 @@
     .module('bdApp')
     .controller('customizerCtrl', customizerCtrl);
 
-  customizerCtrl.$inject = ['$q','$filter','$timeout','$location', '$window', '$routeParams', 'bdAPI', 'jean', '$scope', 'popups', 'aws', 'jsonData', 'messages', 'loader'];
-  function customizerCtrl($q, $filter, $timeout, $location, $window, $routeParams, bdAPI, jean, $scope, popups, aws, jsonData, messages, loader) {
-	  
-    
-    var vm = this;
+  customizerCtrl.$inject = ['$q','$filter','$timeout','$location', '$window', '$routeParams', 'bdAPI', 'jean', '$scope', 'popups', 'aws', 'messages', 'loader', 'jsonData'];
+  function customizerCtrl($q, $filter, $timeout, $location, $window, $routeParams, bdAPI, jean, $scope, popups, aws, messages, loader, jsonData) {
+		
+    var vm = this
 		
 		//Setup Loader		
 		vm.loader = loader.get();
@@ -20,13 +19,13 @@
 		//Set up shared popups service
 		popups.closeAll();
 		vm.popups = popups.get();
-		
+
 		//Set up Jean
 		jean.setup().then(function(result){
-			vm.jean = jean.get();
+			vm.jeanData = jean.get();
 			
 			$scope.$watch(function() {
-				return vm.jean.data;
+				return vm.jeanData;
 			}, function(current, original) {
 				vm.updateActiveItem();
 			}, true);
@@ -82,17 +81,25 @@
 		* GET CUSTOMIZER DATA 
 		*
 		*/	
-		vm.data = jsonData.getData();
+		vm.data = jean.getJsonData();
 		
-
 		vm.activeItem={};
 		vm.updateActiveItem = function(){
-			if (!vm.jean) return false;
+			
+			if (!vm.jeanData) return false;
+			
 			var data = vm.data[vm.panel[vm.panelStep].dataKey];
-			var key = vm.jean[vm.panel[vm.panelStep].jeanKey];
-			var ret = $filter('filter')(data, {id: key});
-			if (ret) ret = ret[0];
-			vm.activeItem = ret||null;
+			var id = vm.jeanData[vm.panel[vm.panelStep].jeanKey];
+			
+			if (typeof(id)== 'object'){
+				//Embedded model
+				vm.activeItem = id;
+			}else{
+				//Need to search
+				var ret = $filter('filter')(data, {id: id});
+				if (ret) ret = ret[0];
+				vm.activeItem = ret||null;
+			}
 		}
 
 		
@@ -102,7 +109,7 @@
 		//Gender
 		vm.panel.push({
 			"panelTemplate":"gender-chooser",
-			"dataKey":"genders",
+			"dataKey":"gender",
 			"title":"Gender",
 			"jeanKey":"gender"
 		});
@@ -110,7 +117,7 @@
 		//Style
 		vm.panel.push({
 			"panelTemplate":"style-chooser",
-			"dataKey":"styles",
+			"dataKey":"style",
 			"title":"Style",
 			"jeanKey":"style"
 		});
@@ -118,7 +125,7 @@
 		//Fabric
 		vm.panel.push({
 			"panelTemplate":"fabric-chooser",
-			"dataKey":"fabrics",
+			"dataKey":"fabric",
 			"title":"Fabric",
 			"jeanKey":"fabric"
 		});
@@ -126,25 +133,25 @@
 		//Top Thread
 		vm.panel.push({
 			"panelTemplate":"chooser",
-			"dataKey":"threads",
+			"dataKey":"thread",
 			"title":"Top Thread",
-			"jeanKey":"top_thread"
+			"jeanKey":"topThread"
 		});
 		
 		//Bottom Thread
 		vm.panel.push({
 			"panelTemplate":"chooser",
-			"dataKey":"threads",
+			"dataKey":"thread",
 			"title":"Bottom Thread",
-			"jeanKey":"bottom_thread"
+			"jeanKey":"bottomThread"
 		});
 		
 		//Accent Thread
 		vm.panel.push({
 			"panelTemplate":"chooser",
-			"dataKey":"threads",
+			"dataKey":"thread",
 			"title":"Accent Thread",
-			"jeanKey":"accent_thread"
+			"jeanKey":"accentThread"
 		});
 		
 		//Overview
@@ -215,7 +222,7 @@
 				vm.savingBar = false;
 				var userData = aws.getCurrentUserFromLocalStorage();
 				var identityId = bdAPI.setupHeaders(userData);
-				$location.path('/customizer/'+vm.jean.jeanId+'/'+identityId);
+				$location.path('/customizer/'+vm.jeanData.jeanId+'/'+identityId);
 				if (callback) callback(result);
 			});
     }

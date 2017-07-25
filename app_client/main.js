@@ -2,13 +2,25 @@
 
   angular.module('bdApp', ['ngRoute', 'ngAnimate','ngSanitize', 'ngCookies', 'angular-gestures']); 
   
-  
+	  var jsonD = function() {
+	  // Initialize a new promise.
+	//  var deferred = $q.defer();
+	
+	  // Check is user is logged in
+/*	  $http.get('/data/thread.json').success(function(result) {
+	    deferred.resolve(result.data);
+	  });
+	*/
+	return "here";
+	  //return deferred.promise;
+	};
+
   function config ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
         templateUrl: '/pages/home/home.view.html',
         controller: 'homeCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
       })
       .when('/register', {
         templateUrl: '/pages/auth/register/register.view.html',
@@ -23,17 +35,32 @@
       .when('/closet', {
         templateUrl: '/pages/closet/closet.view.html',
         controller: 'closetCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve: {
+          jsonData: ['jean', function(jean) {
+            return jean.setupJson();
+          }]      
+        }
       })
       .when('/order/:jeanId?/:userId?', {
         templateUrl: '/pages/order/order.view.html',
         controller: 'orderCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve: {
+          jsonData: ['jean', function(jean) {
+            return jean.setupJson();
+          }]      
+        }
       })
       .when('/customizer/:jeanId?/:userId?', {
         templateUrl: '/pages/customizer/customizer.view.html',
         controller: 'customizerCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve: {
+          jsonData: ['jean', function(jean) {
+            return jean.setupJson();
+          }]      
+        }
       })
       .when('/admin', {
         templateUrl: '/pages/admin/admin.view.html',

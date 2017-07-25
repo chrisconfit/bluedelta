@@ -15,7 +15,7 @@
 
 	<!--Pant Rendering-->
 	<div class="builder__stage">	
-		<image-stack></image-stack>
+		<image-stack jean-data="vm.jeanData"></image-stack>
 	</div>
 	
 	<!--Controls Panel-->
@@ -25,7 +25,7 @@
 	
 	<!--Mobile Helper-->
 	<div ng-init="vm.showMenu = false" class="builder__mobile-helper">
-		<social-actions class="helper" jean="vm.jean" display="vm.displaySocialHelper && vm.showMenu"></social-actions>
+		<social-actions class="helper" jean="vm.jeanData" display="vm.displaySocialHelper && vm.showMenu"></social-actions>
 		<a ng-click="vm.showMenu=!vm.showMenu" ng-class="(vm.showMenu ? 'closer' : '')" class="menu-icon">
 			<span class="bars">
 		</a>

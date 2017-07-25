@@ -10,7 +10,7 @@
   
   function istackCtrl($window, $scope, $q, jean) {
 	  var isvm = this;
-		isvm.jean = jean;
+
 		isvm.centerPan = false;		
 		isvm.zoom = false;
 		isvm.pan = {"x":50, "y":30};

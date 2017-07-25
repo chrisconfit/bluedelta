@@ -38,7 +38,9 @@
 			setupJsonData(jsonDataKeys[d]);
 		}
 		
-
+		BlueDeltaApi.getJsonData = function(){
+			return this.jsonData;
+		}
 		var styleByGender = function(gender){
 			return function(style){
 				return style["images_"+gender];

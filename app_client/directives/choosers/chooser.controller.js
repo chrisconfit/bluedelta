@@ -13,7 +13,7 @@
 			
 			//popups
 			chvm.popups = popups.get();
-			chvm.jean = jean;
+			chvm.jeanData = jean.get();
 			chvm.breakPoint = 800;
 			
 			
@@ -74,8 +74,15 @@
 
 					$timeout(function(){
 						
-						var key = $scope.step.jeanKey+"_"+chvm.jean.data[$scope.step.jeanKey],
-						activeElement = angular.element(document.querySelector('#'+key));
+						//Get the data id 
+						var dataId = chvm.jeanData[$scope.step.jeanKey];
+					
+						//Make sure this isn't an embedded model
+						if (typeof(dataId)== 'object') dataId = dataId[$scope.step.dataKey+"Id"];
+						
+						var elementId = $scope.step.jeanKey+"_"+dataId;												
+					
+						var activeElement = angular.element(document.querySelector('#'+elementId));
 						
 						chvm.selectorCoords.top = activeElement.prop('offsetTop');
 						chvm.selectorCoords.left = activeElement.prop('offsetLeft');
@@ -119,13 +126,13 @@
 				
 				$timeout(function(){
 					text.css({'right':'15px', 'opacity':1});				
-					chvm.jean.data[attr] =	id;	
+					chvm.jeanData[attr] =	id;	
 				}, 200);
 			
 			}
 			
 			chvm.jeanSet = function(attr, val){
-				chvm.jean.data[attr] =	val;
+				chvm.jeanData[attr] =	val;
 			}
 		
 		}	

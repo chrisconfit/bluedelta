@@ -1,5 +1,6 @@
 <dl>
 	<dt ng-repeat-start="(key, value) in filterFields(jean)">{{key | scoreToSpace}}:</dt><!--
-	--><dd ng-repeat-end>{{dataLookup(key,value,"name")}}</dd>
+	--><dd ng-repeat-end>{{value.name}}</dd>
 </dl>
 
+<!-- {dataLookup(key,value,"name")}-->

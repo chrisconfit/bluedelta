@@ -10,7 +10,7 @@
 				
 		<div class="build-step-stage {{vm.panelDir}} {{vm.panel[vm.panelStep].panelTemplate}}">			
 			<div class="step-container template-{{step.panelTemplate}}" ng-class="(step.panelTemplate != 'chooser' ? 'fade':'chooser-anim')" ng-repeat="step in vm.panel" ng-show="vm.panel[vm.panelStep] == step">	
-								
+
 				<!--Gender Chooser-->
 				<gender-chooser 
 				active="vm.panel[vm.panelStep]==step"

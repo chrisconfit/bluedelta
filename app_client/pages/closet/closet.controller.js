@@ -4,8 +4,8 @@
     .module('bdApp')
     .controller('closetCtrl', closetCtrl);
 
-  closetCtrl.$inject = ['$location', 'jean','popups', 'aws', 'bdAPI', '$scope', 'jsonData', 'messages', 'loader'];
-  function closetCtrl($location, jean, popups, aws, bdAPI, $scope, jsonData, messages, loader) {
+  closetCtrl.$inject = ['$location', 'jean','popups', 'aws', 'bdAPI', '$scope', 'messages', 'loader'];
+  function closetCtrl($location, jean, popups, aws, bdAPI, $scope, messages, loader) {
 	  
 
 	  loader.show("Getting your profile information...");
@@ -20,7 +20,7 @@
 		//Set up Jean
 		vm.jean = jean;
 		
-		vm.data=jsonData.getData();
+		vm.data={}//jsonData.getData();
 		vm.jeans = vm.data.jeansList;
 		
 

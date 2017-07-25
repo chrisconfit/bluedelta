@@ -3,11 +3,11 @@
 </div>
 
 <div class="cft-g chooser-grid" id="fabric-chooser">
-	<span ng-class="{ live: chvm.jean.data[step.jeanKey] }" class="chooser-select" id="{{step.jeanKey}}-selector"></span>
+	<span ng-class="{ live: chvm.jeanData.fabric }" class="chooser-select" id="{{step.jeanKey}}-selector"></span>
 	<div class="cft-gi" ng-repeat="data in dataset | orderBy:'weight'">
-		<a ng-class="{ active: chvm.jean.data[step.jeanKey]==data.id }" id="{{step.jeanKey}}_{{data.id}}" 
-		href="" ng-click="chvm.selectAttr($event, data.id, step.jeanKey)">
-			<img src="/images/components/{{step.dataKey}}/thumb/{{data.id}}.jpg">
+		<a ng-class="{ active: chvm.jeanData.fabric.fabricId == data.fabricId }" id="fabric_{{data.fabricId}}" 
+		href="" ng-click="chvm.selectAttr($event, data, step.jeanKey)">
+			<img src="/images/components/{{step.dataKey}}/thumb/{{data.fabricId}}.jpg">
 			<span class="fabric-weight">{{data.weight}}<span class="oz">oz</span></span>
 		</a>
 	</div>

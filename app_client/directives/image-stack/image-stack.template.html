@@ -1,16 +1,16 @@
 <div class="images" id="zoom-frame" ng-class="{'zoomed': isvm.zoom, 'centered':isvm.centerPan}" 
 	ng-click="isvm.toggleZoom()" ng-touch="isvm.zoom = !isvm.zoom" ng-mouseleave="isvm.returnPan()" ng-mousemove="isvm.trackMouse($event)">
-		<!--_s{{isvm.jean.data.style}} will add the current style to the jean, but for now all images are using the "2" style. Let's hardcode that until we need to change-->
-	<img class="zoomed-image" ng-if="isvm.jean.data.fabric" ng-class="{'zoom': isvm.zoom }"
-	src="/images/components/fabrics/g{{isvm.jean.data.gender}}/s2/f{{isvm.jean.data.fabric}}.jpg">		
-	<img class="zoomed-image" ng-if="isvm.jean.data.bottom_thread" ng-class="{'zoom': isvm.zoom }"
-	src="/images/components/threads/g{{isvm.jean.data.gender}}/s2/tb/{{isvm.jean.data.bottom_thread}}.png">
-	<img class="zoomed-image" ng-if="isvm.jean.data.top_thread" ng-class="{'zoom': isvm.zoom }"
-	src="/images/components/threads/g{{isvm.jean.data.gender}}/s2/tt/{{isvm.jean.data.top_thread}}.png">
-	<img class="zoomed-image" ng-if="isvm.jean.data.accent_thread" ng-class="{'zoom': isvm.zoom }"
-	src="/images/components/threads/g{{isvm.jean.data.gender}}/s2/ta/{{isvm.jean.data.accent_thread}}.png">
-	<!--<img class="stage-button" ng-if="isvm.jean.data.hardware != 1"
-	src="/images/components/hardware/thumb_{{isvm.jean.data.hardware}}.jpg">-->
+		<!--_s{{jeanData.style}} will add the current style to the jean, but for now all images are using the "2" style. Let's hardcode that until we need to change-->
+	<img class="zoomed-image" ng-if="jeanData.fabric" ng-class="{'zoom': isvm.zoom }"
+	src="/images/components/fabric/g{{jeanData.gender}}/s2/f{{jeanData.fabric.fabricId}}.jpg">		
+	<img class="zoomed-image" ng-if="jeanData.bottomThread" ng-class="{'zoom': isvm.zoom }"
+	src="/images/components/thread/g{{jeanData.gender}}/s2/tb/{{jeanData.bottomThread.threadId}}.png">
+	<img class="zoomed-image" ng-if="jeanData.topThread" ng-class="{'zoom': isvm.zoom }"
+	src="/images/components/thread/g{{jeanData.gender}}/s2/tt/{{jeanData.topThread.threadId}}.png">
+	<img class="zoomed-image" ng-if="jeanData.accentThread" ng-class="{'zoom': isvm.zoom }"
+	src="/images/components/thread/g{{jeanData.gender}}/s2/ta/{{jeanData.accentThread.threadId}}.png">
+	<!--<img class="stage-button" ng-if="jeanData.hardware != 1"
+	src="/images/components/hardware/thumb_{{jeanData.hardware}}.jpg">-->
 </div>
 
 <a class="zoom-icon" ng-click="isvm.toggleZoom()" href="">
