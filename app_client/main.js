@@ -2,18 +2,7 @@
 
   angular.module('bdApp', ['ngRoute', 'ngAnimate','ngSanitize', 'ngCookies', 'angular-gestures']); 
   
-	  var jsonD = function() {
-	  // Initialize a new promise.
-	//  var deferred = $q.defer();
-	
-	  // Check is user is logged in
-/*	  $http.get('/data/thread.json').success(function(result) {
-	    deferred.resolve(result.data);
-	  });
-	*/
-	return "here";
-	  //return deferred.promise;
-	};
+
 
   function config ($routeProvider, $locationProvider) {
     $routeProvider
@@ -35,32 +24,17 @@
       .when('/closet', {
         templateUrl: '/pages/closet/closet.view.html',
         controller: 'closetCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          jsonData: ['jean', function(jean) {
-            return jean.setupJson();
-          }]      
-        }
+        controllerAs: 'vm'
       })
       .when('/order/:jeanId?/:userId?', {
         templateUrl: '/pages/order/order.view.html',
         controller: 'orderCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          jsonData: ['jean', function(jean) {
-            return jean.setupJson();
-          }]      
-        }
+        controllerAs: 'vm'
       })
       .when('/customizer/:jeanId?/:userId?', {
         templateUrl: '/pages/customizer/customizer.view.html',
         controller: 'customizerCtrl',
-        controllerAs: 'vm',
-        resolve: {
-          jsonData: ['jean', function(jean) {
-            return jean.setupJson();
-          }]      
-        }
+        controllerAs: 'vm'
       })
       .when('/admin', {
         templateUrl: '/pages/admin/admin.view.html',
@@ -72,30 +46,10 @@
     // use the HTML5 History API
     $locationProvider.html5Mode(true);
     
-   }
+  }
 
-  function run($rootScope, $location, aws, jean, popups) {
-	  
-	  /*
-	  $location.update_path = function (path, keep_previous_path_in_history) {
-      if ($location.path() == path) return;
-
-      var routeToKeep = $route.current;
-      var unsubscribe = $rootScope.$on('$locationChangeSuccess', function () {
-        if (routeToKeep) {
-          $route.current = routeToKeep;
-          routeToKeep = null;
-        }
-        unsubscribe();
-        unsubscribe = null;
-      });
-
-      $location.path(path);
-      if (!keep_previous_path_in_history) $location.replace();
-    };
-		*/
-	  
-	  
+  function run($rootScope, $location, aws) {
+	    
     $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
 	    var locked = [
 		    '/closet',
@@ -115,10 +69,15 @@
     });
   }
   
-  angular
-    .module('bdApp')
+  
+ 
+
+	
+			
+
+	angular.module('bdApp')
     .config(['$routeProvider', '$locationProvider', config])
-    .run(['$rootScope', '$location', 'aws', 'jean', 'popups', run])
+    .run(['$rootScope', '$location', 'aws', run])
 		.filter('spaceless',function() {
 	    return function(input) {
 	      if (input) {
@@ -129,6 +88,7 @@
 		.filter('scoreToSpace',function() {
 	    return function(input) {
 	      if (input) {
+		      var input = input.replace( /([A-Z])/g, " $1" );
 	      	return input.replace(/_+/g, ' ');    
 	      }
 	    }
@@ -146,10 +106,43 @@
 		  }  
 		})
 		
+		
+		
+		
+		
+	
+	// Get Angular's $http module.
+	var initInjector = angular.injector(['ng']);
+	var $http = initInjector.get('$http');
+	var $q = initInjector.get('$q');
+
+	
+	var jsonDataKeys = ['style', 'thread', 'button', 'fabric', 'gender'];
+	var promises = [];				
+	for (d = 0; d < jsonDataKeys.length; d++){
+		promises.push(
+			$http.get('/data/'+jsonDataKeys[d]+'.json')
+		);	
+	}
+
+	$q.all(promises).then(
+		function(result){
+			var jsonData = {};
+			for(r=0;r<result.length;r++){
+				var key = result[r].config.url.replace("/data/","").replace(".json","");
+				jsonData[key] = result[r].data;
+			}
+			angular.module('bdApp').constant('jsonData', jsonData);
+			
+			var body = document.getElementById('bdApp');
+			angular.bootstrap(angular.element(body), ['bdApp']);		
+		}
+	);
+
+	
 
 		
 		
-		
-		
+	
 		
 })();

@@ -21,22 +21,22 @@
 		vm.popups = popups.get();
 
 		//Set up Jean
-		jean.setup().then(function(result){
-			vm.jeanData = jean.get();
+		jean.setup();
+		vm.jeanData = jean.get();
 			
-			$scope.$watch(function() {
-				return vm.jeanData;
-			}, function(current, original) {
-				vm.updateActiveItem();
-			}, true);
-			
-			$scope.$watch(function() {
-				return vm.data;
-			}, function(current, original) {
-				vm.updateActiveItem();
-			}, true);
-			
-		})
+		$scope.$watch(function() {
+			return vm.jeanData;
+		}, function(current, original) {
+			vm.updateActiveItem();
+		}, true);
+		
+		$scope.$watch(function() {
+			return vm.data;
+		}, function(current, original) {
+			vm.updateActiveItem();
+		}, true);
+		
+		
 		
 	
 
@@ -81,7 +81,7 @@
 		* GET CUSTOMIZER DATA 
 		*
 		*/	
-		vm.data = jean.getJsonData();
+		vm.data = jsonData;
 		
 		vm.activeItem={};
 		vm.updateActiveItem = function(){
@@ -135,7 +135,7 @@
 			"panelTemplate":"chooser",
 			"dataKey":"thread",
 			"title":"Top Thread",
-			"jeanKey":"topThread"
+			"jeanKey":"top_thread"
 		});
 		
 		//Bottom Thread
@@ -143,7 +143,7 @@
 			"panelTemplate":"chooser",
 			"dataKey":"thread",
 			"title":"Bottom Thread",
-			"jeanKey":"bottomThread"
+			"jeanKey":"bottom_thread"
 		});
 		
 		//Accent Thread
@@ -151,7 +151,7 @@
 			"panelTemplate":"chooser",
 			"dataKey":"thread",
 			"title":"Accent Thread",
-			"jeanKey":"accentThread"
+			"jeanKey":"accent_thread"
 		});
 		
 		//Overview

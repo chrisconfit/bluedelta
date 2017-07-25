@@ -3,61 +3,9 @@
 
   angular
     .module('bdApp')
-    .service('jean', ['$routeParams', '$http','bdAPI', '$q', 'aws', jean]);
+    .service('jean', ['$routeParams', '$http','bdAPI', '$q', 'aws', 'jsonData', jean]);
 
-  function jean($routeParams, $http, bdAPI, $q, aws) {
-		
-		
-		
-		
-		var jvm = this;
-		
-		
-		/*
-		*  Set up JSON Data
-		*/
-		jvm.jsonData = {};
-		
-		setupJsonData = function(key){
-			jvm.promises.push(
-				$http.get('/data/'+key+'.json')
-			);
-		}
-		
-		setupJson = function(){
-			var defer = $q.defer();
-			console.log(Object.keys(jvm.jsonData) );
-			if (Object.keys(jvm.jsonData).length > 0){ defer.resolve(jvm.jsonData); }
-			else{
-				console.log("SETTINGUPPP");
-			}
-			
-			jvm.promises = [];		
-			var jsonDataKeys = ['style', 'thread', 'button', 'fabric', 'gender'];
-			
-			for (d = 0; d < jsonDataKeys.length; d++){
-				setupJsonData(jsonDataKeys[d]);
-			}
-			
-			$q.all(jvm.promises).then(
-				function(result){
-					for(r=0;r<result.length;r++){
-						var key = result[r].config.url.replace("/data/","").replace(".json","");
-						jvm.jsonData[key] = result[r].data;
-					}
-					defer.resolve(jvm.jsonData);					
-				},
-				function(err){defer.reject(err);}
-			);
-			return defer.promise;	
-		}
-		
-
-		var getJsonData = function(){
-			return jvm.jsonData;
-		}
-
-
+  function jean($routeParams, $http, bdAPI, $q, aws, jsonData) {
 
 
 		/*
@@ -65,21 +13,14 @@
 		*/
 		
 		var dataLookup = function(dataType, key){
-console.log(dataType,key);
-console.log(dataType,key);
-console.log(dataType,key);
 
-			var data = jvm.jsonData[dataType];
+			var data = jsonData[dataType];
 			if (!data) return false;
 			
-									console.log("NEW");
 			for (i=0; i<data.length; i++) {
-
-			//	console.log(data[i][dataType+"Id"], key);
-				if (data[i][dataType+"Id"] == key) 
-				
-
-					return data[i];
+				//	console.log(data[i][dataType+"Id"], key);
+				if (data[i][dataType+"Id"] == key) 				
+				return data[i];
   		}
 		}
 		
@@ -89,39 +30,37 @@ console.log(dataType,key);
 		*.  Jean Data
 		*/
 		
-  	jvm.jeanData = {};
+  	jeanData = {};
   	
 		set = function(property, value){
-			jvm.jeanData[property] = value;
+			jeanData[property] = value;
 			this.saved=false;
 		};
 		
 		createNew = function(jean){
 			if (!jean || jean.constructor != Object){
-				jvm.jeanData = {
+				jeanData = {
 					"gender" : 1,
 					"style" : 1,
 					"fabric" : dataLookup("fabric", 1004),
-					"accentThread" : dataLookup("thread", 1),
-					"topThread" : dataLookup("thread", 1),
-					"bottomThread" : dataLookup("thread", 1)
+					"accent_thread" : dataLookup("thread", 1),
+					"top_thread" : dataLookup("thread", 1),
+					"bottom_thread" : dataLookup("thread", 1)
 				}
-				jvm.jeanData.saved = false;
+				jeanData.saved = false;
 			}else{
-				jvm.jeanData = {
+				jeanData = {
 					"gender" : jean.gender,
 					"style" : jean.style,
 					"fabric" : jean.fabric.fabricId,
-					"accentThread" : jean.accentThread.threadId,
-					"topThread" : jean.topThread.threadId,
-					"bottomThread" : jean.bottomThread.threadId
+					"accent_thread" : jean.accent_thread.threadId,
+					"top_thread" : jean.top_thread.threadId,
+					"bottom_thread" : jean.bottom_thread.threadId
 				}
 			}
 		};
 		
-		
-		
-
+				
 		function parseURLkey(key){
 			switch(key){
 				case "g":
@@ -183,81 +122,72 @@ console.log(dataType,key);
 		
 		//Set up jean data from parameter
 		var setup = function(data){
-			var defer = $q.defer();
 			
-			//Set up jean from data
-			if (data){
-				jvm.jeanData = data;
-				defer.resolve(jvm.jeanData);
-			}
-			else{
-				setupJson().then(function(){
-					console.log('setup');
-					//Data URL
-					if ($routeParams.jeanId && !$routeParams.userId){
-						if ($routeParams.jeanId.indexOf(":")>0){
-							createNew();
-							jeanData = $routeParams.jeanId.split(":");
-							for(var d=0; d<jeanData.length; d++){
-								var parts= jeanData[d].match(/([A-Za-z]+)([0-9]+)/);
-								if (!parts) continue;
-								var jeanKey = parseURLkey(parts[1]);
-								if (jeanKey) jvm.jeanData[jeanKey] = parseInt(parts[2]);					
-							}
-						}
-						defer.resolve(jvm.jeanData);
-					}
-					
-					//Copy or Edit Jean
-					else if ($routeParams.jeanId && $routeParams.userId){
-						//First get Jean
-						bdAPI.jeansGet($routeParams.userId, $routeParams.jeanId).then(					
-							function(result){
-								var newJean = result.jeanData;
-								var userData = aws.getCurrentUserFromLocalStorage();
-								if(userData){
-									var identityId = bdAPI.setupHeaders(userData);
-									if (identityId == $routeParams.userId){ //Edit Jean		
-										jvm.jeanData=newJean;
-									}
-									else{ //Copy Jean
-										createNew(newJean);
-									}
-								}else{
-									//Not logged in... copy jean
-									createNew(newJean);
-								}
-								console.log(jean);
-								defer.resolve(jean.jeanData);
-							}, 
-							function(err){
-								//Jean or user not found.. just create a blank jean...
-								console.log(err);
-								createNew();
-								defer.resolve(jean.jeanData);
-							}
-						);
-					}
-					
-					//New Jean
-					else{
-						if(Object.keys(jvm.jeanData).length === 0 && jvm.jeanData.constructor === Object) createNew();		
-						console.log(jvm.jeanData);
-						defer.resolve(jvm.jeanData);		
-						//If there's already data in place we'll use that.
-					}
-					
-				});
-			}
-			
+			var jean = this;
 						
-			//Return Jean data...
-			return defer.promise;
+			//Set up jean from data
+			if (data){ jeanData = data; }
+
+			//Data URL
+			else if ($routeParams.jeanId && !$routeParams.userId){
+				if ($routeParams.jeanId.indexOf(":")>0){
+					createNew();
+					jeanData = $routeParams.jeanId.split(":");
+					for(var d=0; d<jeanData.length; d++){
+						var parts= jeanData[d].match(/([A-Za-z]+)([0-9]+)/);
+						if (!parts) continue;
+						var jeanKey = parseURLkey(parts[1]);
+						if (jeanKey) jeanData[jeanKey] = parseInt(parts[2]);					
+					}
+				}
+			}
+					
+			//Copy or Edit Jean
+			else if ($routeParams.jeanId && $routeParams.userId){
+				
+				console.log("get");
+				
+				//First get Jean
+				bdAPI.jeansGet($routeParams.userId, $routeParams.jeanId).then(					
+					function(result){
+						var newJean = result.data;
+						var userData = aws.getCurrentUserFromLocalStorage();
+						if(userData){
+							var identityId = bdAPI.setupHeaders(userData);
+							if (identityId == $routeParams.userId){ //Edit Jean		
+								console.log(newJean)
+								console.log(jean.jeanData);
+								jean.jeanData=newJean;
+								console.log(jean.jeanData);
+							}
+							
+							else{ //Copy Jean
+								createNew(newJean);
+							}
+						}else{
+							//Not logged in... copy jean
+							createNew(newJean);
+						}
+					}, 
+					function(err){
+						//Jean or user not found.. just create a blank jean...
+						console.log(err);
+						createNew();
+					}
+				);
+			}
+					
+			//New Jean
+			else{
+				if(Object.keys(jeanData).length === 0 && jeanData.constructor === Object) createNew();			
+				//If there's already data in place we'll use that.
+			}
+					
 		}
 		
 		
 		var get=function(){
-			return jvm.jeanData;
+			return jeanData;
 		}
 		
 		
@@ -275,19 +205,20 @@ console.log(dataType,key);
       })
     }
     
-		createThumb = function(){
+		createThumb = function(jeanData){
+			console.log(jeanData);
 	  	var canvas = document.createElement('canvas');
 	  	canvas.width=600;
 	  	canvas.height=600;
 	  	var cntxt = canvas.getContext('2d');	
 	  	var promises = [];
 			var images = [
-				'/images/components/fabrics/g'+jvm.jeanData.gender+'/s2/f'+jvm.jeanData.fabric+'.jpg',
-				'/images/components/threads/g'+jvm.jeanData.gender+'/s2/tb/'+jvm.jeanData.bottom_thread+'.png',
-				'/images/components/threads/g'+jvm.jeanData.gender+'/s2/tt/'+jvm.jeanData.top_thread+'.png',
-				'/images/components/threads/g'+jvm.jeanData.gender+'/s2/ta/'+jvm.jeanData.accent_thread+'.png'
+				'/images/components/fabric/g'+jeanData.gender+'/s2/f'+jeanData.fabric.fabricId+'.jpg',
+				'/images/components/thread/g'+jeanData.gender+'/s2/tb/'+jeanData.bottom_thread.threadId+'.png',
+				'/images/components/thread/g'+jeanData.gender+'/s2/tt/'+jeanData.top_thread.threadId+'.png',
+				'/images/components/thread/g'+jeanData.gender+'/s2/ta/'+jeanData.accent_thread.threadId+'.png'
 			];
-			
+			console.log(images);
 	    for(var i=0; i<images.length; i++){
 	      promises.push(loadImage(images[i], cntxt));
 	    }
@@ -295,6 +226,9 @@ console.log(dataType,key);
 	    return $q.all(promises).then(function(results) {
 	      var dataUrl = canvas.toDataURL('image/jpeg');
 				return dataUrl;
+	    },
+	    function(err){
+		    console.log(err);
 	    });	
   	}
 
@@ -302,10 +236,16 @@ console.log(dataType,key);
 		
 		getDataCode = function(){
 			var url = "";
-			for (var property in jvm.jeanData) {
-			  if (jvm.jeanData.hasOwnProperty(property)) {
+			for (var property in jeanData) {
+			  if (jeanData.hasOwnProperty(property)) {
+					var id = jeanData[property];
+					if (typeof(id)=='object'){
+						var idKey = property+"Id";
+						if (idKey.indexOf("Thread")>-1) idKey="threadId";
+						id = id[idKey];
+					}
 					var urlKey = jeanKeytoURL(property);
-					if (urlKey) url += "_"+urlKey+jvm.jeanData[property];
+					if (urlKey) url += "_"+urlKey+id;
 			  }
 			}	
 			url = url.replace(/(^[_\s]+)|([_\s]+$)/g, '');
@@ -328,31 +268,34 @@ console.log(dataType,key);
 		
 		var save = function(){
 			
+			
+			console.log('save');
+			
 			var defer = $q.defer();
 			var jean = this;
+			console.log(this);
+			var jeanData = jean.get();
+	
+
+			console.log(jeanData);
 			
-			console.log("jean");
-			console.log(jean);
-			var filename = this.getDataCode();
+			var filename = jean.getDataCode();
 			filename += ".jpg";
-			
-			this.createThumb().then( function(imageURL){
+			this.createThumb(jeanData).then( function(imageURL){
 		    var userData = aws.getCurrentUserFromLocalStorage();
-		    
 				bdAPI.defaultHeaders_['Authorization'] = userData.idToken.getJwtToken();
 				var idTokenPayload = userData.idToken.jwtToken.split('.')[1];
 				var identityID = JSON.parse(atob(idTokenPayload)).sub;	
-
-				console.log(userData);
 				
 				if (userData){		
 					aws.saveImageTos3(imageURL, userData, filename).then(
 						function(result){	
 							//Add image to jean before saving...
 				  		jean.set("imageURL",result);
-							if (jean.jeanData.jeanId){
+							if (jeanData.jeanId){
 								//Update existing Jean...
-								bdAPI.jeansUpdate(identityID, jean.jeanData.jeanId, jean.jeanData).then(
+								console.log('update');
+								bdAPI.jeansUpdate(identityID, jeanData.jeanId, jeanData).then(
 									function(result){
 										defer.resolve(result);
 									},
@@ -363,13 +306,18 @@ console.log(dataType,key);
 								);
 							}else{
 								//Create New Jean...
-								bdAPI.jeansCreate(identityID, jean.jeanData).then(
+								console.log('create');
+																	console.log(jeanData);
+								bdAPI.jeansCreate(identityID, jeanData).then(
+
 									function(result){
 										//Add new id to jean
-										jean.set("jeanId",result.jeanData.jeanId);
+										console.log(result);
+										jean.set("jeanId", result.data.jeanId);
 										defer.resolve(result);
 									},
 									function(err){
+										console.log(err);
 										defer.reject(err);
 									}
 								);
@@ -409,8 +357,6 @@ console.log(dataType,key);
 		
 			
 		return {
-			setupJson:setupJson,
-			getJsonData :getJsonData,
 	    dataLookup: dataLookup,
 	    deleter : deleter,
 	    save : save,

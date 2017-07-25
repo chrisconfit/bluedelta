@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="bdApp">
+<html>
 <head>
   <title>Blue Delta Customizer - BETA</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,7 +33,7 @@
   <script src="lib/angular/angular-route.min.js"></script>
   <script src="lib/angular/angular-animate.min.js"></script>
   <script src="lib/angular/gestures.js"></script>
-  <script src="app.min.js"></script>
+
   <script>
     goog.require('API.Client.DefaultApi');
   </script>
@@ -66,9 +66,10 @@
   <!-- optional: only if you use other AWS services -->
   <script src="lib/aws/aws-sdk.min.js"></script>
 </head>
-<body>
+<body  id="bdApp">
 	<div ng-view>
 	</div>
 </body>
+  <script src="app.min.js"></script>
 </html
 

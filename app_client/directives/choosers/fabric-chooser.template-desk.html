@@ -15,7 +15,6 @@
 <h3>Mediumweight <a href="" class="info-pop" ng-click="chvm.popups.denim = !chvm.popups.denim"><i class="fa fa-question-circle"></i></a></h3>
 <div class="cft-g chooser-grid">
 	<div class="cft-gi" ng-repeat="fabric in dataset | filter:weightFilter(10.001,12) | orderBy:'weight'">
-		{{fabric}}
 		<a ng-class="{ active: chvm.jeanData.fabric==fabric }" id="fabric_{{fabric.fabricId}}" 
 		href="" ng-click="chvm.selectAttr($event, fabric, 'fabric')">
 			<img src="/images/components/{{step.dataKey}}/thumb/{{fabric.fabricId}}.jpg">
