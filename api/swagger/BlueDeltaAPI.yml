@@ -839,6 +839,26 @@ definitions:
       name:
         type: string
 
+  Vendor:
+    type: object
+    required:
+    - vendorId
+    properties:
+      vendorId:
+        type: string
+      name:
+        type: string
+
+  Rep:
+    type: object
+    required:
+    - repId
+    properties:
+      repId:
+        type: string
+      name:
+        type: string
+
   TransactionsListResponse:
     required:
     - items
@@ -933,7 +953,7 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Measurement"
-  
+
   Measurement:
     type: object
     properties:
@@ -1018,13 +1038,13 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Jean"
-          
+
   Jean:
     type: object
     properties:
       jeanId:
         type: string
-      imageURL: 
+      imageURL:
         type:string
       ordered:
         boolean

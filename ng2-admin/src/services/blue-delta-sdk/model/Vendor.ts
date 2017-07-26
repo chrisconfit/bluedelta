@@ -12,23 +12,9 @@
 
 import * as models from './models';
 
-export interface Order {
-    orderId?: string;
+export interface Vendor {
+    vendorId: string;
 
-    userId: string;
-
-    shippingAddress?: models.Address;
-
-    price?: string;
-
-    vendor?: models.Vendor;
-
-    rep?: models.Rep;
-
-    orderItems: Array<models.OrderItem>;
-
-    transaction?: models.Transaction;
-
-    timeline?: Array<models.Comment>;
+    name?: string;
 
 }
