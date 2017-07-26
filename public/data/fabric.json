@@ -93,7 +93,7 @@
 		"weight":9,
 		"description":"Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam fabricId dolor fabricId nibh ultricies vehicula ut fabricId elit. Maecenas faucibus mollis interdum. Donec ullamcorper nulla non metus auctor fringilla.",
 		"materials":"90% Cotton / 8% Poly / 2% Spandex",
-		"supplier":""
+		"supplier":null
 	},
 	{
 		"fabricId":1107,

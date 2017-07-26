@@ -145,11 +145,13 @@
 			//Copy or Edit Jean
 			else if ($routeParams.jeanId && $routeParams.userId){
 				
-				console.log("get");
+				console.log($routeParams.jeanId,$routeParams.userId);
 				
 				//First get Jean
 				bdAPI.jeansGet($routeParams.userId, $routeParams.jeanId).then(					
 					function(result){
+						console.log("result");
+						console.log(result.data);
 						var newJean = result.data;
 						var userData = aws.getCurrentUserFromLocalStorage();
 						if(userData){
@@ -307,7 +309,7 @@
 							}else{
 								//Create New Jean...
 								console.log('create');
-																	console.log(jeanData);
+								console.log(jeanData);
 								bdAPI.jeansCreate(identityID, jeanData).then(
 
 									function(result){

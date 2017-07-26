@@ -11,21 +11,21 @@
 	  
     var vm = this;
     vm.popups=popups.get();
-   
-		jean.setup().then(function(result){
-			vm.jean = result;
-			console.log(vm.jean);
-
-			var userDetails = aws.getCurrentUserFromLocalStorage();
-			var identityId = bdAPI.setupHeaders(userDetails);
-			console.log("jean is set up");
-			console.log(vm.jean.jeanId);
-			console.log(identityId);
-			if (vm.jean.jeanId && identityId){
-				console.log("hm..")
-				$location.path('/order/'+vm.jean.jeanId+'/'+identityId);
-			}
-		})
+		
+		jean.setup();
+		vm.jean = jean.get();
+		console.log(vm.jean);
+		
+		var userDetails = aws.getCurrentUserFromLocalStorage();
+		var identityId = bdAPI.setupHeaders(userDetails);
+		console.log("jean is set up");
+		console.log(vm.jean.jeanId);
+		console.log(identityId);
+		if (vm.jean.jeanId && identityId){
+			console.log("hm..")
+			$location.path('/order/'+vm.jean.jeanId+'/'+identityId);
+		}
+		
 		
 		vm.orderForm={};
 		vm.orderForm.step=1;
@@ -41,7 +41,7 @@
 		
 		vm.tailorLocations=[];
 		
-		vm.data=jsonData.getData();
+		vm.data=jsonData;
 		
 		vm.orderForm.nextStep = function(){
 			
