@@ -115,10 +115,16 @@
         url: "/edit/:orderId",
         templateUrl: "app/orders/orders-edit.html",
         authenticate: false,
+        controller: "OrdersController as ovm",
         resolve: {
-	        idCheck: function($stateParams, $location){
+	        jsonData: function($http){
+		      	return $http.get('/assets/data/data.json');
+	        },
+	        orderId: function($stateParams, $location){
 						if ($stateParams.orderId === undefined || $stateParams.orderId == "")
 							$location.path('orders/list');
+							
+						else return $stateParams.orderId;
     			},
 	        loadPlugin: function ($ocLazyLoad) {
             return $ocLazyLoad.load([

@@ -117,7 +117,7 @@
 	var $q = initInjector.get('$q');
 
 	
-	var jsonDataKeys = ['style', 'thread', 'button', 'fabric', 'gender'];
+	var jsonDataKeys = ['style', 'thread', 'button', 'fabric', 'gender', 'tailors'];
 	var promises = [];				
 	for (d = 0; d < jsonDataKeys.length; d++){
 		promises.push(

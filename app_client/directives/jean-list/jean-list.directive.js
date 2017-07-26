@@ -19,9 +19,9 @@
 				
 					var defaultFields = [
 						'fabric',
-						'accentThread',
-						'topThread',
-						'bottomThread',
+						'accent_thread',
+						'top_thread',
+						'bottom_thread',
 						'gender',
 						'style'
 					];

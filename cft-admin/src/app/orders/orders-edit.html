@@ -1,4 +1,4 @@
-<div ng-controller="OrdersController as octrl">
+<div>
 
 <h1>Order ####</h1>
 	                
@@ -7,7 +7,7 @@
 		<section class="content">
 
       <div class="row">
-        
+
         <div class="col-md-3">
           <!-- Profile Image -->
           <div class="ibox ibox-primary">
@@ -54,22 +54,22 @@
 								<div class="ibox-content">
 	                <ul class="list-group list-group-unbordered">
 			              <li class="list-group-item">
-		                  <b>Gender</b> <a href="#" class="pull-right">Male</a>
+		                  <b>Gender</b> <a href="#" class="pull-right">{{ovm.order.orderItems[0].jean.gender}}</a>
 		                </li>
 		                <li class="list-group-item">
-		                  <b>Style</b> <a href="#" class="pull-right">Straight</a>
+		                  <b>Style</b> <a href="#" class="pull-right">{{ovm.order.orderItems[0].jean.style}}</a>
 		                </li>
 		                <li class="list-group-item">
-		                  <b>Fabric</b> <a href="#" class="pull-right">8oz. Raw Denim Classic Indigo</a>
+		                  <b>Fabric</b> <a href="#" class="pull-right">{{ovm.order.orderItems[0].jean.fabric.name}}</a>
 		                </li>
 		                <li class="list-group-item">
-		                  <b>Accent Thread</b> <a href="#" class="pull-right">Gold</a>
+		                  <b>Accent Thread</b> <a href="#" class="pull-right">{{ovm.order.orderItems[0].jean.accent_thread.name}}</a>
 		                </li>
 		                <li class="list-group-item">
-		                  <b>Top Thread</b> <a href="#" class="pull-right">Gold</a>
+		                  <b>Top Thread</b> <a href="#" class="pull-right">{{ovm.order.orderItems[0].jean.top_thread.name}}</a>
 		                </li>
 		                <li class="list-group-item">
-		                  <b>Bottom Thread</b> <a href="#" class="pull-right">Gold</a>
+		                  <b>Bottom Thread</b> <a href="#" class="pull-right">{{ovm.order.orderItems[0].jean.bottom_thread.name}}</a>
 		                </li>
                     <li class="list-group-item">
 		                  <b>Rivets</b> <a href="#" class="pull-right">Yes</a>
@@ -79,7 +79,7 @@
 		                </li>
 		                <li class="list-group-item">
 		                  <p><b>Order Notes</b></p>
-		                  <p>If possible, I would like these jeans to be monogrammed with my name. Let me know if there is an extra cost for this.</p>
+		                  <p>{{ovm.order.orderItems[0].notes}}</p>
 		                </li>
 		              </ul>
 								</div>
@@ -88,9 +88,8 @@
 						<div class="col-md-6">
 							<div class="ibox ibox-default">
 								<div class="ibox-title with-border">
-									<h3 >Order Info</h3>
+									<h3>Order Info</h3>
 								</div>
-									
 								<div class="ibox-content">
 									<div class="form-group">
 										<label class="control-label" for="customer">Jean Price</label>
@@ -101,55 +100,35 @@
 									</div>
 	                <div class="form-group">
 		                <label>Vendor</label>
-		                <select class="form-control select2" style="width: 100%;">
-		                  <option selected="selected">Blue Delta</option>
-		                  <option>Tom James</option>
-											<option>Tim Brown - FHG</option>
-											<option>Scott Toulas - Raphael Wardrobe Design</option>
-											<option>Cedric Hanis</option>
-											<option>Joseph Mapes</option>
-											<option>Greg Brown</option>
-											<option>Kipper Clothing</option>
-											<option>Roberto Revilla</option>
-											<option>Butler Custom Clothing</option>
-											<option>Brogue and Cuff</option>
-											<option>Florida Jean</option>
-											<option>Garrison Bespoke</option>
-											<option>Oliver Rowan Bespoke</option>
-											<option>Commonwealth Clothiers</option>
-											<option>Roosevelt and Co</option>
-											<option>Porter Wilson</option>
-											<option>Cedrick Harris</option>
-											<option>Haymakers</option>
-											<option>11th State</option>
-											<option>Langston</option>
+		                <select ng-model="ovm.order.vendor" class="form-control select2" style="width: 100%;">
+			                <option ng-if="!ovm.order.vendor"ng-selected="!ovm.order.vendor" value="">Select a Vendor</option>
+		                  <option ng-repeat="vendor in ovm.data.vendors">{{vendor.name}}</option>
 		                </select>
 		              </div>
 	              
 	                <div class="form-group">
 		                <label>Rep</label>
-		                <select class="form-control select2" style="width: 100%;">
-		                  <option selected="selected">Nick Weaver</option>
-		                  <option>Josh West</option>
-											<option>Ellen Goucher</option>
+		                <select class="form-control select2" ng-model="ovm.order.rep" style="width: 100%;">
+			                <option ng-if="!ovm.order.rep" ng-selected="!ovm.order.rep" value="">Select a Rep</option>
+											<option ng-repeat="rep in ovm.data.reps">{{rep.name}}</option>
 		                </select>
 		              </div>
 		              
 		              <div class="form-group">
 		                <label>Order Type</label>
-		                <select class="form-control select2" style="width: 100%;">
-		                  <option selected="selected">Blue Delta</option>
-			                  <option>Vendor Fitted</option>
-			                  <option>Cloned from Non-BD Jean</option>
-				                <option>Cloned from BD Jean</option>
-				                <option>Re-Order</option>
-		                	</select>
+		                <select class="form-control select2" ng-model="ovm.order.orderType" style="width: 100%;">
+		                  <option ng-value="1">Blue Delta</option>
+		                  <option ng-value="2">Vendor Fitted</option>
+		                  <option ng-value="3">Cloned from Non-BD Jean</option>
+			                <option ng-value="4">Cloned from BD Jean</option>
+			                <option ng0value="5">Re-Order</option>
+	                	</select>
 		              </div>
 	              
 	                <div class="form-group">
 		                <label>Status</label>
-		                <select class="form-control select2" style="width: 100%;">
-		                  <option selected="selected">Awaiting Payment</option>
+		                <select class="form-control select2" ng-model="ovm.order.status" style="width: 100%;">
+		                  <option>Awaiting Payment</option>
 		                  <option>New</option>
 		                  <option>Awaiting Payment</option>
 		                  <option>Processing</option>
@@ -164,7 +143,7 @@
 				
 				                <div class="input-group date">
 					                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-													<input type="datetime" class="form-control" date-time ng-model="sampleDate1" view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
+													<input type="datetime" class="form-control" ng-model="ovm.order.fitDate" date-time view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
 												</div>
 				                <!-- /.input group -->
 				              </div>
@@ -174,7 +153,7 @@
 				                <label>Due Date:</label>
 				                <div class="input-group date">
 					                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-													<input type="datetime" class="form-control" date-time ng-model="sampleDate2" view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
+													<input type="datetime" class="form-control" ng-model="ovm.order.dueDate" date-time view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
 												</div>
 				                <!-- /.input group -->
 				              </div>
@@ -184,10 +163,10 @@
 		              
 		              <div class="form-group">
 		                <label>Jean DOB:</label>
-		
+											{{ovm.order.dob}}
 		                <div class="input-group date">
 			                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-											<input type="datetime" class="form-control" date-time ng-model="sampleDate3" view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
+											<input type="datetime" class="form-control" date-time ng-model="ovm.order.dob" view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
 										</div>
 		                <!-- /.input group -->
 		              </div>
@@ -197,73 +176,45 @@
 						</div>
 	        </div>
         </div>
-	        
+			
 
       	<div class="col-md-9">
           <div class="tabs-container">
 
             <uib-tabset>
+            
               <uib-tab heading="Timeline">
                 <div class="panel-body">
                   
                   <h3>Timeline</h3>
 									
+									<!--Timeline Form-->
 									<div class="form-group">
 									  <label class="control-label" for="order_id">Enter Note</label>
 									  <div class="input-group">
-									    <input type="text" class="form-control" placeholder="Add Order Note">
+									    <input type="text" class="form-control" ng-model="ovm.timelineForm.message" placeholder="Add Order Note">
 									    <span class="input-group-btn">
-									      <button type="button" class="btn btn-primary btn-flat">Go!</button>
+									      <button type="button" ng-click="ovm.addTimelineItem()" class="btn btn-primary btn-flat">Add</button>
 									    </span>
 									  </div>
 									</div>
-									
-									<div id="vertical-timeline" class="vertical-container dark-timeline">
-										
-										
-										<div class="vertical-timeline-block">
+															
+									<!--Timeline Display-->
+									<div ng-if="ovm.order.timeline.length" id="vertical-timeline" class="vertical-container dark-timeline">
+										<div ng-repeat="t in ovm.order.timeline | orderBy: '-timestamp'"class="vertical-timeline-block">
 											<div class="vertical-timeline-icon navy-bg">
 												<i class="fa fa-circle bg-gray"></i>
 											</div>
 											<div class="vertical-timeline-content">
-												<h3 class="timeline-header no-border">Invoice Sent Via Square (invoice #320300202)</h3>
-												<span class="vertical-date"><span class="time"><i class="fa fa-clock-o"></i> </span> 24 minutes ago <br/>
-													<small>7 Jun. 2017</small>
+												<h3 class="timeline-header no-border">{{t.message}}</h3>
+												<span class="vertical-date"><span class="time"><i class="fa fa-clock-o"></i> </span> {{ovm.timeFromNow(t.timestamp)}} <br/>
+													<small>{{t.timestamp | date : 'd MMM. yyyy'}}</small>
+													<small ng-if="t.user">&nbsp;&nbsp;<i class="fa fa-user"></i> {{t.user}}</small>
 												</span>
 											</div>
 										</div>
-										
-										
-										<div class="vertical-timeline-block">
-											<div class="vertical-timeline-icon navy-bg">
-												<i class="fa fa-circle bg-gray"></i>
-											</div>
-											<div class="vertical-timeline-content">
-												<h3 class="timeline-header no-border">Phone call with customer - They will be sending their clone jeans in. We should receive within the next couple of weeks</h3>
-												<span class="vertical-date"><span class="time"><i class="fa fa-clock-o"></i> </span> 6 hours ago<br/>
-													<small>7 Jun. 2017</small>
-												</span>
-											</div>
-										</div>
-										
-										
-										<div class="vertical-timeline-block">
-											<div class="vertical-timeline-icon navy-bg">
-												<i class="fa fa-circle bg-gray"></i>
-											</div>
-											<div class="vertical-timeline-content">
-												<h3 class="timeline-header no-border">Order Created</h3>
-												<span class="vertical-date"><span class="time"><i class="fa fa-clock-o"></i> </span> 2 days ago<br/>
-													<small>5 Jun. 2017</small>
-												</span>
-											</div>
-										</div>
-										
-										
 									</div>
-			           
-			           
-			           
+			              
                 </div>
               </uib-tab>
               

@@ -30,7 +30,7 @@
 		*.  Jean Data
 		*/
 		
-  	jeanData = {};
+  	var jeanData = {};
   	
 		set = function(property, value){
 			jeanData[property] = value;
@@ -122,16 +122,22 @@
 		
 		//Set up jean data from parameter
 		var setup = function(data){
-			
-			var jean = this;
+			var defer = $q.defer();
 						
 			//Set up jean from data
-			if (data){ jeanData = data; }
+			if (data){ 
+				for(prop in data){
+					if(data.hasOwnProperty(prop)){
+						set(prop, data[prop]);	
+					}
+				}
+				defer.resolve(jeanData);
+			}
 
 			//Data URL
 			else if ($routeParams.jeanId && !$routeParams.userId){
+				createNew();
 				if ($routeParams.jeanId.indexOf(":")>0){
-					createNew();
 					jeanData = $routeParams.jeanId.split(":");
 					for(var d=0; d<jeanData.length; d++){
 						var parts= jeanData[d].match(/([A-Za-z]+)([0-9]+)/);
@@ -140,51 +146,69 @@
 						if (jeanKey) jeanData[jeanKey] = parseInt(parts[2]);					
 					}
 				}
+				defer.resolve(jeanData);
 			}
 					
 			//Copy or Edit Jean
 			else if ($routeParams.jeanId && $routeParams.userId){
-				
-				console.log($routeParams.jeanId,$routeParams.userId);
-				
+
 				//First get Jean
 				bdAPI.jeansGet($routeParams.userId, $routeParams.jeanId).then(					
 					function(result){
-						console.log("result");
-						console.log(result.data);
+
 						var newJean = result.data;
+
 						var userData = aws.getCurrentUserFromLocalStorage();
+						
 						if(userData){
-							var identityId = bdAPI.setupHeaders(userData);
-							if (identityId == $routeParams.userId){ //Edit Jean		
-								console.log(newJean)
-								console.log(jean.jeanData);
-								jean.jeanData=newJean;
-								console.log(jean.jeanData);
-							}
 							
-							else{ //Copy Jean
+							var identityId = bdAPI.setupHeaders(userData);							
+							//Edit Jean
+							if (identityId == $routeParams.userId){
+								for(prop in newJean){
+									if(newJean.hasOwnProperty(prop)){
+										set(prop, newJean[prop]);	
+									}
+								}
+								console.log(jeanData);
+							}							
+							//Copy Jean
+							else{
 								createNew(newJean);
 							}
-						}else{
-							//Not logged in... copy jean
+
+						}
+						
+						//Not logged in.. create new.
+						else {
 							createNew(newJean);
 						}
+						
+						defer.resolve(jeanData);
 					}, 
 					function(err){
 						//Jean or user not found.. just create a blank jean...
 						console.log(err);
 						createNew();
+						defer.resolve(jeanData);
 					}
 				);
 			}
 					
-			//New Jean
-			else{
-				if(Object.keys(jeanData).length === 0 && jeanData.constructor === Object) createNew();			
-				//If there's already data in place we'll use that.
+			
+			//data already exists
+			else if (Object.keys(jeanData).length > 0){
+				defer.resolve(jeanData);
 			}
-					
+			
+			else{
+				if(Object.keys(jeanData).length === 0 && jeanData.constructor === Object){
+					createNew();			
+					defer.resolve(jeanData);
+				}
+			}
+			
+			return defer.promise;
 		}
 		
 		

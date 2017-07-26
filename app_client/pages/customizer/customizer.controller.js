@@ -21,20 +21,31 @@
 		vm.popups = popups.get();
 
 		//Set up Jean
-		jean.setup();
-		vm.jeanData = jean.get();
+		console.log("set");
+		jean.setup().then(function(result){
+			console.log('res');
+			console.log(result);
 			
-		$scope.$watch(function() {
-			return vm.jeanData;
-		}, function(current, original) {
-			vm.updateActiveItem();
-		}, true);
-		
-		$scope.$watch(function() {
-			return vm.data;
-		}, function(current, original) {
-			vm.updateActiveItem();
-		}, true);
+			console.log(jean.get());
+			vm.jeanData=jean.get();
+			console.log("new JS");
+			console.log(vm.jeanData);			
+						
+			$scope.$watch(function() {
+				return vm.jeanData;
+			}, function(current, original) {
+				vm.updateActiveItem();
+			}, true);
+			
+			$scope.$watch(function() {
+				return vm.data;
+			}, function(current, original) {
+				vm.updateActiveItem();
+			}, true);
+
+		});
+
+			
 		
 		
 		

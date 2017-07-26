@@ -25,7 +25,7 @@
 			console.log("hm..")
 			$location.path('/order/'+vm.jean.jeanId+'/'+identityId);
 		}
-		
+
 		
 		vm.orderForm={};
 		vm.orderForm.step=1;
@@ -38,8 +38,6 @@
 				vm.popups.tailors=true;
 			}	
 		}
-		
-		vm.tailorLocations=[];
 		
 		vm.data=jsonData;
 		
