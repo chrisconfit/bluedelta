@@ -774,6 +774,20 @@ definitions:
         type: string
       shipping_address:
         $ref: "#/definitions/Address"
+      price:
+        type: string
+      vendor:
+        $ref: "#/definitions/Vendor"
+      rep:
+        $ref: "#/definitions/Rep"
+      orderType:
+        type:integer
+      fitDate:
+        type:string
+      dueDate:
+        type:string
+      dob:
+        type:string
       orderItems:
         type: array
         items:
@@ -806,6 +820,26 @@ definitions:
       tracking:
         type: string
       notes:
+        type: string
+
+  Vendor:
+    type: object
+    required:
+    - vendorId
+    properties:
+      vendorId:
+        type: string
+      name:
+        type: string
+
+  Rep:
+    type: object
+    required:
+    - repId
+    properties:
+      repId:
+        type: string
+      name:
         type: string
 
   TransactionsListResponse:
@@ -902,7 +936,7 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Measurement"
-  
+
   Measurement:
     type: object
     properties:
@@ -987,13 +1021,13 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Jean"
-          
+
   Jean:
     type: object
     properties:
       jeanId:
         type: string
-      imageURL: 
+      imageURL:
         type:string
       ordered:
         boolean
