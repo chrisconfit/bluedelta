@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { SmartTablesService } from './smartTables.service';
 import { LocalDataSource } from 'ng2-smart-table';
+import { UsersProvider } from "providers/users/users";
+
 
 @Component({
   selector: 'smart-tables',
   templateUrl: './smartTables.html',
-  styleUrls: ['./smartTables.scss']
 })
 export class SmartTables {
-
   query: string = '';
 
   settings = {
@@ -25,38 +25,40 @@ export class SmartTables {
     },
     delete: {
       deleteButtonContent: '<i class="ion-trash-a"></i>',
-      confirmDelete: true
+      confirmDelete: true,
     },
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number'
-      },
-      firstName: {
-        title: 'First Name',
-        type: 'string'
-      },
-      lastName: {
-        title: 'Last Name',
-        type: 'string'
+      name: {
+        title: 'Name',
+        type: 'string',
       },
       email: {
         title: 'Email',
-        type: 'string'
+        type: 'string',
       },
-      phone: {
+      phoneNumber: {
         title: 'Phone',
-        type: 'string'
+        type: 'string',
       },
-    }
+    },
   };
 
-  source: LocalDataSource = new LocalDataSource();
+  tableData: LocalDataSource = new LocalDataSource();
 
-  constructor(protected service: SmartTablesService) {
-    this.service.getData().then((data) => {
-      this.source.load(data);
-    });
+  source;
+
+  loadUsers() {
+    this.source = [
+      ...this.userService.list,
+    ];
+  }
+
+  constructor(
+    public userService: UsersProvider,
+  ) {
+    console.log('Service LIST: ', this.userService.loadItemsWithAuth());
+    // this.loadUsers();
+    // this.tableData.load(this.userService.loadItemsWithAuth());
   }
 
   onDeleteConfirm(event): void {
@@ -66,4 +68,9 @@ export class SmartTables {
       event.confirm.reject();
     }
   }
+
+  ngOnInit() {
+
+  }
 }
+

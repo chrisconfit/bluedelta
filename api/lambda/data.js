@@ -2,7 +2,7 @@
 var AWS = require('aws-sdk');
 var uuid = require('uuid');
 var dynamoDB = new AWS.DynamoDB();
-var documentClient = new AWS.DynamoDB.DocumentClient();
+var documentClient = new AWS.DynamoDB.DocumentClient({convertEmptyValues: true});
 var rfr = require('rfr');
 var config = rfr('config');
 let LambdaError = require('./errors');
