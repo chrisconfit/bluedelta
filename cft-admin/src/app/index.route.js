@@ -86,6 +86,13 @@
         resolve: { 
 	        loadPlugin: function ($ocLazyLoad) {
 					return $ocLazyLoad.load([
+				    {	
+                files: ['assets/scripts/sweetalert/sweetalert.min.js', 'assets/styles/sweetalert/sweetalert.css']
+            },
+            {
+                name: 'oitozero.ngSweetAlert',
+                files: ['assets/scripts/sweetalert/angular-sweetalert.min.js']
+            },
 					  {
 				      serie: true,
 				      files: ['assets/scripts/dataTables/datatables.min.js','assets/styles/dataTables/datatables.min.css']
@@ -115,16 +122,50 @@
         url: "/edit/:orderId",
         templateUrl: "app/orders/orders-edit.html",
         authenticate: false,
-        controller: "OrdersController as ovm",
+        controller: "OrdersEditController as ovm",
         resolve: {
-	        jsonData: function($http){
-		      	return $http.get('/assets/data/data.json');
+	        jsonData: function($http, $q){
+		      	var data=[
+		      		$http.get('/assets/data/vendor.json'),
+		      		$http.get('/assets/data/rep.json'),
+		      		$http.get('/assets/data/thread.json'),
+		      		$http.get('/assets/data/fabric.json'),		      	
+		      		$http.get('/assets/data/gender.json')
+						]
+		      	
+		      	return $q.all(data);
+		      	    			      	
 	        },
-	        orderId: function($stateParams, $location){
+	        
+	        orderData: function($stateParams, $location, bdAPI, $q){
+						
 						if ($stateParams.orderId === undefined || $stateParams.orderId == "")
 							$location.path('orders/list');
-							
-						else return $stateParams.orderId;
+
+						else{
+							var defer = $q.defer();
+							bdAPI.setupHeaders();
+							bdAPI.ordersGet($stateParams.orderId).then(
+								function(result){				
+									var returnData = {"order": result.data};
+									bdAPI.usersGet(result.data.userId).then(
+										function(user){
+											returnData.user = user.data;
+											defer.resolve(returnData);
+										},function(err){
+											console.log(err);
+											defer.resolve(returnData);
+										}
+									)
+								},
+								function(err){
+									console.log(err);
+									defer.reject(err);
+								}
+							);
+					   	return defer.promise; 
+						}
+						
     			},
 	        loadPlugin: function ($ocLazyLoad) {
             return $ocLazyLoad.load([

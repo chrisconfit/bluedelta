@@ -1,20 +1,4 @@
-{
-	"reps" : [
-		{	
-			"repId" : 1,
-			"name":"Nick Weaver"
-		},
-		{
-			"repId" : 2,
-			"name":"Josh West"
-		},
-		{
-			"repId" : 3,
-			"name":"Ellen Goucher"
-		}
-	],
-	
-	"vendors": [
+[
 		{
 			"vendorId" : 1,
 			"name":"Blue Delta"
@@ -96,4 +80,3 @@
 			"name":"Langston"
 		}
 	]
-}

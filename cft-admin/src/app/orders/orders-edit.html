@@ -1,6 +1,6 @@
 <div>
 
-<h1>Order ####</h1>
+<h1>Order {{ovm.order.orderId}}</h1>
 	                
 	<div class="wrapper wrapper-content animated fadeInRight">
 	
@@ -18,16 +18,16 @@
              
               <ul class="list-group list-group-unbordered">
 	              <li class="list-group-item">
-                  <b>Customer</b> <a href="#" class="pull-right">James Kelleway</a>
+                  <b>Customer</b> <a href="#" class="pull-right">{{ovm.orderUser.name}}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Email</b> <a href="#" class="pull-right">jrkelleway@gmail.com</a>
+                  <b>Email</b> <a href="#" class="pull-right">{{ovm.orderUser.email}}</a>
                 </li>
                 <li class="list-group-item">
                   <p><b>Shipping Address</b><a class="pull-right fa fa-edit" href="#"></a></p>
-                  <p>23 LaRhonda Drive<br>
-	                  Oxford, MS 38655<br>
-	                  USA</p>
+                  <p>{{ovm.order.shippingAddress.addressLine1}}<br>
+	                  {{ovm.order.shippingAddress.addressLine2}}<br ng-if="ovm.order.shippingAddress.addressLine2">
+	                  {{ovm.order.shippingAddress.city}}, {{ovm.order.shippingAddress.state}} {{ovm.order.shippingAddress.zip}}</p>
                 </li>
                 <li class="list-group-item">
                   <p><b>Billing Address</b><a class="pull-right fa fa-edit" href="#"></a></p>
@@ -49,27 +49,71 @@
 						<div class="col-md-6">
 							<div class="ibox ibox-default">
 								<div class="ibox-title">
-									<h3 >Jean Build <a class="pull-right fa fa-edit" href="#"></a></h3> 
+									<h3>
+										Jean Build 
+										<a ng-if="!ovm.jeanEditMode" class="pull-right fa fa-edit" ng-click="ovm.jeanEditMode=true" href="#"></a>
+										<a ng-if="ovm.jeanEditMode" class="pull-right fa fa-save" href="#"></a>
+										<a ng-if="ovm.jeanEditMode" class="pull-right fa fa-undo" ng-click="ovm.clearJeanEdit" href="#"></a>
+									</h3> 
 								</div>
 								<div class="ibox-content">
 	                <ul class="list-group list-group-unbordered">
 			              <li class="list-group-item">
-		                  <b>Gender</b> <a href="#" class="pull-right">{{ovm.order.orderItems[0].jean.gender}}</a>
+		                  <b>Gender</b>
+		                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.order.orderItems[0].jean.gender}}</span>
+		                  <select class="pull-right" 
+												ng-if="ovm.jeanEditMode" 
+												ng-model="ovm.order.orderItems[0].jean.gender">
+												<option ng-value="1">Male</option>
+												<option ng-value="2">Female</option>
+											</select>
 		                </li>
 		                <li class="list-group-item">
-		                  <b>Style</b> <a href="#" class="pull-right">{{ovm.order.orderItems[0].jean.style}}</a>
+		                  <b>Style</b> 
+		                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.order.orderItems[0].jean.style}}</span>
+		                  <select class="pull-right" 
+												ng-if="ovm.jeanEditMode" 
+												ng-model="ovm.order.orderItems[0].jean.style">
+												<option ng-value="1">Straight</option>
+												<option ng-value="2">Bootcut</option>
+												<option ng-value="3">Skinny</option>
+											</select>
 		                </li>
 		                <li class="list-group-item">
-		                  <b>Fabric</b> <a href="#" class="pull-right">{{ovm.order.orderItems[0].jean.fabric.name}}</a>
+		                  <b>Fabric</b> 
+		                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.order.orderItems[0].jean.fabric.name}}</span>
+											<select class="pull-right" 
+												ng-if="ovm.jeanEditMode" 
+												ng-options="fabric.name for fabric in ovm.data.fabric track by fabric.fabricId" 	
+												ng-model="ovm.order.orderItems[0].jean.fabric">
+											</select>
 		                </li>
 		                <li class="list-group-item">
-		                  <b>Accent Thread</b> <a href="#" class="pull-right">{{ovm.order.orderItems[0].jean.accent_thread.name}}</a>
+		                  <b>Accent Thread</b> 
+		                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.order.orderItems[0].jean.accent_thread.name}}</span>
+											<select class="pull-right" 
+												ng-if="ovm.jeanEditMode" 
+												ng-options="thread.name for thread in ovm.data.thread track by thread.threadId" 	
+												ng-model="ovm.order.orderItems[0].jean.accent_thread">
+											</select>
 		                </li>
 		                <li class="list-group-item">
-		                  <b>Top Thread</b> <a href="#" class="pull-right">{{ovm.order.orderItems[0].jean.top_thread.name}}</a>
+		                  <b>Top Thread</b> 
+		                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.order.orderItems[0].jean.top_thread.name}}</span>
+		                  <select class="pull-right" 
+												ng-if="ovm.jeanEditMode" 
+												ng-options="thread.name for thread in ovm.data.thread track by thread.threadId" 	
+												ng-model="ovm.order.orderItems[0].jean.top_thread">
+											</select>
 		                </li>
 		                <li class="list-group-item">
-		                  <b>Bottom Thread</b> <a href="#" class="pull-right">{{ovm.order.orderItems[0].jean.bottom_thread.name}}</a>
+		                  <b>Bottom Thread</b> 
+		                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.order.orderItems[0].jean.bottom_thread.name}}</span>
+		                  <select class="pull-right" 
+												ng-if="ovm.jeanEditMode" 
+												ng-options="thread.name for thread in ovm.data.thread track by thread.threadId" 	
+												ng-model="ovm.order.orderItems[0].jean.bottom_thread">
+											</select>
 		                </li>
                     <li class="list-group-item">
 		                  <b>Rivets</b> <a href="#" class="pull-right">Yes</a>
@@ -102,7 +146,7 @@
 		                <label>Vendor</label>
 		                <select ng-model="ovm.order.vendor" class="form-control select2" style="width: 100%;">
 			                <option ng-if="!ovm.order.vendor"ng-selected="!ovm.order.vendor" value="">Select a Vendor</option>
-		                  <option ng-repeat="vendor in ovm.data.vendors">{{vendor.name}}</option>
+		                  <option ng-repeat="vendor in ovm.data.vendor">{{vendor.name}}</option>
 		                </select>
 		              </div>
 	              
@@ -110,7 +154,7 @@
 		                <label>Rep</label>
 		                <select class="form-control select2" ng-model="ovm.order.rep" style="width: 100%;">
 			                <option ng-if="!ovm.order.rep" ng-selected="!ovm.order.rep" value="">Select a Rep</option>
-											<option ng-repeat="rep in ovm.data.reps">{{rep.name}}</option>
+											<option ng-repeat="rep in ovm.data.rep">{{rep.name}}</option>
 		                </select>
 		              </div>
 		              
@@ -170,7 +214,7 @@
 										</div>
 		                <!-- /.input group -->
 		              </div>
-			            <a href="#" class="btn btn-success pull-right btn-flat btn-lg"><b>Save Order</b></a>
+			            <a href="#" ng-click="ovm.saveOrder()" class="btn btn-success pull-right btn-flat btn-lg"><b>Save Order</b></a>
 								</div>
 							</div>
 						</div>

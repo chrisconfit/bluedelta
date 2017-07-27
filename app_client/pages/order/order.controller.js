@@ -14,27 +14,52 @@
 		
 		jean.setup();
 		vm.jean = jean.get();
-		console.log(vm.jean);
+
 		
 		var userDetails = aws.getCurrentUserFromLocalStorage();
 		var identityId = bdAPI.setupHeaders(userDetails);
-		console.log("jean is set up");
-		console.log(vm.jean.jeanId);
-		console.log(identityId);
+
 		if (vm.jean.jeanId && identityId){
-			console.log("hm..")
 			$location.path('/order/'+vm.jean.jeanId+'/'+identityId);
 		}
 
-		
 		vm.orderForm={};
 		vm.orderForm.step=1;
 		
-		vm.orderForm.data = {}
+		vm.order = {
+			"userId":identityId,
+			"price":null,
+			"shippingAddress":null,
+			"vendor":null,
+			"rep":null,
+			"status":"New",
+			"orderItems":[{
+				"jean":vm.jean,
+				"tracking":null,
+				"notes":null,
+			}],
+			"timeline":null,
+			"tailor":null,
+		}
+		
+		
+
+		vm.placeOrder = function(){
+			console.log("placing order...");
+			bdAPI.orderCreate(vm.order).then(
+				function(result){
+					console.log(result);
+					bdAPI.commentsCreate(result.data.orderId, "Order Placed");
+				},
+				function(err){
+					console.log(err)
+				}
+			)
+		}
 		
 		vm.chooseFitType = function(type){
-			vm.orderForm.data.fitType = type;
-			if (type == 2 && !vm.orderForm.data.tailor){
+			vm.order.orderType = type;
+			if (type == 2 && !vm.order.tailor){
 				vm.popups.tailors=true;
 			}	
 		}
@@ -47,12 +72,12 @@
 			if (vm.orderForm.step==1){
 				
 				//Make sure we've got a fit type
-				if (!vm.orderForm.data.fitType){
+				if (!vm.order.orderType){
 					return false;
 				}
 				
 				//If we're using a tailor, make sure we've got a tailor
-				if (vm.orderForm.data.fitType==2 && !vm.orderForm.data.tailor){
+				if (vm.order.orderType ==2 && !vm.order.tailor){
 					vm.popups.tailors=true;
 					return false;
 				}
@@ -72,14 +97,23 @@
 		
 		
 		
+		function getPrimaryAddress(addresses){
+			for (var i=0; i<addresses.length; i++) {
+				if (addresses[i].primary == true) return addresses[i];
+			}
+			console.log('no address marked as primary... returning first result');
+			return addresses[0];
+		}
    
     var user = aws.getCurrentUserFromLocalStorage();
-
+		
+		
     if (user){
 	    var identityID = bdAPI.setupHeaders(user);
 			bdAPI.usersGet(identityID).then(
 				function(result){
 					vm.user = result.data;	
+					vm.order.shippingAddress = getPrimaryAddress(vm.user.address);
 					$scope.$apply();
 				}, 
 				function(err){console.log(err)} 

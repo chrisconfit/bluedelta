@@ -170,7 +170,6 @@
 										set(prop, newJean[prop]);	
 									}
 								}
-								console.log(jeanData);
 							}							
 							//Copy Jean
 							else{
@@ -232,7 +231,6 @@
     }
     
 		createThumb = function(jeanData){
-			console.log(jeanData);
 	  	var canvas = document.createElement('canvas');
 	  	canvas.width=600;
 	  	canvas.height=600;
@@ -244,7 +242,7 @@
 				'/images/components/thread/g'+jeanData.gender+'/s2/tt/'+jeanData.top_thread.threadId+'.png',
 				'/images/components/thread/g'+jeanData.gender+'/s2/ta/'+jeanData.accent_thread.threadId+'.png'
 			];
-			console.log(images);
+
 	    for(var i=0; i<images.length; i++){
 	      promises.push(loadImage(images[i], cntxt));
 	    }
@@ -279,7 +277,6 @@
 		}
 		
 		var deleter = function (userId, jeanId, callback){
-			console.log(userId,jeanId,callback);
 			var userData = aws.getCurrentUserFromLocalStorage();
 			bdAPI.defaultHeaders_['Authorization'] = userData.idToken.getJwtToken();
 			bdAPI.jeansDelete(userId, jeanId).then(
@@ -294,16 +291,12 @@
 		
 		var save = function(){
 			
-			
-			console.log('save');
-			
 			var defer = $q.defer();
 			var jean = this;
-			console.log(this);
+
 			var jeanData = jean.get();
 	
 
-			console.log(jeanData);
 			
 			var filename = jean.getDataCode();
 			filename += ".jpg";
@@ -320,7 +313,7 @@
 				  		jean.set("imageURL",result);
 							if (jeanData.jeanId){
 								//Update existing Jean...
-								console.log('update');
+
 								bdAPI.jeansUpdate(identityID, jeanData.jeanId, jeanData).then(
 									function(result){
 										defer.resolve(result);
@@ -332,18 +325,14 @@
 								);
 							}else{
 								//Create New Jean...
-								console.log('create');
-								console.log(jeanData);
 								bdAPI.jeansCreate(identityID, jeanData).then(
 
 									function(result){
 										//Add new id to jean
-										console.log(result);
 										jean.set("jeanId", result.data.jeanId);
 										defer.resolve(result);
 									},
 									function(err){
-										console.log(err);
 										defer.reject(err);
 									}
 								);
