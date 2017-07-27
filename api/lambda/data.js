@@ -53,20 +53,28 @@ class Table {
     });
   }
 
-  scan() {
+  scan(limit, next) {
     return new Promise((resolve, reject) => {
       documentClient.scan({
         TableName: this.tableParams.TableName,
-        ConsistentRead: true
+        ConsistentRead: true,
+        Limit: limit,
+        ExclusiveStartKey: next ? JSON.parse(next) : null
       }, (err, data) => {
         if (err) {
           reject(LambdaError.internalError(err));
         } else {
           let items = [];
+          let count = 0;
+          let next = null;
           if (data && data.Items) {
+            count = data.ScannedCount;
             items = data.Items;
+            next = JSON.stringify(data.LastEvaluatedKey);
           }
-          resolve({ items });
+          resolve({ count: count,
+                    next: next,
+                    items: items });
         }
       });
     });
@@ -167,6 +175,7 @@ class ButtonsTable extends Table {
       },
       // These are custom options that the Table class understands
       {
+        key: ['buttonId'],
         // Which parameters are auto-generated with uuid.v1() which is time dependant.
         uuid: ['buttonId'],
         // Whether to add timestamps to the entries.
@@ -203,6 +212,7 @@ class ThreadsTable extends Table {
             },
             // These are custom options that the Table class understands
             {
+                key: ['threadId'],
                 // Which parameters are auto-generated with uuid.v1() which is time dependant.
                 uuid: ['threadId'],
                 // Whether to add timestamps to the entries.
@@ -239,6 +249,7 @@ class FabricsTable extends Table {
             },
             // These are custom options that the Table class understands
             {
+                key: ['fabricId'],
                 // Which parameters are auto-generated with uuid.v1() which is time dependant.
                 uuid: ['fabricId'],
                 // Whether to add timestamps to the entries.
@@ -298,6 +309,7 @@ class OrdersTable extends Table {
             },
             // These are custom options that the Table class understands
             {
+                key: ['orderId','userId'],
                 // Which parameters are auto-generated with uuid.v1() which is time dependant.
                 uuid: ['orderId'],
                 // Whether to add timestamps to the entries.
@@ -332,6 +344,7 @@ class UsersTable extends Table {
     },
     // These are custom options that the Table class understands
     {
+      key: ['userId'],
       // // Which parameters are auto-generated with uuid.v1() which is time dependant.
       // uuid: ['identityId'],
       // Whether to add timestamps to the entries.
