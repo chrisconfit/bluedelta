@@ -23,9 +23,13 @@ function Get(event, context) {
 }
 
 function List(event, context) {
-    console.log(event);
-    //TODO(Justin): Add pagination to list results
-    return ThreadsTable.scan();
+    let limit = 25;
+    let next = null;
+    if (event.pathParameters) {
+        limit = event.pathParameters.page_size || 25;
+        next = event.pathParameters.next;
+    }
+    return ThreadsTable.scan(limit, next);
 }
 
 function Update(event, context) {

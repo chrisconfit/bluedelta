@@ -13,6 +13,10 @@
 import * as models from './models';
 
 export interface OrdersListResponse {
+    count?: number;
+
+    next?: string;
+
     items: Array<models.Order>;
 
 }

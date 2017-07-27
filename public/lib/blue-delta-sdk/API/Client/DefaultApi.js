@@ -202,18 +202,30 @@ API.Client.DefaultApi.prototype.buttonsGet = function(buttonId, opt_extraHttpReq
 /**
  * 
  * 
+ * @param {!string} next 
+ * @param {!string} pageSize 
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise<!API.Client.ButtonsListResponse>}
  */
-API.Client.DefaultApi.prototype.buttonsList = function(opt_extraHttpRequestParams) {
+API.Client.DefaultApi.prototype.buttonsList = function(next, pageSize, opt_extraHttpRequestParams) {
   /** @const {string} */
-  var path = this.basePath_ + '/buttons';
+  var path = this.basePath_ + '/buttons'
+      .replace('{' + 'next' + '}', String(next))
+      .replace('{' + 'page_size' + '}', String(pageSize));
 
   /** @type {!Object} */
   var queryParameters = {};
 
   /** @type {!Object} */
   var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'next' is set
+  if (!next) {
+    throw new Error('Missing required parameter next when calling buttonsList');
+  }
+  // verify required parameter 'pageSize' is set
+  if (!pageSize) {
+    throw new Error('Missing required parameter pageSize when calling buttonsList');
+  }
   /** @type {!Object} */
   var httpRequestParams = {
     method: 'GET',
@@ -233,18 +245,30 @@ API.Client.DefaultApi.prototype.buttonsList = function(opt_extraHttpRequestParam
 /**
  * 
  * 
+ * @param {!string} next 
+ * @param {!string} pageSize 
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise}
  */
-API.Client.DefaultApi.prototype.buttonsOptions = function(opt_extraHttpRequestParams) {
+API.Client.DefaultApi.prototype.buttonsOptions = function(next, pageSize, opt_extraHttpRequestParams) {
   /** @const {string} */
-  var path = this.basePath_ + '/buttons';
+  var path = this.basePath_ + '/buttons'
+      .replace('{' + 'next' + '}', String(next))
+      .replace('{' + 'page_size' + '}', String(pageSize));
 
   /** @type {!Object} */
   var queryParameters = {};
 
   /** @type {!Object} */
   var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'next' is set
+  if (!next) {
+    throw new Error('Missing required parameter next when calling buttonsOptions');
+  }
+  // verify required parameter 'pageSize' is set
+  if (!pageSize) {
+    throw new Error('Missing required parameter pageSize when calling buttonsOptions');
+  }
   /** @type {!Object} */
   var httpRequestParams = {
     method: 'OPTIONS',
@@ -535,18 +559,30 @@ API.Client.DefaultApi.prototype.fabricsGet = function(fabricId, opt_extraHttpReq
 /**
  * 
  * 
+ * @param {!string} next 
+ * @param {!string} pageSize 
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise<!API.Client.FabricsListResponse>}
  */
-API.Client.DefaultApi.prototype.fabricsList = function(opt_extraHttpRequestParams) {
+API.Client.DefaultApi.prototype.fabricsList = function(next, pageSize, opt_extraHttpRequestParams) {
   /** @const {string} */
-  var path = this.basePath_ + '/fabrics';
+  var path = this.basePath_ + '/fabrics'
+      .replace('{' + 'next' + '}', String(next))
+      .replace('{' + 'page_size' + '}', String(pageSize));
 
   /** @type {!Object} */
   var queryParameters = {};
 
   /** @type {!Object} */
   var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'next' is set
+  if (!next) {
+    throw new Error('Missing required parameter next when calling fabricsList');
+  }
+  // verify required parameter 'pageSize' is set
+  if (!pageSize) {
+    throw new Error('Missing required parameter pageSize when calling fabricsList');
+  }
   /** @type {!Object} */
   var httpRequestParams = {
     method: 'GET',
@@ -566,18 +602,30 @@ API.Client.DefaultApi.prototype.fabricsList = function(opt_extraHttpRequestParam
 /**
  * 
  * 
+ * @param {!string} next 
+ * @param {!string} pageSize 
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise}
  */
-API.Client.DefaultApi.prototype.fabricsOptions = function(opt_extraHttpRequestParams) {
+API.Client.DefaultApi.prototype.fabricsOptions = function(next, pageSize, opt_extraHttpRequestParams) {
   /** @const {string} */
-  var path = this.basePath_ + '/fabrics';
+  var path = this.basePath_ + '/fabrics'
+      .replace('{' + 'next' + '}', String(next))
+      .replace('{' + 'page_size' + '}', String(pageSize));
 
   /** @type {!Object} */
   var queryParameters = {};
 
   /** @type {!Object} */
   var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'next' is set
+  if (!next) {
+    throw new Error('Missing required parameter next when calling fabricsOptions');
+  }
+  // verify required parameter 'pageSize' is set
+  if (!pageSize) {
+    throw new Error('Missing required parameter pageSize when calling fabricsOptions');
+  }
   /** @type {!Object} */
   var httpRequestParams = {
     method: 'OPTIONS',
@@ -966,18 +1014,30 @@ API.Client.DefaultApi.prototype.ordersGet = function(orderId, opt_extraHttpReque
 /**
  * 
  * 
+ * @param {!string} next 
+ * @param {!string} pageSize 
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise<!API.Client.OrdersListResponse>}
  */
-API.Client.DefaultApi.prototype.ordersList = function(opt_extraHttpRequestParams) {
+API.Client.DefaultApi.prototype.ordersList = function(next, pageSize, opt_extraHttpRequestParams) {
   /** @const {string} */
-  var path = this.basePath_ + '/orders';
+  var path = this.basePath_ + '/orders'
+      .replace('{' + 'next' + '}', String(next))
+      .replace('{' + 'page_size' + '}', String(pageSize));
 
   /** @type {!Object} */
   var queryParameters = {};
 
   /** @type {!Object} */
   var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'next' is set
+  if (!next) {
+    throw new Error('Missing required parameter next when calling ordersList');
+  }
+  // verify required parameter 'pageSize' is set
+  if (!pageSize) {
+    throw new Error('Missing required parameter pageSize when calling ordersList');
+  }
   /** @type {!Object} */
   var httpRequestParams = {
     method: 'GET',
@@ -997,13 +1057,17 @@ API.Client.DefaultApi.prototype.ordersList = function(opt_extraHttpRequestParams
 /**
  * 
  * 
+ * @param {!string} next 
+ * @param {!string} pageSize 
  * @param {!string} userId 
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise<!API.Client.OrdersListResponse>}
  */
-API.Client.DefaultApi.prototype.ordersListByUser = function(userId, opt_extraHttpRequestParams) {
+API.Client.DefaultApi.prototype.ordersListByUser = function(next, pageSize, userId, opt_extraHttpRequestParams) {
   /** @const {string} */
   var path = this.basePath_ + '/users/{userId}/orders'
+      .replace('{' + 'next' + '}', String(next))
+      .replace('{' + 'page_size' + '}', String(pageSize))
       .replace('{' + 'userId' + '}', String(userId));
 
   /** @type {!Object} */
@@ -1011,6 +1075,14 @@ API.Client.DefaultApi.prototype.ordersListByUser = function(userId, opt_extraHtt
 
   /** @type {!Object} */
   var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'next' is set
+  if (!next) {
+    throw new Error('Missing required parameter next when calling ordersListByUser');
+  }
+  // verify required parameter 'pageSize' is set
+  if (!pageSize) {
+    throw new Error('Missing required parameter pageSize when calling ordersListByUser');
+  }
   // verify required parameter 'userId' is set
   if (!userId) {
     throw new Error('Missing required parameter userId when calling ordersListByUser');
@@ -1034,18 +1106,30 @@ API.Client.DefaultApi.prototype.ordersListByUser = function(userId, opt_extraHtt
 /**
  * 
  * 
+ * @param {!string} next 
+ * @param {!string} pageSize 
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise}
  */
-API.Client.DefaultApi.prototype.ordersOptions = function(opt_extraHttpRequestParams) {
+API.Client.DefaultApi.prototype.ordersOptions = function(next, pageSize, opt_extraHttpRequestParams) {
   /** @const {string} */
-  var path = this.basePath_ + '/orders';
+  var path = this.basePath_ + '/orders'
+      .replace('{' + 'next' + '}', String(next))
+      .replace('{' + 'page_size' + '}', String(pageSize));
 
   /** @type {!Object} */
   var queryParameters = {};
 
   /** @type {!Object} */
   var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'next' is set
+  if (!next) {
+    throw new Error('Missing required parameter next when calling ordersOptions');
+  }
+  // verify required parameter 'pageSize' is set
+  if (!pageSize) {
+    throw new Error('Missing required parameter pageSize when calling ordersOptions');
+  }
   /** @type {!Object} */
   var httpRequestParams = {
     method: 'OPTIONS',
@@ -1355,18 +1439,30 @@ API.Client.DefaultApi.prototype.threadsGet = function(threadId, opt_extraHttpReq
 /**
  * 
  * 
+ * @param {!string} next 
+ * @param {!string} pageSize 
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise<!API.Client.ThreadsListResponse>}
  */
-API.Client.DefaultApi.prototype.threadsList = function(opt_extraHttpRequestParams) {
+API.Client.DefaultApi.prototype.threadsList = function(next, pageSize, opt_extraHttpRequestParams) {
   /** @const {string} */
-  var path = this.basePath_ + '/threads';
+  var path = this.basePath_ + '/threads'
+      .replace('{' + 'next' + '}', String(next))
+      .replace('{' + 'page_size' + '}', String(pageSize));
 
   /** @type {!Object} */
   var queryParameters = {};
 
   /** @type {!Object} */
   var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'next' is set
+  if (!next) {
+    throw new Error('Missing required parameter next when calling threadsList');
+  }
+  // verify required parameter 'pageSize' is set
+  if (!pageSize) {
+    throw new Error('Missing required parameter pageSize when calling threadsList');
+  }
   /** @type {!Object} */
   var httpRequestParams = {
     method: 'GET',
@@ -1386,18 +1482,30 @@ API.Client.DefaultApi.prototype.threadsList = function(opt_extraHttpRequestParam
 /**
  * 
  * 
+ * @param {!string} next 
+ * @param {!string} pageSize 
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise}
  */
-API.Client.DefaultApi.prototype.threadsOptions = function(opt_extraHttpRequestParams) {
+API.Client.DefaultApi.prototype.threadsOptions = function(next, pageSize, opt_extraHttpRequestParams) {
   /** @const {string} */
-  var path = this.basePath_ + '/threads';
+  var path = this.basePath_ + '/threads'
+      .replace('{' + 'next' + '}', String(next))
+      .replace('{' + 'page_size' + '}', String(pageSize));
 
   /** @type {!Object} */
   var queryParameters = {};
 
   /** @type {!Object} */
   var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'next' is set
+  if (!next) {
+    throw new Error('Missing required parameter next when calling threadsOptions');
+  }
+  // verify required parameter 'pageSize' is set
+  if (!pageSize) {
+    throw new Error('Missing required parameter pageSize when calling threadsOptions');
+  }
   /** @type {!Object} */
   var httpRequestParams = {
     method: 'OPTIONS',
@@ -1608,18 +1716,30 @@ API.Client.DefaultApi.prototype.usersGet = function(userId, opt_extraHttpRequest
 /**
  * 
  * 
+ * @param {!string} next 
+ * @param {!string} pageSize 
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise<!API.Client.UsersListResponse>}
  */
-API.Client.DefaultApi.prototype.usersList = function(opt_extraHttpRequestParams) {
+API.Client.DefaultApi.prototype.usersList = function(next, pageSize, opt_extraHttpRequestParams) {
   /** @const {string} */
-  var path = this.basePath_ + '/users';
+  var path = this.basePath_ + '/users'
+      .replace('{' + 'next' + '}', String(next))
+      .replace('{' + 'page_size' + '}', String(pageSize));
 
   /** @type {!Object} */
   var queryParameters = {};
 
   /** @type {!Object} */
   var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'next' is set
+  if (!next) {
+    throw new Error('Missing required parameter next when calling usersList');
+  }
+  // verify required parameter 'pageSize' is set
+  if (!pageSize) {
+    throw new Error('Missing required parameter pageSize when calling usersList');
+  }
   /** @type {!Object} */
   var httpRequestParams = {
     method: 'GET',
@@ -1639,18 +1759,30 @@ API.Client.DefaultApi.prototype.usersList = function(opt_extraHttpRequestParams)
 /**
  * 
  * 
+ * @param {!string} next 
+ * @param {!string} pageSize 
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise}
  */
-API.Client.DefaultApi.prototype.usersOptions = function(opt_extraHttpRequestParams) {
+API.Client.DefaultApi.prototype.usersOptions = function(next, pageSize, opt_extraHttpRequestParams) {
   /** @const {string} */
-  var path = this.basePath_ + '/users';
+  var path = this.basePath_ + '/users'
+      .replace('{' + 'next' + '}', String(next))
+      .replace('{' + 'page_size' + '}', String(pageSize));
 
   /** @type {!Object} */
   var queryParameters = {};
 
   /** @type {!Object} */
   var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'next' is set
+  if (!next) {
+    throw new Error('Missing required parameter next when calling usersOptions');
+  }
+  // verify required parameter 'pageSize' is set
+  if (!pageSize) {
+    throw new Error('Missing required parameter pageSize when calling usersOptions');
+  }
   /** @type {!Object} */
   var httpRequestParams = {
     method: 'OPTIONS',
@@ -1830,13 +1962,17 @@ API.Client.DefaultApi.prototype.usersUserIdOptions = function(userId, opt_extraH
 /**
  * 
  * 
+ * @param {!string} next 
+ * @param {!string} pageSize 
  * @param {!string} userId 
  * @param {!angular.$http.Config=} opt_extraHttpRequestParams Extra HTTP parameters to send.
  * @return {!angular.$q.Promise}
  */
-API.Client.DefaultApi.prototype.usersUserIdOrdersOptions = function(userId, opt_extraHttpRequestParams) {
+API.Client.DefaultApi.prototype.usersUserIdOrdersOptions = function(next, pageSize, userId, opt_extraHttpRequestParams) {
   /** @const {string} */
   var path = this.basePath_ + '/users/{userId}/orders'
+      .replace('{' + 'next' + '}', String(next))
+      .replace('{' + 'page_size' + '}', String(pageSize))
       .replace('{' + 'userId' + '}', String(userId));
 
   /** @type {!Object} */
@@ -1844,6 +1980,14 @@ API.Client.DefaultApi.prototype.usersUserIdOrdersOptions = function(userId, opt_
 
   /** @type {!Object} */
   var headerParams = angular.extend({}, this.defaultHeaders_);
+  // verify required parameter 'next' is set
+  if (!next) {
+    throw new Error('Missing required parameter next when calling usersUserIdOrdersOptions');
+  }
+  // verify required parameter 'pageSize' is set
+  if (!pageSize) {
+    throw new Error('Missing required parameter pageSize when calling usersUserIdOrdersOptions');
+  }
   // verify required parameter 'userId' is set
   if (!userId) {
     throw new Error('Missing required parameter userId when calling usersUserIdOrdersOptions');
