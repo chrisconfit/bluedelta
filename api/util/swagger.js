@@ -8,6 +8,7 @@ var spawn = require('child_process').spawn;
 let swaggerDir = path.join(__dirname,'..','swagger');
 let apiSdkDir = path.join(swaggerDir,'generated');
 let appSdkDir = path.join(__dirname,'..','..','ng2-admin','src','services','blue-delta-sdk');
+let appDashboardSdkDir = path.join(__dirname,'..','..','cft-admin','src','assets','scripts','blue-delta-sdk');
 let appClientSdkDir = path.join(__dirname,'..','..','public','lib','blue-delta-sdk');
 
 function createSdk() {
@@ -83,6 +84,9 @@ function createClientSdk() {
         // Copy SDK from temporary generated directory
         fs.copySync(apiSdkDir,appClientSdkDir);
         logger.info('Successfully generated Angular/TypeScript SDK at', appClientSdkDir);
+
+        fs.copySync(apiSdkDir,appDashboardSdkDir);
+        logger.info('Successfully generated Angular/TypeScript SDK at', appDashboardSdkDir);
 
         // Delete temporary generated SDK folder
         fs.removeSync(apiSdkDir);
