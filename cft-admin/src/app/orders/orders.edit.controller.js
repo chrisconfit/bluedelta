@@ -2,13 +2,13 @@
 
 angular.module('inspinia')
   .controller('OrdersEditController', ['bdAPI', '$scope', 'aws', 'DTColumnDefBuilder', 'jsonData', 'orderData', function (bdAPI, $scope, aws, DTColumnDefBuilder, jsonData, orderData) {
-
-
 		
     var vm = this;
+    
     vm.user = {
 	    "name":"Chris LeFevre"
     }
+ 
 		vm.order = orderData.order;
 		vm.order.fitDate =  vm.order.fitDate ? vm.order.fitDate: null;
 		vm.order.dob =  vm.order.dob ? vm.order.dob: null;
@@ -16,7 +16,7 @@ angular.module('inspinia')
 		
 		vm.orderUser = orderData.user;
     
-    //init vendors from route resolve...
+    //init json data from route resolve...
     var jd = {};
 		for(var i=0; i<jsonData.length; i++){
 			var key = jsonData[i].config.url.replace(".json","").replace("/assets/data/", "");
@@ -24,15 +24,19 @@ angular.module('inspinia')
 		}
 		vm.data = jd;
 		
+		
 		vm.timeFromNow = function(timestamp){
 			return moment(timestamp).fromNow();
 		}
+		
 		
 		vm.timelineForm = {
 			message:null
 		}
 		
+		
 		vm.saveOrder = function(){
+			bdAPI.setupHeaders();
 			bdAPI.ordersUpdate(vm.order.orderId, vm.order).then(function(result){
 				console.log("Order saved!");
 				console.log(result);
