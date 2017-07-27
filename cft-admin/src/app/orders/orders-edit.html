@@ -1,8 +1,8 @@
 <div>
-
+<toaster-container></toaster-container>
 <h1>Order {{ovm.order.orderId}}</h1>
 	                
-	<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="wrapper wrapper-content">
 	
 		<section class="content">
 
@@ -24,7 +24,7 @@
                   <b>Email</b> <a href="#" class="pull-right">{{ovm.orderUser.email}}</a>
                 </li>
                 <li class="list-group-item">
-                  <p><b>Shipping Address</b><a class="pull-right fa fa-edit" href="#"></a></p>
+                  <p><b>Shipping Address</b><a class="pull-right fa fa-edit" ng-click="ovm.editAddress()" href="#"></a></p>
                   <p>{{ovm.order.shippingAddress.addressLine1}}<br>
 	                  {{ovm.order.shippingAddress.addressLine2}}<br ng-if="ovm.order.shippingAddress.addressLine2">
 	                  {{ovm.order.shippingAddress.city}}, {{ovm.order.shippingAddress.state}} {{ovm.order.shippingAddress.zip}}</p>

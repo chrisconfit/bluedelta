@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('OrdersEditController', ['bdAPI', '$scope', 'aws', 'DTColumnDefBuilder', 'jsonData', 'orderData', function (bdAPI, $scope, aws, DTColumnDefBuilder, jsonData, orderData) {
-		
+  .controller('OrdersEditController', ['bdAPI', '$scope', 'aws', 'DTColumnDefBuilder', 'jsonData', 'orderData', 'toaster', '$uibModal', 
+  function (bdAPI, $scope, aws, DTColumnDefBuilder, jsonData, orderData, toaster, $uibModal) {
+
     var vm = this;
     
     vm.user = {
@@ -35,12 +36,67 @@ angular.module('inspinia')
 		}
 		
 		
+		/*
+  		toaster.pop({
+			  type: 'wait',
+			  title: 'Saving...',
+			  showCloseButton: true,
+			  timeout: 2000
+			});
+    
+    toaster.pop({
+				  type: 'success',
+				  title: 'Order Saved',
+				  showCloseButton: true,
+				  timeout: 3000
+				});
+				
+					toaster.pop({
+				  type: 'error',
+				  title: 'Could Not Save',
+				  body: "err.message",
+				  showCloseButton: true,
+				  timeout: 7000
+				});
+				
+				*/
+		
+		
+		console.log(getCurrentUserFromLocalStorage());
+    vm.editAddress = function () {
+      var modalInstance = $uibModal.open({
+          templateUrl: 'app/orders/address.html',
+          controller: 'AddressController',
+	        resolve: {
+	            address: function () {
+	                return vm.orderUser.address;
+	            },
+	            order : function() {
+		            return vm.order;
+	            }
+	        }
+      });
+    };
+
+      
+    
+    
+    
 		vm.saveOrder = function(){
+			console.log("saving...");
 			bdAPI.setupHeaders();
+			//Log order id and order details
+			console.log(vm.order.orderId, vm.order);
+			
 			bdAPI.ordersUpdate(vm.order.orderId, vm.order).then(function(result){
-				console.log("Order saved!");
-				console.log(result);
-			})
+				//Log Result
+				console.log("RESULT");
+				console.log(result);	
+			},
+			function(err){
+				console.log(err);
+			});
+		
 		}
 		
     vm.addTimelineItem = function(){
@@ -58,6 +114,39 @@ angular.module('inspinia')
 	    vm.timelineForm.message = null;
     }
     
+    
+    
+    
+    /*
+$scope.demo1 = function(){
+        toaster.success({ body:"Hi, welcome to Inspinia. This is example of Toastr notification box."});
+    };
+
+    $scope.demo2 = function(){
+        toaster.warning({ title: "Title example", body:"This is example of Toastr notification box."});
+    };
+
+    $scope.demo3 = function(){
+        toaster.pop({
+            type: 'info',
+            title: 'Title example',
+            body: 'This is example of Toastr notification box.',
+            showCloseButton: true
+
+        });
+    };
+
+    $scope.demo4 = function(){
+        toaster.pop({
+            type: 'error',
+            title: 'Title example',
+            body: 'This is example of Toastr notification box.',
+            showCloseButton: true,
+            timeout: 600
+        });
+    };
+
+*/
 		
     
    

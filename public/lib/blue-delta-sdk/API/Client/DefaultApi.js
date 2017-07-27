@@ -1172,6 +1172,9 @@ API.Client.DefaultApi.prototype.ordersUpdate = function(orderId, order, opt_extr
     headers: headerParams
   };
 
+		console.log("request");
+	conosle.log(httpRequestParams);
+	
   if (opt_extraHttpRequestParams) {
     httpRequestParams = angular.extend(httpRequestParams, opt_extraHttpRequestParams);
   }

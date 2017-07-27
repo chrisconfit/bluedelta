@@ -169,6 +169,14 @@
     			},
 	        loadPlugin: function ($ocLazyLoad) {
             return $ocLazyLoad.load([
+	            {
+								insertBefore: '#loadBefore',
+								name: 'toaster',
+								files: ['assets/scripts/toastr/toastr.min.js', 'assets/styles/toastr/toastr.min.css']
+	            },
+	            { 
+		            files: ['assets/styles/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css']
+		          },
               {
                 name: 'datePicker',
                 files: ['assets/styles/datapicker/angular-datapicker.css','assets/scripts/datapicker/angular-datepicker.js']
