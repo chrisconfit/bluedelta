@@ -686,14 +686,14 @@ parameters:
     required: true
     type: string
   PageSize:
-    in: "path"
+    in: "query"
     name: "page_size"
     required: false
     type: number
     format: integer
     minimum: 0
   Next:
-    in: "path"
+    in: "query"
     name: "next"
     required: false
     type: string

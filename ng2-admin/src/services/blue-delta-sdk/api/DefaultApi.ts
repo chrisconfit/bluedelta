@@ -107,11 +107,11 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public buttonsList(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<models.ButtonsListResponse> {
-        return this.buttonsListWithHttpInfo(next, pageSize, extraHttpRequestParams)
+    public buttonsList(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<models.ButtonsListResponse> {
+        return this.buttonsListWithHttpInfo(pageSize, next, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -124,11 +124,11 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public buttonsOptions(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.buttonsOptionsWithHttpInfo(next, pageSize, extraHttpRequestParams)
+    public buttonsOptions(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.buttonsOptionsWithHttpInfo(pageSize, next, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -255,11 +255,11 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public fabricsList(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<models.FabricsListResponse> {
-        return this.fabricsListWithHttpInfo(next, pageSize, extraHttpRequestParams)
+    public fabricsList(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<models.FabricsListResponse> {
+        return this.fabricsListWithHttpInfo(pageSize, next, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -272,11 +272,11 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public fabricsOptions(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.fabricsOptionsWithHttpInfo(next, pageSize, extraHttpRequestParams)
+    public fabricsOptions(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.fabricsOptionsWithHttpInfo(pageSize, next, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -439,11 +439,11 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public ordersList(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<models.OrdersListResponse> {
-        return this.ordersListWithHttpInfo(next, pageSize, extraHttpRequestParams)
+    public ordersList(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<models.OrdersListResponse> {
+        return this.ordersListWithHttpInfo(pageSize, next, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -456,12 +456,12 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
-     * @param pageSize 
      * @param userId 
+     * @param pageSize 
+     * @param next 
      */
-    public ordersListByUser(next: string, pageSize: string, userId: string, extraHttpRequestParams?: any): Observable<models.OrdersListResponse> {
-        return this.ordersListByUserWithHttpInfo(next, pageSize, userId, extraHttpRequestParams)
+    public ordersListByUser(userId: string, pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<models.OrdersListResponse> {
+        return this.ordersListByUserWithHttpInfo(userId, pageSize, next, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -474,11 +474,11 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public ordersOptions(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.ordersOptionsWithHttpInfo(next, pageSize, extraHttpRequestParams)
+    public ordersOptions(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.ordersOptionsWithHttpInfo(pageSize, next, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -618,11 +618,11 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public threadsList(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<models.ThreadsListResponse> {
-        return this.threadsListWithHttpInfo(next, pageSize, extraHttpRequestParams)
+    public threadsList(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<models.ThreadsListResponse> {
+        return this.threadsListWithHttpInfo(pageSize, next, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -635,11 +635,11 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public threadsOptions(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.threadsOptionsWithHttpInfo(next, pageSize, extraHttpRequestParams)
+    public threadsOptions(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.threadsOptionsWithHttpInfo(pageSize, next, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -733,11 +733,11 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public usersList(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<models.UsersListResponse> {
-        return this.usersListWithHttpInfo(next, pageSize, extraHttpRequestParams)
+    public usersList(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<models.UsersListResponse> {
+        return this.usersListWithHttpInfo(pageSize, next, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -750,11 +750,11 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public usersOptions(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.usersOptionsWithHttpInfo(next, pageSize, extraHttpRequestParams)
+    public usersOptions(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.usersOptionsWithHttpInfo(pageSize, next, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -833,12 +833,12 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
-     * @param pageSize 
      * @param userId 
+     * @param pageSize 
+     * @param next 
      */
-    public usersUserIdOrdersOptions(next: string, pageSize: string, userId: string, extraHttpRequestParams?: any): Observable<{}> {
-        return this.usersUserIdOrdersOptionsWithHttpInfo(next, pageSize, userId, extraHttpRequestParams)
+    public usersUserIdOrdersOptions(userId: string, pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<{}> {
+        return this.usersUserIdOrdersOptionsWithHttpInfo(userId, pageSize, next, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -1020,22 +1020,30 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public buttonsListWithHttpInfo(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<Response> {
+    public buttonsListWithHttpInfo(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/buttons`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'next' is not null or undefined
-        if (next === null || next === undefined) {
-            throw new Error('Required parameter next was null or undefined when calling buttonsList.');
+        if (pageSize !== undefined) {
+            if(pageSize instanceof Date) {
+                queryParameters.set('page_size', <any>pageSize.d.toISOString());
+            } else {
+                queryParameters.set('page_size', <any>pageSize);
+            }
         }
-        // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
-            throw new Error('Required parameter pageSize was null or undefined when calling buttonsList.');
+
+        if (next !== undefined) {
+            if(next instanceof Date) {
+                queryParameters.set('next', <any>next.d.toISOString());
+            } else {
+                queryParameters.set('next', <any>next);
+            }
         }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -1068,22 +1076,30 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public buttonsOptionsWithHttpInfo(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<Response> {
+    public buttonsOptionsWithHttpInfo(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/buttons`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'next' is not null or undefined
-        if (next === null || next === undefined) {
-            throw new Error('Required parameter next was null or undefined when calling buttonsOptions.');
+        if (pageSize !== undefined) {
+            if(pageSize instanceof Date) {
+                queryParameters.set('page_size', <any>pageSize.d.toISOString());
+            } else {
+                queryParameters.set('page_size', <any>pageSize);
+            }
         }
-        // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
-            throw new Error('Required parameter pageSize was null or undefined when calling buttonsOptions.');
+
+        if (next !== undefined) {
+            if(next instanceof Date) {
+                queryParameters.set('next', <any>next.d.toISOString());
+            } else {
+                queryParameters.set('next', <any>next);
+            }
         }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -1423,22 +1439,30 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public fabricsListWithHttpInfo(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<Response> {
+    public fabricsListWithHttpInfo(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/fabrics`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'next' is not null or undefined
-        if (next === null || next === undefined) {
-            throw new Error('Required parameter next was null or undefined when calling fabricsList.');
+        if (pageSize !== undefined) {
+            if(pageSize instanceof Date) {
+                queryParameters.set('page_size', <any>pageSize.d.toISOString());
+            } else {
+                queryParameters.set('page_size', <any>pageSize);
+            }
         }
-        // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
-            throw new Error('Required parameter pageSize was null or undefined when calling fabricsList.');
+
+        if (next !== undefined) {
+            if(next instanceof Date) {
+                queryParameters.set('next', <any>next.d.toISOString());
+            } else {
+                queryParameters.set('next', <any>next);
+            }
         }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -1471,22 +1495,30 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public fabricsOptionsWithHttpInfo(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<Response> {
+    public fabricsOptionsWithHttpInfo(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/fabrics`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'next' is not null or undefined
-        if (next === null || next === undefined) {
-            throw new Error('Required parameter next was null or undefined when calling fabricsOptions.');
+        if (pageSize !== undefined) {
+            if(pageSize instanceof Date) {
+                queryParameters.set('page_size', <any>pageSize.d.toISOString());
+            } else {
+                queryParameters.set('page_size', <any>pageSize);
+            }
         }
-        // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
-            throw new Error('Required parameter pageSize was null or undefined when calling fabricsOptions.');
+
+        if (next !== undefined) {
+            if(next instanceof Date) {
+                queryParameters.set('next', <any>next.d.toISOString());
+            } else {
+                queryParameters.set('next', <any>next);
+            }
         }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -1930,22 +1962,30 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public ordersListWithHttpInfo(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<Response> {
+    public ordersListWithHttpInfo(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/orders`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'next' is not null or undefined
-        if (next === null || next === undefined) {
-            throw new Error('Required parameter next was null or undefined when calling ordersList.');
+        if (pageSize !== undefined) {
+            if(pageSize instanceof Date) {
+                queryParameters.set('page_size', <any>pageSize.d.toISOString());
+            } else {
+                queryParameters.set('page_size', <any>pageSize);
+            }
         }
-        // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
-            throw new Error('Required parameter pageSize was null or undefined when calling ordersList.');
+
+        if (next !== undefined) {
+            if(next instanceof Date) {
+                queryParameters.set('next', <any>next.d.toISOString());
+            } else {
+                queryParameters.set('next', <any>next);
+            }
         }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -1978,27 +2018,35 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
-     * @param pageSize 
      * @param userId 
+     * @param pageSize 
+     * @param next 
      */
-    public ordersListByUserWithHttpInfo(next: string, pageSize: string, userId: string, extraHttpRequestParams?: any): Observable<Response> {
+    public ordersListByUserWithHttpInfo(userId: string, pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/users/${userId}/orders`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'next' is not null or undefined
-        if (next === null || next === undefined) {
-            throw new Error('Required parameter next was null or undefined when calling ordersListByUser.');
-        }
-        // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
-            throw new Error('Required parameter pageSize was null or undefined when calling ordersListByUser.');
-        }
         // verify required parameter 'userId' is not null or undefined
         if (userId === null || userId === undefined) {
             throw new Error('Required parameter userId was null or undefined when calling ordersListByUser.');
         }
+        if (pageSize !== undefined) {
+            if(pageSize instanceof Date) {
+                queryParameters.set('page_size', <any>pageSize.d.toISOString());
+            } else {
+                queryParameters.set('page_size', <any>pageSize);
+            }
+        }
+
+        if (next !== undefined) {
+            if(next instanceof Date) {
+                queryParameters.set('next', <any>next.d.toISOString());
+            } else {
+                queryParameters.set('next', <any>next);
+            }
+        }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -2031,22 +2079,30 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public ordersOptionsWithHttpInfo(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<Response> {
+    public ordersOptionsWithHttpInfo(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/orders`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'next' is not null or undefined
-        if (next === null || next === undefined) {
-            throw new Error('Required parameter next was null or undefined when calling ordersOptions.');
+        if (pageSize !== undefined) {
+            if(pageSize instanceof Date) {
+                queryParameters.set('page_size', <any>pageSize.d.toISOString());
+            } else {
+                queryParameters.set('page_size', <any>pageSize);
+            }
         }
-        // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
-            throw new Error('Required parameter pageSize was null or undefined when calling ordersOptions.');
+
+        if (next !== undefined) {
+            if(next instanceof Date) {
+                queryParameters.set('next', <any>next.d.toISOString());
+            } else {
+                queryParameters.set('next', <any>next);
+            }
         }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -2393,22 +2449,30 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public threadsListWithHttpInfo(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<Response> {
+    public threadsListWithHttpInfo(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/threads`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'next' is not null or undefined
-        if (next === null || next === undefined) {
-            throw new Error('Required parameter next was null or undefined when calling threadsList.');
+        if (pageSize !== undefined) {
+            if(pageSize instanceof Date) {
+                queryParameters.set('page_size', <any>pageSize.d.toISOString());
+            } else {
+                queryParameters.set('page_size', <any>pageSize);
+            }
         }
-        // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
-            throw new Error('Required parameter pageSize was null or undefined when calling threadsList.');
+
+        if (next !== undefined) {
+            if(next instanceof Date) {
+                queryParameters.set('next', <any>next.d.toISOString());
+            } else {
+                queryParameters.set('next', <any>next);
+            }
         }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -2441,22 +2505,30 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public threadsOptionsWithHttpInfo(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<Response> {
+    public threadsOptionsWithHttpInfo(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/threads`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'next' is not null or undefined
-        if (next === null || next === undefined) {
-            throw new Error('Required parameter next was null or undefined when calling threadsOptions.');
+        if (pageSize !== undefined) {
+            if(pageSize instanceof Date) {
+                queryParameters.set('page_size', <any>pageSize.d.toISOString());
+            } else {
+                queryParameters.set('page_size', <any>pageSize);
+            }
         }
-        // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
-            throw new Error('Required parameter pageSize was null or undefined when calling threadsOptions.');
+
+        if (next !== undefined) {
+            if(next instanceof Date) {
+                queryParameters.set('next', <any>next.d.toISOString());
+            } else {
+                queryParameters.set('next', <any>next);
+            }
         }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -2702,22 +2774,30 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public usersListWithHttpInfo(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<Response> {
+    public usersListWithHttpInfo(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/users`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'next' is not null or undefined
-        if (next === null || next === undefined) {
-            throw new Error('Required parameter next was null or undefined when calling usersList.');
+        if (pageSize !== undefined) {
+            if(pageSize instanceof Date) {
+                queryParameters.set('page_size', <any>pageSize.d.toISOString());
+            } else {
+                queryParameters.set('page_size', <any>pageSize);
+            }
         }
-        // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
-            throw new Error('Required parameter pageSize was null or undefined when calling usersList.');
+
+        if (next !== undefined) {
+            if(next instanceof Date) {
+                queryParameters.set('next', <any>next.d.toISOString());
+            } else {
+                queryParameters.set('next', <any>next);
+            }
         }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -2750,22 +2830,30 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
      * @param pageSize 
+     * @param next 
      */
-    public usersOptionsWithHttpInfo(next: string, pageSize: string, extraHttpRequestParams?: any): Observable<Response> {
+    public usersOptionsWithHttpInfo(pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/users`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'next' is not null or undefined
-        if (next === null || next === undefined) {
-            throw new Error('Required parameter next was null or undefined when calling usersOptions.');
+        if (pageSize !== undefined) {
+            if(pageSize instanceof Date) {
+                queryParameters.set('page_size', <any>pageSize.d.toISOString());
+            } else {
+                queryParameters.set('page_size', <any>pageSize);
+            }
         }
-        // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
-            throw new Error('Required parameter pageSize was null or undefined when calling usersOptions.');
+
+        if (next !== undefined) {
+            if(next instanceof Date) {
+                queryParameters.set('next', <any>next.d.toISOString());
+            } else {
+                queryParameters.set('next', <any>next);
+            }
         }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'
@@ -2959,27 +3047,35 @@ export class DefaultApi {
     /**
      * 
      * 
-     * @param next 
-     * @param pageSize 
      * @param userId 
+     * @param pageSize 
+     * @param next 
      */
-    public usersUserIdOrdersOptionsWithHttpInfo(next: string, pageSize: string, userId: string, extraHttpRequestParams?: any): Observable<Response> {
+    public usersUserIdOrdersOptionsWithHttpInfo(userId: string, pageSize?: string, next?: string, extraHttpRequestParams?: any): Observable<Response> {
         const path = this.basePath + `/users/${userId}/orders`;
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
-        // verify required parameter 'next' is not null or undefined
-        if (next === null || next === undefined) {
-            throw new Error('Required parameter next was null or undefined when calling usersUserIdOrdersOptions.');
-        }
-        // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
-            throw new Error('Required parameter pageSize was null or undefined when calling usersUserIdOrdersOptions.');
-        }
         // verify required parameter 'userId' is not null or undefined
         if (userId === null || userId === undefined) {
             throw new Error('Required parameter userId was null or undefined when calling usersUserIdOrdersOptions.');
         }
+        if (pageSize !== undefined) {
+            if(pageSize instanceof Date) {
+                queryParameters.set('page_size', <any>pageSize.d.toISOString());
+            } else {
+                queryParameters.set('page_size', <any>pageSize);
+            }
+        }
+
+        if (next !== undefined) {
+            if(next instanceof Date) {
+                queryParameters.set('next', <any>next.d.toISOString());
+            } else {
+                queryParameters.set('next', <any>next);
+            }
+        }
+
         // to determine the Content-Type header
         let consumes: string[] = [
             'application/json'

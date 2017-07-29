@@ -25,9 +25,9 @@ function Get(event, context) {
 function List(event, context) {
     let limit = 25;
     let next = null;
-    if (event.pathParameters) {
-        limit = event.pathParameters.page_size || 25;
-        next = event.pathParameters.next;
+    if (event.queryStringParameters) {
+        limit = event.queryStringParameters.page_size || 25;
+        next = event.queryStringParameters.next;
     }
     return FabricsTable.scan(limit, next);
 }
