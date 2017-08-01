@@ -56,11 +56,74 @@ angular.module('inspinia')
  
 	
 		//Get orders
+		vm.pagination = {
+			ordersPerPage:2,
+			prev:false,
+			next:false,
+			nextURL:"",
+			page:1,
+			loaded:0
+		};
+		vm.pagination.startIndex = (vm.pagination.page-1)*vm.pagination.ordersPerPage;
+		
+		vm.findIndex = function(orderId){
+	    for(var i = 0; i < vm.orders.length; i++) {
+	      if(vm.orders[i].orderId === orderId) return i;
+	    }
+	    return -1;
+		}
+		
+		function incrementPage(inc){
+			vm.pagination.page = vm.pagination.page+inc;
+			vm.pagination.startIndex = (vm.pagination.page-1)*vm.pagination.ordersPerPage;
+			if (inc > 0) vm.pagination.prev=true;
+			else vm.pagination.next=true;
+		}
+		
+		
+		vm.pagination.changePage = function(dir){
+			
+			if (vm.pagination.page == 1 && dir=="prev") return false;
+			if (vm.pagination.page == 2 && dir=="prev") vm.pagination.prev=false;
+			
+			//put in rules for the last page
+			
+			if (dir =="next"){
+				if (vm.pagination.page < vm.pagination.loaded) incrementPage(1);
+				else{
+					pullOrders(function(){
+						incrementPage(1);
+					})
+				}
+			}else{
+				incrementPage(-1);				
+			}	
+		}
+		
+		
 
-		bdAPI.call('ordersList', [1,1], function(result){
-			vm.orders = result.data.items;
-			$scope.$apply();
-		});
+		function pullOrders(callback){
+			var args = vm.pagination.nextURL ? [vm.pagination.ordersPerPage, vm.pagination.nextURL] : vm.pagination.ordersPerPage;
+			bdAPI.call('ordersList', args, function(result){
+				console.log(result);
+				vm.orders.push.apply(vm.orders, result.data.items);
+				if (result.data.next){
+					vm.pagination.nextURL=result.data.next;
+					vm.pagination.next = true;
+				}
+				else vm.pagination.next = false;
+				vm.pagination.loaded++;	
+				if (callback){
+				 callback();
+				}
+				$scope.$apply();
+			});
+		}
+		
+		//Init orders
+		vm.orders = [];
+		pullOrders();
+
 		
 	
 			

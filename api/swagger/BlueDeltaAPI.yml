@@ -188,11 +188,8 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-<<<<<<< HEAD
-=======
       security:
 #      - blue-delta-userPool-authorizer: []
->>>>>>> 98c0853b8a10cdc0d916e3eacdec639e6f99a6b7
     post:
       description: Updates a Jean
       operationId: jeans-Update
@@ -689,14 +686,14 @@ parameters:
     required: true
     type: string
   PageSize:
-    in: "path"
+    in: "query"
     name: "page_size"
     required: false
     type: number
     format: integer
     minimum: 0
   Next:
-    in: "path"
+    in: "query"
     name: "next"
     required: false
     type: string

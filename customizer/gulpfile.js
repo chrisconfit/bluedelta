@@ -43,8 +43,20 @@ gulp.task('bdapi_scripts', function() {
     .pipe(gulp.dest('dist/scripts'));
 });
 
+var appScripts = [
+'!./vendor/*.js',
+'!./vendor/**/*.js',
+'!./node_modules/**/*.js',
+'!./node_modules/*.js',
+'!./bower_components/**/*.js',
+'!./bower_components/*.js',
+'!./dist/*.js',
+'!./dist/*/**.js',
+'!./gulpfile.js',
+'./**/*.js'];
+
 gulp.task('app_scripts', function(){
-	gulp.src(['./src/scripts/**/*.js'])
+	gulp.src(appScripts)
 		.pipe(sourcemaps.init())
 		.pipe(uglify({mangle: true}).on('error', gutil.log))
 		.pipe(concat('./app.min.js'))  
@@ -58,10 +70,10 @@ gulp.task('vendor_scripts', function() {
 	gulp.src([
 		'!./vendor/blue-delta-sdk/**/*.js',
 		'./vendor/angular/angular.min.js',
-		'./vendor/aws/aws-cognito-sdk.min.js',
-		'./vendor/aws/aws-cognito-sdk.min.js',
-		'./vendor/aws/aws-sdk.min.js',
-		'./vendor/angular/*!(angular.min).js'])
+		'./vendor/angular/*!(angular.min).js',
+		'./vendor/aws/aws-cognito-sdk.js',
+		'./vendor/aws/amazon-cognito-identity.js',
+		'./vendor/aws/aws-sdk.js'])
 		.pipe(sourcemaps.init())
 		.pipe(uglify({mangle: true}).on('error', gutil.log))
 		.pipe(concat('./vendor.min.js'))  
@@ -71,17 +83,17 @@ gulp.task('vendor_scripts', function() {
 });
 
 gulp.task('styles', function() {
-  return gulp.src(['./src/styles/**/*.scss'])
+  return gulp.src(['./scss/**/*.scss'])
     .pipe(compass({
       css: './dist/styles/',
-      sass: './src/styles/'
+      sass: './scss/'
     }))
     .pipe(gulp.dest('./dist/styles'))
 })
 
 
 gulp.task('watch', function() {
-  watch(['./src/scripts/*.js','./src/scripts/**/*.js',], function () {
+  watch(appScripts, function () {
     gulp.start('app_scripts');
   });
   watch(['!./vendor/blue-delta-sdk/**/*.js','./vendor/**/*.js'], function () {
@@ -90,7 +102,7 @@ gulp.task('watch', function() {
   watch(['./vendor/blue-delta-sdk/**/*.js'], function () {
     gulp.start('bdapi_scripts');
   });
-  watch(['./src/styles/*.scss', './src/styles/**/*.scss'], function () {
+  watch(['./scss/*.scss', './scss/**/*.scss'], function () {
     gulp.start('styles');
   });
 });
@@ -118,7 +130,7 @@ function browserSyncInit(baseDir, browser) {
   browserSync.instance = browserSync.init({
     startPath: '/',
     server: server,
-    browser: browser
+    browser: browser,
   });
 }
 

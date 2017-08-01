@@ -1,48 +1,118 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('UsersController', ['bdAPI', '$scope', 'aws', 'DTColumnDefBuilder', function (bdAPI, $scope, aws, DTColumnDefBuilder) {
-
-
-		
-		console.log(bdAPI);
-
-		console.log("let's get some more orders...");
+  .controller('UsersController',  ['bdAPI', '$scope', 'aws', 'SweetAlert', function (bdAPI, $scope, aws, SweetAlert) {
     var vm = this;
     
-    vm.orders = {};
+		
+		
+		var deleteUserBox = {
+      title: "Are you sure?",
+      text: "This user will be deleted forever!",
+      type: "warning",
+      showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+      closeOnConfirm: false,
+      closeOnCancel: true 
+    }
     
-    aws.authenticateCognitoUser("chris@confitdesign.com","Go@tboy4535").then(
-			function(result){
-				console.log(result);
-				
-				var id = bdAPI.setupHeaders();
-				bdAPI.usersList().then(
-				function(result){
-					console.log(result);
-					vm.users = result.data.items;
-					$scope.$apply();
-				}, 
-				function(err){console.log(err)} 
-			);
-					
-				
-				
-			},
-			
-			
-			function(err){
-				if (err.message == "Incorrect username or password.") err.message = "Incorrect Email address or password."
-				messages.set(err.message,"error");
+    
+		vm.deleteUser = function(userId){
+			SweetAlert.swal(deleteUserBox,
+		    function (isConfirm) {
+			    console.log("UID");
+			    console.log(userId);
+	        if (isConfirm) {
+		        bdAPI.call('usersDelete', userId, function(result){
+							vm.usersRemove(userId);
+	          	SweetAlert.swal("Deleted!", "User "+userId+" has been deleted.", "success");
+	          });
+	        }
+		    }
+		  );
+		}
+
+		vm.usersRemove = function(userId){
+			for(var i=0; i<vm.users.length; i++){
+				if (vm.users[i].identityId == userId){
+					vm.users.splice(i, 1);
+					return;
+				}
 			}
+		}
+		
+    
+  		//Get users
+		vm.pagination = {
+			usersPerPage:20,
+			prev:false,
+			next:false,
+			nextURL:"",
+			page:1,
+			loaded:0
+		};
+		vm.pagination.startIndex = (vm.pagination.page-1)*vm.pagination.usersPerPage;
+		
+		vm.findIndex = function(userId){
+	    for(var i = 0; i < vm.users.length; i++) {
+	      if(vm.users[i].identityId === userId) return i;
+	    }
+	    return -1;
+		}
+		
+		function incrementPage(inc){
+			vm.pagination.page = vm.pagination.page+inc;
+			vm.pagination.startIndex = (vm.pagination.page-1)*vm.pagination.usersPerPage;
+			if (inc > 0) vm.pagination.prev=true;
+			else vm.pagination.next=true;
+		}
+		
+		
+		vm.pagination.changePage = function(dir){
 			
-		);
-    
-    
-   $scope.dtColumnDefs = [
-   	DTColumnDefBuilder.newColumnDef(3).notSortable(),
-	 	DTColumnDefBuilder.newColumnDef(2).notSortable()
-	 ];
+			if (vm.pagination.page == 1 && dir=="prev") return false;
+			if (vm.pagination.page == 2 && dir=="prev") vm.pagination.prev=false;
+			
+			//put in rules for the last page
+			
+			if (dir =="next"){
+				if (vm.pagination.page < vm.pagination.loaded) incrementPage(1);
+				else{
+					pullUsers(function(){
+						incrementPage(1);
+					})
+				}
+			}else{
+				incrementPage(-1);				
+			}	
+		}
+		
+		
+
+		function pullUsers(callback){
+			var args = vm.pagination.nextURL ? [vm.pagination.usersPerPage, vm.pagination.nextURL] : vm.pagination.usersPerPage;
+			bdAPI.call('usersList', args, function(result){
+				console.log(result);
+				vm.users.push.apply(vm.users, result.data.items);
+				if (result.data.next){
+					vm.pagination.nextURL=result.data.next;
+					vm.pagination.next = true;
+				}
+				else vm.pagination.next = false;
+				vm.pagination.loaded++;	
+				if (callback){
+				 callback();
+				}
+				$scope.$apply();
+			});
+		}
+		
+		//Init users
+		vm.users = [];
+		pullUsers();    
+
     		
         
 

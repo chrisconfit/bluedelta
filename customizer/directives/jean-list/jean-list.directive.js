@@ -30,7 +30,6 @@
 					
 					$scope.dataLookup = function(key, value, field){
 						if (typeof(value)=="object") return value[field];
-						
 						var data = jsonData[key];
 						for (d=0;d<data.length;d++){
 							if (data[d].id == value){

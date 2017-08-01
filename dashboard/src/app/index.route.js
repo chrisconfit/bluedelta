@@ -45,20 +45,13 @@
         resolve: { 
 	        loadPlugin: function ($ocLazyLoad) {
 						return $ocLazyLoad.load([
-						  {
-					      serie: true,
-					      files: ['assets/scripts/dataTables/datatables.min.js','assets/styles/dataTables/datatables.min.css']
-						  },
-						  {
-					      serie: true,
-					      name: 'datatables',
-					      files: ['assets/scripts/dataTables/angular-datatables.min.js']
-						  },
-						  {
-					      serie: true,
-					      name: 'datatables.buttons',
-					      files: ['assets/scripts/dataTables/angular-datatables.buttons.min.js']
-							}
+							{	
+	                files: ['assets/scripts/sweetalert/sweetalert.min.js', 'assets/styles/sweetalert/sweetalert.css']
+	            },
+	            {
+	                name: 'oitozero.ngSweetAlert',
+	                files: ['assets/scripts/sweetalert/angular-sweetalert.min.js']
+	            }
 						]);
 					}
                 
@@ -126,13 +119,12 @@
         resolve: {
 	        jsonData: function($http, $q){
 		      	var data=[
-		      		$http.get('/assets/data/vendor.json'),
-		      		$http.get('/assets/data/rep.json'),
-		      		$http.get('/assets/data/thread.json'),
-		      		$http.get('/assets/data/fabric.json'),		      	
-		      		$http.get('/assets/data/gender.json')
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/vendor.json'),
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/rep.json'),
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/thread.json'),
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/fabric.json'),		      	
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/gender.json')
 						]
-		      	
 		      	return $q.all(data);
 		      	    			      	
 	        },

@@ -16,7 +16,7 @@
 		      <div class="cft-g jean-grid">
 			      <div ng-repeat="jean in vm.data.jeansList | filter:{ status: 'production' }" class="cft-gi">
 				      <div class="jean-card">
-								<img ng-click="vm.selectJean(jean)" src="/images/thumbnails/{{jean.id}}.jpg">
+								<img ng-click="vm.selectJean(jean)" ng-src="/images/thumbnails/{{jean.id}}.jpg">
 								<div class="box-content">
 						      <h4 ng-click="vm.selectJean(jean)">{{jean.name}}</h4>
 									<h5>{{jean.buildStatus}}</h5>
@@ -33,7 +33,7 @@
 		      <div class="cft-g jean-grid">
 			      <div ng-repeat="jean in vm.data.jeansList | filter:{ status: 'complete' }" class="cft-gi">
 				      <div class="jean-card">
-					      <img ng-click="vm.selectJean(jean)" src="/images/thumbnails/{{jean.id}}.jpg">
+					      <img ng-click="vm.selectJean(jean)" ng-src="/images/thumbnails/{{jean.id}}.jpg">
 								<div class="box-content">
 					      	<h4 ng-click="vm.selectJean(jean)">{{jean.name}}</h4>
 									<h5>Born: {{jean.birthday | date : "longDate" : "CST" }}</h5>
@@ -49,7 +49,7 @@
 		      <div class="cft-g jean-grid">
 			      <div ng-repeat="jean in vm.user.jeans | filter:{ ordered : '!true' }" class="cft-gi">
 				      <div class="jean-card">
-					      <img src="{{jean.imageURL}}">
+					      <img ng-src="{{jean.imageURL}}">
 								<div class="box-content">
 									<div ng-if="!jean.deleting">
 										<a href="/customizer/{{jean.jeanId}}/{{vm.user.identityId}}">Edit</a> | <a href="" ng-click="vm.orderJean(jean)">Order</a> | <a ng-click="jean.deleting=true" href="">Delete</a> 

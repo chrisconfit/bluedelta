@@ -20,7 +20,7 @@ angular.module('inspinia')
     //init json data from route resolve...
     var jd = {};
 		for(var i=0; i<jsonData.length; i++){
-			var key = jsonData[i].config.url.replace(".json","").replace("/assets/data/", "");
+			var key = jsonData[i].config.url.replace(".json","").replace("http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/", "");
 			jd[key] = jsonData[i].data;
 		}
 		vm.data = jd;

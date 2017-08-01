@@ -3,7 +3,7 @@
 	<div class="cft-gi" ng-repeat="data in dataset">
 		<a ng-class="{ active: chvm.jeanData[step.jeanKey]==data.threadId }" id="{{step.jeanKey}}_{{data.threadId}}" 
 		href="" ng-click="chvm.selectAttr($event, data, step.jeanKey)">
-			<img src="/images/components/{{step.dataKey}}/thumb/{{data.threadId}}.jpg">
+			<img ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/{{step.dataKey}}/thumb/{{data.threadId}}.jpg">
 		</a>
 	</div>
 </div>

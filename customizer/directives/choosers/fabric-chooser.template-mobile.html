@@ -7,7 +7,7 @@
 	<div class="cft-gi" ng-repeat="data in dataset | orderBy:'weight'">
 		<a ng-class="{ active: chvm.jeanData.fabric.fabricId == data.fabricId }" id="fabric_{{data.fabricId}}" 
 		href="" ng-click="chvm.selectAttr($event, data, step.jeanKey)">
-			<img src="/images/components/{{step.dataKey}}/thumb/{{data.fabricId}}.jpg">
+			<img ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/{{step.dataKey}}/thumb/{{data.fabricId}}.jpg">
 			<span class="fabric-weight">{{data.weight}}<span class="oz">oz</span></span>
 		</a>
 	</div>

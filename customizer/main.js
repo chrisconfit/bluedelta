@@ -115,13 +115,13 @@
 	var initInjector = angular.injector(['ng']);
 	var $http = initInjector.get('$http');
 	var $q = initInjector.get('$q');
-
+	var awsJsonUrl = "http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/"
 	
 	var jsonDataKeys = ['style', 'thread', 'button', 'fabric', 'gender', 'tailors'];
 	var promises = [];				
 	for (d = 0; d < jsonDataKeys.length; d++){
 		promises.push(
-			$http.get('/data/'+jsonDataKeys[d]+'.json')
+			$http.get(awsJsonUrl+jsonDataKeys[d]+'.json')
 		);	
 	}
 
@@ -129,11 +129,10 @@
 		function(result){
 			var jsonData = {};
 			for(r=0;r<result.length;r++){
-				var key = result[r].config.url.replace("/data/","").replace(".json","");
+				var key = result[r].config.url.replace(awsJsonUrl,"").replace(".json","");
 				jsonData[key] = result[r].data;
 			}
 			angular.module('bdApp').constant('jsonData', jsonData);
-			
 			var body = document.getElementById('bdApp');
 			angular.bootstrap(angular.element(body), ['bdApp']);		
 		}

@@ -219,6 +219,7 @@
 		function loadImage(src, cntxt) {
       return $q(function(resolve,reject) {
         var image = new Image();
+        image.crossOrigin = "";
         image.src = src;
         image.onload = function() {
           cntxt.drawImage(image,0,0,600,696);
@@ -237,10 +238,10 @@
 	  	var cntxt = canvas.getContext('2d');	
 	  	var promises = [];
 			var images = [
-				'/images/components/fabric/g'+jeanData.gender+'/s2/f'+jeanData.fabric.fabricId+'.jpg',
-				'/images/components/thread/g'+jeanData.gender+'/s2/tb/'+jeanData.bottom_thread.threadId+'.png',
-				'/images/components/thread/g'+jeanData.gender+'/s2/tt/'+jeanData.top_thread.threadId+'.png',
-				'/images/components/thread/g'+jeanData.gender+'/s2/ta/'+jeanData.accent_thread.threadId+'.png'
+				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabric/g'+jeanData.gender+'/s2/f'+jeanData.fabric.fabricId+'.jpg',
+				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/thread/g'+jeanData.gender+'/s2/tb/'+jeanData.bottom_thread.threadId+'.png',
+				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/thread/g'+jeanData.gender+'/s2/tt/'+jeanData.top_thread.threadId+'.png',
+				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/thread/g'+jeanData.gender+'/s2/ta/'+jeanData.accent_thread.threadId+'.png'
 			];
 
 	    for(var i=0; i<images.length; i++){

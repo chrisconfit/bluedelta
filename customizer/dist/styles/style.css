@@ -638,7 +638,7 @@ body {
 }
 
 .hero {
-  background: url("../images/denim-1.jpg");
+  background: url("../../images/denim-1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -2321,13 +2321,13 @@ div[style-chooser] .cft-g.chooser-grid#gender-chooser > .cft-gi, gender-chooser 
   }
 }
 .builder__stage #zoom-frame:hover {
-  cursor: url(../images/search-plus.png), zoom-in;
+  cursor: url(../../images/search-plus.png), zoom-in;
 }
 .builder__stage #zoom-frame.zoomed:hover {
-  cursor: url(../images/search-minus.png), zoom-out;
+  cursor: url(../../images/search-minus.png), zoom-out;
 }
 .builder__stage #zoom-frame.zoomed img:hover {
-  cursor: url(../images/search-minus.png), zoom-out;
+  cursor: url(../../images/search-minus.png), zoom-out;
 }
 .builder__stage #zoom-frame img {
   bottom: -175px;
@@ -2346,7 +2346,7 @@ div[style-chooser] .cft-g.chooser-grid#gender-chooser > .cft-gi, gender-chooser 
   transition: transform 300ms ease;
 }
 .builder__stage #zoom-frame img:hover {
-  cursor: url(../images/search-plus.png), zoom-in;
+  cursor: url(../../images/search-plus.png), zoom-in;
 }
 .builder__stage #zoom-frame img.zoom {
   -moz-transform: scale(1.7) translateX(-50%);

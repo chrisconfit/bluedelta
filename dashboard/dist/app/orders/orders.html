@@ -12,10 +12,10 @@
 					
 				</div>
 				<div class="ibox-content">
-
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
+								<th>#</th>
 								<th>ID</th>
 								<th>Customer</th>
 								<th>Vendor</th>									
@@ -28,7 +28,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="order in octrl.orders track by $index">
+							<tr ng-repeat="order in octrl.orders | limitTo : octrl.pagination.ordersPerPage : octrl.pagination.startIndex">
+								<td>{{octrl.findIndex(order.orderId)+1}}</td>
 								<td>{{order.orderId}}</td>
 								<td>Customer Name</td>
 								<td>{{order.vendor}}</td>
@@ -41,7 +42,15 @@
 							</tr>
 						</tbody>
 					</table>
+
+					<div class="pagination full-width text-center" width="100%" ng-if="octrl.pagination.next || octrl.pagination.prev">
+						<div class="btn-group">
+							<button ng-if="octrl.pagination.prev" ng-click="octrl.pagination.changePage('prev')" class="btn btn-white" type="button"><i class="fa fa-chevron-left"></i></button>
+							<button ng-if="octrl.pagination.next" ng-click="octrl.pagination.changePage('next')"  class="btn btn-white" type="button"><i class="fa fa-chevron-right"></i> </button>
+						</div>
+					</div>
 					
+					<!--
 					<div class="text-center">
             <div class="btn-group">
                 <button class="btn btn-white" type="button"><i class="fa fa-chevron-left"></i></button>
@@ -55,6 +64,7 @@
                 <button class="btn btn-white" type="button"><i class="fa fa-chevron-right"></i> </button>
             </div>
         	</div>
+        	-->
         	
 				</div>
 			</div>

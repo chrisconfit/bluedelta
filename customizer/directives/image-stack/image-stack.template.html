@@ -1,14 +1,14 @@
 <div class="images" id="zoom-frame" ng-class="{'zoomed': isvm.zoom, 'centered':isvm.centerPan}" 
 	ng-click="isvm.toggleZoom()" ng-touch="isvm.zoom = !isvm.zoom" ng-mouseleave="isvm.returnPan()" ng-mousemove="isvm.trackMouse($event)">
 		<!--_s{{jeanData.style}} will add the current style to the jean, but for now all images are using the "2" style. Let's hardcode that until we need to change-->
-	<img class="zoomed-image" ng-if="jeanData.fabric" ng-class="{'zoom': isvm.zoom }"
-	src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabric/g{{jeanData.gender}}/s2/f{{jeanData.fabric.fabricId}}.jpg">		
-	<img class="zoomed-image" ng-if="jeanData.bottom_thread" ng-class="{'zoom': isvm.zoom }"
-	src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/thread/g{{jeanData.gender}}/s2/tb/{{jeanData.bottom_thread.threadId}}.png">
-	<img class="zoomed-image" ng-if="jeanData.top_thread" ng-class="{'zoom': isvm.zoom }"
-	src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/thread/g{{jeanData.gender}}/s2/tt/{{jeanData.top_thread.threadId}}.png">
-	<img class="zoomed-image" ng-if="jeanData.accent_thread" ng-class="{'zoom': isvm.zoom }"
-	src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/thread/g{{jeanData.gender}}/s2/ta/{{jeanData.accent_thread.threadId}}.png">
+	<img crossorigin="Anonymous" class="zoomed-image" ng-if="jeanData.fabric" ng-class="{'zoom': isvm.zoom }"
+	ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabric/g{{jeanData.gender}}/s2/f{{jeanData.fabric.fabricId}}.jpg">		
+	<img crossorigin="Anonymous" class="zoomed-image" ng-if="jeanData.bottom_thread" ng-class="{'zoom': isvm.zoom }"
+	ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/thread/g{{jeanData.gender}}/s2/tb/{{jeanData.bottom_thread.threadId}}.png">
+	<img crossorigin="Anonymous" class="zoomed-image" ng-if="jeanData.top_thread" ng-class="{'zoom': isvm.zoom }"
+	ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/thread/g{{jeanData.gender}}/s2/tt/{{jeanData.top_thread.threadId}}.png">
+	<img crossorigin="Anonymous" class="zoomed-image" ng-if="jeanData.accent_thread" ng-class="{'zoom': isvm.zoom }"
+	ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/thread/g{{jeanData.gender}}/s2/ta/{{jeanData.accent_thread.threadId}}.png">
 	<!--<img class="stage-button" ng-if="jeanData.hardware != 1"
 	src="/images/components/hardware/thumb_{{jeanData.hardware}}.jpg">-->
 </div>

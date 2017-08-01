@@ -20,7 +20,7 @@ angular.module('inspinia')
     //init json data from route resolve...
     var jd = {};
 		for(var i=0; i<jsonData.length; i++){
-			var key = jsonData[i].config.url.replace(".json","").replace("/assets/data/", "");
+			var key = jsonData[i].config.url.replace(".json","").replace("http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/", "");
 			jd[key] = jsonData[i].data;
 		}
 		vm.data = jd;
@@ -108,36 +108,44 @@ angular.module('inspinia')
     
 	    
 		vm.saveOrder = function(){
-
-			
-			bdAPI.setupHeaders();
-			//Log order id and order details
-			console.log(vm.order.orderId, vm.order);
-			
-			bdAPI.ordersUpdate(vm.order.orderId, vm.order).then(function(result){
-				//Log Result
-				console.log("RESULT");
-				console.log(result);	
-			},
-			function(err){
-				console.log(err);
+		/*	 
+			toaster.pop({
+			  type: 'wait',
+			  title: 'Saving...',
+			  showCloseButton: true,
+			  timeout: 2000
 			});
-		
+			*/
+			toaster.wait('Saving...');
+			
+			bdAPI.call('ordersUpdate',[vm.order.orderId, vm.order],function(){
+				toaster.pop({
+				  type: 'success',
+				  title: 'Order Saved',
+				  showCloseButton: true,
+				  timeout: 3000
+				});
+			}, function(){
+				toaster.pop({
+				  type: 'error',
+				  title: 'Could Not Save',
+				  body: "err.message",
+				  showCloseButton: true,
+				  timeout: 7000
+				});
+			});
 		}
 		
     vm.addTimelineItem = function(){
 	    if (!vm.timelineForm.message) return false;
-	    var d = new Date();
-	    if (!vm.order.timeline) vm.order.timeline = [];
-	    vm.order.timeline.push(
-		    {
-			    "message":vm.timelineForm.message,
-			    "timestamp":d.toISOString(),
-			    "user": vm.user.name
-		    }
-	    )
-	    vm.saveOrder();
-	    vm.timelineForm.message = null;
+			bdAPI.call('commentsCreate', [vm.order.orderId, {message:vm.timelineForm.message}], 
+				function(result){
+					console.log("comment created");
+					vm.order=result.data;
+					vm.timelineForm.message = null;
+					$scope.$apply();
+				}
+			);
     }
     
     

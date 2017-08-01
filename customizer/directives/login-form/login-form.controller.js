@@ -8,7 +8,6 @@
   
   function loginFormCtrl($location, aws, messages, $scope) {
     var logvm = this;
-    console.log($scope);
     
 		logvm.messages=messages.get();
 		
