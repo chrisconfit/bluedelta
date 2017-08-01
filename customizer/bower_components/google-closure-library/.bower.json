@@ -1,0 +1,14 @@
+{
+  "name": "google-closure-library",
+  "homepage": "https://github.com/google/closure-library",
+  "_release": "c84af3b81d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "c84af3b81d257355a082ce14adeacbe17f54dffe"
+  },
+  "_source": "https://github.com/google/closure-library.git",
+  "_target": "*",
+  "_originalSource": "google-closure-library",
+  "_direct": true
+}

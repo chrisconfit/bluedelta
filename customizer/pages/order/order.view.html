@@ -1,0 +1,138 @@
+<navigation></navigation>
+<ng-include  src="'/pages/order/popups.html'"></ng-include>
+
+<div class="container page-container">
+
+  <div class="cft-g page-grid">
+	  
+    <div class="cft-gi main">
+			<div class="page-title">
+				<h1>Order <span class="sub-title">- Get your perfect fit</span></h1>
+			</div>
+
+			<!--Step 1-->
+			<div class="order-step-1" ng-if="vm.orderForm.step==1">
+      	<p>Every single pair of Blue Delta Jeans is tailored to your body. To ensure we are getting a perfect fit, there are 3 ways you can order your jeans:</p>
+				<div class="fit-options">
+					<div class="single-option" ng-class="{selected:vm.order.orderType==1}">
+						<h3>1. Get Fitted at Blue Delta</h3>
+						<p>Visit our Oxford MS fitting room to be measured by a Blue Delta Specialist</p>
+						<a href="" ng-click="vm.chooseFitType(1)" ng-class="{checked:vm.order.orderType==1}" class="check-box"></a> 
+						<span class="check-label">I'll get fitted at Blue Delta</span>
+					</div>
+					<div class="single-option" ng-class="{selected:vm.order.orderType==2}">
+						<h3>2. Get Fitted at a trusted tailor</h3>
+						<p>We have Blue Delta Partners all over the USA</p>
+						<a class="option-trigger" ng-click="vm.popups.tailors=true" href="">
+							<span ng-if="!vm.orderForm.data.tailor">View a full list of tailors</span>
+							<span ng-if="vm.orderForm.data.tailor">Change tailor</span>
+						</a>
+						
+						<a href="" ng-click="vm.chooseFitType(2)" ng-class="{checked:vm.order.orderType==2}" class="check-box"></a> 
+						<span class="check-label">I'll get fitted at a Blue Delta Partner 
+							<span ng-if="!vm.orderForm.data.tailor && vm.order.orderType==2"><a ng-click="vm.popups.tailors=true" href="">(choose)</a></span> 
+							<span ng-if="vm.orderForm.data.tailor">({{vm.orderForm.data.tailor.location}})</span>
+						</span>
+					</div>
+					<div class="single-option" ng-class="{selected:vm.order.orderType==3}">
+						<h3>1. Clone your favorite jeans</h3>
+						<p>Can't make it to a tailor? Do you already have a perfect fitting pair of jeans? We can CLONE them.</p>
+						<a class="option-trigger" href="">Learn More</a>
+						<a href="" ng-click="vm.chooseFitType(3)" ng-class="{checked:vm.order.orderType==3}" class="check-box"></a> 
+						<span class="check-label">I'll clone a pair of my jeans</span>
+					</div>
+				</div>
+				<button class="btn" ng-class="{disabled : !vm.order.orderType}" ng-click="vm.orderForm.nextStep()">Next <i class="fa fa-angle-right"></i></button>
+			</div>
+				
+				
+			<!--Step 2-->
+			<div class="order-step-2" ng-if="vm.orderForm.step==2">
+				<h3>Shipping Information</h3> 
+				<p>Each pair of Blue Delta Jeans is made to fit and will take 4 - 6 weeks to arrive at your doorstep.</p>
+				
+					<div class="personal-info">
+				
+				<div class="input-container">
+					<label>Name:</label>
+					<span class="user-value">{{vm.user.name}}</span>
+				</div>
+			
+				<div class="input-container">
+					<label>Phone:</label>
+					<span ng-if="!vm.orderForm.editing.phone">
+						<span class="user-value editable" ng-if="vm.user.phone">
+							{{vm.user.phone}}
+							<i class="fa fa-pencil" ng-click="vm.orderForm.editing.phone=true;"></i>
+						</span>
+						<span ng-if="!vm.user.phone"  class="empty-value-button" ng-click="vm.orderForm.editing.phone=true;">
+							Add Phone Number <i class="fa fa-add-plus-circle"></i>
+						</span>
+					</span>
+					
+					<div class="input-group icon-control" ng-if="vm.orderForm.editing.phone">
+						<input type="text" ng-model="vm.user.phone">
+						<div class="icon-controls">
+							<i class="fa fa-undo" ng-click="vm.orderForm.cancel(i.field)"></i>
+							<i class="fa" ng-class="orderForm.phone ? 'fa-circle-o-notch fa-spin' : 'fa-check' " ng-click="vm.orderForm.save('phone')"></i>
+						</div>
+					</div>
+				</div>
+
+					</div>
+				
+				
+					<div class="address-block">
+						<strong>Address:</strong>
+						<address-choice user="vm.user"></address-choice>
+					</div>
+									
+					<div ng-class="{active:vm.order.orderItems[0].notes}" class="input-group">
+						<textarea ng-model="vm.order.orderItems[0].notes" ></textarea>
+						<label>Additional Comments</label>
+					</div>
+					
+					<div class="info-box">
+
+						<div ng-if="vm.order.orderType==1" class="blue-delta-message">
+							<h3>You are getting fitted in Oxford MS</h3>
+							<p>After submitting your order, we will be in touch to schedule a fitting.</p>
+						</div>
+						
+						<div ng-if="vm.order.orderType==2" class="clone-message">
+							<h3>You are getting fitted at one of our trusted partners ({{vm.orderForm.data.tailor.location}})</h3>
+							<p>After submitting your order, we will be in touch to schedule a fitting.</p>
+						</div>
+						
+						<div ng-if="vm.order.orderType==3" class="clone-message">
+							<h3>You are Cloning your jeans</h3>
+							<p>After submitting your order, we will be in touch to walk you through the next steps.</p>
+						</div>
+						
+						
+						<a href="" ng-click="vm.orderForm.step=1">Change order method</a>	
+					</div>
+					
+					<button ng-click="vm.placeOrder()" class="btn">Place Order</button>
+					
+				</form>
+			</div>
+      
+    </div><!--/.main
+    
+    --><div class="cft-gi sidebar">
+	    <div class="jean-card">
+		    <h3 class="box-title">Your Jean</h3>
+		    <div class="box-content">
+			    <img src="{{vm.jean.imageURL}}">
+					<div class="jean-list order">
+						<jean-list></jean-list>						
+					</div>
+		    </div>
+	    </div>
+
+	    
+	  </div><!--/.sidebar-->
+    
+  </div><!--.page-grid-->
+</div><!--./page-container
