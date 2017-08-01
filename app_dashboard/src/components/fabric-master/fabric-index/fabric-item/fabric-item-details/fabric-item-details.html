@@ -1,5 +1,0 @@
-  <span *ngIf="fabricService.itemIdMarkedForEdit !== fabric.fabricId">{{ fabric.name }}</span><span *ngIf="fabric.updateTime">&nbsp;&nbsp;(edited)</span>
-  <span *ngIf="fabric.fabricId === fabricService.itemIdBeingFetched">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
-  <span *ngIf="fabric.fabricId === fabricService.itemIdMarkedForDelete">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
-  <span *ngIf="!fabric.fabricId">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
-  <p>{{  fabric.createTime | date }}</p>

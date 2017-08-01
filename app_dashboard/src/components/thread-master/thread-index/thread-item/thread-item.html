@@ -1,8 +1,0 @@
-<ion-item>
-  
-  <thread-item-image item-left [thread]="thread"></thread-item-image>
-  <thread-item-details float-left *ngIf="threadService.itemIdMarkedForEdit !== thread.threadId" [thread]="thread"></thread-item-details>
-  <edit-thread-form [thread]="thread"></edit-thread-form>
-  <thread-item-buttons float-right [thread]="thread"></thread-item-buttons>
-  
-</ion-item>

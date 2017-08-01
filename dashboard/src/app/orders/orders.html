@@ -1,0 +1,65 @@
+<div ng-controller="OrdersController as octrl">
+
+	<div class="row wrapper border-bottom white-bg page-heading">
+		<h2>Orders</h2>
+	</div>
+	
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5>BD Orders</h5>
+					
+				</div>
+				<div class="ibox-content">
+
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Customer</th>
+								<th>Vendor</th>									
+								<th>Rep</th>
+								<th>Order Placed</th>
+								<th>Order Status</th>
+								<th>Payment Status</th>
+								<th width=40>Edit</th>
+								<th width=40>Delete</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="order in octrl.orders track by $index">
+								<td>{{order.orderId}}</td>
+								<td>Customer Name</td>
+								<td>{{order.vendor}}</td>
+								<td>{{order.rep}}</td>
+								<td>{{order.createTime | date:"M/d/yyyy"}}</td>
+								<td>{{order.orderStatus}}</td>
+								<td>Payment Status</td>
+								<td><a ui-sref="orders.edit({orderId: order.orderId})"><i class="fa fa-pencil"></i></a>
+								<td><a href="#" ng-click="octrl.deleteOrder(order.orderId)"><i class="fa fa-close"></i></a>
+							</tr>
+						</tbody>
+					</table>
+					
+					<div class="text-center">
+            <div class="btn-group">
+                <button class="btn btn-white" type="button"><i class="fa fa-chevron-left"></i></button>
+                <button class="btn btn-white">1</button>
+                <button class="btn btn-white active">2</button>
+                <button class="btn btn-white">3</button>
+                <button class="btn btn-white">4</button>
+                <button class="btn btn-white">5</button>
+                <button class="btn btn-white">6</button>
+                <button class="btn btn-white">7</button>
+                <button class="btn btn-white" type="button"><i class="fa fa-chevron-right"></i> </button>
+            </div>
+        	</div>
+        	
+				</div>
+			</div>
+		</div>
+	
+	</div>
+	
+</div>

@@ -1,6 +1,0 @@
-<span *ngIf="jeanService.itemIdMarkedForEdit !== jean.jeanId">{{ jean.name }}</span><span *ngIf="jean.updateTime">&nbsp;&nbsp;(edited)</span>
-<span *ngIf="jean.jeanId === jeanService.itemIdBeingFetched">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
-<span *ngIf="jean.jeanId === jeanService.itemIdMarkedForDelete">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
-<span *ngIf="!jean.jeanId">&nbsp;...<ion-icon name="paper-plane"></ion-icon></span>
-<p>{{  jean.createTime | date }}</p>
-  
