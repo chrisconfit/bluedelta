@@ -95,20 +95,28 @@
 				)	
 			}
 		}
-				
+		
+		vm.idid="";
+		vm.orders = [];		
     var cognitoUser = aws.getCurrentUserFromLocalStorage();
     if (cognitoUser){
 	    
 	    bdAPI.defaultHeaders_['Authorization'] = cognitoUser.idToken.getJwtToken();
 	    var idTokenPayload = cognitoUser.idToken.jwtToken.split('.')[1];
 			var identityID = JSON.parse(atob(idTokenPayload)).sub;	
-			bdAPI.usersGet(identityID).then(
-				function(result){
+			
+			vm.idid=identityID;
+			
+			bdAPI.call('ordersList', 100, function(result){
+				vm.orders=result.data.items;
+				$scope.$apply();
+			});	
+			bdAPI.call('usersGet', identityID, function(result){
 					
 					loader.hide();
 			
 					vm.user = result.data;	
-				
+						console.log(vm.user)
 					vm.userForm.data = angular.copy(result.data);
 					$scope.$apply();					
 /*

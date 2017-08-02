@@ -120,6 +120,10 @@
 			}
 		}
 		
+		reset = function(){
+			createNew();
+		}
+		
 		//Set up jean data from parameter
 		var setup = function(data){
 			var defer = $q.defer();
@@ -378,6 +382,7 @@
 	    save : save,
 	    get : get,
 	    setup : setup,
+	    reset : reset,
       set : set,
       createNew :createNew,
       getDataCode: getDataCode,

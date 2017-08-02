@@ -46,11 +46,12 @@
 
 		vm.placeOrder = function(){			
 			bdAPI.call('orderCreate', vm.order, function(result){
-				promises=[];
-//				promises.push(bdAPI.call('commentsCreate', [result.data.orderId, {message:"Order Placed"}]));
-				var savedJean = result.data.orderItems[0];
-				console.log(savedJean);
-	//			promises.push(bdAPI.call('jeansUpdate', [result.data.orderId, {message:"Order Placed"}]));
+				bdAPI.call('commentsCreate', [result.data.orderId, {message:"Order Placed"}], function(comment){
+					vm.popups.orderPlaced = true;
+					jean.reset();
+					vm.jean = jean.get();
+					$scope.$apply();
+				});
 			});
 		}
 
@@ -63,6 +64,14 @@
 		}
 		
 		vm.data=jsonData;
+		
+		vm.goToCloset = function(){
+			console.log('closet');
+			$location.path('/closet');
+		}
+		vm.startOver = function(){
+			$location.path('/customizer');
+		}
 		
 		vm.orderForm.nextStep = function(){
 			

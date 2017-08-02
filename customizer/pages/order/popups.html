@@ -21,3 +21,16 @@
 		</div><!--./popup-content-inner-->
 	</div>
 </div>
+
+
+<div ng-show="vm.popups.orderPlaced" id="tailors-popup" class="popup-window">
+	<div class="popup-content" style="text-align: center;">
+		<div class="popup-content-inner">
+			<h3 class="popup-title">Your Order Inquiry has been placed.</h3>
+			<h5 class="sub-title">Thank you for you interest! A Blue Delta representative will be in touch within 24 Hours</h5>
+			<br><br>
+			<button ng-click="vm.goToCloset()" class="btn" >Go to Closet</button>&nbsp;&nbsp;	
+			<button ng-click="vm.startOver()" class="btn btn-secondary">Build More Jeans</button>	
+		</div><!--./popup-content-inner-->
+	</div>
+</div>

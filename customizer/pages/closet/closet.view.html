@@ -10,17 +10,18 @@
 			</div>
 			
       <div class="jean-closet">	      
+	      
 	      <!--Production-->
-	      <div ng-if="(vm.data.jeansList | filter:{ status: 'production' }).length" class="production">
+	      <div ng-if="(vm.orders | filter:{ userId: vm.idid, status: '!complete' }).length" class="production">
 		      <h3>On the Way</h3>
 		      <div class="cft-g jean-grid">
-			      <div ng-repeat="jean in vm.data.jeansList | filter:{ status: 'production' }" class="cft-gi">
+			      <div ng-repeat="order in vm.orders | filter:{ userId: vm.idid, status: '!complete' }" class="cft-gi">
 				      <div class="jean-card">
-								<img ng-click="vm.selectJean(jean)" ng-src="/images/thumbnails/{{jean.id}}.jpg">
+								<img ng-click="ovm.selectJean(order.orderItems[0].jean)" ng-src="{{order.orderItems[0].jean.imageURL}}">
 								<div class="box-content">
-						      <h4 ng-click="vm.selectJean(jean)">{{jean.name}}</h4>
-									<h5>{{jean.buildStatus}}</h5>
-									<h5>EST ARRIVAL: {{jean.birthday | date : "shortDate" : "CST" }}</h5>
+						      <!--<h4 ng-click="vm.selectJean(order.orderItems[0].jean)">{{jean.name}}</h4>-->
+									<h5>{{order.status}}</h5>
+									<h5>EST ARRIVAL: AUGUST 4, 2017</h5>
 								</div>
 				      </div>
 			      </div>
@@ -28,15 +29,15 @@
 	      </div>
 	      
 	      <!--Owned-->
-	      <div ng-if="(vm.data.jeansList | filter:{ status: 'complete' }).length" class="complete">
-		      <h3>My Blue Delta Jean</h3>
+	      <div ng-if="(vm.orders | filter:{ userId: vm.idid, status: 'complete'  }).length" class="complete">
+		      <h3>My Blue Delta Jeans</h3>
 		      <div class="cft-g jean-grid">
-			      <div ng-repeat="jean in vm.data.jeansList | filter:{ status: 'complete' }" class="cft-gi">
+			      <div ng-repeat="order in vm.orders | filter:{ userId: vm.idid, status: 'complete' }" class="cft-gi">
 				      <div class="jean-card">
-					      <img ng-click="vm.selectJean(jean)" ng-src="/images/thumbnails/{{jean.id}}.jpg">
+					      <img ng-click="ovm.selectJean(order.orderItems[0].jean)" ng-src="{{order.orderItems[0].jean.imageURL}}">
 								<div class="box-content">
-					      	<h4 ng-click="vm.selectJean(jean)">{{jean.name}}</h4>
-									<h5>Born: {{jean.birthday | date : "longDate" : "CST" }}</h5>
+					      	<!--<h4 ng-click="vm.selectJean(jean)">{{jean.name}}</h4>-->
+									<h5>Born: {{order.createTime | date : "longDate" : "CST" }}</h5>
 								</div>
 				      </div>
 			      </div>

@@ -56,9 +56,10 @@
 					</div>
 					
 					<div ng-if="vm.order.orderType==2" class="clone-message">
-						<h3>You are getting fitted at one of our trusted partners in ({{vm.orderForm.data.tailor.location}})</h3>
-						<p>Each pair of Blue Delta Jeans is made custom for your body. After placing your order inquiry, we will be in touch to walk you through the next steps and schedule a fitting in ({{vm.orderForm.data.tailor.location}}).</p>
+						<h3>You are getting fitted at one of our trusted partners in ({{vm.order.tailor.location}})</h3>
+						<p>Each pair of Blue Delta Jeans is made custom for your body. After placing your order inquiry, we will be in touch to walk you through the next steps and schedule a fitting in ({{vm.order.tailor.location}}).</p>
 					</div>
+					
 					
 					<div ng-if="vm.order.orderType==3" class="clone-message">
 						<h3>You are Cloning your jeans</h3>
