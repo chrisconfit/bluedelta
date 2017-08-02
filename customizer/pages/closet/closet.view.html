@@ -21,7 +21,7 @@
 								<div class="box-content">
 						      <!--<h4 ng-click="vm.selectJean(order.orderItems[0].jean)">{{jean.name}}</h4>-->
 									<h5>{{order.status}}</h5>
-									<h5>EST ARRIVAL: AUGUST 4, 2017</h5>
+									<h5>EST ARRIVAL:<br><b>{{order.dueDate | date : "longDate" : "CST"}}</b></h5>
 								</div>
 				      </div>
 			      </div>
