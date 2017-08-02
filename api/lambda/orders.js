@@ -22,9 +22,13 @@ function Get(event, context) {
 }
 
 function List(event, context) {
-    console.log(event);
-    //TODO(Justin): Add pagination to list results
-    return OrdersTable.scan();
+    let limit = 25;
+    let next = null;
+    if (event.queryStringParameters) {
+        limit = event.queryStringParameters.page_size || 25;
+        next = event.queryStringParameters.next;
+    }
+    return OrdersTable.scan(limit, next);
 }
 
 function ListByUser(event, context) {
