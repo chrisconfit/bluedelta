@@ -8,8 +8,8 @@ var spawn = require('child_process').spawn;
 let swaggerDir = path.join(__dirname,'..','swagger');
 let apiSdkDir = path.join(swaggerDir,'generated');
 let appSdkDir = path.join(__dirname,'..','..','ng2-admin','src','services','blue-delta-sdk');
-let appDashboardSdkDir = path.join(__dirname,'..','..','cft-admin','src','assets','scripts','blue-delta-sdk');
-let appClientSdkDir = path.join(__dirname,'..','..','public','lib','blue-delta-sdk');
+let appDashboardSdkDir = path.join(__dirname,'..','..','dashboard','src','assets','scripts','blue-delta-sdk');
+let appClientSdkDir = path.join(__dirname,'..','..','customizer','vendor','blue-delta-sdk');
 
 function createSdk() {
   // Create generated directory if it does not exist
