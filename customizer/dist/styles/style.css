@@ -2630,7 +2630,7 @@ a.overview-trigger i {
   -o-transition-delay: 1s;
   -moz-transition-delay: 1s;
   -webkit-transition-delay: 1s;
-  background: rgba(69, 173, 81, 0.75);
+  background: rgba(61, 146, 71, 0.75);
   padding: 10px;
   position: fixed;
   top: 100%;
@@ -2649,6 +2649,11 @@ a.overview-trigger i {
 .saving-notification h3 {
   color: #fff;
   margin: 0;
+}
+
+h1 .sub-title {
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .cft-g.form-grid > .cft-gi {
@@ -2681,6 +2686,9 @@ a.overview-trigger i {
 }
 .fit-options .single-option h3 {
   margin-bottom: 15px;
+}
+.fit-options .single-option .option-trigger {
+  margin-bottom: 10px;
 }
 
 .info-box {

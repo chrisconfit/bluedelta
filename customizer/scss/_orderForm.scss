@@ -1,3 +1,7 @@
+h1 .sub-title {
+	text-transform: none;
+	letter-spacing: 0;
+}
 .cft-g.form-grid{
 	&>.cft-gi{
 		width:100%;
@@ -23,6 +27,9 @@
 		}
 		h3{
 			margin-bottom:15px;
+		}
+		.option-trigger {
+			margin-bottom: 10px;
 		}
 	}
 }

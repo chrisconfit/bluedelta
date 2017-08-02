@@ -12,7 +12,7 @@
       <div class="jean-closet">	      
 	      <!--Production-->
 	      <div ng-if="(vm.data.jeansList | filter:{ status: 'production' }).length" class="production">
-		      <h3>In Production</h3>
+		      <h3>On the Way</h3>
 		      <div class="cft-g jean-grid">
 			      <div ng-repeat="jean in vm.data.jeansList | filter:{ status: 'production' }" class="cft-gi">
 				      <div class="jean-card">
@@ -29,7 +29,7 @@
 	      
 	      <!--Owned-->
 	      <div ng-if="(vm.data.jeansList | filter:{ status: 'complete' }).length" class="complete">
-		      <h3>Owned</h3>
+		      <h3>My Blue Delta Jean</h3>
 		      <div class="cft-g jean-grid">
 			      <div ng-repeat="jean in vm.data.jeansList | filter:{ status: 'complete' }" class="cft-gi">
 				      <div class="jean-card">
@@ -45,7 +45,7 @@
 
 	      <!--Saved-->
 				<div ng-if="(vm.user.jeans | filter:{ ordered : '!true' }).length" class="saved">
-		      <h3>Saved</h3>
+		      <h3>Saved For Later</h3>
 		      <div class="cft-g jean-grid">
 			      <div ng-repeat="jean in vm.user.jeans | filter:{ ordered : '!true' }" class="cft-gi">
 				      <div class="jean-card">
