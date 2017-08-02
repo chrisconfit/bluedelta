@@ -1047,7 +1047,7 @@ definitions:
       imageURL:
         type:string
       ordered:
-        boolean
+        type:boolean
       measurement:
         $ref: "#/definitions/Measurement"
       top_thread:
