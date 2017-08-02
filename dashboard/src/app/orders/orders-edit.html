@@ -2,7 +2,8 @@
 <toaster-container></toaster-container>
 
 	<div class="row wrapper border-bottom white-bg page-heading">
-		<h1>Order {{ovm.order.orderId}}</h1>
+		<h1 ng-if="ovm.order.orderId">Order {{ovm.order.orderId}}</h1>
+		<h1 ng-if="!ovm.order.orderId">Create New Order</h1>
 	</div>              
 	
 	<div class="wrapper wrapper-content">
@@ -12,14 +13,15 @@
       <div class="col-md-3">
         <!-- Profile Image -->
         <div class="ibox ibox-primary">
-					<div class="ibox-title">
-						<h3>Jean Name: James' Slacks</h3>
-						<img width="100%" src="{{ovm.order.orderItems[0].jean.imageURL}}">
-					</div>
+					<!--<div class="ibox-title">
+						<h3>Jean Name: James' Slacks</h3
+					</div>-->
 					
           <div class="ibox-content ibox-profile">              
-           
-            <ul class="list-group list-group-unbordered">
+           	<a ng-if="!ovm.orderUser.identityId" href="" ng-click="ovm.editUser()" class="btn btn-flat btn-primary btn-block">Add a Client</a>
+           	
+           	<img ng-if="ovm.order.orderItems[0].jean.imageURL" width="100%" ng-src="{{ovm.order.orderItems[0].jean.imageURL}}">
+            <ul ng-if="ovm.orderUser.identityId" class="list-group list-group-unbordered">
               <li class="list-group-item clearfix">
                 <b>Customer</b> <a href="#" class="pull-right">{{ovm.orderUser.name}}</a>
               </li>
@@ -40,8 +42,12 @@
                   {{ovm.order.billingAddress.city}}, {{ovm.order.billingAddress.state}} {{ovm.order.billingAddress.zip}}</p>
               </li>
             </ul>
+            
+            <!--
             <a href="#" class="btn btn-flat btn-danger btn-block"><b>Awaiting Payment</b></a>
             <a href="#" class="btn btn-flat btn-primary btn-block"><b>Re-Send Invoice</b></a>
+            -->
+            
           </div>
           <!-- /.ibox-content -->
         </div>
@@ -245,7 +251,7 @@
 
           <uib-tabset>
           
-            <uib-tab heading="Timeline">
+            <uib-tab ng-if="ovm.order.orderItems.length" heading="Timeline">
               <div class="panel-body">
                 
                 <h3>Timeline</h3>

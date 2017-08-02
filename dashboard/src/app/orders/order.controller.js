@@ -1,14 +1,25 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('OrdersController', ['bdAPI', '$scope', 'aws', 'DTColumnDefBuilder', 'SweetAlert', function (bdAPI, $scope, aws, DTColumnDefBuilder, SweetAlert) {
+  .controller('OrdersController', ['bdAPI', '$scope', 'aws', 'SweetAlert', function (bdAPI, $scope, aws, SweetAlert) {
 
 
 		console.log(bdAPI);
+		
+		
+		
+		
+		
 
-	DTColumnDefBuilder
     var vm = this;
     
+    
+    
+    vm.userNames = {
+	    "357bae03-cce3-47ea-8875-3cfddab19e08": "Adam Lewis",
+	    "58c978b5-b518-46fc-9276-6e880bd670e3":"Ryan Jetton",
+	    "12f1a391-02f3-4aaf-92cc-734ed5f38184" : "Chris LeFevre"
+    }
     var deleteOrderBox = {
       title: "Are you sure?",
       text: "This order will be deleted forever!",
@@ -36,10 +47,7 @@ angular.module('inspinia')
 		  );
 		}
 		
-		$scope.dtColumnDefs = [
-      DTColumnDefBuilder.newColumnDef(7).notSortable(),
-      DTColumnDefBuilder.newColumnDef(8).notSortable()
-    ];
+
 
  
 
@@ -57,7 +65,7 @@ angular.module('inspinia')
 	
 		//Get orders
 		vm.pagination = {
-			ordersPerPage:2,
+			ordersPerPage:20,
 			prev:false,
 			next:false,
 			nextURL:"",

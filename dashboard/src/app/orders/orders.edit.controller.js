@@ -1,21 +1,27 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('OrdersEditController', ['bdAPI', '$scope', 'aws', 'DTColumnDefBuilder', 'jsonData', 'orderData', 'toaster', '$uibModal', 
-  function (bdAPI, $scope, aws, DTColumnDefBuilder, jsonData, orderData, toaster, $uibModal) {
+  .controller('OrdersEditController', ['bdAPI', '$scope', 'aws', 'jsonData', 'orderData', 'toaster', '$uibModal', 
+  function (bdAPI, $scope, aws, jsonData, orderData, toaster, $uibModal) {
 
     var vm = this;
     
     vm.user = {
 	    "name":"Chris LeFevre"
     }
- 
-		vm.order = orderData.order;
+		
+		var newOrderData = {
+			fitDate:"",
+			dob:"",
+			dueDate:""
+		}
+		var newOrder = orderData.order ? false : true;
+		
+		vm.order = orderData.order || newOrderData;
 		vm.order.fitDate =  vm.order.fitDate ? vm.order.fitDate: null;
 		vm.order.dob =  vm.order.dob ? vm.order.dob: null;
 		vm.order.dueDate =  vm.order.dueDate ? vm.order.dueDate: null;
-		
-		vm.orderUser = orderData.user;
+		vm.orderUser = orderData.user || {};
     
     //init json data from route resolve...
     var jd = {};
@@ -36,7 +42,7 @@ angular.module('inspinia')
 		}
 		
 		
-		vm.jeanEditMode=false;
+		vm.jeanEditMode= newOrder ? true : false;
 		
 		vm.beginJeanEdit = function(){
 			console.log("begin");
@@ -105,7 +111,24 @@ angular.module('inspinia')
     };
     
        
-    
+    vm.editUser = function(){
+	    var modalInstance = $uibModal.open({
+        templateUrl: 'app/orders/userChoice.html',
+        controller: 'UserChoiceController',
+        resolve: {
+	        saveOrder : function(){
+		        return vm.saveOrder;
+	        },
+          orderUser : function() {
+	          return vm.orderUser;
+          },
+          order : function() {
+	          return vm.order;
+          }
+        }
+    	});
+    };
+
 	    
 		vm.saveOrder = function(){
 		/*	 
@@ -118,17 +141,22 @@ angular.module('inspinia')
 			*/
 			toaster.wait('Saving...');
 			
-			bdAPI.call('ordersUpdate',[vm.order.orderId, vm.order],function(){
+			var args = newOrder ? vm.order : [vm.order.orderId, vm.order];
+			var saveFunc = newOrder ? 'orderCreate' : 'ordersUpdate';
+			var succMessage = newOrder ? "Order Created" : "Order Saved";
+			var errMessage = newOrder ? "Could not create" : "Could not Save";	
+				console.log(args);
+				bdAPI.call(saveFunc, args, function(){
 				toaster.pop({
 				  type: 'success',
-				  title: 'Order Saved',
+				  title: succMessage,
 				  showCloseButton: true,
 				  timeout: 3000
 				});
 			}, function(){
 				toaster.pop({
 				  type: 'error',
-				  title: 'Could Not Save',
+				  title: errMessage,
 				  body: "err.message",
 				  showCloseButton: true,
 				  timeout: 7000

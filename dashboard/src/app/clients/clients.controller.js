@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('UsersController',  ['bdAPI', '$scope', 'aws', 'SweetAlert', function (bdAPI, $scope, aws, SweetAlert) {
+  .controller('ClientsController',  ['bdAPI', '$scope', 'aws', 'SweetAlert', function (bdAPI, $scope, aws, SweetAlert) {
     var vm = this;
     
 		

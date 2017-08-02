@@ -12,27 +12,27 @@
 				  </span>
 				</div>
 				<div class="logo-element">
-				  IN+
+				  BD
 				</div>
       </li>
-
+<!--
       <li ui-sref-active="active">
         <a ui-sref="dashboard.main"><i class="fa fa-laptop"></i> <span class="nav-label">Dashboard</span> </a>
       </li>
-
-			<li ng-class="{active: $state.includes('orders')}">
+-->
+			<li ng-class="{active: main.state.includes('orders')}">
 			  <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Orders</span> <span class="fa arrow"></span></a>
-			  <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('dashboards')}">
+			  <ul class="nav nav-second-level collapse" ng-class="{in: main.state.includes('dashboards')}">
 		      <li ui-sref-active="active"><a ui-sref="orders.list">List</a></li>
 		      <li ui-sref-active="active"><a ui-sref="orders.add">Add</a></li>
 			  </ul>
 			</li>
 
-			<li ng-class="{active: $state.includes('clients')}">
+			<li ng-class="{active: main.state.includes('clients')}">
 			  <a href="#"><i class="fa fa-users"></i> <span class="nav-label">Clients</span> <span class="fa arrow"></span></a>
-			  <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('users')}">
-		      <li ui-sref-active="active"><a ui-sref="users.list">List</a></li>
-		      <li ui-sref-active="active"><a ui-sref="users.add">Add</a></li>
+			  <ul class="nav nav-second-level collapse" ng-class="{in: main.state.includes('clients')}">
+		      <li ui-sref-active="active"><a ui-sref="clients.list">List</a></li>
+		      <li ui-sref-active="active"><a ui-sref="clients.add">Add</a></li>
 			  </ul>
 			</li>
         

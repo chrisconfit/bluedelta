@@ -15,37 +15,7 @@
 
     var BlueDeltaApi = $window._thirdParty.BlueDeltaApi;
 		
-		//JSON Data
-		BlueDeltaApi.jsonData = {};
-		setupJsonData = function(key){
-			$http.get('/data/'+key+'.json').then(function(response){
-				BlueDeltaApi.jsonData[key] = response.data;
-			});
-		}
 		
-		jsonDataKeys = [
-			'chris-jeans',
-			'profile',
-			'styles',
-			'threads',
-			'buttons',
-			'fabrics',
-			'genders',
-			'tailors'
-		];
-		
-		for (d = 0; d < jsonDataKeys.length; d++) { 
-			setupJsonData(jsonDataKeys[d]);
-		}
-		
-		BlueDeltaApi.getJsonData = function(){
-			return this.jsonData;
-		}
-		var styleByGender = function(gender){
-			return function(style){
-				return style["images_"+gender];
-		  }
-		};
 		
 		BlueDeltaApi.jeanKeyToDataKey = function(jeanKey){
 			var dataKey = false;

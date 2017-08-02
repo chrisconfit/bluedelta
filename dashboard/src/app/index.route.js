@@ -37,9 +37,9 @@
         authenticate: true
       })
 			
-			.state('users', {
+			.state('clients', {
         abstract: true,
-        url: "/users",
+        url: "/clients",
         templateUrl: "app/components/common/content.html",
         authenticate: true,
         resolve: { 
@@ -57,20 +57,75 @@
                 
 	      }
       })
-      .state('users.list', {
+      .state('clients.list', {
         url: "/list",
-        templateUrl: "app/users/users.html",
-        data: { pageTitle: 'Orders' },
+        templateUrl: "app/clients/clients.html",
         authenticate: true
       })
-      .state('users.add', {
+      .state('clients.add', {
         url: "/add",
-        templateUrl: "app/users/users-add.html",
-        data: { pageTitle: 'Orders' },
+        templateUrl: "app/clients/clients-add.html",
         authenticate: true
       })
       
-      
+      .state('clients.edit', {
+        url: "/edit/:clientId",
+        templateUrl: "app/clients/clients-edit.html",
+        authenticate: false,
+        controller: "ClientsEditController as cvm",
+        resolve: {
+	        jsonData: function($http, $q){
+		      	var data=[
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/vendor.json'),
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/rep.json'),
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/thread.json'),
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/fabric.json'),		      	
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/gender.json')
+						]
+		      	return $q.all(data);
+		      	    			      	
+	        },
+	        
+	        userData: function($stateParams, $location, bdAPI, $q){
+						
+						if ($stateParams.userId === undefined || $stateParams.userId == "")
+							$location.path('users/list');
+
+						else{
+							var defer = $q.defer();
+							bdAPI.call('usersGet', [$stateParams.userId],
+								function(result){				
+									var returnData = {"user": result.data};
+									returnData.client = client.data;
+									defer.resolve(returnData);									
+								},
+								function(err){
+									defer.reject(err);
+								}
+							);
+					   	return defer.promise; 
+						}
+						
+    			},
+	        loadPlugin: function ($ocLazyLoad) {
+            return $ocLazyLoad.load([
+	            {
+								insertBefore: '#loadBefore',
+								name: 'toaster',
+								files: ['assets/scripts/toastr/toastr.min.js', 'assets/styles/toastr/toastr.min.css']
+	            },
+	            { 
+		            files: ['assets/styles/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css']
+		          },
+              {
+                name: 'datePicker',
+                files: ['assets/styles/datapicker/angular-datapicker.css','assets/scripts/datapicker/angular-datepicker.js']
+              }
+            ])
+	        }
+	      }
+      })
+
       .state('orders', {
         abstract: true,
         url: "/orders",
@@ -85,21 +140,7 @@
             {
                 name: 'oitozero.ngSweetAlert',
                 files: ['assets/scripts/sweetalert/angular-sweetalert.min.js']
-            },
-					  {
-				      serie: true,
-				      files: ['assets/scripts/dataTables/datatables.min.js','assets/styles/dataTables/datatables.min.css']
-					  },
-					  {
-				      serie: true,
-				      name: 'datatables',
-				      files: ['assets/scripts/dataTables/angular-datatables.min.js']
-					  },
-					  {
-				      serie: true,
-				      name: 'datatables.buttons',
-				      files: ['assets/scripts/dataTables/angular-datatables.buttons.min.js']
-					  }
+            }
 					]);
 					}
                 
@@ -139,6 +180,7 @@
 							bdAPI.call('ordersGet', [$stateParams.orderId],
 								function(result){				
 									var returnData = {"order": result.data};
+									console.log("This user's ID: "+result.data.userId);
 									bdAPI.call('usersGet', [result.data.userId],
 										function(user){
 											returnData.user = user.data;
@@ -178,13 +220,43 @@
       
       .state('orders.add', {
         url: "/add",
-        templateUrl: "app/orders/orders-add.html",
-        authenticate: true,
-        data: { pageTitle: 'Orders' },
-      });
+        templateUrl: "app/orders/orders-edit.html",
+        authenticate: false,
+        controller: "OrdersEditController as ovm",
+        resolve: {
+	        jsonData: function($http, $q){
+		      	var data=[
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/vendor.json'),
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/rep.json'),
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/thread.json'),
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/fabric.json'),		      	
+		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/gender.json')
+						]
+		      	return $q.all(data);
+		      	    			      	
+	        },
+	        
+	        orderData: function(){ return {} },
+	        loadPlugin: function ($ocLazyLoad) {
+            return $ocLazyLoad.load([
+	            {
+								insertBefore: '#loadBefore',
+								name: 'toaster',
+								files: ['assets/scripts/toastr/toastr.min.js', 'assets/styles/toastr/toastr.min.css']
+	            },
+	            { 
+		            files: ['assets/styles/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css']
+		          },
+              {
+                name: 'datePicker',
+                files: ['assets/styles/datapicker/angular-datapicker.css','assets/scripts/datapicker/angular-datepicker.js']
+              }
+            ])
+	        }
+	      }
+      })      
       
-      
-    $urlRouterProvider.otherwise('dashboard/main');
+    $urlRouterProvider.otherwise('orders/list');
   }
 
 })();
