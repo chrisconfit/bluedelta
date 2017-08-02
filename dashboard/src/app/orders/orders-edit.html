@@ -54,7 +54,6 @@
         <!-- /.ibox -->
       </div><!-- /.col -->
       
-      
       <div class="col-md-9">
         <div class="row">
 					<div class="col-md-6">
@@ -71,23 +70,20 @@
                 <ul class="list-group jean-list-edit list-group-unbordered">
 		              <li class="list-group-item clearfix">
 	                  <b>Gender</b>
-	                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.order.orderItems[0].jean.gender}}</span>
+	                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.lookup("genderId", ovm.order.orderItems[0].jean.gender, ovm.genders).label}}</span>
 	                  <select class="form-control pull-right" 
 											ng-if="ovm.jeanEditMode" 
-											ng-model="ovm.order.orderItems[0].jean.gender">
-											<option ng-value="1">Male</option>
-											<option ng-value="2">Female</option>
+											ng-model="ovm.order.orderItems[0].jean.gender" 
+											ng-options="gender.genderId as gender.label for gender in ovm.genders">
 										</select>
 	                </li>
 	                <li class="list-group-item clearfix">
 	                  <b>Style</b> 
-	                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.order.orderItems[0].jean.style}}</span>
+	                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.lookup("styleId", ovm.order.orderItems[0].jean.style, ovm.style).label}}</span>
 	                  <select class="form-control  pull-right" 
 											ng-if="ovm.jeanEditMode" 
-											ng-model="ovm.order.orderItems[0].jean.style">
-											<option ng-value="1">Straight</option>
-											<option ng-value="2">Bootcut</option>
-											<option ng-value="3">Skinny</option>
+											ng-model="ovm.order.orderItems[0].jean.style"
+											ng-options="style.styleId as style.label for style in ovm.style">
 										</select>
 	                </li>
 	                <li class="list-group-item clearfix">
@@ -95,7 +91,7 @@
 	                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.order.orderItems[0].jean.fabric.name}}</span>
 										<select class="form-control  pull-right" 
 											ng-if="ovm.jeanEditMode" 
-											ng-options="fabric.name for fabric in ovm.data.fabric track by fabric.fabricId" 	
+											ng-options="fabric.fabricId+' - '+fabric.name for fabric in ovm.data.fabric track by fabric.fabricId" 	
 											ng-model="ovm.order.orderItems[0].jean.fabric">
 										</select>
 	                </li>
@@ -168,40 +164,30 @@
 								</div>
                 <div class="form-group">
 	                <label>Vendor</label>
-	                <select ng-model="ovm.order.vendor" class="form-control select2" style="width: 100%;">
-		                <option ng-if="!ovm.order.vendor"ng-selected="!ovm.order.vendor" value="">Select a Vendor</option>
-	                  <option ng-repeat="vendor in ovm.data.vendor">{{vendor.name}}</option>
+	                <select ng-model="ovm.order.vendor" class="form-control select2" style="width: 100%;"
+		                ng-options="vendor.name as vendor.name for vendor in ovm.data.vendor">
 	                </select>
 	              </div>
               
                 <div class="form-group">
 	                <label>Rep</label>
-	                <select class="form-control select2" ng-model="ovm.order.rep" style="width: 100%;">
-		                <option ng-if="!ovm.order.rep" ng-selected="!ovm.order.rep" value="">Select a Rep</option>
-										<option ng-repeat="rep in ovm.data.rep">{{rep.name}}</option>
+	                <select class="form-control select2" ng-model="ovm.order.rep" style="width: 100%;" 
+		              ng-options="rep.name as rep.name for rep in ovm.data.rep">
 	                </select>
 	              </div>
 	              
 	              <div class="form-group">
 	                <label>Order Type</label>
-	                <select class="form-control select2" ng-model="ovm.order.orderType" style="width: 100%;">
-	                  <option ng-value="1">Blue Delta</option>
-	                  <option ng-value="2">Vendor Fitted</option>
-	                  <option ng-value="3">Cloned from Non-BD Jean</option>
-		                <option ng-value="4">Cloned from BD Jean</option>
-		                <option ng0value="5">Re-Order</option>
+	                <select class="form-control select2" ng-model="ovm.order.orderType" style="width: 100%;"
+									ng-options="type.typeId as type.label for type in ovm.orderType">
                 	</select>
 	              </div>
               
                 <div class="form-group">
 	                <label>Status</label>
-	                <select class="form-control select2" ng-model="ovm.order.status" style="width: 100%;">
-	                  <option>Awaiting Payment</option>
-	                  <option>New</option>
-	                  <option>Awaiting Payment</option>
-	                  <option>Processing</option>
-	                  <option>Shipped</option>
-	                  <option>Completed</option>
+	                <select class="form-control select2" 
+	                ng-options="status.label as status.label for status in ovm.status"  
+		              ng-model="ovm.order.status" style="width: 100%;">
 	                </select>
 	              </div>
 	              <div class="row">
@@ -251,7 +237,7 @@
 
           <uib-tabset>
           
-            <uib-tab ng-if="ovm.order.orderItems.length" heading="Timeline">
+            <uib-tab ng-if="ovm.order.orderItems" heading="Timeline">
               <div class="panel-body">
                 
                 <h3>Timeline</h3>

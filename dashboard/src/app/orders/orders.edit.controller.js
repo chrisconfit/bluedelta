@@ -18,11 +18,48 @@ angular.module('inspinia')
 		var newOrder = orderData.order ? false : true;
 		
 		vm.order = orderData.order || newOrderData;
+		console.log(vm.order);
 		vm.order.fitDate =  vm.order.fitDate ? vm.order.fitDate: null;
 		vm.order.dob =  vm.order.dob ? vm.order.dob: null;
 		vm.order.dueDate =  vm.order.dueDate ? vm.order.dueDate: null;
 		vm.orderUser = orderData.user || {};
     
+    
+    vm.lookup = function(key, value, data){
+			for (i=0; i<data.length; i++){
+				if (data[i][key]==value) return data[i];	
+    	}
+    	return false;
+    }
+    
+    vm.style=[
+	    {"styleId":1, "label":"Straight"},
+	    {"styleId":2, "label":"Skinny"},
+	    {"styleId":3, "label":"Bootcut"},
+    ]
+    
+    vm.genders = [
+	    {"genderId":1, "label":"Male"},
+			{"genderId":2, "label":"Female"},
+    ];
+    
+    vm.status = [
+			{"statusId":1, "label":"New"},
+			{"statusId":2, "label":"Awaiting Payment"},
+			{"statusId":3, "label":"Processing"},
+			{"statusId":4, "label":"Shipped"},
+			{"statusId":5, "label":"Completed"},
+    ];
+
+		vm.orderType = [
+			{"typeId":1, "label":"Blue Delta"},
+			{"typeId":2, "label":"Vendor Fitted"},
+			{"typeId":3, "label":"Cloned from Non-BD Jean"},
+			{"typeId":4, "label":"Cloned from BD Jean"},
+			{"typeId":5, "label":"Re-Order"},
+		];
+			
+		
     //init json data from route resolve...
     var jd = {};
 		for(var i=0; i<jsonData.length; i++){
@@ -139,14 +176,27 @@ angular.module('inspinia')
 			  timeout: 2000
 			});
 			*/
-			toaster.wait('Saving...');
+			toaster.pop({
+			  type: 'wait',
+			  title: "Saving...",
+			  showCloseButton: true,
+			  timeout: 3000
+			});
+			
+			
+			console.log("ABOUT TO SAVE");
+			console.log(vm.order);
 			
 			var args = newOrder ? vm.order : [vm.order.orderId, vm.order];
 			var saveFunc = newOrder ? 'orderCreate' : 'ordersUpdate';
 			var succMessage = newOrder ? "Order Created" : "Order Saved";
 			var errMessage = newOrder ? "Could not create" : "Could not Save";	
-				console.log(args);
-				bdAPI.call(saveFunc, args, function(){
+			
+			console.log(saveFunc);
+			console.log(args);
+			
+			bdAPI.call(saveFunc, args, function(result){
+				console.log(result);
 				toaster.pop({
 				  type: 'success',
 				  title: succMessage,

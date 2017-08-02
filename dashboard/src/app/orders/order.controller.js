@@ -16,10 +16,13 @@ angular.module('inspinia')
     
     
     vm.userNames = {
+	    "865eda13-2e89-4564-9f7c-0d1accfdcebe":"Dan Terzo",
 	    "357bae03-cce3-47ea-8875-3cfddab19e08": "Adam Lewis",
 	    "58c978b5-b518-46fc-9276-6e880bd670e3":"Ryan Jetton",
-	    "12f1a391-02f3-4aaf-92cc-734ed5f38184" : "Chris LeFevre"
+	    "12f1a391-02f3-4aaf-92cc-734ed5f38184" : "Chris LeFevre",
+	    "3b9b047a-f148-4f53-9306-bd93139d7b1c": "James Kelleway"
     }
+    
     var deleteOrderBox = {
       title: "Are you sure?",
       text: "This order will be deleted forever!",

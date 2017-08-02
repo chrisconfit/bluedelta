@@ -1232,9 +1232,6 @@ API.Client.DefaultApi.prototype.ordersUpdate = function(orderId, order, opt_extr
   if (!order) {
     throw new Error('Missing required parameter order when calling ordersUpdate');
   }
-  console.log(JSON.stringify(order));
-  console.log("from default API");
-  console.log(order);
   /** @type {!Object} */
   var httpRequestParams = {
     method: 'POST',

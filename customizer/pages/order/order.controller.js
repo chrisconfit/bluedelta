@@ -44,20 +44,13 @@
 		
 		
 
-		vm.placeOrder = function(){
-			console.log("placing order...");
-
-			console.log("order object V");
-			console.log(vm.order);
-			
+		vm.placeOrder = function(){			
 			bdAPI.call('orderCreate', vm.order, function(result){
-				
-				console.log("order created: "+result.data.orderId);
-				
-				bdAPI.call('commentsCreate', [result.data.orderId, {message:"Order Placed"}], function(result){
-					console.log("comment created");
-					console.log(result);
-				});
+				promises=[];
+//				promises.push(bdAPI.call('commentsCreate', [result.data.orderId, {message:"Order Placed"}]));
+				var savedJean = result.data.orderItems[0];
+				console.log(savedJean);
+	//			promises.push(bdAPI.call('jeansUpdate', [result.data.orderId, {message:"Order Placed"}]));
 			});
 		}
 
