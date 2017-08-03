@@ -1086,7 +1086,7 @@ definitions:
       jeanId:
         type: string
       imageURL:
-        type:string
+        type: string
       ordered:
         type:boolean
       measurement:
