@@ -1,0 +1,10 @@
+<div class="cft-g chooser-grid" id="{{step.jeanKey}}-chooser" data-key="{{step.jeanKey}}">
+	<span ng-class="{ live: chvm.jeanData[step.jeanKey], active:active }" class="chooser-select" id="{{step.jeanKey}}-selector"></span>
+	<div class="cft-gi" ng-repeat="data in dataset">
+		<a ng-class="{ active: chvm.jeanData[step.jeanKey]==data.threadId }" id="{{step.jeanKey}}_{{data.threadId}}" 
+		href="" ng-click="chvm.selectAttr($event, data, step.jeanKey)">
+			<img ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/{{step.dataKey}}/thumb/{{data.threadId}}.jpg">
+		</a>
+	</div>
+</div>
+

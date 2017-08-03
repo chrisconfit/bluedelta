@@ -1,0 +1,125 @@
+
+<div ng-show="vm.popups.jeanProfile" ng-click="vm.popups.jeanProfile = false" class="popup-window">
+	<div class="popup-content" ng-click="$event.stopPropagation()">
+		<a class="popup-closer" href="" ng-click="vm.popups.jeanProfile = false"></a>
+		<div class="popup-content-inner">
+			
+			<div class="cft-g jean-profile-grid">
+				<div class="cft-gi main">
+					
+					<div ng-init="vm.titleEdit=false" class="jean-profile-data">							
+						
+							<h3 ng-if="!vm.titleEdit">
+								{{vm.displayJean.data.name}}
+								<i ng-click="vm.titleEdit=true; vm.oldTitle=vm.displayJean.data.name" class="fa fa-pencil"></i>
+							</h3>	
+
+							<div class="input-group icon-control" ng-if="vm.titleEdit">
+								<input type="text" ng-model="vm.displayJean.data.name">
+								<div class="icon-controls">
+									<i ng-click="vm.displayJean.data.name=vm.oldTitle; vm.titleEdit=false;" class="fa fa-undo"></i>
+									<i ng-click="vm.titleEdit=false" class="fa fa-check"></i>
+								</div>
+							</div>
+						
+						<p>Status:{{vm.displayJean.data.buildStatus}}</p>
+						<p>Estimated Arrival: {{vm.displayJean.data.birthday}}</p>
+						<p>Order#: {{vm.displayJean.data.orderNumber}}</p>
+					</div>
+					
+					<div class="jean-list closet">
+						<jean-list jean="vm.displayJean"></jean-list>						
+					</div>
+					
+					<label>Alterations/Comments</label>
+					<textarea></textarea>
+					
+					<button class="btn">Send</button>
+					
+				</div><!--
+				--><div class="cft-gi sidebar">
+					<div class="jean-card">
+						<img src="/images/thumbnails/{{vm.displayJean.data.id}}.jpg">
+						<div class="box-content">
+							<button class="btn">Re-Order</button>
+							<button ng-click="vm.copyJean()" class="btn">Copy</button>
+						</div>				
+					</div>
+				</div>
+			</div>
+		</div><!--./popup-content-inner-->
+	</div>
+</div>
+
+
+
+<div ng-show="vm.popups.editUser" ng-init="vm.form.user = vm.user" ng-click="vm.popups.editUser = false" class="popup-window">
+	<div class="popup-content" ng-click="$event.stopPropagation()">
+		<a class="popup-closer" href="" ng-click="vm.popups.editUser = false"></a>
+		<div class="popup-content-inner">
+		
+			<div class="user-pop-group user-form" ng-init="inputs = [{label:'Email', field:'email'},{label:'Phone', field:'phone'}]">
+				
+				<h3>Basic Information</h3>
+				
+				<div class="input-container">
+					<label class='fixed-width'>Name:</label>
+					<span class="user-value">{{vm.user.name}}</span>
+				</div>
+			
+				<div class="input-container" ng-repeat="i in inputs">
+					<label class='fixed-width'>{{i.label}}:</label>
+					<span ng-if="!vm.userForm.editing[i.field]">
+						<span class="user-value editable" ng-if="vm.user[i.field]">
+							{{vm.user[i.field]}}
+							<i class="fa fa-pencil" ng-click="vm.userForm.editing[i.field]=true;"></i>
+						</span>
+						<span ng-if="!vm.user[i.field]"  class="empty-value-button" ng-click="vm.userForm.editing[i.field]=true;">
+							Add {{i.label}} <i class="fa fa-add-plus-circle"></i>
+						</span>
+					</span>
+					<div class="input-group icon-control" ng-if="vm.userForm.editing[i.field]">
+						<input type="text" ng-model="vm.user[i.field]">
+						<div class="icon-controls">
+							<i class="fa fa-undo" ng-click="vm.userForm.cancel(i.field)"></i>
+							<i class="fa" ng-class="vm.userForm.saving[i.field] ? 'fa-circle-o-notch fa-spin' : 'fa-check' " ng-click="vm.userForm.save(i.field)"></i>
+						</div>
+					</div>
+				</div>
+				
+				<a href="" ng-if="!vm.passForm.editing" ng-click="vm.passForm.editing=true">Change Password</a>
+				<form class="cft-form" ng-if="vm.passForm.editing">
+					<div ng-class="{active: vm.passForm.currentPass.length}" class="input-group">
+						<input type="password" class="form-control" id="currentPass" ng-model="vm.passForm.currentPass">
+						<label for="currentPass">Current Password</label>
+					</div>
+					
+					<div ng-class="{active: vm.passForm.newPass.length}" class="input-group">
+						<input type="password" class="form-control" id="newPass" ng-model="vm.passForm.newPass">
+						<label for="newPass">New Password</label>
+					</div>
+					
+					<div ng-class="{active: vm.passForm.newPassConfirm.length}" class="input-group">
+						<input type="password" class="form-control" id="newPassConfirm" ng-model="vm.passForm.newPassConfirm">
+						<label for="newPassConfirm">Confirm New Password</label>
+					</div>
+					<button ng-click="vm.changePassword()"class="btn">Change Password</button> 	<button  ng-click="vm.passForm.clear()" class="btn">Close</button>
+				</form>
+				
+										
+				<div class="message-block" ng-show="vm.messages.message">
+		  		<p class="form-messages {{vm.messages.type}}" ng-bind-html="vm.messages.message"></p>
+				</div>
+				
+			</div>
+			
+			<div class="user-pop-group add-form">
+				<address-choice user="vm.user"></address-choice>
+			</div>
+			
+			
+			
+			
+		</div><!--./popup-content-inner-->
+	</div>
+</div>

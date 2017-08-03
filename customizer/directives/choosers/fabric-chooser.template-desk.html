@@ -1,0 +1,35 @@
+
+<span ng-class="{ live: chvm.jeanData.fabric }" class="chooser-select" id="fabric-selector"></span>
+{{data}}
+<h3>Lightweight <a href="" class="info-pop" ng-click="chvm.popups.denim = !chvm.popups.denim"><i class="fa fa-question-circle"></i></a></h3>
+<div class="cft-g chooser-grid">
+	<div class="cft-gi" ng-repeat="fabric in dataset | filter:weightFilter(null,10) | orderBy:'weight'">
+		<a ng-class="{ active: chvm.jeanData.fabric==fabric }" id="fabric_{{fabric.fabricId}}" 
+		href="" ng-click="chvm.selectAttr($event, fabric, 'fabric')">
+			<img ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/{{step.dataKey}}/thumb/{{fabric.fabricId}}.jpg">
+			<span class="fabric-weight">{{fabric.weight}}<span class="oz">oz</span></span>
+		</a>
+	</div>
+</div>
+
+<h3>Mediumweight <a href="" class="info-pop" ng-click="chvm.popups.denim = !chvm.popups.denim"><i class="fa fa-question-circle"></i></a></h3>
+<div class="cft-g chooser-grid">
+	<div class="cft-gi" ng-repeat="fabric in dataset | filter:weightFilter(10.001,12) | orderBy:'weight'">
+		<a ng-class="{ active: chvm.jeanData.fabric==fabric }" id="fabric_{{fabric.fabricId}}" 
+		href="" ng-click="chvm.selectAttr($event, fabric, 'fabric')">
+			<img ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/{{step.dataKey}}/thumb/{{fabric.fabricId}}.jpg">
+			<span class="fabric-weight">{{fabric.weight}}<span class="oz">oz</span></span>
+		</a>
+	</div>
+</div>
+
+<h3>Heavyweight <a href="" class="info-pop" ng-click="chvm.popups.denim = !chvm.popups.denim"><i class="fa fa-question-circle"></i></a></h3>
+<div class="cft-g chooser-grid">
+	<div class="cft-gi" ng-repeat="fabric in dataset | filter:weightFilter(12.001,null) | orderBy:'weight'">
+		<a ng-class="{ active: chvm.jeanData.fabric==fabric }" id="fabric_{{fabric.fabricId}}" 
+		href="" ng-click="chvm.selectAttr($event, fabric, 'fabric')">
+			<img ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/{{step.dataKey}}/thumb/{{fabric.fabricId}}.jpg">
+			<span class="fabric-weight">{{fabric.weight}}<span class="oz">oz</span></span>
+		</a>
+	</div>
+</div>

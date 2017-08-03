@@ -1,8 +1,0 @@
-<ion-item>
-  
-  <fabric-item-image item-left [fabric]="fabric"></fabric-item-image>
-  <fabric-item-details float-left *ngIf="fabricService.itemIdMarkedForEdit !== fabric.fabricId" [fabric]="fabric"></fabric-item-details>
-  <edit-fabric-form [fabric]="fabric"></edit-fabric-form>
-  <fabric-item-buttons float-right [fabric]="fabric"></fabric-item-buttons>
-  
-</ion-item>

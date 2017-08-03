@@ -1,4 +1,0 @@
-<button ion-button *ngIf="threadService.itemIdMarkedForEdit === thread.threadId" (click)="threadService.exitItemEditMode()"><ion-icon name="arrow-back"></ion-icon></button>
-<button ion-button *ngIf="threadService.itemIdMarkedForEdit !== thread.threadId" (click)="threadService.startItemEdit(thread)"><ion-icon name="clipboard"></ion-icon></button>
-<button ion-button *ngIf="threadService.itemIdMarkedForEdit !== thread.threadId" (click)="threadService.deleteItemWithAuth(thread.threadId)"><ion-icon name="close-circle"></ion-icon></button>
-<button ion-button *ngIf="threadService.itemIdMarkedForEdit === thread.threadId" (click)="threadService.editItemWithAuth(thread, threadService.itemEdit)" [disabled]="!threadService.itemEdit?.valid"><ion-icon name="checkmark"></ion-icon></button>

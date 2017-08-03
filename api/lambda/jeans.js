@@ -7,30 +7,24 @@ let LambdaError = require('./errors');
 
 
 function Create(event, context) {
-  let input = JSON.parse(event.body);
-  return UsersTable.get(event.pathParameters.userId).then(
-    (data) => {
-      if (!data.nextJeanId) {
-          data.nextJeanId = 1
-      }
+    let input = JSON.parse(event.body);
+    return UsersTable.get(event.pathParameters.userId).then(
+        (data) => {
+            if (!data.nextJeanId) {
+                data.nextJeanId = 1
+            }
 
-      input.jeanId = data.nextJeanId;
-      data.nextJeanId += 1;
-      if (data.jeans) {
-          data.jeans.push(input);
-      } else {
-          data.jeans = [input];
-      }
-      
-      return UsersTable.put(data).then(
-				(result)=>{
-					return new Promise((resolve, reject) => {
-						resolve(input);
-					})
-				}
-			);
-  	}
-	);
+            input.jeanId = data.nextJeanId;
+            data.nextJeanId += 1;
+            if (data.jeans) {
+                data.jeans.push(input);
+            } else {
+                data.jeans = [input];
+            }
+
+            return UsersTable.put(data);
+        }
+    );
 }
 
 function Delete(event, context){
@@ -46,8 +40,7 @@ function Delete(event, context){
 
 function Get(event, context) {
     return UsersTable.get(event.pathParameters.userId).then(
-        (data) => {
-            console.log(data);
+        (data) => {	
             return new Promise((resolve, reject) => {
                 var jean = data.jeans.find( (jean) => { return jean.jeanId == parseInt(event.pathParameters.jeanId) });
                 if (jean) {
