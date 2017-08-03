@@ -1069,6 +1069,14 @@ definitions:
         type: string
       ordered:
         type: boolean
+      gender:
+        type: number
+        format: integer
+        minimum: 0
+      style:
+        type: number
+        format: integer
+        minimum: 0 
       measurement:
         $ref: "#/definitions/Measurement"
       top_thread:

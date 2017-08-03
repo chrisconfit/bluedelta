@@ -270,7 +270,7 @@
 					var id = jeanData[property];
 					if (typeof(id)=='object'){
 						var idKey = property+"Id";
-						if (idKey.indexOf("Thread")>-1) idKey="threadId";
+						if (idKey.indexOf("thread")>-1) idKey="threadId";
 						id = id[idKey];
 					}
 					var urlKey = jeanKeytoURL(property);

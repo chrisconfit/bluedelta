@@ -23,7 +23,7 @@
            	<img ng-if="ovm.order.orderItems[0].jean.imageURL" width="100%" ng-src="{{ovm.order.orderItems[0].jean.imageURL}}">
             <ul ng-if="ovm.orderUser.identityId" class="list-group list-group-unbordered">
               <li class="list-group-item clearfix">
-                <b>Customer</b> <a href="#" class="pull-right">{{ovm.orderUser.name}}</a>
+                <b>Customer</b> <a href="#" ng-click="ovm.editUser()" class="pull-right">{{ovm.orderUser.name}}</a>
               </li>
               <li class="list-group-item clearfix">
                 <b>Email</b> <a href="#" class="pull-right">{{ovm.orderUser.email}}</a>
@@ -159,7 +159,7 @@
 									<label class="control-label" for="customer">Jean Price</label>
                   <div class="input-group">
 		                <span class="input-group-addon">$</span>
-		                <input type="text" class="form-control" placeholder="350.00">
+		                <input type="text" class="form-control" ng-model="ovm.order.price" ng-blur="ovm.convertToCurrency()" placeholder="350.00">
 		              </div>
 								</div>
                 <div class="form-group">
@@ -284,7 +284,13 @@
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="customer">Seat</label>
+											<label class="control-label" for="customer">Seat-Down</label>
+											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">Seat-Right</label>
 											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
 										</div>
 									</div>
@@ -296,19 +302,46 @@
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="customer">Thigh Upper</label>
+											<label class="control-label" for="customer">Full Rise</label>
+											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">Thigh-Upper-Down</label>
 											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="customer">Thigh Middle</label>
+											<label class="control-label" for="customer">Thigh-Upper-Right</label>
 											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="customer">Thigh Lower</label>
+											<label class="control-label" for="customer">Thigh-Middle-Down</label>
+											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">Thigh-Middle-Right</label>
+											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">Thigh-Lower-Down</label>
+											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">Thigh-Lower-Right</label>
 											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
 										</div>
 									</div>
@@ -323,23 +356,37 @@
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="customer">Knee</label>
+											<label class="control-label" for="customer">Knee-Up</label>
 											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="customer">Calf</label>
+											<label class="control-label" for="customer">Knee-Right</label>
 											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="customer">Leg Opening</label>
+											<label class="control-label" for="customer">Calf-Up</label>
+											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">Calf-Right</label>
+											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">Leg-Opening</label>
 											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
 										</div>
 									</div>
 								</div>
+								
+								
 								
 								<hr>
 								
@@ -356,7 +403,9 @@
 											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
 										</div>
 									</div>
+									
 									<div class="col-sm-2">
+										{{ovm.order.orderItems[0]}}
                   	<div class="form-group">
                       <label class="control-label" for="customer">Desired Fit</label>
                       <select class="form-control select2" style="width: 100%;">

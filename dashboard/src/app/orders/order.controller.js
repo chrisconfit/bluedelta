@@ -16,6 +16,7 @@ angular.module('inspinia')
     
     
     vm.userNames = {
+	    "8144148a-2ad6-4353-8850-0e1b301fa227" : "Creighton Hardy",
 	    "865eda13-2e89-4564-9f7c-0d1accfdcebe":"Dan Terzo",
 	    "357bae03-cce3-47ea-8875-3cfddab19e08": "Adam Lewis",
 	    "58c978b5-b518-46fc-9276-6e880bd670e3":"Ryan Jetton",

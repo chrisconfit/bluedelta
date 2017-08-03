@@ -12,6 +12,30 @@ API.Client.Jean = function() {}
 API.Client.Jean.prototype.jeanId;
 
 /**
+ * @type {!string}
+ * @export
+ */
+API.Client.Jean.prototype.imageURL;
+
+/**
+ * @type {!boolean}
+ * @export
+ */
+API.Client.Jean.prototype.ordered;
+
+/**
+ * @type {!number}
+ * @export
+ */
+API.Client.Jean.prototype.gender;
+
+/**
+ * @type {!number}
+ * @export
+ */
+API.Client.Jean.prototype.style;
+
+/**
  * @type {!API.Client.Measurement}
  * @export
  */
