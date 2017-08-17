@@ -1,26 +1,4 @@
-function datatablesCtrl($scope,DTOptionsBuilder){
 
-    $scope.dtOptions = DTOptionsBuilder.newOptions()
-        .withDOM('<"html5buttons"B>lTfgitp')
-        .withButtons([
-            
-            {extend: 'csv'},
-            {extend: 'excel', title: 'BlueDetlaOrdersExport'},
-            {extend: 'pdf', title: 'BlueDetlaOrdersExport'},
-						{extend: 'print',
-						  customize: function (win){
-						    $(win.document.body).addClass('white-bg');
-						    $(win.document.body).css('font-size', '10px');
-						
-						    $(win.document.body).find('table')
-						        .addClass('compact')
-						        .css('font-size', 'inherit');
-						  }
-						}
-        ]);
-
-    
-}
 
 function formValidation($scope) {
 	
@@ -43,5 +21,4 @@ function formValidation($scope) {
 
 angular
     .module('inspinia')
-    .controller('datatablesCtrl', datatablesCtrl)
     .controller('formValidation', formValidation)

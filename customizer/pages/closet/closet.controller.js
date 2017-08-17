@@ -4,8 +4,8 @@
     .module('bdApp')
     .controller('closetCtrl', closetCtrl);
 
-  closetCtrl.$inject = ['$location', 'jean','popups', 'aws', 'bdAPI', '$scope', 'messages', 'loader'];
-  function closetCtrl($location, jean, popups, aws, bdAPI, $scope, messages, loader) {
+  closetCtrl.$inject = ['$location', '$window', 'jean','popups', 'aws', 'bdAPI', '$scope', 'messages', 'loader'];
+  function closetCtrl($location, $window, jean, popups, aws, bdAPI, $scope, messages, loader) {
 	  
 
 	  loader.show("Getting your profile information...");
@@ -82,63 +82,39 @@
 			if (vm.user[field] == "") vm.user[field] = null;
 			if (vm.userForm.validate(field, vm.user[field])){
 				vm.userForm.saving[field] = true;
-				bdAPI.usersUpdate(vm.user.identityId, vm.user).then(
-					function(result){
-						vm.userForm.saving[field] = false;
-						vm.userForm.editing[field] = false;
-						vm.userForm.data[field] = vm.user[field];
-						$scope.$apply();
-					},
-					function(err){
-						console.log(err);
-					}	
-				)	
+				bdAPI.call('usersUpdate', [vm.user.identityId, vm.user], function(result){
+					vm.userForm.saving[field] = false;
+					vm.userForm.editing[field] = false;
+					vm.userForm.data[field] = vm.user[field];
+					$scope.$apply();
+				});	
 			}
 		}
 		
-		vm.idid="";
 		vm.orders = [];		
-    var cognitoUser = aws.getCurrentUserFromLocalStorage();
-    if (cognitoUser){
-	    
-	    bdAPI.defaultHeaders_['Authorization'] = cognitoUser.idToken.getJwtToken();
-	    var idTokenPayload = cognitoUser.idToken.jwtToken.split('.')[1];
-			var identityID = JSON.parse(atob(idTokenPayload)).sub;	
+    
+    
+    //Get user details and orders...
+    var identityID = aws.getCurrentIdentityId();
+    if (!identityID){ $location.path('/'); }
+	  else{
 			
-			vm.idid=identityID;
-			
+	  	//Todo: Just get orders for user...
 			bdAPI.call('ordersList', 100, function(result){
 				vm.orders=result.data.items;
-				$scope.$apply();
 			});	
-			bdAPI.call('usersGet', identityID, function(result){
-					
-					loader.hide();
-			
-					vm.user = result.data;	
-						console.log(vm.user)
-					vm.userForm.data = angular.copy(result.data);
-					$scope.$apply();					
-/*
-					vm.user.jeans = [];
-					
-					bdAPI.usersUpdate(vm.user.identityId, vm.user).then(function(res){
-						console.log("updated...");
-						console.log(res);
-					})
-*/
 				
-				}, 
-				function(err){console.log(err)} 
-			);
-    }else{
-	    $location.path('/');
-		}
+			bdAPI.call('usersGet', identityID, function(result){
+				loader.hide();
+				vm.user = result.data;							
+				vm.userForm.data = angular.copy(result.data);	
+			});
+			
+    }
 	    	
 	    	
 
 	    	
-	
 				
 		/*
 		* Password Form
@@ -178,9 +154,6 @@
 		}
 		
 		
-		//Register User
-
- 
     vm.changePassword = function () {
 	    messages.reset();
 	    if (vm.validatePasswordForm()){
@@ -198,13 +171,9 @@
     };	
 		
 
-		/*
-		
-		vm.orderJean = function(jeanData){
-			vm.jean = jean;
-			$location.path('/order/'+jeanData.jeanId+'/'+vm.user.identityId);
-		}
-*/
+
+
+
 
 		vm.copyJean = function(){
 			vm.jean = jean.createNew(vm.displayJean);
@@ -214,12 +183,16 @@
 		vm.displayJean={};
 		vm.selectJean = function(jean){
 			vm.popups.jeanProfile = true; 
-			vm.displayJean.data=jean
+			vm.displayJean=jean
 		}
 		
+		vm.selectOrder = function(order){
+			vm.popups.orderProfile = true; 
+			vm.displayOrder=order;
+			vm.displayJean = order.orderItems[0].jean;
+		}
 		
-		
-
+	
 		function findJeanbyId(jeanId){
 			for (var j=0; j < vm.user.jeans.length; j++) {
 	      if (vm.user.jeans[j].jeanId === jeanId) {
@@ -237,10 +210,8 @@
 		}
 		
 		vm.orderJean = function(jeanData){
-			console.log("ordering");
 			jean.setup(jeanData);
-			//$location.path('/order/'+jeanData.jeanId+'/'+vm.user.identityId);
-			$location.path('/order');
+			$location.path('/order/'+jeanData.jeanId+'/'+vm.user.identityId);
 		}
 	
 			

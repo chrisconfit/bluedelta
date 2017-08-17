@@ -6,7 +6,22 @@
 
   aws.$inject = ['$http', '$window', '$q', 'AWSConfig'];
   function aws ($http, $window, $q, AWSConfig) {
-			
+		
+		function _setUserInLocalStorage(userDetails){
+			$window.localStorage.user = JSON.stringify({
+				"name":userDetails.name,
+				"email":userDetails.email,
+				"username":userDetails["cognito:username"],
+				"identityId":userDetails.sub
+			});
+			$window.localStorage.isLoggedIn = true;
+		}
+		
+		function _clearUserInLocalStorage(){
+			$window.localStorage.clear();
+			$window.localStorage.isLoggedIn = false;
+		}
+		
     function _getUserPool() {
       var poolData = { UserPoolId : AWSConfig.USER_POOL_ID, ClientId : AWSConfig.CLIENT_ID };
       var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
@@ -47,10 +62,7 @@
       return attrList;
     }
       
-    function _parseIdentityId(jwt){
-	    var idTokenPayload = jwt.split('.')[1];
-			return JSON.parse(atob(idTokenPayload)).sub;				
-    }
+
     
 		function _getAWSCredentials(idToken){
 
@@ -87,6 +99,15 @@
 			// return defer.promise;
 			
 		}
+		
+		getCurrentIdentityId = function(jwt){
+	    if (!jwt){
+		  	var userData = getCurrentUserFromLocalStorage();
+				jwt = userData.idToken.getJwtToken();
+	    }
+	    var idTokenPayload = jwt.split('.')[1];
+			return JSON.parse(atob(idTokenPayload)).sub;				
+    }
 			
     getUserFromLocalStorage = function(username) {
       var cognitoUser = _getCognitoUser(username, _getUserPool());
@@ -135,6 +156,7 @@
 			return defer.promise;		
 		}
 		
+		
     authenticateCognitoUser = function(username, password) {
       var authenticationDetails = _getAuthenticationDetails(username, password);
       var cognitoUser = _getCognitoUser(username, _getUserPool());
@@ -144,9 +166,10 @@
       
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
+	        var userDetails = JSON.parse(atob(result.idToken.jwtToken.split('.')[1]));		
+					_setUserInLocalStorage(userDetails);
+					console.log(userDetails);
 					defer.resolve(result);
-					//Use the idToken for Logins Map when Federating User Pools with Cognito Identity or when passing through an Authorization Header to an API Gateway Authorizer
-					$window.localStorage.isLoggedIn = true;
         },
         onFailure: function(err) {
           defer.reject(err);
@@ -170,7 +193,7 @@
 		
 
     signupForApplication = function(emailAddress, name, password) {
-	    
+	    console.log(emailAddress, name, password);
 	    var defer = $q.defer();
 	    
       var attributeList = _buildAttributeList(_buildAttribute, {email: emailAddress, name: name});
@@ -281,10 +304,6 @@
 			return defer.promise;		   
 		}
 	    
-	    
-     
-
-
 		
     forgotPassword = function(userName) {
 	    var defer = $q.defer();
@@ -339,6 +358,7 @@
 
     signUserOut = function(cognitoUser) {
       if (cognitoUser != null) {
+	      	_clearUserInLocalStorage();
           cognitoUser.signOut();
       }
     }
@@ -347,13 +367,13 @@
 	  	var cognitoUser = _getUserPool().getCurrentUser();
       if (cognitoUser != null) {
         cognitoUser.signOut();
-				$window.localStorage.isLoggedIn = false;
+				_clearUserInLocalStorage();
       }
     }
 
 
     signUserOutGlobally = function(cognitoUser) {
-	    $window.localStorage.isLoggedIn = false;
+	    _clearUserInLocalStorage();
       cognitoUser.globalSignOut();
     }
 		
@@ -376,17 +396,12 @@
       }
     }
    
-	   
-
-    
 		
 		isLoggedIn = function() {
-			var cognitoUser = _getUserPool().getCurrentUser();
-			return cognitoUser ? true: false;
+			return $window.localStorage.isLoggedIn=="true";		
 		}
 		
 	
-		
     confirmRegisteredUnauthenticatedUser = function(userName, confirmationCode) {
 	    
       var cognitoUser = _getCognitoUser(userName, _getUserPool());
@@ -451,6 +466,7 @@
       
     
     return {
+	    getCurrentIdentityId:getCurrentIdentityId,
 	    authenticateViaFB: authenticateViaFB,
 	    getUserFromLocalStorage: getUserFromLocalStorage,
       deleteCognitoUser: deleteCognitoUser,

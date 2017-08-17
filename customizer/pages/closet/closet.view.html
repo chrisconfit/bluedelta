@@ -17,11 +17,11 @@
 		      <div class="cft-g jean-grid">
 			      <div ng-repeat="order in vm.orders | filter:{ userId: vm.idid, status: '!complete' }" class="cft-gi">
 				      <div class="jean-card">
-								<img ng-click="ovm.selectJean(order.orderItems[0].jean)" ng-src="{{order.orderItems[0].jean.imageURL}}">
+								<img ng-click="vm.selectOrder(order)" ng-src="{{order.orderItems[0].jean.imageURL}}">
 								<div class="box-content">
-						      <!--<h4 ng-click="vm.selectJean(order.orderItems[0].jean)">{{jean.name}}</h4>-->
-									<h5>{{order.status}}</h5>
-									<h5>EST ARRIVAL:<br><b>{{order.dueDate | date : "longDate" : "CST"}}</b></h5>
+						     	<h4 ng-click="vm.selectJean(order.orderItems[0].jean)">{{order.orderItems[0].jean.name}}</h4>
+									<h5>Status: {{order.status}}</h5>
+									<h5 ng-if="order.dueDate">EST ARRIVAL:<br><b>{{order.dueDate | date : "longDate" : "CST"}}</b></h5>
 								</div>
 				      </div>
 			      </div>
@@ -34,10 +34,10 @@
 		      <div class="cft-g jean-grid">
 			      <div ng-repeat="order in vm.orders | filter:{ userId: vm.idid, status: 'complete' }" class="cft-gi">
 				      <div class="jean-card">
-					      <img ng-click="ovm.selectJean(order.orderItems[0].jean)" ng-src="{{order.orderItems[0].jean.imageURL}}">
+					      <img ng-click="vm.selectOrder(order)" ng-src="{{order.orderItems[0].jean.imageURL}}">
 								<div class="box-content">
-					      	<!--<h4 ng-click="vm.selectJean(jean)">{{jean.name}}</h4>-->
-									<h5>Born: {{order.createTime | date : "longDate" : "CST" }}</h5>
+					      	<h4 ng-click="vm.selectJean(jean)">{{order.orderItems[0].jean.name}}</h4>
+									<h5>Born: {{order.dob | date : "longDate" : "CST" }}</h5>
 								</div>
 				      </div>
 			      </div>
@@ -52,6 +52,7 @@
 				      <div class="jean-card">
 					      <img ng-src="{{jean.imageURL}}">
 								<div class="box-content">
+									<h4>{{jean.name}}</h4>
 									<div ng-if="!jean.deleting">
 										<a href="/customizer/{{jean.jeanId}}/{{vm.user.identityId}}">Edit</a> | <a href="" ng-click="vm.orderJean(jean)">Order</a> | <a ng-click="jean.deleting=true" href="">Delete</a> 
 									</div>

@@ -3,9 +3,9 @@
 
   angular
     .module('bdApp')
-    .service('jean', ['$routeParams', '$http','bdAPI', '$q', 'aws', 'jsonData', jean]);
+    .service('jean', ['$routeParams', '$window', 'bdAPI', '$q', 'aws', 'jsonData', jean]);
 
-  function jean($routeParams, $http, bdAPI, $q, aws, jsonData) {
+  function jean($routeParams, $window, bdAPI, $q, aws, jsonData) {
 
 
 		/*
@@ -157,6 +157,7 @@
 			else if ($routeParams.jeanId && $routeParams.userId){
 
 				//First get Jean
+				console.log($routeParams.userId, $routeParams.jeanId);
 				bdAPI.jeansGet($routeParams.userId, $routeParams.jeanId).then(					
 					function(result){
 
@@ -220,22 +221,30 @@
 		}
 		
 		
-		function loadImage(src, cntxt) {
-      return $q(function(resolve,reject) {
-        var image = new Image();
-        image.crossOrigin = "";
-        image.src = src;
-        image.onload = function() {
-          cntxt.drawImage(image,0,0,600,696);
-          resolve(image);
-        };
-        image.onerror = function(e) {
-          reject(e);
-        };
-      })
-    }
+		function loadImage(src) {
+			return $q(function(resolve,reject) {
+			  var image = new Image();
+			  image.crossOrigin = "";
+			  image.src = src;
+			  image.onload = function() {
+			    resolve(image);
+			  };
+			  image.onerror = function(e) {
+			    reject(e);
+			  };
+			})
+		}   
     
-		createThumb = function(jeanData){
+	 function searchAndDraw(key, cntxt, images){
+			for(i=0; i<images.length; i++){
+				var image = images[i];
+				if(image.src.indexOf("/"+key+"/") > -1){
+					cntxt.drawImage(image,0,0,600,696);
+				};
+			}
+		}
+		
+	  var createThumb = function(jeanData){
 	  	var canvas = document.createElement('canvas');
 	  	canvas.width=600;
 	  	canvas.height=600;
@@ -247,19 +256,26 @@
 				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/thread/g'+jeanData.gender+'/s2/tt/'+jeanData.top_thread.threadId+'.png',
 				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/thread/g'+jeanData.gender+'/s2/ta/'+jeanData.accent_thread.threadId+'.png'
 			];
-
+	
 	    for(var i=0; i<images.length; i++){
 	      promises.push(loadImage(images[i], cntxt));
 	    }
-
-	    return $q.all(promises).then(function(results) {
-	      var dataUrl = canvas.toDataURL('image/jpeg');
-				return dataUrl;
-	    },
-	    function(err){
-		    console.log(err);
-	    });	
-  	}
+	    
+	    return $q.all(promises).then(
+	    	function(results) {
+			    console.log("all images loaded");
+					searchAndDraw("fabric", cntxt, results);
+					searchAndDraw("tb", cntxt, results);
+					searchAndDraw("tt", cntxt, results);
+					searchAndDraw("ta", cntxt, results);
+		      var dataUrl = canvas.toDataURL('image/jpeg');
+					return dataUrl;
+		    },    
+		    function(err){
+			    console.log(err);
+		    }
+	    );	
+		}
 
 		
 		
@@ -298,50 +314,31 @@
 			
 			var defer = $q.defer();
 			var jean = this;
-
 			var jeanData = jean.get();
-	
-
-			
 			var filename = jean.getDataCode();
 			filename += ".jpg";
+			
 			this.createThumb(jeanData).then( function(imageURL){
-		    var userData = aws.getCurrentUserFromLocalStorage();
-				bdAPI.defaultHeaders_['Authorization'] = userData.idToken.getJwtToken();
-				var idTokenPayload = userData.idToken.jwtToken.split('.')[1];
-				var identityID = JSON.parse(atob(idTokenPayload)).sub;	
 				
+		    var userData = aws.getCurrentUserFromLocalStorage();
 				if (userData){		
 					aws.saveImageTos3(imageURL, userData, filename).then(
 						function(result){	
+
 							//Add image to jean before saving...
 				  		jean.set("imageURL",result);
-							if (jeanData.jeanId){
-								//Update existing Jean...
+							var	userId = aws.getCurrentIdentityId();
+							var args = jeanData.jeanId ? [userId, jeanData.jeanId, jeanData] : [userId, jeanData];
+							var saveFunc = jeanData.jeanId ? 'jeansUpdate' : 'jeansCreate';
+							
+							bdAPI.call(saveFunc, args, function(result){
+								
+								//For new jeans... set the Id..
+								var newJean = result.data.jeans[result.data.jeans.length-1];
+								if (!jeanData.jeanId) jean.set("jeanId", newJean.jeanId);
+								defer.resolve(result);
+							}, function(err){defer.reject(err);});
 
-								bdAPI.jeansUpdate(identityID, jeanData.jeanId, jeanData).then(
-									function(result){
-										defer.resolve(result);
-									},
-									function(err){
-										console.log(err);
-										defer.reject(err);
-									}
-								);
-							}else{
-								//Create New Jean...
-								bdAPI.jeansCreate(identityID, jeanData).then(
-
-									function(result){
-										//Add new id to jean
-										jean.set("jeanId", result.data.jeanId);
-										defer.resolve(result);
-									},
-									function(err){
-										defer.reject(err);
-									}
-								);
-							}
 							
 				  	}, function(err){
 					  	console.log(err);
@@ -352,28 +349,10 @@
 					defer.reject("You are not logged in...");
 				}
 				
-				
 	    });
 			
 			return defer.promise;
-			
-			
-			/*
-			if (jean.id !== null){
-				jeansUpdate(userId, jean.id, jean).then(function(result){
-					console.log(result);
-				});	
-			}
-			else{
-				jeansCreate(userId, jean).then(function(result){
-					console.log(result);
-					
-				});	
-			}
-			*/
 		}
-		
-		//Wait for data to be assigned before returning...
 		
 			
 		return {

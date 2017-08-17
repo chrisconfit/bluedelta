@@ -484,7 +484,7 @@ h1.page-title{
 		.control-panel-inner{
 			.build-step-stage{
 				padding-top:44px;
-				display:inline-block;
+				//display:inline-block;
 				&.chooser, &.fabric-chooser, &.gender-chooser, &.style-chooser{
 					padding-top:88px;
 					height:400px;
@@ -772,6 +772,7 @@ h1.page-title{
 		}
   	&.gender-chooser .chooser-select {
     	width: calc(50% - 15px);
+    	top:0!important;
 			left:15px;
   	}
   }
@@ -782,6 +783,7 @@ h1.page-title{
 			display:block;
 			height:320px;
 			overflow:auto;
+			&::-webkit-scrollbar {display: none;}
 		}
 		.chooser-select{
 			top:15px;
@@ -1272,6 +1274,16 @@ a.overview-trigger{
 }
 .jean-overview{
 	background:#fff;
+	h3.jean-name{
+		color:#fff;
+		padding:13px;
+		@include font-size(18,18);
+		font-weight: 400;
+		text-align: center;
+		text-transform: none;
+		margin:0;
+		background:$teal;
+	}
 }
 .jean-list{
 	&.closet{

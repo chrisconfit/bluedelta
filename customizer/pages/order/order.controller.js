@@ -14,7 +14,12 @@
 		
 		jean.setup();
 		vm.jean = jean.get();
-
+		
+		vm.hasMeasurements = function(order) {
+			console.log("HM Filter");
+			var measurements = order.orderItems[0].jean.measurement;
+			return Object.keys(measurements).length && measurements.waist;
+		};
 		
 		var userDetails = aws.getCurrentUserFromLocalStorage();
 		var identityId = bdAPI.setupHeaders(userDetails);
@@ -42,10 +47,24 @@
 			"tailor":null,
 		}
 		
-		
+		vm.orders = [];
+		bdAPI.call('ordersList', 100, function(result){
+			console.log(result.data.items);
+			for(i=0; i<result.data.items.length; i++){
+				var item = result.data.items[i];
+				if (item.userId == aws.getCurrentIdentityId() && item.status != "New"){
+					vm.orders.push(item);
+				}
+			}
+		});	
 
 		vm.placeOrder = function(){			
 			bdAPI.call('orderCreate', vm.order, function(result){
+				vm.jean.ordered = true;
+				bdAPI.call('jeansUpdate', [aws.getCurrentIdentityId(), vm.jean.jeanId, vm.jean], function(result){
+					console.log("jeanSaved");
+					console.log(result);					
+				});
 				bdAPI.call('commentsCreate', [result.data.orderId, {message:"Order Placed"}], function(comment){
 					vm.popups.orderPlaced = true;
 					jean.reset();

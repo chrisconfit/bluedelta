@@ -1,4 +1,4 @@
-<div ng-controller="OrdersController as octrl">
+<div ng-controller="OrdersController as ovm">
 
 	<div class="row wrapper border-bottom white-bg page-heading">
 		<h2>Orders</h2>
@@ -28,25 +28,25 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="order in octrl.orders | limitTo : octrl.pagination.ordersPerPage : octrl.pagination.startIndex">
-								<td>{{octrl.findIndex(order.orderId)+1}}</td>
+							<tr ng-repeat="order in ovm.orders | limitTo : ovm.pagination.ordersPerPage : ovm.pagination.startIndex">
+								<td>{{ovm.findIndex(order.orderId)+1}}</td>
 								<td>{{order.orderId}}</td>
-								<td>Customer Name</td>
+								<td>{{ovm.userNames[order.userId] || order.userId}}</td>
 								<td>{{order.vendor}}</td>
 								<td>{{order.rep}}</td>
 								<td>{{order.createTime | date:"M/d/yyyy"}}</td>
-								<td>{{order.orderStatus}}</td>
-								<td>Payment Status</td>
+								<td>{{order.status}}</td>
+								<td>Payment Received</td>
 								<td><a ui-sref="orders.edit({orderId: order.orderId})"><i class="fa fa-pencil"></i></a>
-								<td><a href="#" ng-click="octrl.deleteOrder(order.orderId)"><i class="fa fa-close"></i></a>
+								<td><a href="#" ng-click="ovm.deleteOrder(order.orderId)"><i class="fa fa-close"></i></a>
 							</tr>
 						</tbody>
 					</table>
 
-					<div class="pagination full-width text-center" width="100%" ng-if="octrl.pagination.next || octrl.pagination.prev">
+					<div class="pagination full-width text-center" width="100%" ng-if="ovm.pagination.next || ovm.pagination.prev">
 						<div class="btn-group">
-							<button ng-if="octrl.pagination.prev" ng-click="octrl.pagination.changePage('prev')" class="btn btn-white" type="button"><i class="fa fa-chevron-left"></i></button>
-							<button ng-if="octrl.pagination.next" ng-click="octrl.pagination.changePage('next')"  class="btn btn-white" type="button"><i class="fa fa-chevron-right"></i> </button>
+							<button ng-if="ovm.pagination.prev" ng-click="ovm.pagination.changePage('prev')" class="btn btn-white" type="button"><i class="fa fa-chevron-left"></i></button>
+							<button ng-if="ovm.pagination.next" ng-click="ovm.pagination.changePage('next')"  class="btn btn-white" type="button"><i class="fa fa-chevron-right"></i> </button>
 						</div>
 					</div>
 					

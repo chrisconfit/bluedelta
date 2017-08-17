@@ -1,13 +1,28 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('OrdersController', ['bdAPI', '$scope', 'aws', 'DTColumnDefBuilder', 'SweetAlert', function (bdAPI, $scope, aws, DTColumnDefBuilder, SweetAlert) {
+  .controller('OrdersController', ['bdAPI', '$scope', 'aws', 'SweetAlert', function (bdAPI, $scope, aws, SweetAlert) {
 
 
 		console.log(bdAPI);
+		
+		
+		
+		
+		
 
-	DTColumnDefBuilder
     var vm = this;
+    
+    
+    
+    vm.userNames = {
+	    "8144148a-2ad6-4353-8850-0e1b301fa227" : "Creighton Hardy",
+	    "865eda13-2e89-4564-9f7c-0d1accfdcebe":"Dan Terzo",
+	    "357bae03-cce3-47ea-8875-3cfddab19e08": "Adam Lewis",
+	    "58c978b5-b518-46fc-9276-6e880bd670e3":"Ryan Jetton",
+	    "12f1a391-02f3-4aaf-92cc-734ed5f38184" : "Chris LeFevre",
+	    "3b9b047a-f148-4f53-9306-bd93139d7b1c": "James Kelleway"
+    }
     
     var deleteOrderBox = {
       title: "Are you sure?",
@@ -36,10 +51,7 @@ angular.module('inspinia')
 		  );
 		}
 		
-		$scope.dtColumnDefs = [
-      DTColumnDefBuilder.newColumnDef(7).notSortable(),
-      DTColumnDefBuilder.newColumnDef(8).notSortable()
-    ];
+
 
  
 
@@ -57,7 +69,7 @@ angular.module('inspinia')
 	
 		//Get orders
 		vm.pagination = {
-			ordersPerPage:2,
+			ordersPerPage:20,
 			prev:false,
 			next:false,
 			nextURL:"",

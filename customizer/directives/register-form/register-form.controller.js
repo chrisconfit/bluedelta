@@ -70,16 +70,18 @@
 	    messages.reset();
 	    
 	    if (regvm.validateRegistrationForm()){
+		    
 	      aws.signupForApplication(regvm.credentials.email, regvm.credentials.name, regvm.credentials.password).then(
 	      	function(result){
-						if ($scope.callback) $scope.callback();
+						if ($scope.callback) $scope.callback(regvm.credentials);
 						if ($scope.redirect) $location.path($scope.redirect);
 						if (!$scope.callback && !$scope.redirect)	$location.path('/login');    
 		      },   
 		      function(err){
 				    messages.set(err.message, "error");
 			    }
-			  );
+			  );			  
+			  
 		  }
     };	
     

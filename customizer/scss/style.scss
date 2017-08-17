@@ -732,6 +732,14 @@ form.cft-form{
 			color:$colorText;
 		}
 	}
+	.order-details{
+		span{
+			display:block;
+			margin-bottom:5px;
+			text-transform: uppercase;
+			color:$darkGrey;
+		}
+	}
 	input.jean-name{
 		@include font-size(24,32);
 		
@@ -741,8 +749,12 @@ form.cft-form{
 .delete-jean{
 	margin:0;
 }
-.user-pop-group{
+
+.pop-group{
 	max-width:600px;
+	.cft-gi &{
+		max-width:none;
+	}
 	&:not(:last-of-type){
 		margin-bottom:15px;
 		padding-bottom:15px;
@@ -829,4 +841,16 @@ form.cft-form{
 	  right:0;
 	  @include transform(translate(0,-50%));
   }
+}
+
+.fit-grid{
+	&>.cft-gi{
+		margin-bottom:30px;
+		width:100%;
+	}
+	@include at-query($min, $deskMin){
+		&>.cft-gi{
+			width:33.3333%;
+		}	
+	}
 }

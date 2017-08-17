@@ -9,13 +9,14 @@
 	      restrict: 'EA',
 				templateUrl: '/directives/jean-list/jean-list.template.html',
 	      scope : {
-	        fields : '=?'
+	        fields : '=?',
+	        jean: '=?'
 	      },
 	      
 	      link: function($scope){
 					
 					$scope.dataBank = jsonData;
-					$scope.jean = jean.get();
+					$scope.jean = $scope.jean || jean.get();
 				
 					var defaultFields = [
 						'fabric',

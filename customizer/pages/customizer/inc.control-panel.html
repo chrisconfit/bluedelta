@@ -54,6 +54,7 @@
 							Overview <i ng-class="(vm.overviewOn ? 'fa-angle-down' : 'fa-angle-up')" class="fa"></i>
 						</a>
 						<div class="jean-list" ng-class="(vm.overviewOn ? 'show' :'hide')">
+							<h3 class="jean-name" ng-if="vm.jeanData.name">{{vm.jeanData.name}}</h3>
 							<jean-list data="vm.data" jean="vm.jean"></jean-list>
 						</div>
 					</div>

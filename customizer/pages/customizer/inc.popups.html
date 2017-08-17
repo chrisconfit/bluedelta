@@ -11,7 +11,7 @@
 					</div><!--
 					--><div class="cft-gi">
 						<h4>Register</h4>
-						<register-form callback="vm.authCallback"></register-form>
+						<register-form callback="vm.registerCallback"></register-form>
 					</div>
 				</div>
 				<div class="message-block" ng-show="vm.messages.message">
@@ -33,6 +33,39 @@
 					<p class="fabric-description">{{vm.activeItem.description}}</p>
 					<div class="fabric-preveiw" style="background: url(/images/components/fabrics/preview_{{vm.jean.data.fabric}}.jpg) no-repeat center center; 
 					-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;"></div>
+			</div><!--./popup-content-inner-->
+		</div>
+	</div>
+	
+	
+		<!--Saved Popup-->
+	<div ng-show="vm.popups.saver"	ng-click="vm.popups.saver = false" class="popup-window">
+		<div class="popup-content saved-popup" ng-click="$event.stopPropagation()">
+			<a class="popup-closer" href="" ng-click="vm.popups.saver = false"></a>
+			<div class="popup-content-inner">
+					
+					<div ng-if="!vm.jean.name">
+						<h3>Give your Jeans a name</h3>
+						<form class="cft-form">
+							<div ng-class="{active: vm.newJeanName}" class="input-group">
+						    <input type="text" class="form-control" id="jean-name" ng-model="vm.newJeanName" style="">
+						    <label for="jean-name">Jean Name</label>
+						  </div>
+							<btn ng-click="vm.runSave()" class="btn">Save</btn>
+							<btn class="btn btn-secondary" ng-click="vm.popups.saver=false">Cancel</btn> 
+						</form>
+					</div>
+					
+					<div ng-if="vm.jean.name">
+						<h3 class="popup-title">Your Jean has been saved!</h3>
+						<h4 class="popup-sub-title">What would you like to do next?</h4>
+						<div class="button-list">
+							<a class="btn" ng-click="vm.keepEditing();">Keep Customizing</a>
+							<a class="btn" ng-click="vm.goToCloset()">Go to Closet</a>
+							<a class="btn" ng-click="vm.startOver()">Start Over</a>
+						</div>
+					</div>
+					
 			</div><!--./popup-content-inner-->
 		</div>
 	</div>

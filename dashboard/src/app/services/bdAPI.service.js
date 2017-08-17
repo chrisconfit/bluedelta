@@ -67,6 +67,8 @@
 		}
 		
 		BlueDeltaApi.call = function(func,args,success,error){
+			console.log(func);
+			console.log(args);
 			var bdapi = this;
 	    aws.getCurrentUserFromLocalStorage(function(session){
 		    //Reset auth header

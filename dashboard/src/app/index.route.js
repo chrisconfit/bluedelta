@@ -178,7 +178,9 @@
 						else{
 							var defer = $q.defer();
 							bdAPI.call('ordersGet', [$stateParams.orderId],
-								function(result){				
+								function(result){		
+									console.log("route");
+									console.log(result);		
 									var returnData = {"order": result.data};
 									console.log("This user's ID: "+result.data.userId);
 									bdAPI.call('usersGet', [result.data.userId],

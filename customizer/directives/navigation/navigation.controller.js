@@ -13,8 +13,14 @@
 		vm.drops={};
 		vm.drops.acct=false;
 		vm.mobileMenu = false;
-
-		vm.isLoggedIn = aws.getCurrentUserFromLocalStorage() ? true : false;	
+	/*	
+		$scope.$watch(function () { return $localStorage.something; },function(newVal,oldVal){
+		   if(oldVal!==newVal && newVal === undefined){
+		     console.log('It is undefined'); 
+		  }
+		});
+*/
+		vm.isLoggedIn = aws.isLoggedIn();
 
 		vm.logout = function(){			
 			aws.signCurrentUserOut();

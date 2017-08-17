@@ -5,8 +5,8 @@
     .module('bdApp')
     .service('bdAPI', bdAPI);
 
-  bdAPI.$inject = ['$window', '$http', '$httpParamSerializer', '$filter','$q', 'aws'];
-  function bdAPI ($window, $http, $httpParamSerializer, $filter, $q, aws) {
+  bdAPI.$inject = ['$window', '$rootScope', '$http', '$httpParamSerializer', '$filter','$q', 'aws'];
+  function bdAPI ($window, $rootScope, $http, $httpParamSerializer, $filter, $q, aws) {
 
 	  $window._thirdParty = $window._thirdParty || {};
 	  $window._thirdParty.BlueDeltaApi =new API.Client.DefaultApi(angular.injector(["ng"]).get("$http"),
@@ -108,6 +108,7 @@
 				bdapi[func].apply(bdapi, args).then(
 					function(result){
 						success(result);
+						$rootScope.$$phase || $rootScope.$apply();
 					}, 
 					function(err){
 						console.log(err);

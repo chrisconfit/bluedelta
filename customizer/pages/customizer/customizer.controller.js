@@ -218,17 +218,44 @@
 		}
 
 		vm.savingBar = false;
-			
-    vm.saveCallback = function(callback){
-	    popups.closeAll();
+		
+		vm.newJeanName = "My Jeans - 6";
+		vm.saveCallback = function(callback){
+			callback = callback || null;
+			popups.closeAll();
+			if(vm.jeanData.name) vm.runSave(callback);
+			else popups.set('saver', true);
+		}	
+		
+    vm.runSave = function(callback){
+	    vm.jeanData.name = vm.newJeanName;
 			vm.savingBar = true;
-			jean.save().then(function(result){
-				vm.savingBar = false;
-				var userData = aws.getCurrentUserFromLocalStorage();
-				var identityId = bdAPI.setupHeaders(userData);
-				$location.path('/customizer/'+vm.jeanData.jeanId+'/'+identityId);
-				if (callback) callback(result);
-			});
+			jean.save().then(
+				function(result){
+					if (callback){ 
+						callback(result);
+					}else{
+						vm.savingBar = false;
+						popups.set('saver',true);					
+					}
+				}
+			);
+    }
+    
+    vm.keepEditing = function(){
+	    var identityId = aws.getCurrentIdentityId();
+			$location.path('/customizer/'+vm.jeanData.jeanId+'/'+identityId);
+    }
+    
+    vm.goToCloset = function(){
+	    $location.path('/closet');
+    }
+    
+    vm.startOver = function(){
+	    jean.reset();
+	    vm.jeanData=jean.get();
+	    console.log(jean.get());
+	    popups.closeAll();
     }
     
     vm.saveJean = function(){
@@ -245,7 +272,13 @@
     //Set default auth callback
 		vm.authCallback = vm.orderCallback;
     
-    
+    vm.registerCallback = function(details){
+	    aws.authenticateCognitoUser(details.email, details.password).then(
+		    function(result){
+					vm.authCallback();	
+		  	}
+	    )
+    }
     
     
 

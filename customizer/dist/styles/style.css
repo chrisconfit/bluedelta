@@ -1606,7 +1606,6 @@ h1.page-title {
   }
   .builder__control-panel .control-panel-inner .build-step-stage {
     padding-top: 44px;
-    display: inline-block;
   }
   .builder__control-panel .control-panel-inner .build-step-stage.chooser, .builder__control-panel .control-panel-inner .build-step-stage.fabric-chooser, .builder__control-panel .control-panel-inner .build-step-stage.gender-chooser, .builder__control-panel .control-panel-inner .build-step-stage.style-chooser {
     padding-top: 88px;
@@ -1898,6 +1897,7 @@ h1.page-title {
   }
   .chooser.gender-chooser .chooser-select, .fabric-chooser.gender-chooser .chooser-select, .style-chooser.gender-chooser .chooser-select, .gender-chooser.gender-chooser .chooser-select {
     width: calc(50% - 15px);
+    top: 0 !important;
     left: 15px;
   }
 }
@@ -1906,6 +1906,9 @@ h1.page-title {
     display: block;
     height: 320px;
     overflow: auto;
+  }
+  .chooser chooser::-webkit-scrollbar, .chooser fabric-chooser::-webkit-scrollbar, .fabric-chooser chooser::-webkit-scrollbar, .fabric-chooser fabric-chooser::-webkit-scrollbar, .style-chooser chooser::-webkit-scrollbar, .style-chooser fabric-chooser::-webkit-scrollbar, .gender-chooser chooser::-webkit-scrollbar, .gender-chooser fabric-chooser::-webkit-scrollbar {
+    display: none;
   }
   .chooser .chooser-select, .fabric-chooser .chooser-select, .style-chooser .chooser-select, .gender-chooser .chooser-select {
     top: 15px;
@@ -2463,6 +2466,19 @@ a.overview-trigger i {
 .jean-overview {
   background: #fff;
 }
+.jean-overview h3.jean-name {
+  color: #fff;
+  padding: 13px;
+  font-size: 18px;
+  line-height: 18px;
+  font-size: 1.8rem;
+  line-height: 1.8rem;
+  font-weight: 400;
+  text-align: center;
+  text-transform: none;
+  margin: 0;
+  background: #41778b;
+}
 
 .jean-list {
   max-height: 0;
@@ -2689,6 +2705,39 @@ h1 .sub-title {
 }
 .fit-options .single-option .option-trigger {
   margin-bottom: 10px;
+}
+
+.fit-grid .jean-card {
+  position: relative;
+}
+.fit-grid .jean-card .box-content {
+  -webkit-transition: all 300ms ease;
+  -moz-transition: all 300ms ease;
+  -ms-transition: all 300ms ease;
+  -o-transition: all 300ms ease;
+  transition: all 300ms ease;
+}
+.fit-grid .jean-card:before {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 4px solid #004964;
+  content: "";
+  position: absolute;
+  display: block;
+  opacity: 0;
+  -webkit-transition: all 300ms ease;
+  -moz-transition: all 300ms ease;
+  -ms-transition: all 300ms ease;
+  -o-transition: all 300ms ease;
+  transition: all 300ms ease;
+}
+.fit-grid .jean-card.active .box-content {
+  background: #bdcfd6;
+}
+.fit-grid .jean-card.active:before {
+  opacity: 1;
 }
 
 .info-box {
@@ -3029,6 +3078,12 @@ ul.tailor-list {
   font-size: 18px;
   color: #1d1d1d;
 }
+.jean-profile-data .order-details span {
+  display: block;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  color: #363839;
+}
 .jean-profile-data input.jean-name {
   font-size: 24px;
   line-height: 32px;
@@ -3040,15 +3095,18 @@ ul.tailor-list {
   margin: 0;
 }
 
-.user-pop-group {
+.pop-group {
   max-width: 600px;
 }
-.user-pop-group:not(:last-of-type) {
+.cft-gi .pop-group {
+  max-width: none;
+}
+.pop-group:not(:last-of-type) {
   margin-bottom: 15px;
   padding-bottom: 15px;
   border-bottom: 1px solid #bac2c5;
 }
-.user-pop-group i {
+.pop-group i {
   color: #41778b;
   font-size: 14px;
 }
@@ -3133,4 +3191,14 @@ ul.tailor-list {
   -ms-transform: translate(0, -50%);
   -webkit-transform: translate(0, -50%);
   transform: translate(0, -50%);
+}
+
+.fit-grid > .cft-gi {
+  margin-bottom: 30px;
+  width: 100%;
+}
+@media screen and (min-width: 800px) {
+  .fit-grid > .cft-gi {
+    width: 33.3333%;
+  }
 }

@@ -2,7 +2,8 @@
 <toaster-container></toaster-container>
 
 	<div class="row wrapper border-bottom white-bg page-heading">
-		<h1>Order {{ovm.order.orderId}}</h1>
+		<h1 ng-if="ovm.order.orderId">Order {{ovm.order.orderId}}</h1>
+		<h1 ng-if="!ovm.order.orderId">Create New Order</h1>
 	</div>              
 	
 	<div class="wrapper wrapper-content">
@@ -12,16 +13,17 @@
       <div class="col-md-3">
         <!-- Profile Image -->
         <div class="ibox ibox-primary">
-					<div class="ibox-title">
-						<h3>Jean Name: James' Slacks</h3>
-						<img width="100%" src="{{ovm.order.orderItems[0].jean.imageURL}}">
-					</div>
+					<!--<div class="ibox-title">
+						<h3>Jean Name: James' Slacks</h3
+					</div>-->
 					
           <div class="ibox-content ibox-profile">              
-           
-            <ul class="list-group list-group-unbordered">
+           	<a ng-if="!ovm.orderUser.identityId" href="" ng-click="ovm.editUser()" class="btn btn-flat btn-primary btn-block">Add a Client</a>
+           	
+           	<img ng-if="ovm.order.orderItems[0].jean.imageURL" width="100%" ng-src="{{ovm.order.orderItems[0].jean.imageURL}}">
+            <ul ng-if="ovm.orderUser.identityId" class="list-group list-group-unbordered">
               <li class="list-group-item clearfix">
-                <b>Customer</b> <a href="#" class="pull-right">{{ovm.orderUser.name}}</a>
+                <b>Customer</b> <a href="#" ng-click="ovm.editUser()" class="pull-right">{{ovm.orderUser.name}}</a>
               </li>
               <li class="list-group-item clearfix">
                 <b>Email</b> <a href="#" class="pull-right">{{ovm.orderUser.email}}</a>
@@ -40,14 +42,17 @@
                   {{ovm.order.billingAddress.city}}, {{ovm.order.billingAddress.state}} {{ovm.order.billingAddress.zip}}</p>
               </li>
             </ul>
+            
+            <!--
             <a href="#" class="btn btn-flat btn-danger btn-block"><b>Awaiting Payment</b></a>
             <a href="#" class="btn btn-flat btn-primary btn-block"><b>Re-Send Invoice</b></a>
+            -->
+            
           </div>
           <!-- /.ibox-content -->
         </div>
         <!-- /.ibox -->
       </div><!-- /.col -->
-      
       
       <div class="col-md-9">
         <div class="row">
@@ -65,23 +70,20 @@
                 <ul class="list-group jean-list-edit list-group-unbordered">
 		              <li class="list-group-item clearfix">
 	                  <b>Gender</b>
-	                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.order.orderItems[0].jean.gender}}</span>
+	                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.lookup("genderId", ovm.order.orderItems[0].jean.gender, ovm.genders).label}}</span>
 	                  <select class="form-control pull-right" 
 											ng-if="ovm.jeanEditMode" 
-											ng-model="ovm.order.orderItems[0].jean.gender">
-											<option ng-value="1">Male</option>
-											<option ng-value="2">Female</option>
+											ng-model="ovm.order.orderItems[0].jean.gender" 
+											ng-options="gender.genderId as gender.label for gender in ovm.genders">
 										</select>
 	                </li>
 	                <li class="list-group-item clearfix">
 	                  <b>Style</b> 
-	                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.order.orderItems[0].jean.style}}</span>
+	                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.lookup("styleId", ovm.order.orderItems[0].jean.style, ovm.style).label}}</span>
 	                  <select class="form-control  pull-right" 
 											ng-if="ovm.jeanEditMode" 
-											ng-model="ovm.order.orderItems[0].jean.style">
-											<option ng-value="1">Straight</option>
-											<option ng-value="2">Bootcut</option>
-											<option ng-value="3">Skinny</option>
+											ng-model="ovm.order.orderItems[0].jean.style"
+											ng-options="style.styleId as style.label for style in ovm.style">
 										</select>
 	                </li>
 	                <li class="list-group-item clearfix">
@@ -89,7 +91,7 @@
 	                  <span ng-if="!ovm.jeanEditMode" class="pull-right">{{ovm.order.orderItems[0].jean.fabric.name}}</span>
 										<select class="form-control  pull-right" 
 											ng-if="ovm.jeanEditMode" 
-											ng-options="fabric.name for fabric in ovm.data.fabric track by fabric.fabricId" 	
+											ng-options="fabric.fabricId+' - '+fabric.name for fabric in ovm.data.fabric track by fabric.fabricId" 	
 											ng-model="ovm.order.orderItems[0].jean.fabric">
 										</select>
 	                </li>
@@ -157,45 +159,35 @@
 									<label class="control-label" for="customer">Jean Price</label>
                   <div class="input-group">
 		                <span class="input-group-addon">$</span>
-		                <input type="text" class="form-control" placeholder="350.00">
+		                <input type="text" class="form-control" ng-model="ovm.order.price" ng-blur="ovm.convertToCurrency()" placeholder="350.00">
 		              </div>
 								</div>
                 <div class="form-group">
 	                <label>Vendor</label>
-	                <select ng-model="ovm.order.vendor" class="form-control select2" style="width: 100%;">
-		                <option ng-if="!ovm.order.vendor"ng-selected="!ovm.order.vendor" value="">Select a Vendor</option>
-	                  <option ng-repeat="vendor in ovm.data.vendor">{{vendor.name}}</option>
+	                <select ng-model="ovm.order.vendor" class="form-control select2" style="width: 100%;"
+		                ng-options="vendor.name as vendor.name for vendor in ovm.data.vendor">
 	                </select>
 	              </div>
               
                 <div class="form-group">
 	                <label>Rep</label>
-	                <select class="form-control select2" ng-model="ovm.order.rep" style="width: 100%;">
-		                <option ng-if="!ovm.order.rep" ng-selected="!ovm.order.rep" value="">Select a Rep</option>
-										<option ng-repeat="rep in ovm.data.rep">{{rep.name}}</option>
+	                <select class="form-control select2" ng-model="ovm.order.rep" style="width: 100%;" 
+		              ng-options="rep.name as rep.name for rep in ovm.data.rep">
 	                </select>
 	              </div>
 	              
 	              <div class="form-group">
 	                <label>Order Type</label>
-	                <select class="form-control select2" ng-model="ovm.order.orderType" style="width: 100%;">
-	                  <option ng-value="1">Blue Delta</option>
-	                  <option ng-value="2">Vendor Fitted</option>
-	                  <option ng-value="3">Cloned from Non-BD Jean</option>
-		                <option ng-value="4">Cloned from BD Jean</option>
-		                <option ng0value="5">Re-Order</option>
+	                <select class="form-control select2" ng-model="ovm.order.orderType" style="width: 100%;"
+									ng-options="type.typeId as type.label for type in ovm.orderType">
                 	</select>
 	              </div>
               
                 <div class="form-group">
 	                <label>Status</label>
-	                <select class="form-control select2" ng-model="ovm.order.status" style="width: 100%;">
-	                  <option>Awaiting Payment</option>
-	                  <option>New</option>
-	                  <option>Awaiting Payment</option>
-	                  <option>Processing</option>
-	                  <option>Shipped</option>
-	                  <option>Completed</option>
+	                <select class="form-control select2" 
+	                ng-options="status.label as status.label for status in ovm.status"  
+		              ng-model="ovm.order.status" style="width: 100%;">
 	                </select>
 	              </div>
 	              <div class="row">
@@ -238,14 +230,13 @@
 					</div>
         </div>
       </div><!-- /.col -->
-		
 
     	<div class="col-md-9 pull-right">
         <div class="tabs-container">
 
           <uib-tabset>
           
-            <uib-tab heading="Timeline">
+            <uib-tab ng-if="ovm.order.orderItems" heading="Timeline">
               <div class="panel-body">
                 
                 <h3>Timeline</h3>
@@ -287,37 +278,70 @@
 									<div class="col-sm-2">
 										<div class="form-group">
 									    <label class="control-label" for="customer">Waist</label>
-									    <input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+									    <input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.waist" name="waist" id="waist" class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="customer">Seat</label>
-											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+											<label class="control-label" for="customer">Seat-Down</label>
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.seatDown" name="seatDown" id="seatDown" class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">Seat-Right</label>
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.seatRight" name="seatRight" id="seatRight"  class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
 											<label class="control-label" for="customer">Rise</label>
-											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.rise" name="rise" id="rise"  class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="customer">Thigh Upper</label>
-											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+											<label class="control-label" for="customer">Full Rise</label>
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.fullRise" name="fullRise" id="fullRise"  class="form-control">
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">Thigh-Upper-Down</label>
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.thighUpperDown" name="thighUpperDown" id="thighUpperDown"  class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="customer">Thigh Middle</label>
-											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+											<label class="control-label" for="customer">Thigh-Upper-Right</label>
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.thighUpperRight" name="thighUpperRight" id="thighUpperRight"  class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="customer">Thigh Lower</label>
-											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+											<label class="control-label" for="customer">Thigh-Middle-Down</label>
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.thighMiddleDown" name="thighMiddleDown" id="thighMiddleDown"  class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">Thigh-Middle-Right</label>
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.thighMiddleRight" name="thighMiddleRight" id="thighMiddleRight"  class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">Thigh-Lower-Down</label>
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.thighLowerDown" name="thighLowerDown" id="thighLowerDown"  class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">Thigh-Lower-Right</label>
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.thighLowerRight" name="thighLowerRight" id="thighLowerRight"  class="form-control">
 										</div>
 									</div>
 								</div>
@@ -326,28 +350,42 @@
 									<div class="col-sm-2">
 										<div class="form-group">
 											<label class="control-label" for="customer">Outseam</label>
-											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.outseam" name="outseam" id="outseam"  class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="customer">Knee</label>
-											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+											<label class="control-label" for="customer">Knee-Up</label>
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.kneeUp" name="kneeUp" id="kneeUp"  class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="customer">Calf</label>
-											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+											<label class="control-label" for="customer">Knee-Right</label>
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.kneeRight" name="kneeRight" id="kneeRight"  class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="customer">Leg Opening</label>
-											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+											<label class="control-label" for="customer">Calf-Up</label>
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.calfUp" name="calfUp" id="calfUp"  class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">Calf-Right</label>
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.calfRight" name="calfRight" id="calfRight"  class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">Leg-Opening</label>
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.legOpening" name="legOpening" id="legOpening"  class="form-control">
 										</div>
 									</div>
 								</div>
+								
+								
 								
 								<hr>
 								
@@ -355,40 +393,16 @@
 									<div class="col-sm-2">
 										<div class="form-group">
 											<label class="control-label" for="customer">Height</label>
-											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.height" name="height" id="height"  class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
 											<label class="control-label" for="customer">Weight</label>
-											<input type="text" id="waist" name="waist" value="" placeholder="" class="form-control">
+											<input type="text" ng-model="ovm.order.orderItems[0].jean.measurement.weight" name="weight" id="weight"  class="form-control">
 										</div>
-									</div>
-									<div class="col-sm-2">
-                  	<div class="form-group">
-                      <label class="control-label" for="customer">Desired Fit</label>
-                      <select class="form-control select2" style="width: 100%;">
-			                  <option selected="selected">Select</option>
-			                  <option>Trim</option>
-			                  <option>Regular</option>
-			                  <option>Easy</option>
-			                </select>
-										</div>
-									</div>
+									</div>									
 								</div>
-								
-								<hr>
-								
-								<div class="row">
-									<div class="col-sm-6">
-									  <div class="form-group">
-									    <label class="control-label" for="customer">Notes for Tailor</label>
-									    <textarea class="form-control" rows="3" placeholder="Notes..."></textarea>
-									  </div>
-									</div>
-								</div>
-								
-                <a href="#" class="btn btn-success"><b>Save</b></a>
 
               </div>
                      

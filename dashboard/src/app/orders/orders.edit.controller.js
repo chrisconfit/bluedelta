@@ -9,11 +9,18 @@ angular.module('inspinia')
     vm.user = {
 	    "name":"Chris LeFevre"
     }
-		
+    
 		var newOrderData = {
 			fitDate:"",
 			dob:"",
-			dueDate:""
+			dueDate:"",
+			orderItems:[
+				{
+					jean:{
+						measurement:{}
+					}
+				}
+			]
 		}
 		var newOrder = orderData.order ? false : true;
 		vm.order = newOrder ? newOrderData : orderData.order;
@@ -22,6 +29,9 @@ angular.module('inspinia')
 		vm.order.dob =  vm.order.dob ? vm.order.dob: null;
 		vm.order.dueDate =  vm.order.dueDate ? vm.order.dueDate: null;
 		vm.orderUser = orderData.user || {};
+    
+
+    if(!vm.order.orderItems[0].jean.measurement) vm.order.orderItems[0].jean.measurement = {};
     
     vm.convertToCurrency = function(){
 	    price = vm.order.price.replace("$","");
@@ -341,7 +351,9 @@ angular.module('inspinia')
 		var saveFunc = newOrder ? 'orderCreate' : 'ordersUpdate';
 		var succMessage = newOrder ? "Order Created" : "Order Saved";
 		var errMessage = newOrder ? "Could not create" : "Could not Save";	
-		bdAPI.call(saveFunc, args, function(result){;
+		bdAPI.call(saveFunc, args, function(result){
+			console.log(result);
+			
 			toaster.pop({
 			  type: 'success',
 			  title: succMessage,
