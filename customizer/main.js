@@ -1,6 +1,6 @@
 (function () {
 
-  angular.module('bdApp', ['ngRoute', 'ngAnimate','ngSanitize', 'ngCookies', 'angular-gestures']); 
+  angular.module('bdApp', ['ngRoute', 'ngAnimate','ngSanitize', 'ngCookies', 'angular-gestures', 'user', 'api']); 
   
 
 
@@ -48,18 +48,19 @@
     
   }
 
-  function run($rootScope, $location, aws) {
-	    
+  function run($rootScope, $location, user) {
+	  if (user.isLoggedIn()) user.setup();
     $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
+
 	    var locked = [
 		    '/closet',
 		    '/order'
 	    ];
 	    
-	    if (locked.indexOf($location.path()) >= 0 && !aws.isLoggedIn() ){
+	    if (locked.indexOf($location.path()) >= 0 && !user.isLoggedIn() ){
 				$location.path('/login');
 	  	}
-	  	/*
+	  	/* TODO
 	  	//If there's no jean on the order screen.... redirect to the customizer page.
 	  	if($location.path().indexOf("/order") >= 0 && !Object.keys(jean.data).length){
 		  	$location.path('/customizer');
@@ -77,7 +78,7 @@
 
 	angular.module('bdApp')
     .config(['$routeProvider', '$locationProvider', config])
-    .run(['$rootScope', '$location', 'aws', run])
+    .run(['$rootScope', '$location', 'user', run])
 		.filter('spaceless',function() {
 	    return function(input) {
 	      if (input) {

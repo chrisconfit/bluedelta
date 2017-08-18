@@ -4,21 +4,20 @@
     .module('bdApp')
     .controller('homeCtrl', homeCtrl);
 			
-		homeCtrl.$inject = ['user'];
+		homeCtrl.$inject = ['$window', 'user'];
 		
 		
-    function homeCtrl (user) {
-	    
+    function homeCtrl ($window, user) { 	    
 			var vm = this;
 			vm.user = user.get();
-			
-	    user.login("cplefevre@gmail.com", "i@mF@tty23", function(user){
-		    console.log('second user');
+			console.log($window.localStorage.getItem("bdAccessToken"));
+			/*
+	    user.login("chris@confitdesign.com", "i@mF@tty23", function(data){
+		    vm.user = data;
+		    console.log(data);
 				console.log(vm.user);
 	    });
-	    
-			console.log('first user');
-	    console.log(vm.user);
+	   */
 	    	
     }
 

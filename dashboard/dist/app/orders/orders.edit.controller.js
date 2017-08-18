@@ -30,6 +30,7 @@ angular.module('inspinia')
 		vm.order.dueDate =  vm.order.dueDate ? vm.order.dueDate: null;
 		vm.orderUser = orderData.user || {};
     
+
     if(!vm.order.orderItems[0].jean.measurement) vm.order.orderItems[0].jean.measurement = {};
     
     vm.convertToCurrency = function(){

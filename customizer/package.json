@@ -32,6 +32,7 @@
     "gulp-closure-compiler": "^0.4.0",
     "gulp-compass": "^2.1.0",
     "gulp-concat": "^2.6.0",
+    "gulp-debug": "^3.1.0",
     "gulp-ng-annotate": "^1.1.0",
     "gulp-ng-html2js": "^0.2.0",
     "gulp-sourcemaps": "^1.5.2",

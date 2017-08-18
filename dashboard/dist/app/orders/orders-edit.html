@@ -13,15 +13,14 @@
       <div class="col-md-3">
         <!-- Profile Image -->
         <div class="ibox ibox-primary">
-					<!--<div class="ibox-title">
-						<h3>Jean Name: James' Slacks</h3
-					</div>-->
+					<div class="ibox-title" ng-if="ovm.order.orderItems[0].jean.name">
+						<h3>Jean Name: {{ovm.order.orderItems[0].jean.name}}</h3>
+					</div>
 					
           <div class="ibox-content ibox-profile">              
-           	<a ng-if="!ovm.orderUser.identityId" href="" ng-click="ovm.editUser()" class="btn btn-flat btn-primary btn-block">Add a Client</a>
-           	
-           	<img ng-if="ovm.order.orderItems[0].jean.imageURL" width="100%" ng-src="{{ovm.order.orderItems[0].jean.imageURL}}">
-            <ul ng-if="ovm.orderUser.identityId" class="list-group list-group-unbordered">
+	          <a ng-if="!ovm.orderUser.identityId" href="" ng-click="ovm.editUser()" class="btn btn-flat btn-primary btn-block">Add a Client</a>
+						<img ng-if="ovm.order.orderItems[0].jean.imageURL" width="100%" ng-src="{{ovm.order.orderItems[0].jean.imageURL}}">
+	          <ul ng-if="ovm.orderUser.identityId" class="list-group list-group-unbordered">
               <li class="list-group-item clearfix">
                 <b>Customer</b> <a href="#" ng-click="ovm.editUser()" class="pull-right">{{ovm.orderUser.name}}</a>
               </li>
@@ -234,9 +233,8 @@
     	<div class="col-md-9 pull-right">
         <div class="tabs-container">
 
-          <uib-tabset>
-          
-            <uib-tab ng-if="ovm.order.orderItems" heading="Timeline">
+          <uib-tabset active="'timeline'">
+            <uib-tab index="timeline" active="true" ng-if="ovm.order.orderItems[0].jean.jeanId" heading="Timeline">
               <div class="panel-body">
                 
                 <h3>Timeline</h3>
@@ -253,7 +251,7 @@
 								</div>
 														
 								<!--Timeline Display-->
-								<div ng-if="ovm.order.timeline.length" id="vertical-timeline" class="vertical-container dark-timeline">
+								<div id="vertical-timeline" class="vertical-container dark-timeline">
 									<div ng-repeat="t in ovm.order.timeline | orderBy: '-timestamp'"class="vertical-timeline-block">
 										<div class="vertical-timeline-icon navy-bg">
 											<i class="fa fa-circle bg-gray"></i>
@@ -271,7 +269,7 @@
               </div>
             </uib-tab>
             
-            <uib-tab heading="Measurements">
+            <uib-tab index="measurements" heading="Measurements">
               <div class="panel-body">
                      
                 <div class="row">

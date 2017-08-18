@@ -4,11 +4,11 @@
     .module('bdApp')
     .controller('closetCtrl', closetCtrl);
 
-  closetCtrl.$inject = ['$location', '$window', 'jean','popups', 'aws', 'bdAPI', '$scope', 'messages', 'loader'];
-  function closetCtrl($location, $window, jean, popups, aws, bdAPI, $scope, messages, loader) {
+  closetCtrl.$inject = ['$location', '$window', 'jean','popups', 'aws', 'bdAPI', '$scope', 'messages', 'loader', 'user'];
+  function closetCtrl($location, $window, jean, popups, aws, bdAPI, $scope, messages, loader, user) {
 	  
 
-	  loader.show("Getting your profile information...");
+	  //loader.show("Getting your profile information...");
 	  
     var vm = this;   
 		
@@ -95,7 +95,8 @@
     
     
     //Get user details and orders...
-    var identityID = aws.getCurrentIdentityId();
+ //     var identityID = aws.getCurrentIdentityId();
+ /*
     if (!identityID){ $location.path('/'); }
 	  else{
 			
@@ -106,13 +107,15 @@
 				
 			bdAPI.call('usersGet', identityID, function(result){
 				loader.hide();
-				vm.user = result.data;							
+				//vm.user = result.data;							
 				vm.userForm.data = angular.copy(result.data);	
 			});
 			
+			vm.user = user.get();
+			
     }
-	    	
-	    	
+	    	*/
+	    vm.user = user.get();	
 
 	    	
 				

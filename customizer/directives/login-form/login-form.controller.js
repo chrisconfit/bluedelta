@@ -4,9 +4,9 @@
     .module('bdApp')
     .controller('loginFormCtrl', loginFormCtrl);
 
-  loginFormCtrl.$inject = ['$location', 'aws', 'messages', '$scope'];
+  loginFormCtrl.$inject = ['$location', 'user', 'messages', '$scope', 'aws'];
   
-  function loginFormCtrl($location, aws, messages, $scope) {
+  function loginFormCtrl($location, user, messages, $scope, aws) {
     var logvm = this;
     
 		logvm.messages=messages.get();
@@ -33,17 +33,15 @@
 			messages.reset();
 	    if (logvm.validateLoginForm()){
 		    console.log('valid');
-	      aws.authenticateCognitoUser(email,password).then(
-					function(result){
-						if ($scope.callback) $scope.callback();
-						if ($scope.redirect) $location.path($scope.redirect);
-						if (!$scope.callback && !$scope.redirect)	$location.path('/customizer');
-					},
-					function(err){
-						if (err.message == "Incorrect username or password.") err.message = "Incorrect Email address or password."
-						messages.set(err.message,"error");
-					}
-				);
+	      user.login(email, password, function(){
+					if ($scope.callback) $scope.callback();
+					if ($scope.redirect) $location.path($scope.redirect);
+					if (!$scope.callback && !$scope.redirect)	$location.path('/customizer');
+				},
+				function(err){
+					if (err.message == "Incorrect username or password.") err.message = "Incorrect Email address or password."
+					messages.set(err.message,"error");
+				});
 		  }
 		}
 		

@@ -2,16 +2,16 @@
 (function() {
 
   angular
-    .module('bdApp')
-    .service('Nuser', Nuser);
-		
-	Nuser.$inject = ['$location', '$window', 'api'];
-  function Nuser($location, $window, api) {
-	  
-	  var user = {};
+    .module('user', ['api'])
+    .service('user', user);
+
+  user.$inject = ['$location', '$window', 'api'];
+  function user($location, $window, api) {
+		console.log("USERSIN");
+		console.log(api);
+	 var user = {};
 	  
 		var isLoggedIn = function(){
-			console.log("Here");
 			return $window.localStorage.getItem("bdAccessToken") ? true : false;
 		}
 	  
@@ -37,6 +37,7 @@
 			api.call('getCurrentUser', {}, function(userDetails){
 				console.log(userDetails);
 				set(userDetails);
+				console.log("IG OT MY USER FROM THE SERVICE");
 				console.log(user);
 			});
 		}
@@ -69,7 +70,7 @@
       logout:logout,
       setup: setup
     };
-    
-  }
 
+	}
+	
 })();

@@ -2,18 +2,17 @@
 (function() {
 
   angular
-    .module('bdApp')
-    .service('Nuser', Nuser);
-		
-	Nuser.$inject = ['$location', '$window', 'api'];
-  function Nuser($location, $window, api) {
-	  
-	  var user = {};
-	  
-		var isLoggedIn = function(){
-			console.log("Here");
-			return $window.localStorage.getItem("bdAccessToken") ? true : false;
-		}
+    .module('user', ['api'])
+    .service('user', user);
+
+  user.$inject = ['$location', '$window', 'api'];
+  function user($location, $window, api) {
+
+	 var user = {};
+	 	
+	  var isAdmin = function(){ return $window.localStorage.getItem("bdUserRole") > 0 ? true : false; }
+		var isLoggedIn = function(){ return $window.localStorage.getItem("bdAccessToken") ? true : false; }
+	  var getToken = function(){ return $window.localStorage.getItem("bdAccessToken"); }
 	  
 		var set = function(key, data){
 			
@@ -21,7 +20,6 @@
 			
 			if (typeof key === 'object'){
 				
-				console.log('setting whole user');
 				var userData = key;
 				for (obKey in userData){
         if(!userData.hasOwnProperty(obKey)) continue;
@@ -33,20 +31,22 @@
       return user;
     };
 		
-		var setup = function(){
+		var setup = function(callback){
 			api.call('getCurrentUser', {}, function(userDetails){
-				console.log(userDetails);
+				$window.localStorage.setItem("userRole", userDetails.roleId);
 				set(userDetails);
-				console.log(user);
+				if (callback) callback(userDetails);
 			});
 		}
 		
 		var login = function(username, password, success, error){
 			api.login(username, password)
 			.success(function(response){
-				console.log(response);
 				$window.localStorage.setItem("bdAccessToken", response.access_token);
-				if (success) success(response);
+				setup(function(userData){
+					$window.localStorage.setItem("bdUserRole", userData.role_id);
+					if (success) success(userData);
+				});
 			})
 			.error(function(err){
 				console.log(err);
@@ -56,20 +56,22 @@
 		
 		var logout = function(){
 			$window.localStorage.removeItem("bdAccessToken");
+			$window.localStorage.removeItem("bdUserRole");
 			user = {};
-			console.log("logged out");
 			$location.path("/login");
 		}
 	  
 	  return {
       get:function(){ return user;},
       isLoggedIn : isLoggedIn,
+      isAdmin : isAdmin,
       set: set,
       login:login,
       logout:logout,
-      setup: setup
+      setup: setup,
+      getToken, getToken
     };
-    
-  }
 
+	}
+	
 })();

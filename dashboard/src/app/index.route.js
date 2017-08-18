@@ -9,21 +9,38 @@
   function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 	  $locationProvider.html5Mode(true);
     $stateProvider
-    	
+    	/*
+	    .state("app", {
+	      url: "/app",
+	      abstract: true,
+	      authenticate: false,
+	      template: "<div ui-view></div>",
+	      resolve:{
+		      userData: function(user, $q){
+			      var defer = $q.defer();
+			      if (user.isLoggedIn()){
+				      user.setup(function(userData){
+					      defer.resolve(userData);
+				      });
+			      }
+			      else defer.resolve({});
+			      return defer.prmoise;
+			  	}
+	      }
+	    })
+
+    	*/
     	.state('login', {
         url: "/login",
         templateUrl: "app/login/login.html",
         authenticate: false
       })
     
-    
       .state('forgot_password', {
         url: "/forgot-password",
         templateUrl: "app/forgot_password/forgot_password.html",
         authenticate: false
-      })
-    
-    
+      }) 
     	
       .state('dashboard', {
         abstract: true,
@@ -31,6 +48,7 @@
         templateUrl: "app/components/common/content.html",
         authenticate: true
       })
+      
       .state('dashboard.main', {
         url: "/main",
         templateUrl: "app/main/main.html",
@@ -57,11 +75,13 @@
                 
 	      }
       })
+      
       .state('clients.list', {
         url: "/list",
         templateUrl: "app/clients/clients.html",
         authenticate: true
       })
+      
       .state('clients.add', {
         url: "/add",
         templateUrl: "app/clients/clients-add.html",
@@ -146,12 +166,14 @@
                 
 	      }
       })
+      
       .state('orders.list', {
         url: "/list",
         templateUrl: "app/orders/orders.html",
         authenticate: true,
         data: { pageTitle: 'Orders' },
       })
+      
       .state('orders.edit', {
         url: "/edit/:orderId",
         templateUrl: "app/orders/orders-edit.html",

@@ -10,6 +10,7 @@ var closureCompiler = require('gulp-closure-compiler');
 var browserSync = require('browser-sync');
 var browserSyncSpa = require('browser-sync-spa');
 var path = require('path');
+var debug = require('gulp-debug');
 
 
 var closureScripts = [
@@ -73,7 +74,9 @@ gulp.task('vendor_scripts', function() {
 		'./vendor/angular/*!(angular.min).js',
 		'./vendor/aws/aws-cognito-sdk.js',
 		'./vendor/aws/amazon-cognito-identity.js',
-		'./vendor/aws/aws-sdk.js'])
+		'./vendor/aws/aws-sdk.js',
+		'../shared-services/**/*.js'])
+		.pipe(debug())
 		.pipe(sourcemaps.init())
 		.pipe(uglify({mangle: true}).on('error', gutil.log))
 		.pipe(concat('./vendor.min.js'))  
@@ -96,7 +99,7 @@ gulp.task('watch', function() {
   watch(appScripts, function () {
     gulp.start('app_scripts');
   });
-  watch(['!./vendor/blue-delta-sdk/**/*.js','./vendor/**/*.js'], function () {
+  watch(['!./vendor/blue-delta-sdk/**/*.js','./vendor/**/*.js', '../shared-services/**/*.js'], function () {
     gulp.start('vendor_scripts');
   });
   watch(['./vendor/blue-delta-sdk/**/*.js'], function () {

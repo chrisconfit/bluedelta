@@ -27,6 +27,13 @@ gulp.task('inject', ['scripts', 'styles'], function () {
     path.join('!' + conf.paths.src, '/app/**/*.spec.js'),
     path.join('!' + conf.paths.src, '/app/**/*.mock.js'),
   ])
+  
+  var injectVendorScripts = gulp.src([
+  	path.join('../shared-services/**/*.js'),
+  ])
+  
+  
+  
   .pipe($.angularFilesort()).on('error', conf.errorHandler('AngularFilesort'));
 
   var injectOptions = {
@@ -35,6 +42,7 @@ gulp.task('inject', ['scripts', 'styles'], function () {
   };
 
   return gulp.src(path.join(conf.paths.src, '/*.html'))
+	  .pipe($.inject(injectVendorScripts, injectOptions))
     .pipe($.inject(injectStyles, injectOptions))
     .pipe($.inject(injectScripts, injectOptions))
     .pipe(wiredep(_.extend({}, conf.wiredep)))

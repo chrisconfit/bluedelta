@@ -1,19 +1,13 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('OrdersController', ['bdAPI', '$scope', 'aws', 'SweetAlert', function (bdAPI, $scope, aws, SweetAlert) {
+  .controller('OrdersController', ['bdAPI', '$scope', 'aws', 'SweetAlert', 'user', function (bdAPI, $scope, aws, SweetAlert, user) {
 
-
-		console.log(bdAPI);
-		
-		
-		
-		
-		
 
     var vm = this;
     
     
+    vm.user = user.get();
     
     vm.userNames = {
 	    "8144148a-2ad6-4353-8850-0e1b301fa227" : "Creighton Hardy",
@@ -117,7 +111,6 @@ angular.module('inspinia')
 		function pullOrders(callback){
 			var args = vm.pagination.nextURL ? [vm.pagination.ordersPerPage, vm.pagination.nextURL] : vm.pagination.ordersPerPage;
 			bdAPI.call('ordersList', args, function(result){
-				console.log(result);
 				vm.orders.push.apply(vm.orders, result.data.items);
 				if (result.data.next){
 					vm.pagination.nextURL=result.data.next;
