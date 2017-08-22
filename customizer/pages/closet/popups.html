@@ -121,15 +121,10 @@
 		<a class="popup-closer" href="" ng-click="vm.popups.editUser = false"></a>
 		<div class="popup-content-inner">
 		
-			<div class="pop-group user-form" ng-init="inputs = [{label:'Email', field:'email'},{label:'Phone', field:'phone'}]">
+			<div class="pop-group user-form" ng-init="inputs = [{label:'First Name', field:'first_name'},{label:'Last Name', field:'last_name'},{label:'Email', field:'email'},{label:'Phone', field:'phone'}]">
 				
 				<h3>Basic Information</h3>
-				
-				<div class="input-container">
-					<label class='fixed-width'>Name:</label>
-					<span class="user-value">{{vm.user.first_name}} {{vm.user.last_name}}</span>
-				</div>
-			
+							
 				<div class="input-container" ng-repeat="i in inputs">
 					<label class='fixed-width'>{{i.label}}:</label>
 					<span ng-if="!vm.userForm.editing[i.field]">

@@ -1,90 +1,90 @@
 [
 	{
 		"id":1,
-		"location":"Baltimore, MD"
+		"city":"Baltimore", "state":"MD"
 	},
 	{
 		"id":2,
-		"location":"Birmingjam, AL"
+		"city":"Birmingjam", "state":"AL"
 	},
 	{
 		"id":3,
-		"location":"Bowling Green, KY"
+		"city":"Bowling Green", "state":"KY"
 	},
 	{
 		"id":4,
-		"location":"Charlotte, NC"
+		"city":"Charlotte", "state":"NC"
 	},
 	{
 		"id":5,
-		"location":"Chicago, IL"
+		"city":"Chicago", "state":"IL"
 	},
 	{
 		"id":6,
-		"location":"Washington, D.C."
+		"city":"Washington", "state":"D.C."
 	},
 	{
 		"id":7,
-		"location":"Cincinnati, OH"
+		"city":"Cincinnati", "state":"OH"
 	},
 	{
 		"id":8,
-		"location":"Dallas, TX"
+		"city":"Dallas", "state":"TX"
 	},
 	{
 		"id":9,
-		"location":"Dayton, OH"
+		"city":"Dayton", "state":"OH"
 	},
 	{
 		"id":10,
-		"location":"Detroit, MI"
+		"city":"Detroit", "state":"MI"
 	},
 	{
 		"id":11,
-		"location":"London, U.K."
+		"city":"London", "state":"U.K."
 	},
 	{
 		"id":12,
-		"location":"Los Angeles, CA"
+		"city":"Los Angeles", "state":"CA"
 	},
 	{
 		"id":13,
-		"location":"Louisville, KY"
+		"city":"Louisville", "state":"KY"
 	},
 	{
 		"id":14,
-		"location":"Memphis, TN"
+		"city":"Memphis", "state":"TN"
 	},
 	{
 		"id":15,
-		"location":"Raleigh, NC"
+		"city":"Raleigh", "state":"NC"
 	},
 	{
 		"id":16,
-		"location":"Richmond, VA"
+		"city":"Richmond", "state":"VA"
 	},
 	{
 		"id":17,
-		"location":"San Francisco, CA"
+		"city":"San Francisco", "state":"CA"
 	},
 	{
 		"id":18,
-		"location":"Scottsdale, AZ"
+		"city":"Scottsdale", "state":"AZ"
 	},
 	{
 		"id":19,
-		"location":"St. Louis, MO"
+		"city":"St. Louis", "state":"MO"
 	},
 	{
 		"id":20,
-		"location":"St. Petersburg, FL"
+		"city":"St. Petersburg", "state":"FL"
 	},
 	{
 		"id":21,
-		"location":"Toronto, Canada"
+		"city":"Toronto", "state":"Canada"
 	},
 	{
 		"id":22,
-		"location":"Vancouver, B.C."
+		"city":"Vancouver", "state":"B.C."
 	}
 ]

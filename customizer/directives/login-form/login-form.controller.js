@@ -36,7 +36,7 @@
 	      user.login(email, password, function(){
 					if ($scope.callback) $scope.callback();
 					if ($scope.redirect) $location.path($scope.redirect);
-					if (!$scope.callback && !$scope.redirect)	$location.path('/customizer');
+					if (!$scope.callback && !$scope.redirect)	$location.path('/closet');
 				},
 				function(err){
 					if (err.message == "Incorrect username or password.") err.message = "Incorrect Email address or password."

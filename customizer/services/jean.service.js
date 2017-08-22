@@ -3,9 +3,9 @@
 
   angular
     .module('bdApp')
-    .service('jean', ['$routeParams', '$window', 'bdAPI', '$q', 'aws', 'jsonData', jean]);
+    .service('jean', ['$routeParams', '$window', 'bdAPI', '$q', 'aws', 'jsonData', 'api', jean]);
 
-  function jean($routeParams, $window, bdAPI, $q, aws, jsonData) {
+  function jean($routeParams, $window, bdAPI, $q, aws, jsonData, api) {
 
 
 		/*
@@ -312,13 +312,33 @@
 		
 		var save = function(){
 			
+			console.log("saving jean...");
+			
 			var defer = $q.defer();
 			var jean = this;
 			var jeanData = jean.get();
 			var filename = jean.getDataCode();
 			filename += ".jpg";
+
+			var blob = this.createThumb(jeanData).then(function(blob){
+				jeanData.blob = blob;
+				console.log(blob);
+				api.call('createMyJean', jeanData, function(result){
+					console.log("We have created the jean");
+					defer.resolve(result);
+				}, function(err){
+					defer.reject(err);
+				});//api.call();
+				
+			}, function(err){
+				defer.reject(err);
+			}); //createThumb();
 			
-			this.createThumb(jeanData).then( function(imageURL){
+			return defer.promise;
+			/*
+
+			
+			
 				
 		    var userData = aws.getCurrentUserFromLocalStorage();
 				if (userData){		
@@ -350,8 +370,8 @@
 				}
 				
 	    });
-			
-			return defer.promise;
+			*/
+
 		}
 		
 			

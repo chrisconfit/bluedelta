@@ -4,15 +4,16 @@
     .module('bdApp')
     .controller('registerFormCtrl', registerFormCtrl);
 
-  registerFormCtrl.$inject = ['$scope', '$location', 'aws', '$sce', 'messages'];
+  registerFormCtrl.$inject = ['$scope', '$location', 'user', '$sce', 'messages'];
   
-  function registerFormCtrl($scope, $location, aws, $sce, messages) {
+  function registerFormCtrl($scope, $location, user, $sce, messages) {
     var regvm = this;
     
 		regvm.messages=messages.get();
 		
 		regvm.credentials = {
-      name : "",
+      first_name : "",
+      last_name:"",
       email : "",
       password : ""
     };
@@ -40,7 +41,7 @@
 			}
 
 			
-			if (!regvm.credentials.email || !regvm.credentials.name || !regvm.credentials.password || !regvm.credentials.passwordConfirm){
+			if (!regvm.credentials.email || !regvm.credentials.first_name || !regvm.credentials.last_name || !regvm.credentials.password || !regvm.credentials.passwordConfirm){
 				messages.set("All fields are required", "error");
 				return false;
 			}
@@ -68,20 +69,15 @@
 		//Register User
     regvm.registerUser = function () {
 	    messages.reset();
-	    
 	    if (regvm.validateRegistrationForm()){
-		    
-	      aws.signupForApplication(regvm.credentials.email, regvm.credentials.name, regvm.credentials.password).then(
-	      	function(result){
-						if ($scope.callback) $scope.callback(regvm.credentials);
-						if ($scope.redirect) $location.path($scope.redirect);
-						if (!$scope.callback && !$scope.redirect)	$location.path('/login');    
-		      },   
-		      function(err){
-				    messages.set(err.message, "error");
-			    }
-			  );			  
-			  
+		    user.register(regvm.credentials.email, regvm.credentials.password, regvm.credentials.first_name, regvm.credentials.last_name, function(result){
+					if ($scope.callback) $scope.callback(regvm.credentials);
+					if ($scope.redirect) $location.path($scope.redirect);
+					if (!$scope.callback && !$scope.redirect)	$location.path('/closet');    
+		    },   
+		    function(err){
+				  messages.set(err.message, "error");
+			  });			  
 		  }
     };	
     

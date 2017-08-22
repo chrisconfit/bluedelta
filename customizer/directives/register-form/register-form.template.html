@@ -1,7 +1,11 @@
 <form novalidate class="cft-form register-form" ng-submit="regvm.registerUser()">
-  <div ng-class="{active: regvm.credentials.name.length}" class="input-group">
-    <input type="text" class="form-control" id="name" ng-model="regvm.credentials.name">
-    <label for="name">Full name</label>
+  <div ng-class="{active: regvm.credentials.first_name.length}" class="input-group">
+    <input type="text" class="form-control" id="name" ng-model="regvm.credentials.first_name">
+    <label for="name">First name</label>
+  </div>
+  <div ng-class="{active: regvm.credentials.last_name.length}" class="input-group">
+    <input type="text" class="form-control" id="name" ng-model="regvm.credentials.last_name">
+    <label for="name">Last name</label>
   </div>
   <div ng-class="{active: regvm.credentials.email.length}" class="input-group">
     <input type="text" class="form-control" id="email" ng-model="regvm.credentials.email">

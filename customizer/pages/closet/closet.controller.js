@@ -4,8 +4,8 @@
     .module('bdApp')
     .controller('closetCtrl', closetCtrl);
 
-  closetCtrl.$inject = ['$location', '$window', 'jean','popups', 'aws', 'bdAPI', '$scope', 'messages', 'loader', 'user'];
-  function closetCtrl($location, $window, jean, popups, aws, bdAPI, $scope, messages, loader, user) {
+  closetCtrl.$inject = ['$location', '$window', 'jean','popups', 'aws', 'bdAPI', '$scope', 'messages', 'loader', 'user', 'api'];
+  function closetCtrl($location, $window, jean, popups, aws, bdAPI, $scope, messages, loader, user, api) {
 	  
 
 	  //loader.show("Getting your profile information...");
@@ -21,13 +21,12 @@
 		vm.jean = jean;
 		
 		vm.data={}//jsonData.getData();
-		vm.jeans = vm.data.jeansList;
+		//vm.jeans = vm.data.jeansList;
 		
-
+		
 		vm.onload=function(){
 			$scope.vm = vm;	
 		}
-		
 		
 		//Edit User
 		vm.userForm = {};
@@ -79,19 +78,32 @@
 
 		
 		vm.userForm.save = function(field){
-			if (vm.user[field] == "") vm.user[field] = null;
+			//if (vm.user[field] == "") vm.user[field] = null;
 			if (vm.userForm.validate(field, vm.user[field])){
-				vm.userForm.saving[field] = true;
-				bdAPI.call('usersUpdate', [vm.user.identityId, vm.user], function(result){
+				console.log(vm.user);
+				user.update(vm.user, function(result){
 					vm.userForm.saving[field] = false;
 					vm.userForm.editing[field] = false;
 					vm.userForm.data[field] = vm.user[field];
-					$scope.$apply();
-				});	
+				});
 			}
 		}
 		
+		//Set up orders
 		vm.orders = [];		
+   
+    api.call('getMyOrders', {}, function(result){
+	    console.log(result);
+	    vm.orders = result;
+    });
+    
+   	//Set up jeans
+		vm.jeans = [];		
+   
+    api.call('getMyJeans', {}, function(result){
+	    console.log(result);
+	    vm.jeans = result;
+    });
     
     
     //Get user details and orders...
