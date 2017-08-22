@@ -8,6 +8,119 @@
 		<div class="row">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
+					<h5>Filters</h5>
+				</div>
+				<div class="ibox-content">
+						<div class="row">
+
+							<div class="col-sm-4">
+							  <div class="form-group">
+							    <label class="control-label" for="order_id">Order ID</label>
+							    <input type="text" id="order_id" name="order_id" value="" placeholder="Order ID" class="form-control">
+							  </div>
+							</div>
+							
+							<div class="col-sm-4">
+							  <div class="form-group">
+							    <label>Status</label>
+							    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+							      <option selected="selected">All</option>
+							      <option>New</option>
+							      <option>Awaiting Payment</option>
+							      <option>Processing</option>
+							      <option>Shipped</option>
+							      <option>Completed</option>
+							    </select>
+							  </div>
+							</div>
+							                
+							<div class="col-sm-4">
+							  <div class="form-group">
+							    <label>Type</label>
+							    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+							      <option selected="selected">All</option>
+							      <option>Blue Delta</option>
+							      <option>Vendor Fitted</option>
+							      <option>Cloned from Non-BD Jean</option>
+							      <option>Cloned from BD Jean</option>
+							      <option>Re-Order</option>
+							    </select>
+							  </div>
+							</div>
+                
+            </div>
+            <div class="row">
+
+
+								<div class="col-sm-4">
+                  <div class="form-group">
+                    <label class="font-normal">Range select</label>
+										<div uib-dropdown>
+											<a class="btn btn-primary btn-sm" uib-dropdown-toggle>
+											    Select range
+											</a>
+											<div>
+												<span>Selected date: <br/> {{a | dateInMillis | date: 'mm-dd-yyyy'}} - {{b | dateInMillis | date: 'mm-dd-yyyy'}}</span>
+											</div>
+											<div uib-dropdown-menu="" ng-click="$event.preventDefault();$event.stopPropagation()">
+												<div date-range view="date" min-view="date" format="YYYY-MM-DD" start="a" end="b" auto-close="true"></div>
+											</div>
+										</div>
+                  </div>
+								</div>
+								
+								<div class="col-sm-4">
+								  <div class="form-group">
+								    <label>Vendor</label>
+								    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+								      <option selected="selected">All</option>
+								      <option>Tom James</option>
+											<option>Tim Brown - FHG</option>
+											<option>Scott Toulas - Raphael Wardrobe Design</option>
+											<option>Cedric Hanis</option>
+											<option>Joseph Mapes</option>
+											<option>Greg Brown</option>
+											<option>Kipper Clothing</option>
+											<option>Roberto Revilla</option>
+											<option>Butler Custom Clothing</option>
+											<option>Brogue and Cuff</option>
+											<option>Florida Jean</option>
+											<option>Garrison Bespoke</option>
+											<option>Oliver Rowan Bespoke</option>
+											<option>Commonwealth Clothiers</option>
+											<option>Roosevelt and Co</option>
+											<option>Porter Wilson</option>
+											<option>Cedrick Harris</option>
+											<option>Haymakers</option>
+											<option>11th State</option>
+											<option>Langston</option>
+								    </select>
+								  </div>
+								</div>
+								
+								<div class="col-sm-4">
+									<div class="form-group">
+								    <label>Results per page</label>
+								    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+									    <option>10</option>
+								      <option selected="selected">25</option>
+								      <option>50</option>
+											<option>100</option>
+											<option>200</option>
+								    </select>
+								  </div>
+								</div>
+								
+            </div>
+
+					</div>
+				
+				
+			</div>
+		</div>
+		<div class="row">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
 					<h5>BD Orders</h5>
 					
 				</div>

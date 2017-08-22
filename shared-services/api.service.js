@@ -139,6 +139,10 @@
 		var postThread = function(data){
 			return httpReq("POST", "/api/threads", data);
 		}
+		
+		var postTailor = function(data){
+			return httpReq("POST", "/api/tailors", data);
+		}
 	  
 	  
 	  
@@ -153,6 +157,7 @@
       
       createFabric: createFabric,
       postThread:postThread,
+      postTailor:postTailor,
       
       getCurrentUser:getCurrentUser,
       createMyJeans:createMyJeans,

@@ -11,19 +11,7 @@
 			var vm = this;
 		
 
-			for(i = 0 ; i<jsonData.fabric.length; i++){
-				var data = jsonData.fabric[i];
-
-				data.id = data.fabricId;
-				delete data['fabricId'];
-
-				
-				api.call("createFabric", data, function(result){
-					console.log("Created!");
-					console.log(result);
-				});
-				
-			}
+			
 			
 			
 			for(i = 0 ; i<jsonData.tailors.length; i++){
@@ -36,12 +24,12 @@
 				//data.layer = "/";
 				//data.thumb = "/";
 					console.log(data);
-				/*
-				api.call("postThread", data, function(result){
+				
+				api.call("postTailor", data, function(result){
 					console.log("Created!");
 					console.log(result);
 				});
-				*/
+				
 				
 			}
 			

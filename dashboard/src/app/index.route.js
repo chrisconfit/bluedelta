@@ -160,6 +160,14 @@
             {
                 name: 'oitozero.ngSweetAlert',
                 files: ['assets/scripts/sweetalert/angular-sweetalert.min.js']
+            },
+            {
+	              name: 'daterangepicker',
+	              files: ['assets/scripts/daterangepicker/angular-daterangepicker.js']
+            },
+            {
+              name: 'datePicker',
+              files: ['assets/styles/datapicker/angular-datapicker.css','assets/scripts/datapicker/angular-datepicker.js']
             }
 					]);
 					}

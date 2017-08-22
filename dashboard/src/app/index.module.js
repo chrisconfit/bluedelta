@@ -10,5 +10,11 @@
 				console.log(input.slice(begin, begin + limit));
 		    return input.slice(begin, begin + limit);
 		  };
+	  })
+	  .filter('dateInMillis', function() {
+	    return function(dateString) {
+	      return Date.parse(dateString);
+	    };
 	  });
+
 })();
