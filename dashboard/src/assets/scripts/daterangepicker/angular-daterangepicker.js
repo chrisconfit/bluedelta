@@ -5,7 +5,7 @@
 
     picker.constant('dateRangePickerConfig', {
         separator: ' - ',
-        format: 'YYYY-MM-DD',
+        format: 'YYYY/MM/DD',
         clearLabel: 'Clear'
     });
 

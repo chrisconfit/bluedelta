@@ -1,24 +1,50 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('AddressController', ['$scope', '$uibModalInstance', 'data', 'address', 'order', 'saveOrder',
-  function ($scope, $uibModalInstance, data, address, order, saveOrder) {
+  .controller('AddressController', ['$scope', '$uibModalInstance', 'data', 'address', 'order', 'save',
+  function ($scope, $uibModalInstance, data, address, order, save) {
 	  
 	 	console.log(data);
 		$scope.addresses=address;
 		$scope.order = order;
 		$scope.addressType = data.addressType;
 		$scope.icon = data.icon;
+		$scope.addData={primaryIndex:null};
+		$scope.newAdd = {
+	    editing:false,
+	    form:{
+		    address_line_1:"",
+		    address_line_2:"",
+		    city:"",
+		    state:"",
+		    zip:""		    
+	    },
+    }
+	
+		
+		if(!$scope.addresses.length){ $scope.newAdd.editing=true; }
+		else {
+			for(var i=0; i < $scope.addresses.length; i++){
+				console.log(address[i].primary);
+				if ($scope.addresses[i].primary==1){
+					$scope.addData.primaryIndex=i;
+					break;
+				}
+			}
+		}
+		console.log($scope.addData);
 		
     $scope.ok = function () {
-	    if ($scope.addressType == "Shipping"){
-	    	$scope.order.shippingAddress = angular.copy($scope.newAdd.data);
+	    if ($scope.addData.primaryIndex == null){
+		    var saveAdd=$scope.newAdd.form;
 	    }
 	    else{
-		    $scope.order.billingAddress = angular.copy($scope.newAdd.data);
+		    var saveAdd = $scope.addresses[$scope.addData.primaryIndex];
 	    }
-    	saveOrder();
-      $uibModalInstance.close();
+	    
+    	save(saveAdd, function(){
+	    	$uibModalInstance.close();	
+    	});
     };
 
     $scope.cancel = function () {
@@ -31,17 +57,7 @@ angular.module('inspinia')
     }
     
     
-    $scope.newAdd = {
-	    data:{},
-	    editing:false,
-	    form:{
-		    addressLine1:"",
-		    addressLine2:"",
-		    city:"",
-		    state:"",
-		    zip:""		    
-	    },
-    }
+
 
 
     $scope.states = [

@@ -130,7 +130,7 @@
 					<span ng-if="!vm.userForm.editing[i.field]">
 						<span class="user-value editable" ng-if="vm.user[i.field]">
 							{{vm.user[i.field]}}
-							<i class="fa fa-pencil" ng-click="vm.userForm.editing[i.field]=true;"></i>
+							<i class="fa fa-pencil" ng-click="vm.userForm.editField([i.field])"></i>
 						</span>
 						<span ng-if="!vm.user[i.field]"  class="empty-value-button" ng-click="vm.userForm.editing[i.field]=true;">
 							Add {{i.label}} <i class="fa fa-add-plus-circle"></i>
@@ -161,7 +161,7 @@
 						<input type="password" class="form-control" id="newPassConfirm" ng-model="vm.passForm.newPassConfirm">
 						<label for="newPassConfirm">Confirm New Password</label>
 					</div>
-					<button ng-click="vm.changePassword()"class="btn">Change Password</button> 	<button  ng-click="vm.passForm.clear()" class="btn">Close</button>
+					<button ng-click="vm.changePassword()"class="btn">Change Password</button> 	<button ng-click="vm.passForm.clear()" class="btn">Close</button>
 				</form>
 				
 										

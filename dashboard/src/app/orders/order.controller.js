@@ -18,6 +18,45 @@ angular.module('inspinia')
 	    "3b9b047a-f148-4f53-9306-bd93139d7b1c": "James Kelleway"
     }
     
+    
+    
+    
+    //Filter Orders
+    vm.filters = {
+	    "status":"All",
+	    "orderId":"",
+	    "vendor":"All",
+	    "dateRange":{startDate: null, endDate: null},
+	    "resultsPerPage":25,
+	    "type":"All"
+    };
+    
+    function serializeFilters(obj){
+	    var result = [];
+			for (var property in obj)
+				if(!obj[property] || obj[property]=="All" || obj[property]==null || obj[property] =="") continue;
+        else result.push(encodeURIComponent(property) + "=" + encodeURIComponent(obj[property]));
+			return result.join("&");
+    }
+    vm.filterOrders = function(){
+	    var filters = angular.copy(vm.filters);
+	    var range = filters.dateRange;
+	    delete filters.dateRange;
+	    filters.startDate = range.startDate;
+	    filters.endDate = range.endDate;
+	    console.log(filters);
+	    console.log(serializeFilters(filters));
+    }
+    console.log(vm.filters);
+    
+    
+    
+    
+    
+    
+    
+    //Delete Orders
+    
     var deleteOrderBox = {
       title: "Are you sure?",
       text: "This order will be deleted forever!",
@@ -29,7 +68,6 @@ angular.module('inspinia')
       closeOnConfirm: false,
       closeOnCancel: true 
     }
-    
     
 		vm.deleteOrder = function(orderId){
 			SweetAlert.swal(deleteOrderBox,
@@ -45,11 +83,6 @@ angular.module('inspinia')
 		  );
 		}
 		
-
-
- 
-
- 
 		vm.ordersRemove = function(orderId){
 			for(var i=0; i<vm.orders.length; i++){
 				if (vm.orders[i].orderId == orderId){

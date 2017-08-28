@@ -32,6 +32,7 @@
 		vm.userForm = {};
 		vm.userForm.editing={};
 		vm.userForm.saving={};
+		vm.userForm.data = {};
 		vm.userForm.feedback={
 			"type":"",
 			"message":"",
@@ -41,8 +42,13 @@
 		vm.userForm.cancel = function(field){
 			vm.userForm.editing[field] = false;
 			vm.user[field] = vm.userForm.data[field];
-		}
+		};
 		
+		vm.userForm.editField = function(field){
+			vm.userForm.data[field] = angular.copy(vm.user[field]);
+			vm.userForm.editing[field]=true;
+			
+		}
 		
 		//Validation functions
 		function validateEmail(email) {
@@ -84,7 +90,7 @@
 				user.update(vm.user, function(result){
 					vm.userForm.saving[field] = false;
 					vm.userForm.editing[field] = false;
-					vm.userForm.data[field] = vm.user[field];
+					//vm.userForm.data[field] = vm.user[field];
 				});
 			}
 		}
@@ -172,16 +178,18 @@
     vm.changePassword = function () {
 	    messages.reset();
 	    if (vm.validatePasswordForm()){
-		    
-				aws.changePassword(vm.user.email, vm.passForm.currentPass, vm.passForm.newPass).then(
-					function(result){
-						vm.passForm.clear();
-						messages.set("Password successfully changed.", "success");
-					},
-					function(err){	
-						messages.set(err.message, "error");
-					}
-				);
+		    var passwordData ={
+			    id:vm.user.id,
+			    password:vm.passForm.newPass,
+			    old_password:vm.passForm.currentPass
+			  }
+				user.update(passwordData, function(result){
+					vm.passForm.clear();
+					messages.set("Password successfully changed.", "success");
+				},
+				function(err){	
+					messages.set(err.message, "error");
+				});
 		  }
     };	
 		

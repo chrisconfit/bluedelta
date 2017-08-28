@@ -9,12 +9,12 @@
 			<div class="single-address" ng-repeat="add in addresses track by $index">
 				<div class="radio radio-primary">
 			    <input type="radio" id="address_{{$index}}" id="name_{{$index}}"
-			    ng-value="add"  
-			    ng-model="newAdd.data"
-			    ng-click="newAdd.editing=false">
-			    <label for="address_{{$index}}"> 	
-			    	{{add.addressLine1}}
-						<br ng-if="add.addressLine2">{{add.addressLine2}}
+			    ng-value="$index"  
+					ng-model="addData.primaryIndex"\
+					ng-click="newAdd.editing=false">
+			    <label for="address_{{$index}}">
+			    	{{add.address_line_1}}
+						<br ng-if="add.address_line_2">{{add.address_line_2}}
 						<br>{{add.city}}, {{add.state}} {{add.zip}}
 					</label>
 				</div>
@@ -24,9 +24,8 @@
 			
 			<div class="radio radio-primary">
 				<input name="newAdd_toggle" id="newAdd_toggle" type="radio"  
-				ng-value="newAdd.form"
-				ng-model="newAdd.data"
-				ng-click="newAdd.editing=true">
+				ng-click="newAdd.editing=true; addData.primaryIndex=null"
+				ng-checked="newAdd.editing">
 			  <label for="newAdd_toggle">Add New Address</label>
 			</div>  
 				
@@ -36,13 +35,13 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">Street 1</label>
 						<div class="col-sm-10">
-							<input type="text" ng-model="newAdd.form.addressLine1" class="form-control">
+							<input type="text" ng-model="newAdd.form.address_line_1" class="form-control">
 						</div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">Street 2</label>
 						<div class="col-sm-10">
-							<input type="text" ng-model="newAdd.form.addressLine2" class="form-control">
+							<input type="text" ng-model="newAdd.form.address_line_2" class="form-control">
 						</div>
           </div>
           <div class="form-group">
@@ -81,8 +80,8 @@
 <!--
 	<div class="add-form">	
 	<div ng-if="!editing" ng-repeat="add in user.address | filter:{primary:'true'} | limitTo:1">
-		<span class='add-line'>{{add.addressLine1}}</span>
-		<span class='add-line' ng-if="add.addressLine2">{{add.addressLine2}}</span>
+		<span class='add-line'>{{add.address_line_1}}</span>
+		<span class='add-line' ng-if="add.address_line_2">{{add.address_line_2}}</span>
 		<span class='add-line'>{{add.city}}, {{add.state}} {{add.zip}}</span>
 		<a href="" ng-click="startEditing()">Change</a>
 	</div>
@@ -92,8 +91,8 @@
 		
 		<div ng-if="!active" class="single-address" ng-repeat="add in user.address track by $index">
 			<a href="" ng-click="choosePrimary($index)" ng-class="{checked:add.primary}" class="check-box small"></a>
-			<span class='add-line'>{{add.addressLine1}}</span>
-			<span class='add-line' ng-if="add.addressLine2">{{add.addressLine2}}</span>
+			<span class='add-line'>{{add.address_line_1}}</span>
+			<span class='add-line' ng-if="add.address_line_2">{{add.address_line_2}}</span>
 			<span class='add-line'>{{add.city}}, {{add.state}} {{add.zip}}</span>
 			<div class="icon-controls">
 				<i ng-click="open($index)" class="fa fa-pencil"></i>
@@ -105,12 +104,12 @@
 		<a ng-if="!active" class="address-action-link" ng-click="stopEditing()" href="">Done</a>						
 	
 		<form ng-if="active" class="cft-form">
-			<div ng-class="{active: model.addressLine1.length}" class="input-group">
-		    <input type="text" class="form-control" id="addLine1" ng-model="model.addressLine1">
+			<div ng-class="{active: model.address_line_1.length}" class="input-group">
+		    <input type="text" class="form-control" id="addLine1" ng-model="model.address_line_1">
 		    <label for="addLine1">Address Line 1</label>
 		  </div>
-		  <div ng-class="{active: model.addressLine2.length}" class="input-group">
-		    <input type="text" class="form-control" id="addLine2" ng-model="model.addressLine2">
+		  <div ng-class="{active: model.address_line_2.length}" class="input-group">
+		    <input type="text" class="form-control" id="addLine2" ng-model="model.address_line_2">
 		    <label for="addLine2">Address Line 2</label>
 		  </div>
 		  <div ng-class="{active: model.city.length}" class="input-group">

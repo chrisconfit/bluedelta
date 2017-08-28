@@ -1,78 +1,68 @@
-<div ng-controller="OrdersController as ovm">
-
-	<div class="row wrapper border-bottom white-bg page-heading">
-		<h2>Orders</h2>
-	</div>
+	<div ng-controller="OrdersController as ovm">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<h2>Orders</h2>
+		</div>
+		<div class="wrapper wrapper-content animated fadeInRight">
+		
+			<div class="row">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>Filters</h5>
+					</div>
+					<div class="ibox-content">
+						{{ovm.filters}}
+							<div class="row">
 	
-	<div class="wrapper wrapper-content animated fadeInRight">
-		<div class="row">
-			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<h5>Filters</h5>
-				</div>
-				<div class="ibox-content">
-						<div class="row">
-
-							<div class="col-sm-4">
-							  <div class="form-group">
-							    <label class="control-label" for="order_id">Order ID</label>
-							    <input type="text" id="order_id" name="order_id" value="" placeholder="Order ID" class="form-control">
-							  </div>
-							</div>
+								<div class="col-sm-4">
+								  <div class="form-group">
+								    <label class="control-label" for="order_id">Order ID</label>
+								    <input type="text" ng-model="ovm.filters.orderId" id="order_id" name="order_id" class="form-control">
+								  </div>
+								</div>
 							
-							<div class="col-sm-4">
-							  <div class="form-group">
-							    <label>Status</label>
-							    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-							      <option selected="selected">All</option>
-							      <option>New</option>
-							      <option>Awaiting Payment</option>
-							      <option>Processing</option>
-							      <option>Shipped</option>
-							      <option>Completed</option>
-							    </select>
-							  </div>
-							</div>
-							                
-							<div class="col-sm-4">
-							  <div class="form-group">
-							    <label>Type</label>
-							    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-							      <option selected="selected">All</option>
-							      <option>Blue Delta</option>
-							      <option>Vendor Fitted</option>
-							      <option>Cloned from Non-BD Jean</option>
-							      <option>Cloned from BD Jean</option>
-							      <option>Re-Order</option>
-							    </select>
-							  </div>
-							</div>
-                
-            </div>
-            <div class="row">
+								<div class="col-sm-4">
+								  <div class="form-group">
+								    <label>Status</label>
+								    <select class="form-control" style="width: 100%;" ng-model="ovm.filters.status">
+								      <option>All</option>
+								      <option>New</option>
+								      <option>Awaiting Payment</option>
+								      <option>Processing</option>
+								      <option>Shipped</option>
+								      <option>Completed</option>
+								    </select>
+								  </div>
+								</div>
+								                
+								<div class="col-sm-4">
+								  <div class="form-group">
+								    <label>Type</label>
+								    <select class="form-control" ng-model="ovm.filters.type" style="width: 100%;">
+								      <option>All</option>
+								      <option>Blue Delta</option>
+								      <option>Vendor Fitted</option>
+								      <option>Cloned from Non-BD Jean</option>
+								      <option>Cloned from BD Jean</option>
+								      <option>Re-Order</option>
+								    </select>
+								  </div>
+								</div>
+	                
+	            </div>
+	            <div class="row">
 
 
 								<div class="col-sm-4">
                   <div class="form-group">
-                    <label class="font-normal">Range select</label>
-										<div uib-dropdown>
-											<a class="btn btn-primary btn-sm" uib-dropdown-toggle>
-											    Select range
-											</a>
-											<div>
-												<span>Selected date: <br/> {{a | dateInMillis | date: 'mm-dd-yyyy'}} - {{b | dateInMillis | date: 'mm-dd-yyyy'}}</span>
-											</div>
-											<div uib-dropdown-menu="" ng-click="$event.preventDefault();$event.stopPropagation()">
-												<div date-range view="date" min-view="date" format="YYYY-MM-DD" start="a" end="b" auto-close="true"></div>
-											</div>
-										</div>
+                    <label>Date Range</label>
+										<input date-range-picker="" class="form-control date-picker" type="text" ng-model="ovm.filters.dateRange">
                   </div>
 								</div>
 								
 								<div class="col-sm-4">
 								  <div class="form-group">
 								    <label>Vendor</label>
-								    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+								    <select class="form-control" style="width: 100%;" ng-model="ovm.filters.vendor">
 								      <option selected="selected">All</option>
 								      <option>Tom James</option>
 											<option>Tim Brown - FHG</option>
@@ -101,23 +91,28 @@
 								<div class="col-sm-4">
 									<div class="form-group">
 								    <label>Results per page</label>
-								    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-									    <option>10</option>
-								      <option selected="selected">25</option>
-								      <option>50</option>
-											<option>100</option>
-											<option>200</option>
+								    <select class="form-control" style="width: 100%;" ng-model="ovm.fiilters.resultsPerPage">
+									    <option ng-value="10">10</option>
+								      <option ng-val="25">25</option>
+								      <option ng-value="50">50</option>
+											<option ng-value="100">100</option>
+											<option ng-value="200">200</option>
 								    </select>
 								  </div>
 								</div>
 								
             </div>
-
-					</div>
-				
-				
-			</div>
-		</div>
+            
+            <div class="row">
+	            <div class="col-sm-3 pull-right">
+		            <button class="btn btn-flat btn-primary btn-block" ng-click="ovm.newQuery()"><i class="fa fa-filter"></i> Filter</button>
+	            </div>
+            </div> 
+            
+					</div><!--ibox-content-->
+			</div><!--ibox-->
+		</div><!--.row-->
+		
 		<div class="row">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">

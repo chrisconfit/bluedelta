@@ -8,28 +8,100 @@
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 	  $locationProvider.html5Mode(true);
-    $stateProvider
-    	/*
-	    .state("app", {
-	      url: "/app",
-	      abstract: true,
-	      authenticate: false,
-	      template: "<div ui-view></div>",
-	      resolve:{
-		      userData: function(user, $q){
-			      var defer = $q.defer();
-			      if (user.isLoggedIn()){
-				      user.setup(function(userData){
-					      defer.resolve(userData);
-				      });
-			      }
-			      else defer.resolve({});
-			      return defer.prmoise;
-			  	}
-	      }
-	    })
+	  
+	  
+	  
+	  
+	  /*
+		* Resolves Base
+		*/
+		
+		var editplugins = [
+		  { insertBefore: '#loadBefore', name: 'toaster', files: ['assets/scripts/toastr/toastr.min.js', 'assets/styles/toastr/toastr.min.css']},
+	    { files: ['assets/styles/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css']},
+	    { name: 'datePicker', files: ['assets/styles/datapicker/angular-datapicker.css','assets/scripts/datapicker/angular-datepicker.js']
+	    }
+	  ];
+	  
+	  var editScreenResolve = {
+		  appData: function(api){return api.getData();},
+		  loadPlugin: function ($ocLazyLoad) { return $ocLazyLoad.load(editplugins)}
+	  }
+	 
+	 
+		
+		
+		/*
+		* Client Resolves
+		*/
+		
+	  var clientAddScreenResolve = angular.copy(editScreenResolve);
+	  clientAddScreenResolve.userData = function(){return {}};
+      
+    var clientEditScreenResolve = angular.copy(editScreenResolve);
+    clientEditScreenResolve.userData = function($stateParams, $location, api, $q){
+			if ($stateParams.clientId === undefined || $stateParams.clientId == ""){
+				console.log("no clients!!!");
+				$location.path('clients/list');
+			}
 
-    	*/
+			else{
+				var defer = $q.defer();
+				api.call('userGet', $stateParams.clientId,
+					function(result){	defer.resolve(result);	},
+					function(err){ defer.reject(err); }
+				);
+		   	return defer.promise; 
+			}
+		}   
+		
+		
+		
+		
+		/*
+		* Order Resolves
+		*/
+		
+		var orderAddScreenResolve = angular.copy(editScreenResolve);
+	  clientAddScreenResolve.orderData = function(){return {}}
+		   
+		var orderEditScreenResolve = angular.copy(editScreenResolve);
+		orderEditScreenResolve.orderData = function($stateParams, $location, bdAPI, $q){
+			if ($stateParams.orderId === undefined || $stateParams.orderId == ""){
+				console.log("no order!!!");
+				$location.path('orders/list');
+			}
+			else{
+				var defer = $q.defer();
+				bdAPI.call('ordersGet', [$stateParams.orderId],
+					function(result){		
+						console.log("route");
+						console.log(result);		
+						var returnData = {"order": result.data};
+						console.log("This user's ID: "+result.data.userId);
+						bdAPI.call('usersGet', [result.data.userId],
+							function(user){
+								returnData.user = user.data;
+								defer.resolve(returnData);
+							},function(err){
+								defer.resolve(returnData);
+							}
+						)
+					},
+					function(err){defer.reject(err);}
+				);
+				return defer.promise; 
+			}	
+		}
+  
+	  
+	  
+		/*
+		* Routes
+		*/	  
+		
+    $stateProvider
+ 
     	.state('login', {
         url: "/login",
         templateUrl: "app/login/login.html",
@@ -63,13 +135,8 @@
         resolve: { 
 	        loadPlugin: function ($ocLazyLoad) {
 						return $ocLazyLoad.load([
-							{	
-	                files: ['assets/scripts/sweetalert/sweetalert.min.js', 'assets/styles/sweetalert/sweetalert.css']
-	            },
-	            {
-	                name: 'oitozero.ngSweetAlert',
-	                files: ['assets/scripts/sweetalert/angular-sweetalert.min.js']
-	            }
+							{	files: ['assets/scripts/sweetalert/sweetalert.min.js', 'assets/styles/sweetalert/sweetalert.css']},
+	            {name: 'oitozero.ngSweetAlert', files: ['assets/scripts/sweetalert/angular-sweetalert.min.js']}
 						]);
 					}
                 
@@ -84,66 +151,18 @@
       
       .state('clients.add', {
         url: "/add",
-        templateUrl: "app/clients/clients-add.html",
-        authenticate: true
+        templateUrl: "app/clients/clients-edit.html",
+        controller: "ClientsEditController as cvm",
+        authenticate: true,
+        resolve: clientAddScreenResolve
       })
       
       .state('clients.edit', {
         url: "/edit/:clientId",
         templateUrl: "app/clients/clients-edit.html",
-        authenticate: false,
+        authenticate: true,
         controller: "ClientsEditController as cvm",
-        resolve: {
-	        jsonData: function($http, $q){
-		      	var data=[
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/vendor.json'),
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/rep.json'),
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/thread.json'),
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/fabric.json'),		      	
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/gender.json')
-						]
-		      	return $q.all(data);
-		      	    			      	
-	        },
-	        
-	        userData: function($stateParams, $location, bdAPI, $q){
-						
-						if ($stateParams.userId === undefined || $stateParams.userId == "")
-							$location.path('users/list');
-
-						else{
-							var defer = $q.defer();
-							bdAPI.call('usersGet', [$stateParams.userId],
-								function(result){				
-									var returnData = {"user": result.data};
-									returnData.client = client.data;
-									defer.resolve(returnData);									
-								},
-								function(err){
-									defer.reject(err);
-								}
-							);
-					   	return defer.promise; 
-						}
-						
-    			},
-	        loadPlugin: function ($ocLazyLoad) {
-            return $ocLazyLoad.load([
-	            {
-								insertBefore: '#loadBefore',
-								name: 'toaster',
-								files: ['assets/scripts/toastr/toastr.min.js', 'assets/styles/toastr/toastr.min.css']
-	            },
-	            { 
-		            files: ['assets/styles/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css']
-		          },
-              {
-                name: 'datePicker',
-                files: ['assets/styles/datapicker/angular-datapicker.css','assets/scripts/datapicker/angular-datepicker.js']
-              }
-            ])
-	        }
-	      }
+        resolve: clientEditScreenResolve
       })
 
       .state('orders', {
@@ -154,21 +173,11 @@
         resolve: { 
 	        loadPlugin: function ($ocLazyLoad) {
 					return $ocLazyLoad.load([
-				    {	
-                files: ['assets/scripts/sweetalert/sweetalert.min.js', 'assets/styles/sweetalert/sweetalert.css']
-            },
-            {
-                name: 'oitozero.ngSweetAlert',
-                files: ['assets/scripts/sweetalert/angular-sweetalert.min.js']
-            },
-            {
-	              name: 'daterangepicker',
-	              files: ['assets/scripts/daterangepicker/angular-daterangepicker.js']
-            },
-            {
-              name: 'datePicker',
-              files: ['assets/styles/datapicker/angular-datapicker.css','assets/scripts/datapicker/angular-datepicker.js']
-            }
+				    {	files: ['assets/scripts/sweetalert/sweetalert.min.js', 'assets/styles/sweetalert/sweetalert.css']},
+            { name: 'oitozero.ngSweetAlert', files: ['assets/scripts/sweetalert/angular-sweetalert.min.js'] },
+            { serie: true, files: ['assets/scripts/daterangepicker/daterangepicker.js', 'assets/styles/daterangepicker/daterangepicker-bs3.css'] },
+            { name: 'daterangepicker', files: ['assets/scripts/daterangepicker/angular-daterangepicker.js']},
+            { name: 'datePicker', files: ['assets/styles/datapicker/angular-datapicker.css','assets/scripts/datapicker/angular-datepicker.js'] }
 					]);
 					}
                 
@@ -185,107 +194,17 @@
       .state('orders.edit', {
         url: "/edit/:orderId",
         templateUrl: "app/orders/orders-edit.html",
-        authenticate: false,
+        authenticate: true,
         controller: "OrdersEditController as ovm",
-        resolve: {
-	        jsonData: function($http, $q){
-		      	var data=[
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/vendor.json'),
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/rep.json'),
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/thread.json'),
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/fabric.json'),		      	
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/gender.json')
-						]
-		      	return $q.all(data);
-		      	    			      	
-	        },
-	        
-	        orderData: function($stateParams, $location, bdAPI, $q){
-						
-						if ($stateParams.orderId === undefined || $stateParams.orderId == "")
-							$location.path('orders/list');
-
-						else{
-							var defer = $q.defer();
-							bdAPI.call('ordersGet', [$stateParams.orderId],
-								function(result){		
-									console.log("route");
-									console.log(result);		
-									var returnData = {"order": result.data};
-									console.log("This user's ID: "+result.data.userId);
-									bdAPI.call('usersGet', [result.data.userId],
-										function(user){
-											returnData.user = user.data;
-											defer.resolve(returnData);
-										},function(err){
-											defer.resolve(returnData);
-										}
-									)
-								},
-								function(err){
-									defer.reject(err);
-								}
-							);
-					   	return defer.promise; 
-						}
-						
-    			},
-	        loadPlugin: function ($ocLazyLoad) {
-            return $ocLazyLoad.load([
-	            {
-								insertBefore: '#loadBefore',
-								name: 'toaster',
-								files: ['assets/scripts/toastr/toastr.min.js', 'assets/styles/toastr/toastr.min.css']
-	            },
-	            { 
-		            files: ['assets/styles/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css']
-		          },
-              {
-                name: 'datePicker',
-                files: ['assets/styles/datapicker/angular-datapicker.css','assets/scripts/datapicker/angular-datepicker.js']
-              }
-            ])
-	        }
-	      }
+        resolve: orderEditScreenResolve
       })
-      
       
       .state('orders.add', {
         url: "/add",
         templateUrl: "app/orders/orders-edit.html",
-        authenticate: false,
+        authenticate: true,
         controller: "OrdersEditController as ovm",
-        resolve: {
-	        jsonData: function($http, $q){
-		      	var data=[
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/vendor.json'),
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/rep.json'),
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/thread.json'),
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/fabric.json'),		      	
-		      		$http.get('http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/gender.json')
-						]
-		      	return $q.all(data);
-		      	    			      	
-	        },
-	        
-	        orderData: function(){ return {} },
-	        loadPlugin: function ($ocLazyLoad) {
-            return $ocLazyLoad.load([
-	            {
-								insertBefore: '#loadBefore',
-								name: 'toaster',
-								files: ['assets/scripts/toastr/toastr.min.js', 'assets/styles/toastr/toastr.min.css']
-	            },
-	            { 
-		            files: ['assets/styles/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css']
-		          },
-              {
-                name: 'datePicker',
-                files: ['assets/styles/datapicker/angular-datapicker.css','assets/scripts/datapicker/angular-datepicker.js']
-              }
-            ])
-	        }
-	      }
+        resolve: orderAddScreenResolve
       })      
       
     $urlRouterProvider.otherwise('orders/list');

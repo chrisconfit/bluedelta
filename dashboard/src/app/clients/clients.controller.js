@@ -1,10 +1,9 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('ClientsController',  ['bdAPI', '$scope', 'aws', 'SweetAlert', function (bdAPI, $scope, aws, SweetAlert) {
+  .controller('ClientsController',  ['$scope', 'aws', 'SweetAlert', 'api', function ($scope, aws, SweetAlert, api) {
     var vm = this;
     
-		
 		
 		var deleteUserBox = {
       title: "Are you sure?",
@@ -22,10 +21,9 @@ angular.module('inspinia')
 		vm.deleteUser = function(userId){
 			SweetAlert.swal(deleteUserBox,
 		    function (isConfirm) {
-			    console.log("UID");
-			    console.log(userId);
 	        if (isConfirm) {
-		        bdAPI.call('usersDelete', userId, function(result){
+		        api.call('usersDelete', userId, function(result){
+			        console.log(result);
 							vm.usersRemove(userId);
 	          	SweetAlert.swal("Deleted!", "User "+userId+" has been deleted.", "success");
 	          });
@@ -36,7 +34,7 @@ angular.module('inspinia')
 
 		vm.usersRemove = function(userId){
 			for(var i=0; i<vm.users.length; i++){
-				if (vm.users[i].identityId == userId){
+				if (vm.users[i].id == userId){
 					vm.users.splice(i, 1);
 					return;
 				}
@@ -44,83 +42,309 @@ angular.module('inspinia')
 		}
 		
     
-  		//Get users
+  		
+		
+		
+		
+		
+		
+		
+		vm.changePage = function(page){
+			console.log("new page: "+page);
+			vm.filters.page=parseInt(page);
+			vm.users=[];
+			pullUsers(vm.filters);
+		}
+		
 		vm.pagination = {
-			usersPerPage:20,
-			prev:false,
-			next:false,
-			nextURL:"",
-			page:1,
-			loaded:0
-		};
-		vm.pagination.startIndex = (vm.pagination.page-1)*vm.pagination.usersPerPage;
-		
-		vm.findIndex = function(userId){
-	    for(var i = 0; i < vm.users.length; i++) {
-	      if(vm.users[i].identityId === userId) return i;
-	    }
-	    return -1;
+			total:0,
+			current:0
 		}
 		
-		function incrementPage(inc){
-			vm.pagination.page = vm.pagination.page+inc;
-			vm.pagination.startIndex = (vm.pagination.page-1)*vm.pagination.usersPerPage;
-			if (inc > 0) vm.pagination.prev=true;
-			else vm.pagination.next=true;
-		}
-		
-		
-		vm.pagination.changePage = function(dir){
-			
-			if (vm.pagination.page == 1 && dir=="prev") return false;
-			if (vm.pagination.page == 2 && dir=="prev") vm.pagination.prev=false;
-			
-			//put in rules for the last page
-			
-			if (dir =="next"){
-				if (vm.pagination.page < vm.pagination.loaded) incrementPage(1);
-				else{
-					pullUsers(function(){
-						incrementPage(1);
-					})
-				}
-			}else{
-				incrementPage(-1);				
-			}	
-		}
-		
-		
-
-		function pullUsers(callback){
-			var args = vm.pagination.nextURL ? [vm.pagination.usersPerPage, vm.pagination.nextURL] : vm.pagination.usersPerPage;
-			bdAPI.call('usersList', args, function(result){
+		function pullUsers(filters, callback){
+			//var data = vm.pagination.nextURL ? [vm.pagination.usersPerPage, vm.pagination.nextURL] : vm.pagination.usersPerPage;
+			api.call('usersList', filters, function(result){
+				console.log("pulled!");
 				console.log(result);
-				vm.users.push.apply(vm.users, result.data.items);
-				if (result.data.next){
-					vm.pagination.nextURL=result.data.next;
-					vm.pagination.next = true;
-				}
-				else vm.pagination.next = false;
+				if (vm.pagination.total == 0 ) vm.pagination.total = parseInt(result.total)/vm.filters.results_per_page;
+				vm.pagination.current = parseInt(result.page);
+				vm.users.push.apply(vm.users, result.results);
 				vm.pagination.loaded++;	
-				if (callback){
-				 callback();
-				}
-				$scope.$apply();
+				if (callback) callback();
 			});
 		}
 		
 		//Init users
 		vm.users = [];
-		pullUsers();    
-
-    		
+		vm.filters = {
+			"results_per_page" : 25,
+			"page": 1, 
+			"orderby":"last_name",
+			"order":"ASC",
+			"state":"",
+		}
+		
+		pullUsers(vm.filters);    
+    
+    vm.changeSort = function(col, asc){
+	    var direction = asc ? "ASC" : "DESC";
+	    vm.filters.orderby=col;
+	    vm.filters.order = direction;
+			vm.newQuery();
+    }
         
+    vm.newQuery = function(){
+	    vm.users = [];
+	    vm.filters.page=1;
+	    for (var i=0; i<vm.filters.length; i++){
+		    if (vm.filters[i] == "") delete vm.filters[i];
+	    }
+	    pullUsers(vm.filters);
+    }
 
 
 		
 
-    vm.userName = 'Example user';
-    vm.helloText = 'Welcome in INSPINIA Gulp SeedProject';
-    vm.descriptionText = 'It is an application skeleton for a typical AngularJS web app. You can use it to quickly bootstrap your angular webapp projects.';
-
+    vm.states = [
+	    {
+		    "name":"None",
+		    "abbreviation":""
+	    },
+	    {
+	        "name": "Alabama",
+	        "abbreviation": "AL"
+	    },
+	    {
+	        "name": "Alaska",
+	        "abbreviation": "AK"
+	    },
+	    {
+	        "name": "American Samoa",
+	        "abbreviation": "AS"
+	    },
+	    {
+	        "name": "Arizona",
+	        "abbreviation": "AZ"
+	    },
+	    {
+	        "name": "Arkansas",
+	        "abbreviation": "AR"
+	    },
+	    {
+	        "name": "California",
+	        "abbreviation": "CA"
+	    },
+	    {
+	        "name": "Colorado",
+	        "abbreviation": "CO"
+	    },
+	    {
+	        "name": "Connecticut",
+	        "abbreviation": "CT"
+	    },
+	    {
+	        "name": "Delaware",
+	        "abbreviation": "DE"
+	    },
+	    {
+	        "name": "District Of Columbia",
+	        "abbreviation": "DC"
+	    },
+	    {
+	        "name": "Federated States Of Micronesia",
+	        "abbreviation": "FM"
+	    },
+	    {
+	        "name": "Florida",
+	        "abbreviation": "FL"
+	    },
+	    {
+	        "name": "Georgia",
+	        "abbreviation": "GA"
+	    },
+	    {
+	        "name": "Guam",
+	        "abbreviation": "GU"
+	    },
+	    {
+	        "name": "Hawaii",
+	        "abbreviation": "HI"
+	    },
+	    {
+	        "name": "Idaho",
+	        "abbreviation": "ID"
+	    },
+	    {
+	        "name": "Illinois",
+	        "abbreviation": "IL"
+	    },
+	    {
+	        "name": "Indiana",
+	        "abbreviation": "IN"
+	    },
+	    {
+	        "name": "Iowa",
+	        "abbreviation": "IA"
+	    },
+	    {
+	        "name": "Kansas",
+	        "abbreviation": "KS"
+	    },
+	    {
+	        "name": "Kentucky",
+	        "abbreviation": "KY"
+	    },
+	    {
+	        "name": "Louisiana",
+	        "abbreviation": "LA"
+	    },
+	    {
+	        "name": "Maine",
+	        "abbreviation": "ME"
+	    },
+	    {
+	        "name": "Marshall Islands",
+	        "abbreviation": "MH"
+	    },
+	    {
+	        "name": "Maryland",
+	        "abbreviation": "MD"
+	    },
+	    {
+	        "name": "Massachusetts",
+	        "abbreviation": "MA"
+	    },
+	    {
+	        "name": "Michigan",
+	        "abbreviation": "MI"
+	    },
+	    {
+	        "name": "Minnesota",
+	        "abbreviation": "MN"
+	    },
+	    {
+	        "name": "Mississippi",
+	        "abbreviation": "MS"
+	    },
+	    {
+	        "name": "Missouri",
+	        "abbreviation": "MO"
+	    },
+	    {
+	        "name": "Montana",
+	        "abbreviation": "MT"
+	    },
+	    {
+	        "name": "Nebraska",
+	        "abbreviation": "NE"
+	    },
+	    {
+	        "name": "Nevada",
+	        "abbreviation": "NV"
+	    },
+	    {
+	        "name": "New Hampshire",
+	        "abbreviation": "NH"
+	    },
+	    {
+	        "name": "New Jersey",
+	        "abbreviation": "NJ"
+	    },
+	    {
+	        "name": "New Mexico",
+	        "abbreviation": "NM"
+	    },
+	    {
+	        "name": "New York",
+	        "abbreviation": "NY"
+	    },
+	    {
+	        "name": "North Carolina",
+	        "abbreviation": "NC"
+	    },
+	    {
+	        "name": "North Dakota",
+	        "abbreviation": "ND"
+	    },
+	    {
+	        "name": "Northern Mariana Islands",
+	        "abbreviation": "MP"
+	    },
+	    {
+	        "name": "Ohio",
+	        "abbreviation": "OH"
+	    },
+	    {
+	        "name": "Oklahoma",
+	        "abbreviation": "OK"
+	    },
+	    {
+	        "name": "Oregon",
+	        "abbreviation": "OR"
+	    },
+	    {
+	        "name": "Palau",
+	        "abbreviation": "PW"
+	    },
+	    {
+	        "name": "Pennsylvania",
+	        "abbreviation": "PA"
+	    },
+	    {
+	        "name": "Puerto Rico",
+	        "abbreviation": "PR"
+	    },
+	    {
+	        "name": "Rhode Island",
+	        "abbreviation": "RI"
+	    },
+	    {
+	        "name": "South Carolina",
+	        "abbreviation": "SC"
+	    },
+	    {
+	        "name": "South Dakota",
+	        "abbreviation": "SD"
+	    },
+	    {
+	        "name": "Tennessee",
+	        "abbreviation": "TN"
+	    },
+	    {
+	        "name": "Texas",
+	        "abbreviation": "TX"
+	    },
+	    {
+	        "name": "Utah",
+	        "abbreviation": "UT"
+	    },
+	    {
+	        "name": "Vermont",
+	        "abbreviation": "VT"
+	    },
+	    {
+	        "name": "Virgin Islands",
+	        "abbreviation": "VI"
+	    },
+	    {
+	        "name": "Virginia",
+	        "abbreviation": "VA"
+	    },
+	    {
+	        "name": "Washington",
+	        "abbreviation": "WA"
+	    },
+	    {
+	        "name": "West Virginia",
+	        "abbreviation": "WV"
+	    },
+	    {
+	        "name": "Wisconsin",
+	        "abbreviation": "WI"
+	    },
+	    {
+	        "name": "Wyoming",
+	        "abbreviation": "WY"
+	    }
+		];
   }]);

@@ -24,12 +24,12 @@
 				//data.layer = "/";
 				//data.thumb = "/";
 					console.log(data);
-				
+				/*
 				api.call("postTailor", data, function(result){
 					console.log("Created!");
 					console.log(result);
 				});
-				
+				*/
 				
 			}
 			

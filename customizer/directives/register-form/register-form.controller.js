@@ -76,6 +76,7 @@
 					if (!$scope.callback && !$scope.redirect)	$location.path('/closet');    
 		    },   
 		    function(err){
+			    if (err.message = "Duplicate email address") err.message = "This user is already registered.";
 				  messages.set(err.message, "error");
 			  });			  
 		  }

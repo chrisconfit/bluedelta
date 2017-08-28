@@ -29,7 +29,9 @@
 		
 		//Call an API function and handle data
 		var call = function(func, data, success, error){
-			
+			console.log("calling "+func);
+			console.log("with...");
+			console.log(data);
 			accessToken = $window.localStorage.getItem('bdAccessToken');
 			
 			if (noTokenNecessary.indexOf(func) < 0 && !accessToken){
@@ -46,7 +48,7 @@
 				$rootScope.$$phase || $rootScope.$apply();
 			})
 			.error(function(err, status, headers) {	
-				console.log(err.message);
+				console.log(err);
 				if (error) error(err);
 			});
 			
@@ -60,20 +62,27 @@
 		  var token = $window.localStorage.getItem('bdAccessToken');
 		  if (token) headers.Authorization = "Bearer "+token;
       
-     console.log(headers);
-			console.log(data);
-		  
 			var httpConfig = {
 				"method": method,
 				"url" : config.url+path,
 				"headers" : headers,
-				"data":data
 			}	
+			if(data){
+				var dataKey = method=="POST" ? "data":"params"
+				httpConfig[dataKey] = data;
+			}
 			
 			console.log(httpConfig);
 		  return $http(httpConfig);
 		}
 		
+		
+		
+		
+		/*
+		* USER
+		*/
+
 
 		/*
 		* AUTH
@@ -111,6 +120,12 @@
 	  /*
 		*  CURRENT USER DATA
 		*/
+		var postAddress = function(data){
+			console.log('posting add');
+			console.log(data);
+			return httpReq("POST", "/api/users/current/address", data);
+		}
+		
 		var createMyJeans = function(data){
 		  return httpReq("POST", "/api/users/current/jeans", data);
 	  }
@@ -145,12 +160,48 @@
 		}
 	  
 	  
+	  /*
+		* Admin API
+		*/
 	  
-	  
+	  var usersList = function(data){
+			return httpReq("GET", "/api/users", data);
+	  }
 
+		var userGet = function(userId){
+			return httpReq("GET", "/api/users/"+userId);
+		}
 		
+		var usersDelete = function(userId){
+			return httpReq("DELETE", "/api/users/"+userId);
+		}
+		
+		var usersCreateAddress = function(data){
+			return httpReq("POST", "/api/users/"+data.userId+"/address", data.address);
+		}
+		
+		var usersPost = function(data){
+			
+			var path = "/api/users/"
+			if (data.id) path += data.id;
+			console.log(data);
+			console.log(path);
+			return httpReq("POST", path, data);			
+		}
+		
+		
+		
+		var data = {};
+		httpReq("GET", "/api/data").success(function(result){
+			console.log(result);
+			data = result;
+		}).error(function(err){
+			console.log(err);
+		});
 		
     return {
+	    getData:function(){ return data;},
+	    
       call : call,
       login: login,
       register: register,
@@ -163,8 +214,14 @@
       createMyJeans:createMyJeans,
       getMyOrders:getMyOrders,
       getMyJeans:getMyJeans,
-      updateMe: updateMe
+      updateMe: updateMe,
+      postAddress:postAddress,
       
+      usersList:usersList,
+      userGet:userGet,
+      usersDelete:usersDelete,
+      usersCreateAddress:usersCreateAddress,
+      usersPost:usersPost,
     };
     
   }

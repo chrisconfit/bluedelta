@@ -79,7 +79,7 @@
 		    <h3 class="box-title">Your Profile</h3>
 		    <div class="box-content">
 			    <h4>{{vm.user.first_name}} {{vm.user.last_name}}</h4>
-			    <h5 ng-repeat="add in vm.user.address | filter:{primary:'true'} | limitTo:1">{{add.city}}, {{add.state}}</h5>
+			    <h5 ng-repeat="add in vm.user.addresses | filter:{primary:'1'} | limitTo:1">{{add.city}}, {{add.state}}</h5>
 			    <a ng-click="vm.popups.editUser=true" href="">Edit Account info <i class="fa fa-edit"></i></a>
 		    </div>
 	    </div>

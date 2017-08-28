@@ -4,9 +4,9 @@
     .module('bdApp')
     .controller('addressChoiceCtrl', addressChoiceCtrl);
 
-  addressChoiceCtrl.$inject = ['$scope', '$filter', 'bdAPI', 'messages'];
+  addressChoiceCtrl.$inject = ['$scope', '$filter', 'bdAPI', 'messages', 'api'];
   
-  function addressChoiceCtrl($scope, $filter, bdAPI, messages) {
+  function addressChoiceCtrl($scope, $filter, bdAPI, messages, api) {
 	  /*
 		*
 		* This controller is designed to be a child of closet.controller. It refernces $scope.$scope.user throughout and needs to inherit $scope.user from a parent
@@ -18,25 +18,21 @@
 		$scope.addForm = {};
 		$scope.model = {};
 		
-		var addFormFields = ['addressLine1','addressLine2','city','state','zip'];
+		var addFormFields = ['address_line_1','address_line_2','city','state','zip'];
 		
 		
 		//Choose Primary Address
 		$scope.choosePrimary = function(index){
-			for (a = 0; a< $scope.user.address.length; a++){
-				$scope.user.address[a].primary = (a == index ? true :false);
+			for (a = 0; a< $scope.user.addresses.length; a++){
+				$scope.user.addresses[a].primary = (a == index ? 1 :0);
 			}
-			bdAPI.saveUser($scope.user).then(
-				function(result){
-					console.log('saved');
-				}
-			);
+			//TODO ... update primary;
 		}
 
 		
 		$scope.startEditing = function(){
 			//Bring Primary address to the top
-			$scope.user.address = $filter('orderBy')($scope.user.address, '-primary');
+			$scope.user.addresses = $filter('orderBy')($scope.user.addresses, '-primary');
 			$scope.editing = true;
 		}
 		
@@ -44,25 +40,23 @@
 			$scope.editing = false;
 		}
 
-
-
 		$scope.editAdd = {};
 		
 		//Open Address Form
 		$scope.open = function(index){
 
 			$scope.active = true;
-			if (!$scope.user.address) $scope.user.address = [];
+			if (!$scope.user.addresses) $scope.user.addresses = [];
 			//New Address
 			if (typeof index === 'undefined'){
 				$scope.model = {};
-				$scope.editAdd.index = $scope.user.address.push($scope.model) -1;
+				$scope.editAdd.index = $scope.user.addresses.push($scope.model) -1;
 				$scope.editAdd.data = null;	
 			}
 			
 			//Editing Existing...
 			else{
-				$scope.model = $scope.user.address[index];
+				$scope.model = $scope.user.addresses[index];
 				$scope.editAdd.index = index;
 				$scope.editAdd.data =  angular.copy($scope.model);
 			}
@@ -78,15 +72,14 @@
 		}
 		
 		function removeAddress(index){
-			$scope.user.address.splice(index, 1);
+			$scope.user.addresses.splice(index, 1);
 		}
 	
-		
 		//Clear Address Form
 		$scope.clear = function(){
 			var dataObj = $scope.editAdd.data;
 			if (dataObj == null) removeAddress($scope.editAdd.index);//Remove Address
-			else $scope.user.address[$scope.editAdd.index] = $scope.editAdd.data;//Reset Address
+			else $scope.user.addresses[$scope.editAdd.index] = $scope.editAdd.data;//Reset Address
 			resetForm();			
 		}
 		
@@ -94,34 +87,29 @@
 		//Remove Address and save user
 		$scope.remove = function(index){
 			
-			if ($scope.user.address.length < 2){
+			if ($scope.user.addresses.length < 2){
 				messages.set("You can't remove your last address", "error");
 				return false;	
 			}
 			
-			var wasPrimary = $scope.user.address[index].primary;	
+			var wasPrimary = $scope.user.addresses[index].primary;	
 			removeAddress(index);
 			if(wasPrimary) $scope.choosePrimary(0);
-			bdAPI.saveUser($scope.user);
+			
+			//TODO: 
 		}
 		
 		//Save Form
 		$scope.save = function(){
-		 	var primary = $scope.user.address.filter(function(add){
+			var primary = $scope.user.addresses.filter(function(add){
 				return add.primary == true;
- 			});
- 			if (!primary.length) $scope.user.address[0].primary=true;
- 				
-			bdAPI.saveUser($scope.user).then(
-				function(result){
-					$scope.newAdd = null;
-					$scope.active = false;
-					$scope.model = {};
-					$scope.$apply();
-				}
-			);
-			
-			
+			});
+			if (!primary.length) $scope.user.addresses[0].primary=true;
+			api.call('postAddress', $scope.model, function(result){	
+				$scope.newAdd = null;
+				$scope.active = false;
+				$scope.model = {};	
+			});
 		}
 		
 		
