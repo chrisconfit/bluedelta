@@ -12,10 +12,11 @@
     vm.tailors = apiData.tailors;
 
 		function getPrimaryAddress(addresses){
-			if(!addresses) return false;
+			if(!addresses || !addresses.length) return false;
 			for (var i=0; i<addresses.length; i++) {
 				if (addresses[i].primary == true) return addresses[i].id;
 			}
+
 			console.log('no address marked as primary... returning first result');
 			return addresses[0].id;
 		}

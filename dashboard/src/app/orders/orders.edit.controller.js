@@ -1,20 +1,18 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('OrdersEditController', ['$filter', '$q', 'bdAPI', '$scope', 'aws', 'jsonData', 'orderData', 'toaster', '$uibModal','api', 
-  function ($filter, $q, bdAPI, $scope, aws, jsonData, orderData, toaster, $uibModal, api) {
+  .controller('OrdersEditController', ['$filter', '$q', 'bdAPI', '$scope', 'aws', 'orderData', 'toaster', '$uibModal','api', 'appData',
+  function ($filter, $q, bdAPI, $scope, aws, orderData, toaster, $uibModal, api, appData) {
 
     var vm = this;
     
-    vm.user = {
-	    "name":"Chris LeFevre"
-    }
+
     
 		var newOrderData = {
 			fitDate:"",
 			dob:"",
 			dueDate:"",
-			orderItems:[
+			order_items:[
 				{
 					jean:{
 						measurement:{}
@@ -22,16 +20,16 @@ angular.module('inspinia')
 				}
 			]
 		}
-		var newOrder = orderData.order ? false : true;
-		vm.order = newOrder ? newOrderData : orderData.order;
-		vm.originalJean = newOrder ? null : angular.copy(vm.order.orderItems[0].jean);
+		console.log("orderData");
+		console.log(orderData);
+		
+		vm.newOrder = orderData ? false : true;
+		vm.order = vm.newOrder ? newOrderData : orderData;
+		vm.originalJean = vm.newOrder ? null : angular.copy(vm.order.order_items[0]);
 		vm.order.fitDate =  vm.order.fitDate ? vm.order.fitDate: null;
 		vm.order.dob =  vm.order.dob ? vm.order.dob: null;
 		vm.order.dueDate =  vm.order.dueDate ? vm.order.dueDate: null;
 		vm.orderUser = orderData.user || {};
-    
-
-    if(!vm.order.orderItems[0].jean.measurement) vm.order.orderItems[0].jean.measurement = {};
     
     vm.convertToCurrency = function(){
 	    price = vm.order.price.replace("$","");
@@ -42,10 +40,7 @@ angular.module('inspinia')
     
     
     vm.lookup = function(key, value, data){
-			for (i=0; i<data.length; i++){
-				if (data[i][key]==value) return data[i];	
-    	}
-    	return false;
+			return false;
     }
     
     
@@ -79,13 +74,10 @@ angular.module('inspinia')
 			
 		
     //init json data from route resolve...
-    var jd = {};
-		for(var i=0; i<jsonData.length; i++){
-			var key = jsonData[i].config.url.replace(".json","").replace("http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/", "");
-			jd[key] = jsonData[i].data;
-		}
-		vm.data = jd;
-		
+
+		vm.data = appData;
+		console.log("here it is");
+		console.log(appData);
 		
 		vm.timeFromNow = function(timestamp){
 			return moment(timestamp).fromNow();
@@ -96,18 +88,15 @@ angular.module('inspinia')
 			message:null
 		}
 		
-		
-		vm.jeanEditMode= newOrder ? true : false;
-		
+		//Edit Jean details...
+		vm.EditMode= vm.newOrder ? true : false;
 		vm.beginJeanEdit = function(){
-			console.log("begin");
-			vm.jeanEditMode = true;
-			vm.jeanBeforeEdit = angular.copy(vm.order.orderItems[0].jean);
+			vm.EditMode = true;
+			vm.BeforeEdit = angular.copy(vm.order.order_items[0]);
 		}
-		
 		vm.clearJeanEdit = function(){
-			vm.jeanEditMode = false;
-			vm.order.orderItems[0].jean = angular.copy(vm.jeanBeforeEdit);
+			vm.EditMode = false;
+			vm.order.order_items[0] = angular.copy(vm.BeforeEdit);
 		}
 		
 
@@ -130,7 +119,7 @@ angular.module('inspinia')
 		        return vm.saveOrder;
 	        },
           address: function () {
-            return vm.orderUser.address;
+            return vm.orderUser.addresses;
           },
           order : function() {
 	          return vm.order;
@@ -205,7 +194,7 @@ angular.module('inspinia')
 	}   
     
  function searchAndDraw(key, cntxt, images){
-		for(i=0; i<images.length; i++){
+		for(var i=0; i<images.length; i++){
 			var image = images[i];
 			if(image.src.indexOf("/"+key+"/") > -1){
 				cntxt.drawImage(image,0,0,600,696);
@@ -294,7 +283,7 @@ angular.module('inspinia')
 	}
 	
 	function jeanHasChanged(){
-		var o1 = vm.order.orderItems[0].jean;
+		var o1 = vm.order.order_items[0];
 		var o2 = vm.originalJean;
 		return !angular.equals(o1, o2);
 	}
@@ -347,10 +336,10 @@ angular.module('inspinia')
 
 
 	function runSaveFunc(){
-		var args = newOrder ? vm.order : [vm.order.orderId, vm.order];
-		var saveFunc = newOrder ? 'orderCreate' : 'ordersUpdate';
-		var succMessage = newOrder ? "Order Created" : "Order Saved";
-		var errMessage = newOrder ? "Could not create" : "Could not Save";	
+		var args = vm.newOrder ? vm.order : [vm.order.orderId, vm.order];
+		var saveFunc = vm.newOrder ? 'orderCreate' : 'ordersUpdate';
+		var succMessage = vm.newOrder ? "Order Created" : "Order Saved";
+		var errMessage = vm.newOrder ? "Could not create" : "Could not Save";	
 		bdAPI.call(saveFunc, args, function(result){
 			console.log(result);
 			
@@ -361,7 +350,7 @@ angular.module('inspinia')
 			  timeout: 3000
 			});
 			
-			if (newOrder){
+			if (vm.newOrder){
 				console.log(result.orderId);
 			}
 			
@@ -388,14 +377,14 @@ angular.module('inspinia')
 		});
 		
 		if(jeanHasChanged()){
-			var jean = vm.order.orderItems[0].jean;
+			var jean = vm.order.order_items[0];
 			var filename = getDataCode(jean);
 			filename += ".jpg";
 			createThumb(jean).then( function(imageURL){
 				var userData = aws.getCurrentUserFromLocalStorage();
 				if (userData){		
 					aws.saveImageTos3(imageURL, userData, filename).then(function(result){
-						vm.order.orderItems[0].jean.imageURL = result;
+						vm.order.order_items[0].imageURL = result;
 						runSaveFunc();
 					});
 				}
@@ -408,7 +397,7 @@ angular.module('inspinia')
 //			var defer = $q.defer();
 /*
 	
-	var jean = vm.order.orderItems[0].jean;
+	var jean = vm.order.order_items[0];
 	var filename = getDataCode(jean);
 	filename += ".jpg";
 
@@ -435,10 +424,10 @@ angular.module('inspinia')
 						function(result){	
 							//Add image to jean before saving...
 				  		jean.set("imageURL",result);
-							if (jeanData.jeanId){
+							if (jeanDataId){
 								//Update existing Jean...
 
-								bdAPI.jeansUpdate(identityID, jeanData.jeanId, jeanData).then(
+								bdAPIsUpdate(identityID, jeanDataId, jeanData).then(
 									function(result){
 										defer.resolve(result);
 									},
@@ -449,11 +438,11 @@ angular.module('inspinia')
 								);
 							}else{
 								//Create New Jean...
-								bdAPI.jeansCreate(identityID, jeanData).then(
+								bdAPIsCreate(identityID, jeanData).then(
 
 									function(result){
 										//Add new id to jean
-										jean.set("jeanId", result.data.jeanId);
+										jean.set("jeanId", result.dataId);
 										defer.resolve(result);
 									},
 									function(err){

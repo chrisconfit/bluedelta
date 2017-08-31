@@ -9,7 +9,30 @@
   function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 	  $locationProvider.html5Mode(true);
 	  
-	  
+	  var getAppData = function($q, $http){
+		  var defer = $q.defer();
+		  $http.get("http://ec2-54-200-231-145.us-west-2.compute.amazonaws.com/api/data").then(function(result){
+			
+				result.data.genders = [
+					{"id":1, "name":"Male"},
+					{"id":2, "name":"Female"},
+				];
+				
+				result.data.lookup = function(data, key, value, retKey){
+					var dataSet = this[data];
+					retKey = retKey || false;
+					for (var i=0; i<dataSet.length; i++){				
+						if(dataSet[i][key] == value)
+							return retKey ? dataSet[i][retKey] : dataSet[i]
+					}
+				}
+				
+				defer.resolve(result.data);
+			});
+			
+			return defer.promise;
+		}
+
 	  
 	  
 	  /*
@@ -18,7 +41,7 @@
 		
 		
 	  var listScreenResolve = {
-		  appData: function(api){return api.getData();}
+		  appData: getAppData
 	  }
 	  
 	  
@@ -30,7 +53,7 @@
 	  ];
 	  
 	  var editScreenResolve = {
-		  appData: function(api){return api.getData();},
+		  appData:getAppData,
 		  loadPlugin: function ($ocLazyLoad) { return $ocLazyLoad.load(editplugins)}
 	  }
 	 
@@ -47,7 +70,6 @@
     var clientEditScreenResolve = angular.copy(editScreenResolve);
     clientEditScreenResolve.userData = function($stateParams, $location, api, $q){
 			if ($stateParams.clientId === undefined || $stateParams.clientId == ""){
-				console.log("no clients!!!");
 				$location.path('clients/list');
 			}
 
@@ -69,64 +91,33 @@
 		*/
 		
 		var orderAddScreenResolve = angular.copy(editScreenResolve);
-	  clientAddScreenResolve.orderData = function(){return {}}
+	  orderAddScreenResolve.orderData = function(){return {}}
 		   
 		var orderEditScreenResolve = angular.copy(editScreenResolve);
-		orderEditScreenResolve.orderData = function($stateParams, $location, bdAPI, $q){
+		orderEditScreenResolve.orderData = function($stateParams, $location, api, $q){
+		
 			if ($stateParams.orderId === undefined || $stateParams.orderId == ""){
-				console.log("no order!!!");
 				$location.path('orders/list');
 			}
 			else{
+				console.log("MADE IT!!!");
 				var defer = $q.defer();
-				bdAPI.call('ordersGet', [$stateParams.orderId],
-					function(result){		
-						console.log("route");
-						console.log(result);		
-						var returnData = {"order": result.data};
-						console.log("This user's ID: "+result.data.userId);
-						bdAPI.call('usersGet', [result.data.userId],
-							function(user){
-								returnData.user = user.data;
-								defer.resolve(returnData);
-							},function(err){
-								defer.resolve(returnData);
-							}
-						)
+				var ret = {};
+				api.call('orderGet', $stateParams.orderId,
+					function(result){	
+						defer.resolve(result);
 					},
-					function(err){defer.reject(err);}
+					function(err){ defer.reject(err); }
 				);
-				return defer.promise; 
-			}	
-		}
+			}
+			
+			return defer.promise; 
+		}	
+		
   
 	  
 	  
-	  var getAppData = function($q, $http){
-		  var defer = $q.defer();
-		  $http.get("http://ec2-54-200-231-145.us-west-2.compute.amazonaws.com/api/data").then(function(result){
-			
-				result.data.genders = [
-					{"id":1, "name":"Male"},
-					{"id":2, "name":"Female"},
-				];
-				
-				result.data.lookup = function(data, key, value, retKey){
-					var dataSet = this[data];
-					console.log("lookin up !!!");
-					retKey = retKey || false;
-					for (i=0; i<dataSet.length; i++){				
-						if(dataSet[i][key] == value)
-							return retKey ? dataSet[i][retKey] : dataSet[i]
-					}
-				}
-				
-				defer.resolve(result.data);
-			});
-			
-			return defer.promise;
-		}
-							
+	  							
 	  
 	  
 	  
@@ -206,7 +197,7 @@
         templateUrl: "app/components/common/content.html",
         authenticate: true,
         resolve: { 
-	        appData: function(){return "this";},
+	        appData:getAppData,
 	        loadPlugin: function ($ocLazyLoad) {
 					return $ocLazyLoad.load([
 				    {	files: ['assets/scripts/sweetalert/sweetalert.min.js', 'assets/styles/sweetalert/sweetalert.css']},

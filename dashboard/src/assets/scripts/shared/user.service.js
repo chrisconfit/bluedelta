@@ -69,8 +69,6 @@
 				first_name:first_name,
 				last_name:last_name
 			};
-			console.log("user register");
-			console.log(userData);
 			
 			api.call('register', userData, function(response){
 				authCallback(response, success);

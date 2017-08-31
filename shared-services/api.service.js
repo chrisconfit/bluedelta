@@ -33,6 +33,7 @@
 			console.log("calling "+func);
 			console.log("with...");
 			console.log(data);
+			
 			accessToken = $window.localStorage.getItem('bdAccessToken');
 			
 			if (noTokenNecessary.indexOf(func) < 0 && !accessToken){
@@ -73,7 +74,6 @@
 				httpConfig[dataKey] = data;
 			}
 			
-			console.log(httpConfig);
 		  return $http(httpConfig);
 		}
 		
@@ -208,7 +208,10 @@
 		var ordersList = function(data){
 			return httpReq("GET", "/api/orders", data);
 	  }
-		
+	  
+		var orderGet = function(orderId){
+			return httpReq("GET", "/api/orders/"+orderId);
+		}
 
 		
 		var data = {};
@@ -243,7 +246,8 @@
       usersDelete:usersDelete,
       usersCreateAddress:usersCreateAddress,
       usersPost:usersPost,
-      ordersList:ordersList
+      ordersList:ordersList,
+      orderGet:orderGet
     };
     
   }

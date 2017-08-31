@@ -6,8 +6,6 @@ angular.module('inspinia')
 
     var vm = this;
     vm.data = appData;
-    console.log("DATA!!!");
-    console.log(vm.data);
     
     vm.user = user.get();
     
@@ -19,7 +17,7 @@ angular.module('inspinia')
 	    "12f1a391-02f3-4aaf-92cc-734ed5f38184" : "Chris LeFevre",
 	    "3b9b047a-f148-4f53-9306-bd93139d7b1c": "James Kelleway"
     }
-    
+    console.log(appData);
     
     
     function serializeFilters(obj){
@@ -35,10 +33,8 @@ angular.module('inspinia')
 	    delete filters.dateRange;
 	    filters.startDate = range.startDate;
 	    filters.endDate = range.endDate;
-	    console.log(filters);
-	    console.log(serializeFilters(filters));
     }
-    console.log(vm.filters);
+
     
     
     
@@ -135,8 +131,6 @@ angular.module('inspinia')
 		function pullOrders(filters, callback){
 			//var data = vm.pagination.nextURL ? [vm.pagination.usersPerPage, vm.pagination.nextURL] : vm.pagination.usersPerPage;
 			api.call('ordersList', filters, function(result){
-				console.log("pulled!");
-				console.log(result);
 				if (vm.pagination.total == 0 ) vm.pagination.total = parseInt(result.total)/vm.filters.results_per_page;
 				vm.pagination.current = parseInt(result.page);
 				vm.orders.push.apply(vm.orders, result.results);
@@ -153,6 +147,27 @@ angular.module('inspinia')
 			"orderby":"created_at",
 			"order":"ASC",
 		}
+		
+		
+		$scope.$watch(angular.bind(this, function () {
+		  return this.filters.id;
+		}), function (newVal) {
+			if (newVal =="") delete vm.filters.id;
+			if (!newVal) return false;	
+			var arr = newVal.split(',');
+			vm.filters.id=arr;
+		});
+		
+		//Date range filter setter
+		vm.dateRange = {startDate: null, endDate: null}
+		$scope.$watch(angular.bind(this, function () {
+		  return this.dateRange;
+		}), function (newVal) {
+			if (newVal.startDate ==null) delete vm.filters.start_date;
+			else vm.filters.start_date = new Date(newVal.startDate);
+			if (newVal.endDate ==null) delete vm.filters.end_date;
+			else vm.filters.end_date = new Date(newVal.endDate);
+		});    	
 		
 		vm.changeSort = function(col, asc){
 	    var direction = asc ? "ASC" : "DESC";
@@ -171,8 +186,18 @@ angular.module('inspinia')
     }
     
 		pullOrders(vm.filters);   
+					
+		vm.changePage = function(page){
+			vm.filters.page=parseInt(page);
+			vm.orders=[];
+			pullOrders(vm.filters);
+		}
 		
-		
+		vm.pagination = {
+			total:0,
+			current:0
+		}
+
 		
 	
 			
