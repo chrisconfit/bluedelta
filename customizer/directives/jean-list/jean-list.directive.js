@@ -2,7 +2,7 @@
 
   angular
     .module('bdApp')
-    .directive('jeanList', ['jean', 'jsonData', function(jean, jsonData) {
+    .directive('jeanList', ['jean', 'apiData', function(jean, apiData) {
     	
 			return {
 	    	
@@ -15,27 +15,47 @@
 	      
 	      link: function($scope){
 					
-					$scope.dataBank = jsonData;
+					$scope.dataBank = apiData;
 					$scope.jean = $scope.jean || jean.get();
 				
 					var defaultFields = [
-						'fabric',
-						'accent_thread',
-						'top_thread',
-						'bottom_thread',
+						'fabric_id',
+						'accent_thread_id',
+						'top_thread_id',
+						'bottom_thread_id',
 						'gender',
-						'style'
+						'style_option_id'
 					];
 
+					$scope.findLabel = function(field){
+						var fieldLabels = {
+							'fabric_id' : 'Fabric',
+							'accent_thread_id' : 'Accent Thread',
+							'top_thread_id' : 'Top Thread',
+							'bottom_thread_id' : 'Bottom Thread',
+							'gender' : 'Gender',
+							'style_option_id' : 'Style'
+						}
+					  return fieldLabels[field]; // otherwise it won't be within the results
+					};
+					
+					
 					$scope.fields = $scope.fields || defaultFields;
 					
-					$scope.dataLookup = function(key, value, field){
-						if (typeof(value)=="object") return value[field];
-						var data = jsonData[key];
+					$scope.dataLookup = function(key, value){
+							
+						var dataMap = {
+							'fabric_id' : 'fabrics',
+							'accent_thread_id' : 'threads',
+							'top_thread_id' : 'threads',
+							'bottom_thread_id' : 'threads',
+							'gender' : 'gender_options',
+							'style_option_id' : 'style_options'
+						}
+						var key = dataMap[key];
+						var data = apiData[key];
 						for (d=0;d<data.length;d++){
-							if (data[d].id == value){
-								return data[d][field];
-							}
+							if (data[d].id == value) return data[d].name;
 						}
 
 												

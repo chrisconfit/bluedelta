@@ -13,7 +13,7 @@
 	<div ng-if="editing">
 		
 		<div ng-if="!active" class="single-address" ng-repeat="add in vm.user.address track by $index">
-			<a href="" ng-click="choosePrimary($index)" ng-class="{checked:add.primary}" class="check-box small"></a>
+			<a href="" ng-click="choosePrimary(add)" ng-class="{checked:add.primary}" class="check-box small"></a>
 			<span class='add-line'>{{add.addressLine1}}</span>
 			<span class='add-line' ng-if="add.addressLine2">{{add.addressLine2}}</span>
 			<span class='add-line'>{{add.city}}, {{add.state}} {{add.zip}}</span>

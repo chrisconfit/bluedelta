@@ -2923,6 +2923,32 @@ ul.tailor-list {
   border-bottom: 1px solid #bac2c5;
 }
 
+.cft-g.clone-grid > .cft-gi {
+  width: 100%;
+  vertical-align: top;
+}
+@media screen and (min-width: 650px) {
+  .cft-g.clone-grid > .cft-gi {
+    width: 50%;
+  }
+}
+
+.clone-grid img {
+  width: 100%;
+}
+.clone-grid ul {
+  list-style-type: none;
+}
+.clone-grid ul li {
+  padding: 3px 0;
+  border-bottom: 1px solid #bac2c5;
+}
+.clone-grid ul li span.measurement {
+  text-transform: capitalize;
+  font-weight: 700;
+  color: #004964;
+}
+
 .form-messages {
   margin: 10px 0;
   padding: 10px;

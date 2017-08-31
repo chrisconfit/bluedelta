@@ -9,20 +9,20 @@
 				<h1>{{vm.user.first_name}} {{vm.user.last_name}}'s Closet</h1>
 			</div>
 			
-			{{vm.user}}
+			<!--{{vm.jeans}}-->
 			
       <div class="jean-closet">	      
 	      
 	      <!--Production-->
-	      <div ng-if="(vm.orders | filter:{ userId: vm.idid, status: '!complete' }).length" class="production">
+	      <div ng-if="(vm.orders | filter:{ status: '!complete' }).length" class="production">
 		      <h3>On the Way</h3>
 		      <div class="cft-g jean-grid">
-			      <div ng-repeat="order in vm.orders | filter:{ userId: vm.idid, status: '!complete' }" class="cft-gi">
+			      <div ng-repeat="order in vm.orders | filter:{ status: '!complete' }" class="cft-gi">
 				      <div class="jean-card">
-								<img ng-click="vm.selectOrder(order)" ng-src="{{order.orderItems[0].jean.imageURL}}">
+								<img ng-click="vm.selectOrder(order)" ng-src="{{order.order_items[0].jean_image_url}}">
 								<div class="box-content">
-						     	<h4 ng-click="vm.selectJean(order.orderItems[0].jean)">{{order.orderItems[0].jean.name}}</h4>
-									<h5>Status: {{order.status}}</h5>
+						     	<h4 ng-click="vm.selectJean(order.order_items[0])">{{order.order_items[0].jean_name}}</h4>
+									<h5>Status: {{vm.data.lookup("order_statuses", "id", order.order_status_id, "name")}}</h5>
 									<h5 ng-if="order.dueDate">EST ARRIVAL:<br><b>{{order.dueDate | date : "longDate" : "CST"}}</b></h5>
 								</div>
 				      </div>
@@ -31,14 +31,14 @@
 	      </div>
 	      
 	      <!--Owned-->
-	      <div ng-if="(vm.orders | filter:{ userId: vm.idid, status: 'complete'  }).length" class="complete">
+	      <div ng-if="(vm.orders | filter:{ status: 'complete'  }).length" class="complete">
 		      <h3>My Blue Delta Jeans</h3>
 		      <div class="cft-g jean-grid">
-			      <div ng-repeat="order in vm.orders | filter:{ userId: vm.idid, status: 'complete' }" class="cft-gi">
+			      <div ng-repeat="order in vm.orders | filter:{ status: 'complete' }" class="cft-gi">
 				      <div class="jean-card">
-					      <img ng-click="vm.selectOrder(order)" ng-src="{{order.orderItems[0].jean.imageURL}}">
+					      <img ng-click="vm.selectOrder(order)" ng-src="{{order.order_items[0].imageURL}}">
 								<div class="box-content">
-					      	<h4 ng-click="vm.selectJean(jean)">{{order.orderItems[0].jean.name}}</h4>
+					      	<h4 ng-click="vm.selectJean(jean)">{{order.order_items[0].name}}</h4>
 									<h5>Born: {{order.dob | date : "longDate" : "CST" }}</h5>
 								</div>
 				      </div>
@@ -47,18 +47,18 @@
 	      </div>
 
 	      <!--Saved-->
-				<div ng-if="(vm.user.jeans | filter:{ ordered : '!true' }).length" class="saved">
+				<div ng-if="(vm.jeans | filter:{ ordered : '!true' }).length" class="saved">
 		      <h3>Saved For Later</h3>
 		      <div class="cft-g jean-grid">
-			      <div ng-repeat="jean in vm.user.jeans | filter:{ ordered : '!true' }" class="cft-gi">
+			      <div ng-repeat="jean in vm.jeans | filter:{ ordered : '!true' }" class="cft-gi">
 				      <div class="jean-card">
-					      <img ng-src="{{jean.imageURL}}">
+					      <img ng-src="{{jean.image_url}}">
 								<div class="box-content">
 									<h4>{{jean.name}}</h4>
 									<div ng-if="!jean.deleting">
-										<a href="/customizer/{{jean.jeanId}}/{{vm.user.identityId}}">Edit</a> | <a href="" ng-click="vm.orderJean(jean)">Order</a> | <a ng-click="jean.deleting=true" href="">Delete</a> 
+										<a href="/customizer/{{jean.id}}">Edit</a> | <a href="" ng-click="vm.orderJean(jean.id)">Order</a> | <a ng-click="jean.deleting=true" href="">Delete</a> 
 									</div>
-									<p class="delete-jean" ng-if="jean.deleting">Delete this jean? <br><a ng-click="vm.deleteJean(jean.jeanId)" href="">Yes</a> | <a href="" ng-click="jean.deleting=false">No</a></p>
+									<p class="delete-jean" ng-if="jean.deleting">Delete this jean? <br><a ng-click="vm.deleteJean(jean.id)" href="">Yes</a> | <a href="" ng-click="jean.deleting=false">No</a></p>
 								</div>
 				      </div>
 			      </div>

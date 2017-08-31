@@ -38,38 +38,53 @@
 	</div>
 	
 	
-		<!--Saved Popup-->
-	<div ng-show="vm.popups.saver"	ng-click="vm.popups.saver = false" class="popup-window">
+	<!--Namer Popup-->
+	<div ng-show="vm.popups.namer"	ng-click="vm.popups.namer = false" class="popup-window">
 		<div class="popup-content saved-popup" ng-click="$event.stopPropagation()">
-			<a class="popup-closer" href="" ng-click="vm.popups.saver = false"></a>
+			<a class="popup-closer" href="" ng-click="vm.popups.namer = false"></a>
 			<div class="popup-content-inner">
-					
-					<div ng-if="!vm.jean.name">
-						<h3>Give your Jeans a name</h3>
-						<form class="cft-form">
-							<div ng-class="{active: vm.newJeanName}" class="input-group">
-						    <input type="text" class="form-control" id="jean-name" ng-model="vm.newJeanName" style="">
-						    <label for="jean-name">Jean Name</label>
-						  </div>
-							<btn ng-click="vm.runSave()" class="btn">Save</btn>
-							<btn class="btn btn-secondary" ng-click="vm.popups.saver=false">Cancel</btn> 
-						</form>
-					</div>
-					
-					<div ng-if="vm.jean.name">
-						<h3 class="popup-title">Your Jean has been saved!</h3>
-						<h4 class="popup-sub-title">What would you like to do next?</h4>
-						<div class="button-list">
-							<a class="btn" ng-click="vm.keepEditing();">Keep Customizing</a>
-							<a class="btn" ng-click="vm.goToCloset()">Go to Closet</a>
-							<a class="btn" ng-click="vm.startOver()">Start Over</a>
-						</div>
-					</div>
-					
+				<h3>Give your Jeans a name</h3>
+				<form class="cft-form">
+					<div ng-class="{active: vm.newJeanName}" class="input-group">
+				    <input type="text" class="form-control" id="jean-name" ng-model="vm.newJeanName" style="">
+				    <label for="jean-name">Jean Name</label>
+				  </div>
+					<btn ng-click="vm.jean.name = vm.newJeanName; vm.runSave()" class="btn">Save</btn>
+					<btn class="btn btn-secondary" ng-click="vm.popups.saver=false">Cancel</btn> 
+				</form>
 			</div><!--./popup-content-inner-->
 		</div>
 	</div>
 	
+	<!--Save Opts Popup-->
+	<div ng-show="vm.popups.saveOpts"	ng-click="vm.popups.saveOpts = false" class="popup-window">
+		<div class="popup-content saved-popup" ng-click="$event.stopPropagation()">
+			<a class="popup-closer" href="" ng-click="vm.popups.saveOpts = false"></a>
+			<div class="popup-content-inner">
+				<div ng-if="vm.jean.name">
+					<h3 class="popup-title">Your Jean has been saved!</h3>
+					<h4 class="popup-sub-title">What would you like to do next?</h4>
+					<div class="button-list">
+						<a class="btn" ng-click="vm.keepEditing();">Keep Customizing</a>
+						<a class="btn" ng-click="vm.goToCloset()">Go to Closet</a>
+						<a class="btn" ng-click="vm.startOver()">Start Over</a>
+					</div>
+				</div>
+			</div><!--./popup-content-inner-->
+		</div>
+	</div>
+	
+	<!--Jean Not Found-->
+	<div ng-show="vm.popups.noJean"	ng-click="vm.popups.noJean = false" class="popup-window">
+		<div class="popup-content noJean-popup" ng-click="$event.stopPropagation()">
+			<div class="popup-content-inner">
+					<h3 class="popup-title">This Jean could not be found!</h3>
+					<div class="button-list">
+						<a class="btn" ng-click="vm.startOver()">Start with a new pair</a>
+					</div>
+			</div><!--./popup-content-inner-->
+		</div>
+	</div>
 	
 	<!--Denim Weight Popup-->
 	<div ng-show="vm.popups.denim"	ng-click="vm.popups.denim = false" id="how-it-works" class="popup-window">

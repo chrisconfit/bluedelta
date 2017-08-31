@@ -25,6 +25,7 @@
 			'login',
 			'register',
 			'forgotPassword',
+			'getJean'
 		];
 		
 		//Call an API function and handle data
@@ -107,10 +108,8 @@
 	  /*
 		*  JEANS
 		*/
-	  var getJeans = function(data){
-		  var path = "/api/jeans/";
-		  if (data.id) path+= data.id;
-		  return $http.get(config.url+path);
+	  var getJean = function(data){
+		  return httpReq("GET", "/api/jean/"+data);
 	  }
 	  
 
@@ -121,9 +120,13 @@
 		*  CURRENT USER DATA
 		*/
 		var postAddress = function(data){
-			console.log('posting add');
-			console.log(data);
-			return httpReq("POST", "/api/users/current/address", data);
+			var path = "/api/users/current/addresses"
+			if (data.id) path+="/"+data.id;
+			return httpReq("POST", path, data);
+		}
+
+		var deleteAddress = function(addressId){
+		  return httpReq("DELETE", "/api/users/current/addresses/"+addressId);			
 		}
 		
 		var createMyJeans = function(data){
@@ -159,6 +162,22 @@
 			return httpReq("POST", "/api/tailors", data);
 		}
 	  
+	  var getMyJeans = function(){
+		  return httpReq("GET", "/api/users/current/jeans");
+	  }
+	  
+	  var getMyOrders = function(){
+		  return httpReq("GET", "/api/users/current/orders");
+	  }
+	  var deleteMyJean = function(jeanId){
+			return httpReq("DELETE", "/api/users/current/jeans/"+jeanId);
+		}
+		var placeMyOrder = function(orderCreateObj){
+			return httpReq("POST", "/api/users/current/orders", orderCreateObj);
+		}
+	  
+	  
+	  
 	  
 	  /*
 		* Admin API
@@ -181,23 +200,18 @@
 		}
 		
 		var usersPost = function(data){
-			
-			var path = "/api/users/"
-			if (data.id) path += data.id;
-			console.log(data);
-			console.log(path);
+			var path = "/api/users"
+			if (data.id) path += "/"+data.id;
 			return httpReq("POST", path, data);			
 		}
 		
+		var ordersList = function(data){
+			return httpReq("GET", "/api/orders", data);
+	  }
 		
+
 		
 		var data = {};
-		httpReq("GET", "/api/data").success(function(result){
-			console.log(result);
-			data = result;
-		}).error(function(err){
-			console.log(err);
-		});
 		
     return {
 	    getData:function(){ return data;},
@@ -210,18 +224,26 @@
       postThread:postThread,
       postTailor:postTailor,
       
+      getJean:getJean,
+      
       getCurrentUser:getCurrentUser,
       createMyJeans:createMyJeans,
       getMyOrders:getMyOrders,
       getMyJeans:getMyJeans,
       updateMe: updateMe,
       postAddress:postAddress,
+      getMyJeans:getMyJeans,
+      getMyOrders:getMyOrders,
+      deleteMyJean:deleteMyJean,
+      deleteAddress: deleteAddress,
+      placeMyOrder: placeMyOrder,
       
       usersList:usersList,
       userGet:userGet,
       usersDelete:usersDelete,
       usersCreateAddress:usersCreateAddress,
       usersPost:usersPost,
+      ordersList:ordersList
     };
     
   }

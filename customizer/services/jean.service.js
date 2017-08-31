@@ -3,9 +3,9 @@
 
   angular
     .module('bdApp')
-    .service('jean', ['$routeParams', '$window', 'bdAPI', '$q', 'aws', 'jsonData', 'api', jean]);
+    .service('jean', ['$routeParams', '$window', 'bdAPI', '$q', 'aws', 'apiData', 'api', jean]);
 
-  function jean($routeParams, $window, bdAPI, $q, aws, jsonData, api) {
+  function jean($routeParams, $window, bdAPI, $q, aws, apiData, api) {
 
 
 		/*
@@ -14,7 +14,7 @@
 		
 		var dataLookup = function(dataType, key){
 
-			var data = jsonData[dataType];
+			var data = apiData[dataType];
 			if (!data) return false;
 			
 			for (i=0; i<data.length; i++) {
@@ -40,22 +40,22 @@
 		createNew = function(jean){
 			if (!jean || jean.constructor != Object){
 				jeanData = {
-					"gender" : 1,
-					"style" : 1,
-					"fabric" : dataLookup("fabric", 1004),
-					"accent_thread" : dataLookup("thread", 1),
-					"top_thread" : dataLookup("thread", 1),
-					"bottom_thread" : dataLookup("thread", 1)
+					"gender_option_id" : 1,
+					"style_option_id" : 1,
+					"fabric_id" : 1004,
+					"accent_thread_id" :1,
+					"top_thread_id" : 1,
+					"bottom_thread_id" : 1
 				}
 				jeanData.saved = false;
 			}else{
 				jeanData = {
-					"gender" : jean.gender,
-					"style" : jean.style,
-					"fabric" : jean.fabric.fabricId,
-					"accent_thread" : jean.accent_thread.threadId,
-					"top_thread" : jean.top_thread.threadId,
-					"bottom_thread" : jean.bottom_thread.threadId
+					"gender_option_id" : jean.gender_option_id,
+					"style_option_id" : jean.style_option_id,
+					"fabric_id" : jean.fabric_id,
+					"accent_thread_id" : jean.accent_thread_id,
+					"top_thread_id" : jean.top_thread_id,
+					"bottom_thread_id" : jean.bottom_thread_id
 				}
 			}
 		};
@@ -64,27 +64,27 @@
 		function parseURLkey(key){
 			switch(key){
 				case "g":
-	      return "gender";
+	      return "gender_option_id";
 	      break;
 	      
 	      case "s":
-	      return "style";
+	      return "style_option_id";
 	      break;
 	      
 	      case "f":
-	      return "fabric";
+	      return "fabric_id";
 	      break;
 	      
 	      case "tt":
-	      return "top_thread";
+	      return "top_thread_id";
 	      break;
 	      
 	      case "tb":
-	      return "bottom_thread";
+	      return "bottom_thread_id";
 	      break;
 	      
 	      case "ta":
-	      return "accent_thread";
+	      return "accent_thread_id";
 	      
 	      default: return false;
 			}
@@ -93,27 +93,27 @@
 		
 		function jeanKeytoURL(key){
 			switch(key){
-				case "gender":
+				case "gender_option_id":
 	      return "g";
 	      break;
 	      
-	      case "style":
+	      case "style_option_id":
 	      return "s";
 	      break;
 	      
-	      case "fabric":
+	      case "fabric_id":
 	      return "f";
 	      break;
 	      
-	      case "top_thread":
+	      case "top_thread_id":
 	      return "tt";
 	      break;
 	      
-	      case "bottom_thread":
+	      case "bottom_thread_id":
 	      return "tb";
 	      break;
 	      
-	      case "accent_thread":
+	      case "accent_thread_id":
 	      return "ta";
 	      
 	      default: return false;
@@ -124,21 +124,79 @@
 			createNew();
 		}
 		
-		//Set up jean data from parameter
-		var setup = function(data){
-			var defer = $q.defer();
-						
-			//Set up jean from data
-			if (data){ 
-				for(prop in data){
-					if(data.hasOwnProperty(prop)){
-						set(prop, data[prop]);	
-					}
+		buildJeanData = function(data, copy){
+
+			//Make a copy
+			if(copy==true){
+				delete data.user_id;
+				delete data.id;
+				data.name = "Copy of "+data.name;
+			}
+			for(prop in data){
+				if(data.hasOwnProperty(prop)){
+					set(prop, data[prop]);	
 				}
+			}
+		}
+		
+		//Set up jean data from parameter
+		var setup = function(data, action){
+			var defer = $q.defer();
+			
+			//Get our user Id and detrmine whether or not we want to make a copy		
+			var userId = parseInt($window.localStorage.getItem("bdUserId"));
+			var makeCopy = userId ? false : true;
+			makeCopy = action == "copy" ? true : makeCopy;
+			
+			
+			//Set up jean from object data
+			if (data !== null && typeof data === 'object'){ 
+				
+				console.log("working from object data!");
+				
+				if (data.user_id && data.user_id !== userId) delete data.id;
+				buildJeanData(data, makeCopy);
 				defer.resolve(jeanData);
 			}
 
+
+			//Copy or Edit Jean from Id
+			else if (data !== null && data !== undefined){
+				
+				console.log(data, userId, action, makeCopy);
+				console.log("working from ID!");
+				
+				//First get Jean
+				api.call('getJean', data, function(result){
+					
+					if (result.user_id !== userId) makeCopy = true;
+
+					buildJeanData(result, makeCopy);
+					console.log(jeanData);
+					defer.resolve(jeanData);
+				}, function(err){
+						defer.reject(err)
+				});
+			}
+
+			//Jean Data already exists
+			else if (Object.keys(jeanData).length > 0){
+			
+				console.log("jean data already exists!");
+				
+				defer.resolve(jeanData);
+			}
+			
+			else{
+			
+				console.log("creating new jean!");
+				
+				createNew();			
+				defer.resolve(jeanData);
+			}
+			
 			//Data URL
+			/*
 			else if ($routeParams.jeanId && !$routeParams.userId){
 				createNew();
 				if ($routeParams.jeanId.indexOf(":")>0){
@@ -152,13 +210,12 @@
 				}
 				defer.resolve(jeanData);
 			}
+			*/
+			
+			
 					
-			//Copy or Edit Jean
-			else if ($routeParams.jeanId && $routeParams.userId){
-
-				//First get Jean
-				console.log($routeParams.userId, $routeParams.jeanId);
-				bdAPI.jeansGet($routeParams.userId, $routeParams.jeanId).then(					
+							
+				/*bdAPI.jeansGet($routeParams.userId, $routeParams.jeanId).then(					
 					function(result){
 
 						var newJean = result.data;
@@ -197,20 +254,11 @@
 						defer.resolve(jeanData);
 					}
 				);
-			}
+				*/
+		
 					
 			
-			//data already exists
-			else if (Object.keys(jeanData).length > 0){
-				defer.resolve(jeanData);
-			}
-			
-			else{
-				if(Object.keys(jeanData).length === 0 && jeanData.constructor === Object){
-					createNew();			
-					defer.resolve(jeanData);
-				}
-			}
+
 			
 			return defer.promise;
 		}
@@ -251,10 +299,10 @@
 	  	var cntxt = canvas.getContext('2d');	
 	  	var promises = [];
 			var images = [
-				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabric/g'+jeanData.gender+'/s2/f'+jeanData.fabric.fabricId+'.jpg',
-				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/thread/g'+jeanData.gender+'/s2/tb/'+jeanData.bottom_thread.threadId+'.png',
-				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/thread/g'+jeanData.gender+'/s2/tt/'+jeanData.top_thread.threadId+'.png',
-				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/thread/g'+jeanData.gender+'/s2/ta/'+jeanData.accent_thread.threadId+'.png'
+				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabrics/g'+jeanData.gender_option_id+'/s2/f'+jeanData.fabric_id+'.jpg',
+				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/tb/'+jeanData.bottom_thread_id+'.png',
+				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/tt/'+jeanData.top_thread_id+'.png',
+				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/ta/'+jeanData.accent_thread_id+'.png'
 			];
 	
 	    for(var i=0; i<images.length; i++){
@@ -263,8 +311,7 @@
 	    
 	    return $q.all(promises).then(
 	    	function(results) {
-			    console.log("all images loaded");
-					searchAndDraw("fabric", cntxt, results);
+					searchAndDraw("fabrics", cntxt, results);
 					searchAndDraw("tb", cntxt, results);
 					searchAndDraw("tt", cntxt, results);
 					searchAndDraw("ta", cntxt, results);
@@ -276,39 +323,31 @@
 		    }
 	    );	
 		}
-
 		
 		
 		getDataCode = function(){
 			var url = "";
+			console.log("get data code!!!");
+			console.log(jeanData);
+			
 			for (var property in jeanData) {
 			  if (jeanData.hasOwnProperty(property)) {
 					var id = jeanData[property];
-					if (typeof(id)=='object'){
-						var idKey = property+"Id";
-						if (idKey.indexOf("thread")>-1) idKey="threadId";
-						id = id[idKey];
-					}
 					var urlKey = jeanKeytoURL(property);
+					console.log(property, urlKey, id);
 					if (urlKey) url += "_"+urlKey+id;
 			  }
 			}	
 			url = url.replace(/(^[_\s]+)|([_\s]+$)/g, '');
+			console.log(url);
 			return url;
 		}
 		
-		var deleter = function (userId, jeanId, callback){
-			var userData = aws.getCurrentUserFromLocalStorage();
-			bdAPI.defaultHeaders_['Authorization'] = userData.idToken.getJwtToken();
-			bdAPI.jeansDelete(userId, jeanId).then(
-				function(result){
-					if (callback) callback(result);
-				},
-				function(err){
-					console.log(err);
-				}
-			)
-		}
+		var deleter = function (jeanId, callback){
+			api.call('deleteMyJean', jeanId, function(result){
+				if (callback) callback(result);
+			});
+		};
 		
 		var save = function(){
 			
@@ -319,12 +358,12 @@
 			var jeanData = jean.get();
 			var filename = jean.getDataCode();
 			filename += ".jpg";
-
-			var blob = this.createThumb(jeanData).then(function(blob){
-				jeanData.blob = blob;
-				console.log(blob);
-				api.call('createMyJean', jeanData, function(result){
+			jeanData.image = {filename:filename};
+			this.createThumb(jeanData).then(function(blob){
+				jeanData.image.data = blob;
+				api.call('createMyJeans', jeanData, function(result){
 					console.log("We have created the jean");
+					console.log(result);
 					defer.resolve(result);
 				}, function(err){
 					defer.reject(err);
@@ -380,6 +419,7 @@
 	    deleter : deleter,
 	    save : save,
 	    get : get,
+	    set: set,
 	    setup : setup,
 	    reset : reset,
       set : set,

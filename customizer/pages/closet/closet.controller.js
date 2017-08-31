@@ -4,23 +4,29 @@
     .module('bdApp')
     .controller('closetCtrl', closetCtrl);
 
-  closetCtrl.$inject = ['$location', '$window', 'jean','popups', 'aws', 'bdAPI', '$scope', 'messages', 'loader', 'user', 'api'];
-  function closetCtrl($location, $window, jean, popups, aws, bdAPI, $scope, messages, loader, user, api) {
-	  
-
-	  //loader.show("Getting your profile information...");
-	  
+  closetCtrl.$inject = ['$location', '$window', 'jean','popups', '$scope', 'messages', 'loader', 'user', 'api', 'apiData', '$routeParams'];
+  function closetCtrl($location, $window, jean, popups, $scope, messages, loader, user, api, apiData, $routeParams) {
+	    
     var vm = this;   
 		
 		popups.closeAll();
 		vm.popups=popups.get();
 
 		vm.messages=messages.get();
-		
+		vm.data = apiData;
 		//Set up Jean
-		vm.jean = jean;
+		vm.jeans;
+		api.call('getMyJeans', null, function(results){
+			vm.jeans = results;
+		});
 		
-		vm.data={}//jsonData.getData();
+		//Set up orders
+		vm.orders = [];		
+    api.call('getMyOrders', {}, function(result){
+	    vm.orders = result;
+    });
+    
+		vm.data=apiData;//jsonData.getData();
 		//vm.jeans = vm.data.jeansList;
 		
 		
@@ -95,22 +101,9 @@
 			}
 		}
 		
-		//Set up orders
-		vm.orders = [];		
-   
-    api.call('getMyOrders', {}, function(result){
-	    console.log(result);
-	    vm.orders = result;
-    });
+
     
-   	//Set up jeans
-		vm.jeans = [];		
-   
-    api.call('getMyJeans', {}, function(result){
-	    console.log(result);
-	    vm.jeans = result;
-    });
-    
+   	
     
     //Get user details and orders...
  //     var identityID = aws.getCurrentIdentityId();
@@ -198,9 +191,9 @@
 
 
 
-		vm.copyJean = function(){
+		vm.copyJean = function(jeanId){
 			vm.jean = jean.createNew(vm.displayJean);
-			$location.path('/customizer');
+			$location.path('/customizer/'+jeanId+'/copy');
 		}
 		
 		vm.displayJean={};
@@ -217,24 +210,22 @@
 		
 	
 		function findJeanbyId(jeanId){
-			for (var j=0; j < vm.user.jeans.length; j++) {
-	      if (vm.user.jeans[j].jeanId === jeanId) {
-	        return {"index": j, "data" : vm.user.jeans[j]};
-	      }
+			for (var j=0; j < vm.jeans.length; j++) {
+	      if (vm.jeans[j].id === jeanId) return j;
       }
   	}
 
 		vm.deleteJean = function(jeanId){
-			jean.deleter(vm.user.identityId, jeanId, function(result){
-				var index = findJeanbyId(jeanId).index;
-				vm.user.jeans.splice(index, 1);
-				$scope.$apply();
+			api.call('deleteMyJean', jeanId, function(result){
+				console.log(result);
+				var index = findJeanbyId(jeanId);
+				vm.jeans.splice(index, 1);
 			});
 		}
 		
-		vm.orderJean = function(jeanData){
-			jean.setup(jeanData);
-			$location.path('/order/'+jeanData.jeanId+'/'+vm.user.identityId);
+		vm.orderJean = function(jeanId){
+			console.log("going to order");
+			$location.path('/order/'+jeanId);
 		}
 	
 			

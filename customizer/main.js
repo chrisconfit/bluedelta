@@ -26,12 +26,12 @@
         controller: 'closetCtrl',
         controllerAs: 'vm'
       })
-      .when('/order/:jeanId?/:userId?', {
+      .when('/order/:jeanId?', {
         templateUrl: '/pages/order/order.view.html',
         controller: 'orderCtrl',
         controllerAs: 'vm'
       })
-      .when('/customizer/:jeanId?/:userId?', {
+      .when('/customizer/:jeanId?/:action?', {
         templateUrl: '/pages/customizer/customizer.view.html',
         controller: 'customizerCtrl',
         controllerAs: 'vm'
@@ -114,8 +114,11 @@
 	
 	// Get Angular's $http module.
 	var initInjector = angular.injector(['ng']);
+	
 	var $http = initInjector.get('$http');
 	var $q = initInjector.get('$q');
+	
+	/*
 	var awsJsonUrl = "http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/"
 	
 	var jsonDataKeys = ['style', 'thread', 'button', 'fabric', 'gender', 'tailors'];
@@ -125,7 +128,28 @@
 			$http.get(awsJsonUrl+jsonDataKeys[d]+'.json')
 		);	
 	}
-
+	*/
+	$http.get("http://ec2-54-200-231-145.us-west-2.compute.amazonaws.com/api/data").then(function(result){
+		
+		result.data.genders = [
+			{"id":1, "name":"Male"},
+			{"id":2, "name":"Female"},
+		];
+		
+		result.data.lookup = function(data, key, value, retKey){
+			var dataSet = this[data];
+			console.log("lookin up !!!");
+			retKey = retKey || false;
+			for (i=0; i<dataSet.length; i++){				
+				if(dataSet[i][key] == value)
+					return retKey ? dataSet[i][retKey] : dataSet[i]
+			}
+		}
+		angular.module('bdApp').constant('apiData', result.data);
+		var body = document.getElementById('bdApp');
+		angular.bootstrap(angular.element(body), ['bdApp']);		
+	});
+	/*
 	$q.all(promises).then(
 		function(result){
 			var jsonData = {};
@@ -138,6 +162,7 @@
 			angular.bootstrap(angular.element(body), ['bdApp']);		
 		}
 	);
+	*/
 
 	
 

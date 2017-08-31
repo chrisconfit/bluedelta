@@ -1,7 +1,11 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('ClientsEditController',  ['$uibModal', 'userData', 'appData', '$scope', 'api', 'SweetAlert', 'toaster', function ($uibModal, userData, appData, $scope, api, SweetAlert, toaster) {
+  .controller('ClientsEditController',  ['$uibModal', 'userData', 'appData', '$scope', 'api', 'SweetAlert', 'toaster', '$state',
+  function ($uibModal, userData, appData, $scope, api, SweetAlert, toaster, $state) {
+    
+    
+    
     
     var vm = this;
     
@@ -71,7 +75,6 @@ angular.module('inspinia')
 	* * * * * Save/Create	* * * * * 
 	*															*	
 	\*	  												*/	
-	
 	vm.saveUser = function(){
 		
 		toaster.pop({
@@ -100,9 +103,7 @@ angular.module('inspinia')
 			  timeout: 3000
 			});
 			
-			if(vm.newUser){
-				console.log("new user created!!");
-			}
+			if(vm.newUser) $state.transitionTo('clients.edit', {clientId:result.id});
 					
 		}, function(err){
 			toaster.pop({

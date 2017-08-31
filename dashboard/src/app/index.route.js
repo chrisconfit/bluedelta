@@ -16,6 +16,12 @@
 		* Resolves Base
 		*/
 		
+		
+	  var listScreenResolve = {
+		  appData: function(api){return api.getData();}
+	  }
+	  
+	  
 		var editplugins = [
 		  { insertBefore: '#loadBefore', name: 'toaster', files: ['assets/scripts/toastr/toastr.min.js', 'assets/styles/toastr/toastr.min.css']},
 	    { files: ['assets/styles/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css']},
@@ -96,6 +102,35 @@
   
 	  
 	  
+	  var getAppData = function($q, $http){
+		  var defer = $q.defer();
+		  $http.get("http://ec2-54-200-231-145.us-west-2.compute.amazonaws.com/api/data").then(function(result){
+			
+				result.data.genders = [
+					{"id":1, "name":"Male"},
+					{"id":2, "name":"Female"},
+				];
+				
+				result.data.lookup = function(data, key, value, retKey){
+					var dataSet = this[data];
+					console.log("lookin up !!!");
+					retKey = retKey || false;
+					for (i=0; i<dataSet.length; i++){				
+						if(dataSet[i][key] == value)
+							return retKey ? dataSet[i][retKey] : dataSet[i]
+					}
+				}
+				
+				defer.resolve(result.data);
+			});
+			
+			return defer.promise;
+		}
+							
+	  
+	  
+	  
+	  
 		/*
 		* Routes
 		*/	  
@@ -171,6 +206,7 @@
         templateUrl: "app/components/common/content.html",
         authenticate: true,
         resolve: { 
+	        appData: function(){return "this";},
 	        loadPlugin: function ($ocLazyLoad) {
 					return $ocLazyLoad.load([
 				    {	files: ['assets/scripts/sweetalert/sweetalert.min.js', 'assets/styles/sweetalert/sweetalert.css']},
@@ -188,7 +224,10 @@
         url: "/list",
         templateUrl: "app/orders/orders.html",
         authenticate: true,
-        data: { pageTitle: 'Orders' },
+        controller: "OrdersController as ovm",
+        resolve:{
+	        appData:getAppData
+        }
       })
       
       .state('orders.edit', {

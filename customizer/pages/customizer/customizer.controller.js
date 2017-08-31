@@ -4,8 +4,8 @@
     .module('bdApp')
     .controller('customizerCtrl', customizerCtrl);
 
-  customizerCtrl.$inject = ['$q','$filter','$timeout','$location', '$window', '$routeParams', 'bdAPI', 'jean', '$scope', 'popups', 'aws', 'messages', 'loader', 'jsonData'];
-  function customizerCtrl($q, $filter, $timeout, $location, $window, $routeParams, bdAPI, jean, $scope, popups, aws, messages, loader, jsonData) {
+  customizerCtrl.$inject = ['api', 'user', '$q','$filter','$timeout','$location', '$window', '$routeParams', 'bdAPI', 'jean', '$scope', 'popups', 'aws', 'messages', 'loader', 'apiData'];
+  function customizerCtrl(api, user, $q, $filter, $timeout, $location, $window, $routeParams, bdAPI, jean, $scope, popups, aws, messages, loader, apiData) {
 		
     var vm = this
 		
@@ -21,9 +21,13 @@
 		vm.popups = popups.get();
 
 		//Set up Jean
-		jean.setup().then(function(result){
-			vm.jeanData=jean.get();
-						
+		var jeanId;
+		if ($routeParams.jeanId) jeanId = $routeParams.jeanId;
+		var action = false;
+		if ($routeParams.action) action = $routeParams.action;
+		
+		jean.setup(jeanId, action).then(function(result){
+			vm.jeanData=jean.get();			
 			$scope.$watch(function() {
 				return vm.jeanData;
 			}, function(current, original) {
@@ -35,6 +39,15 @@
 			}, function(current, original) {
 				vm.updateActiveItem();
 			}, true);
+
+		}, 
+		
+		
+		function(err){
+			//Test for jean not found...
+			if(err.message = "Invalid Jean ID"){
+				popups.set('noJean',true);
+			}
 
 		});
 
@@ -85,77 +98,67 @@
 		* GET CUSTOMIZER DATA 
 		*
 		*/	
-		vm.data = jsonData;
-		
+		vm.data = apiData;
 		vm.activeItem={};
+		
 		vm.updateActiveItem = function(){
-			
 			if (!vm.jeanData) return false;
-			
 			var data = vm.data[vm.panel[vm.panelStep].dataKey];
 			var id = vm.jeanData[vm.panel[vm.panelStep].jeanKey];
-			
-			if (typeof(id)== 'object'){
-				//Embedded model
-				vm.activeItem = id;
-			}else{
-				//Need to search
-				var ret = $filter('filter')(data, {id: id});
-				if (ret) ret = ret[0];
-				vm.activeItem = ret||null;
-			}
+			var ret = $filter('filter')(data, {id: id});
+			if (ret) ret = ret[0];
+			vm.activeItem = ret||null;
 		}
 
-		
 		//Build Control Panel Steps
 		vm.panel = [];
 		
 		//Gender
 		vm.panel.push({
 			"panelTemplate":"gender-chooser",
-			"dataKey":"gender",
+			"dataKey":"genders",
 			"title":"Gender",
-			"jeanKey":"gender"
+			"jeanKey":"gender_option_id"
 		});
 		
 		//Style
 		vm.panel.push({
 			"panelTemplate":"style-chooser",
-			"dataKey":"style",
+			"dataKey":"style_options",
 			"title":"Style",
-			"jeanKey":"style"
+			"jeanKey":"style_option_id"
 		});
 		
 		//Fabric
 		vm.panel.push({
 			"panelTemplate":"fabric-chooser",
-			"dataKey":"fabric",
+			"dataKey":"fabrics",
 			"title":"Fabric",
-			"jeanKey":"fabric"
+			"jeanKey":"fabric_id"
 		});
 		
 		//Top Thread
 		vm.panel.push({
 			"panelTemplate":"chooser",
-			"dataKey":"thread",
+			"dataKey":"threads",
 			"title":"Top Thread",
-			"jeanKey":"top_thread"
+			"jeanKey":"top_thread_id"
 		});
 		
 		//Bottom Thread
 		vm.panel.push({
 			"panelTemplate":"chooser",
-			"dataKey":"thread",
+			"dataKey":"threads",
 			"title":"Bottom Thread",
-			"jeanKey":"bottom_thread"
+			"jeanKey":"bottom_thread_id"
 		});
 		
 		//Accent Thread
 		vm.panel.push({
 			"panelTemplate":"chooser",
-			"dataKey":"thread",
+			"dataKey":"threads",
 			"title":"Accent Thread",
-			"jeanKey":"accent_thread"
+			"jeanKey":"accent_thread_id"
 		});
 		
 		//Overview
@@ -163,18 +166,6 @@
 			"panelTemplate":"list",
 			"title":"Overview"
 		});
-		
-		
-		/*
-		Not using hardware for now...
-
-		vm.panel.push({
-			"panelTemplate":"chooser",
-			"dataKey":"hardware",
-			"title":"Hardware",
-			"jeanKey":"hardware"
-		});
-		*/
 		
 		vm.panelDir="next";		
 		vm.panelStep = 0;
@@ -190,61 +181,42 @@
 		
 
 		
-
-
-				
 		/*
 		*
 		* Control Panel actions
 		*
 		*/
-		vm.orderCallback = function(){
-			vm.saveCallback(function(){
-				$location.path('/order')
-			});
-		}		
+	
 		
-		vm.placeOrder=function(){
-			if(!aws.isLoggedIn()){
-				vm.authCallback = vm.orderCallback;
-				popups.set('loginOrRegister',true);
-				return false;
-			}
-			else {
-				vm.saveCallback(function(){
-					$location.path('/order')
-				});
-			}
-		}
 
 		vm.savingBar = false;
+		vm.newJeanName = "My New Jeans";
+		vm.authCallback;
+		vm.saveCallback;
 		
-		vm.newJeanName = "My Jeans - 6";
-		vm.saveCallback = function(callback){
-			callback = callback || null;
-			popups.closeAll();
-			if(vm.jeanData.name) vm.runSave(callback);
-			else popups.set('saver', true);
+		var openSaveOpts = function(){
+			console.log("running openSaveOpts...");
+			popups.set('saveOpts',true);
+			
 		}	
 		
-    vm.runSave = function(callback){
-	    vm.jeanData.name = vm.newJeanName;
-			vm.savingBar = true;
-			jean.save().then(
-				function(result){
-					if (callback){ 
-						callback(result);
-					}else{
-						vm.savingBar = false;
-						popups.set('saver',true);					
-					}
-				}
-			);
-    }
-    
+		var redirectToOrder = function(jean){
+			$location.path('/order/'+jean.id);
+		}	
+		
+		vm.saveAndOrder = function(){
+			vm.saveCallback = redirectToOrder;
+			vm.runSave();
+		}	
+		
+		vm.saveAndShowOpts = function(){
+			console.log("running!!!");
+			vm.saveCallback = openSaveOpts;
+			vm.runSave();
+		}	
+		
     vm.keepEditing = function(){
-	    var identityId = aws.getCurrentIdentityId();
-			$location.path('/customizer/'+vm.jeanData.jeanId+'/'+identityId);
+			$location.path('/customizer/'+vm.jeanData.id);
     }
     
     vm.goToCloset = function(){
@@ -258,19 +230,51 @@
 	    popups.closeAll();
     }
     
-    vm.saveJean = function(){
-			if(!aws.isLoggedIn()){
-				vm.authCallback = vm.saveCallback;
+    //Check for jean name, run save, and ex callback
+		vm.runSave = function(){
+			popups.closeAll();
+			
+			if(!vm.jeanData.name) popups.set('namer', true);
+			
+			else{
+				vm.savingBar = true;
+				jean.save().then(
+					function(result){
+						vm.jeanData = result;
+						vm.savingBar = false;
+						if (vm.saveCallback){ 
+							vm.saveCallback(result);
+						}
+					}
+				);
+			} 
+		}
+    
+    //When Order is clicked...
+    vm.placeOrder=function(){
+			if(!user.isLoggedIn()){
+				vm.authCallback = vm.saveAndOrder;
 				popups.set('loginOrRegister',true);
 				return false;
 			}
-			else{
-		  	vm.saveCallback();
-    	}
+			else {
+				vm.saveAndOrder();
+			}
+		}
+
+
+    //When Save is clicked....
+    vm.saveJean = function(){
+			if(!user.isLoggedIn()){
+				vm.authCallback = vm.saveAndShowOpts;
+				popups.set('loginOrRegister',true);
+				return false;
+			}
+			else vm.saveAndShowOpts();
   	}
     
     //Set default auth callback
-		vm.authCallback = vm.orderCallback;
+		
     
     vm.registerCallback = function(details){
 	    aws.authenticateCognitoUser(details.email, details.password).then(

@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('OrdersController', ['bdAPI', '$scope', 'aws', 'SweetAlert', 'user', function (bdAPI, $scope, aws, SweetAlert, user) {
+  .controller('OrdersController', ['appData', 'bdAPI', '$scope', 'aws', 'SweetAlert', 'user', 'api', function (appData, bdAPI, $scope, aws, SweetAlert, user, api) {
 
 
     var vm = this;
-    
+    vm.data = appData;
+    console.log("DATA!!!");
+    console.log(vm.data);
     
     vm.user = user.get();
     
@@ -19,17 +21,6 @@ angular.module('inspinia')
     }
     
     
-    
-    
-    //Filter Orders
-    vm.filters = {
-	    "status":"All",
-	    "orderId":"",
-	    "vendor":"All",
-	    "dateRange":{startDate: null, endDate: null},
-	    "resultsPerPage":25,
-	    "type":"All"
-    };
     
     function serializeFilters(obj){
 	    var result = [];
@@ -141,27 +132,47 @@ angular.module('inspinia')
 		
 		
 
-		function pullOrders(callback){
-			var args = vm.pagination.nextURL ? [vm.pagination.ordersPerPage, vm.pagination.nextURL] : vm.pagination.ordersPerPage;
-			bdAPI.call('ordersList', args, function(result){
-				vm.orders.push.apply(vm.orders, result.data.items);
-				if (result.data.next){
-					vm.pagination.nextURL=result.data.next;
-					vm.pagination.next = true;
-				}
-				else vm.pagination.next = false;
+		function pullOrders(filters, callback){
+			//var data = vm.pagination.nextURL ? [vm.pagination.usersPerPage, vm.pagination.nextURL] : vm.pagination.usersPerPage;
+			api.call('ordersList', filters, function(result){
+				console.log("pulled!");
+				console.log(result);
+				if (vm.pagination.total == 0 ) vm.pagination.total = parseInt(result.total)/vm.filters.results_per_page;
+				vm.pagination.current = parseInt(result.page);
+				vm.orders.push.apply(vm.orders, result.results);
 				vm.pagination.loaded++;	
-				if (callback){
-				 callback();
-				}
-				$scope.$apply();
+				if (callback) callback();
 			});
 		}
 		
-		//Init orders
+		//Init users
 		vm.orders = [];
-		pullOrders();
-
+		vm.filters = {
+			"results_per_page" : 25,
+			"page": 1, 
+			"orderby":"created_at",
+			"order":"ASC",
+		}
+		
+		vm.changeSort = function(col, asc){
+	    var direction = asc ? "ASC" : "DESC";
+	    vm.filters.orderby=col;
+	    vm.filters.order = direction;
+			vm.newQuery();
+    }
+        
+    vm.newQuery = function(){
+	    vm.orders = [];
+	    vm.filters.page=1;
+	    for (var i=0; i<vm.filters.length; i++){
+		    if (vm.filters[i] == "") delete vm.filters[i];
+	    }
+	    pullOrders(vm.filters);
+    }
+    
+		pullOrders(vm.filters);   
+		
+		
 		
 	
 			

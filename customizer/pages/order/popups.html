@@ -8,22 +8,22 @@
 			
 			<div class="check-list">
 				<ul class="tailor-list">
-					<li  ng-repeat="check in vm.data.tailors | orderBy : 'location'">
-						<input id="tailor_{{check.id}}" ng-checked="vm.order.tailor==check" 
-						ng-click="vm.order.tailor==check ? vm.order.tailor=null : vm.order.tailor=check"
+					<li  ng-repeat="check in vm.tailors | orderBy : 'location'">
+						<input id="tailor_{{check.id}}" ng-checked="vm.orderCreateObj.tailor_id==check" 
+						ng-click="vm.orderCreateObj.tailor_id==check.id ? vm.orderCreateObj.tailor_id=null : vm.orderCreateObj.tailor_id=check.id"
 						value="{{check.id}}" type="checkbox">
-						<label for="tailor_{{check.id}}">{{check.location}}</label>
+						<label for="tailor_{{check.id}}">{{check.city}}, {{check.state}}</label>
 					</li>
 				</ul>
 			</div>
 						
-			<button ng-click="vm.popups.tailors=false" class="btn" ng-class="{disabled : vm.order.tailor==null}">Choose Tailor</button>	
+			<button ng-click="vm.popups.tailors=false" class="btn" ng-class="{disabled : vm.orderCreateObj.tailor_id==null}">Choose Tailor</button>	
 		</div><!--./popup-content-inner-->
 	</div>
 </div>
 
 
-<div ng-show="vm.popups.orderPlaced" id="tailors-popup" class="popup-window">
+<div ng-show="vm.popups.orderPlaced" id="order-complete-popup" class="popup-window">
 	<div class="popup-content" style="text-align: center;">
 		<div class="popup-content-inner">
 			<h3 class="popup-title">Your Order Inquiry has been placed.</h3>

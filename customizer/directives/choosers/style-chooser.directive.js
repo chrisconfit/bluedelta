@@ -15,10 +15,10 @@
         active: '='
       },
       link: function($scope){
-	      //Weight Filter
 	      $scope.checkGenderFilter = function(gender){
 					return function(style){
-						return (style['images_'+gender] ? true:false);
+						g = gender == 1 ? "male":"female";
+						return style[g];
 				  }
 				};
 	    }

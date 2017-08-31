@@ -11,8 +11,8 @@
     .module('bdApp')
     .controller('addFormCtrl', addFormCtrl);
 
-  addFormCtrl.$inject = ['$scope', '$filter', 'bdAPI', 'messages'];
-  function addFormCtrl($scope, $filter, bdAPI, messages) {
+  addFormCtrl.$inject = ['$scope', '$filter', 'bdAPI', 'messages', 'api'];
+  function addFormCtrl($scope, $filter, bdAPI, messages, api) {
 	  
 	  
 	  $scope.editing=false;
@@ -24,15 +24,19 @@
 		
 		
 		//Choose Primary Address
-		$scope.choosePrimary = function(index){
+		$scope.choosePrimary = function(address){
+			
+			console.log("choosing primary!!");
+			console.log(address);
+			
 			for (a = 0; a< $scope.vm.user.address.length; a++){
-				$scope.vm.user.address[a].primary = (a == index ? true :false);
+				var add = $scope.vm.user.address[a];
+				add.primary = (add.id == address.id ? true :false);
 			}
-			bdAPI.saveUser($scope.vm.user).then(
-				function(result){
-					console.log('saved');
-				}
-			);
+			
+			api.call('postAddress', address, function(result){
+				console.log('saved');
+			});
 		}
 
 		

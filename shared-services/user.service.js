@@ -13,6 +13,7 @@
 	  var isAdmin = function(){ return $window.localStorage.getItem("bdUserRole") > 0 ? true : false; }
 		var isLoggedIn = function(){ return $window.localStorage.getItem("bdAccessToken") ? true : false; }
 	  var getToken = function(){ return $window.localStorage.getItem("bdAccessToken"); }
+	 
 	  
 		var set = function(key, data){
 			
@@ -44,6 +45,7 @@
 			$window.localStorage.setItem("bdAccessToken", response.access_token);
 			setup(function(userData){
 				$window.localStorage.setItem("bdUserRole", userData.role_id);
+				$window.localStorage.setItem("bdUserId", userData.id);
 				if (callback) callback(userData);
 			});
 		}
@@ -80,6 +82,7 @@
 		var logout = function(){
 			$window.localStorage.removeItem("bdAccessToken");
 			$window.localStorage.removeItem("bdUserRole");
+			$window.localStorage.removeItem("bdUserId");
 			user = {};
 			$location.path("/login");
 		}
@@ -87,7 +90,10 @@
 		var update = function(userData, success, error){
 			api.call('updateMe', userData, success, error);
 		}
-	  
+	  var jeans = [];
+	  var getMyJeans = function(){
+		  
+	  }
 	  return {
       get:function(){ return user;},
       isLoggedIn : isLoggedIn,

@@ -208,3 +208,28 @@ ul.tailor-list{
 	border-top:1px solid $grey;
 	border-bottom:1px solid $grey;
 }
+
+.cft-g.clone-grid{
+	&>.cft-gi{width:100%; vertical-align: top;}	
+	@include at-query($min, 650px){
+		&>.cft-gi{width:50%;}	
+	}
+}
+
+.clone-grid{
+	img{
+		width:100%;
+	}
+	ul{
+		list-style-type: none;
+		li{
+			padding:3px 0;
+			border-bottom:1px solid $grey;
+			span.measurement{
+				text-transform: capitalize;
+				font-weight:700;
+				color:$blue;
+			}	
+		}
+	}
+}

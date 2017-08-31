@@ -10,13 +10,13 @@
 	<div ng-if="editing">
 		
 		<div ng-if="!active" class="single-address" ng-repeat="add in user.addresses track by $index">
-			<a href="" ng-click="choosePrimary($index)" ng-class="{checked:add.primary}" class="check-box small"></a>
+			<a href="" ng-click="choosePrimary(add)" ng-class="{checked:add.primary>0}" class="check-box small"></a>
 			<span class='add-line'>{{add.address_line_1}}</span>
 			<span class='add-line' ng-if="add.address_line_2">{{add.address_line_2}}</span>
 			<span class='add-line'>{{add.city}}, {{add.state}} {{add.zip}}</span>
 			<div class="icon-controls">
 				<i ng-click="open($index)" class="fa fa-pencil"></i>
-				<i ng-if="user.addresses.length>1" ng-click="remove($index)" class="fa fa-minus-circle"></i>
+				<i ng-if="user.addresses.length>1" ng-click="remove(add.id)" class="fa fa-minus-circle"></i>
 			</div>
 		</div>
 	

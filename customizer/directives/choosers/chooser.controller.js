@@ -33,7 +33,6 @@
 						scrollStep = (distance / stepNum),
 						scrollTest = (el.scrollLeft < scrollTo ? function(a,b){return a<=b-1;} : function(a,b){return a>=b+1;} );		
 				/*
-
 				console.log("current Scoll pos: "+el.scrollLeft);
 				console.log("Scroll to "+scrollTo);
 				console.log("distance to go "+distance);
@@ -78,7 +77,7 @@
 						var dataId = chvm.jeanData[$scope.step.jeanKey];
 					
 						//Make sure this isn't an embedded model
-						if (typeof(dataId)== 'object') dataId = dataId[$scope.step.dataKey+"Id"];
+						if (typeof(dataId)== 'object') dataId = dataId[$scope.step.dataKey4];
 						
 						var elementId = $scope.step.jeanKey+"_"+dataId;												
 					
@@ -126,7 +125,7 @@
 				
 				$timeout(function(){
 					text.css({'right':'15px', 'opacity':1});				
-					chvm.jeanData[attr] =	id;	
+					jean.set(attr,id);	
 				}, 200);
 			
 			}
