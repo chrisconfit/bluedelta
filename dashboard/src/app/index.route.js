@@ -172,7 +172,10 @@
       .state('clients.list', {
         url: "/list",
         templateUrl: "app/clients/clients.html",
-        authenticate: true
+        authenticate: true,
+        resolve:{
+	        appData:getAppData
+        }
       })
       
       .state('clients.add', {

@@ -62,6 +62,8 @@ angular.module('inspinia')
 		}
 		
 		function pullUsers(filters, callback){
+			console.log("filters!!!");
+			console.log(filters);
 			//var data = vm.pagination.nextURL ? [vm.pagination.usersPerPage, vm.pagination.nextURL] : vm.pagination.usersPerPage;
 			api.call('usersList', filters, function(result){
 				console.log("pulled!");
@@ -81,8 +83,13 @@ angular.module('inspinia')
 			"page": 1, 
 			"orderby":"last_name",
 			"order":"ASC",
-			"state":"",
 		}
+		$scope.$watch(angular.bind(this, function () {
+		  return this.filters.state;
+		}), function (newVal) {
+			if (newVal =="") delete vm.filters.state;
+			if (!newVal) return false;	
+		});
 		
 		pullUsers(vm.filters);    
     
