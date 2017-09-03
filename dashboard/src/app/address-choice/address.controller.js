@@ -23,16 +23,7 @@ angular.module('inspinia')
 		if(!$scope.addresses.length){ $scope.newAdd.editing=true; }
 		
     $scope.ok = function () {
-		  if($scope.a.selected == null){
-			  var saveAdd = $scope.newAdd.form;
-			  saveAdd.newAdd=true;
-			}
-		  else{
-				for (var i=0; i<$scope.addresses.length; i++) {
-					if ($scope.addresses[i].id == $scope.a.selected)  var saveAdd = $scope.addresses[i];
-				}
-				saveAdd.newAdd=false;
-			}
+		  var saveAdd = $scope.a.selected == null ?  $scope.newAdd.form : $scope.a.selected;
     	save(saveAdd, function(){
 	    	$uibModalInstance.close();	
     	});

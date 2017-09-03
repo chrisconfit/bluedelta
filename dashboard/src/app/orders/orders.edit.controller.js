@@ -88,6 +88,10 @@ angular.module('inspinia')
   
   
   vm.saveAddress = function(add, callback){
+	  
+	  console.log( "SAVING ADDRESS!!");
+	  console.log(add);
+	  
     if (add === parseInt(add, 10)){
 	    vm.order.shipping_address_id = add;
 	    for (var i=0; i<vm.orderUser.addresses.length; i++){
@@ -147,8 +151,10 @@ angular.module('inspinia')
 			console.log(result);
 	    vm.orderUser = result;
 	    var primary = getPrimaryAddress(result.addresses);
+	    console.log('prim');
 	    console.log(primary);
 			vm.order.address = primary;
+			vm.order.shipping_address_id=result.id;
     });
   }
 

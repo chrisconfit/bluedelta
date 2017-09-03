@@ -3,7 +3,7 @@
 angular.module('inspinia')
   .controller('ClientsEditController',  ['$uibModal', 'userData', 'appData', '$scope', 'api', 'SweetAlert', 'toaster', '$state',
   function ($uibModal, userData, appData, $scope, api, SweetAlert, toaster, $state) {
-    
+
     
     
     
@@ -20,7 +20,7 @@ angular.module('inspinia')
 			phone:"",
 			addresses:[],
 		}
-
+		
 
 		vm.newUser = Object.keys(vm.userData).length>0 ? false : true;
 		vm.userData = vm.newUser ? defaultUser : userData;		
@@ -46,15 +46,7 @@ angular.module('inspinia')
 		        icon : icon,
 		      },
 	        save : function(){
-		        return function(address, success){
-			        address.user_id = vm.userData.id;
-			        address.primary=1;
-		        	api.call('usersCreateAddress', {userId:vm.userData.id,address:address}, function(result){
-			        	console.log(result);
-			        	vm.userData.addresses = (result.addresses);
-			        	success();
-			        });
-		        }
+		        return vm.saveAddress;
 	        },
           address: function () {
             return vm.userData.addresses;
@@ -66,7 +58,27 @@ angular.module('inspinia')
     	});
     };
     
-    
+    function setPrimary(primaryId){
+	    for (var i=0; i<vm.userData.addresses.length; i++){
+		  	var thisAdd = vm.userData.addresses[i];
+		  	if (thisAdd.id == primaryId) thisAdd.primary=1;
+		  	else thisAdd.primary=0;
+	    }
+    }
+   
+	  vm.saveAddress = function(add, callback){		
+			add.primary=1;
+			var data = {userId:vm.userData.id, address:add};
+			var creatingNew = add.newAdd;
+			api.call('postAddress', data, function(result){	
+				if(creatingNew) vm.userData.addresses.push(result);
+				setPrimary(result.id);
+		    if(callback)callback();
+			});		
+		}
+  
+ 
+	
 
 
 	/*														*\
@@ -91,11 +103,7 @@ angular.module('inspinia')
 		console.log('about to post!');
 		
 		api.call('usersPost', args, function(result){
-			
-			console.log(result);
-			
 			vm.clientEditMode=false
-			
 			toaster.pop({
 			  type: 'success',
 			  title: succMessage,

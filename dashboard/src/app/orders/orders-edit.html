@@ -8,7 +8,7 @@
 	<br>
 	<pre>
 		{{ovm.order | json}}
-	</pre>
+	</pre> 
 	<br>
 	
 	<div class="wrapper wrapper-content">
@@ -35,10 +35,10 @@
               <li class="list-group-item clearfix">
 
                 <p><b>Shipping Address</b><a class="pull-right fa fa-edit" ng-click="ovm.editAddress('Shipping', 'fa-truck')" href="#"></a></p>
-                <p ng-if="ovmorder.address">{{ovm.order.address.address_line_1}}<br>
+                <p ng-if="ovm.order.address">{{ovm.order.address.address_line_1}}<br>
                   {{ovm.order.address.address_line_2}}<br ng-if="ovm.order.address.addressLine2 && ovm.order.address.addressLine2!=''">
                   {{ovm.order.address.city}}, {{ovm.order.address.state}} {{ovm.order.address.zip}}</p>
-                <a ng-if="!ovmorder.address" ng-click="ovm.editAddress('Shipping', 'fa-truck')" href="">Add Address</a>
+                <a ng-if="!ovm.order.address" ng-click="ovm.editAddress('Shipping', 'fa-truck')" href="">Add Address</a>
               </li>
               <!--<li class="list-group-item clearfix">
                 <p><b>Billing Address</b><a class="pull-right fa fa-edit" ng-click="ovm.editAddress('Billing', 'fa-list')" href="#"></a></p>

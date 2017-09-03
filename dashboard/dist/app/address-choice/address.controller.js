@@ -1,12 +1,11 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('AddressController', ['$scope', '$uibModalInstance', 'data', 'address', 'order', 'save',
-  function ($scope, $uibModalInstance, data, address, order, save) {
+  .controller('AddressController', ['$scope', '$uibModalInstance', 'data', 'address', 'save',
+  function ($scope, $uibModalInstance, data, address, save) {
 	  
-	 	console.log(data);
+	  $scope.a = {selected:data.selected};
 		$scope.addresses=address;
-		$scope.order = order;
 		$scope.addressType = data.addressType;
 		$scope.icon = data.icon;
 		$scope.addData={primaryIndex:null};
@@ -20,28 +19,20 @@ angular.module('inspinia')
 		    zip:""		    
 	    },
     }
-	
 		
 		if(!$scope.addresses.length){ $scope.newAdd.editing=true; }
-		else {
-			for(var i=0; i < $scope.addresses.length; i++){
-				console.log(address[i].primary);
-				if ($scope.addresses[i].primary==1){
-					$scope.addData.primaryIndex=i;
-					break;
-				}
-			}
-		}
-		console.log($scope.addData);
 		
     $scope.ok = function () {
-	    if ($scope.addData.primaryIndex == null){
-		    var saveAdd=$scope.newAdd.form;
-	    }
-	    else{
-		    var saveAdd = $scope.addresses[$scope.addData.primaryIndex];
-	    }
-	    
+		  if($scope.a.selected == null){
+			  var saveAdd = $scope.newAdd.form;
+			  saveAdd.newAdd=true;
+			}
+		  else{
+				for (var i=0; i<$scope.addresses.length; i++) {
+					if ($scope.addresses[i].id == $scope.a.selected)  var saveAdd = $scope.addresses[i];
+				}
+				saveAdd.newAdd=false;
+			}
     	save(saveAdd, function(){
 	    	$uibModalInstance.close();	
     	});
@@ -50,11 +41,6 @@ angular.module('inspinia')
     $scope.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
-    
-    
-    $scope.compare = function(add){
-	    return angular.equals(add, $scope.order.shippingAddress);
-    }
     
     
 
