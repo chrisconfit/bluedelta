@@ -1,19 +1,13 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('OrdersController', ['bdAPI', '$scope', 'aws', 'SweetAlert', function (bdAPI, $scope, aws, SweetAlert) {
+  .controller('OrdersController', ['appData', 'bdAPI', '$scope', 'aws', 'SweetAlert', 'user', 'api', function (appData, bdAPI, $scope, aws, SweetAlert, user, api) {
 
-
-		console.log(bdAPI);
-		
-		
-		
-		
-		
 
     var vm = this;
+    vm.data = appData;
     
-    
+    vm.user = user.get();
     
     vm.userNames = {
 	    "8144148a-2ad6-4353-8850-0e1b301fa227" : "Creighton Hardy",
@@ -23,6 +17,32 @@ angular.module('inspinia')
 	    "12f1a391-02f3-4aaf-92cc-734ed5f38184" : "Chris LeFevre",
 	    "3b9b047a-f148-4f53-9306-bd93139d7b1c": "James Kelleway"
     }
+    console.log(appData);
+    
+    
+    function serializeFilters(obj){
+	    var result = [];
+			for (var property in obj)
+				if(!obj[property] || obj[property]=="All" || obj[property]==null || obj[property] =="") continue;
+        else result.push(encodeURIComponent(property) + "=" + encodeURIComponent(obj[property]));
+			return result.join("&");
+    }
+    vm.filterOrders = function(){
+	    var filters = angular.copy(vm.filters);
+	    var range = filters.dateRange;
+	    delete filters.dateRange;
+	    filters.startDate = range.startDate;
+	    filters.endDate = range.endDate;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    //Delete Orders
     
     var deleteOrderBox = {
       title: "Are you sure?",
@@ -35,7 +55,6 @@ angular.module('inspinia')
       closeOnConfirm: false,
       closeOnCancel: true 
     }
-    
     
 		vm.deleteOrder = function(orderId){
 			SweetAlert.swal(deleteOrderBox,
@@ -51,11 +70,6 @@ angular.module('inspinia')
 		  );
 		}
 		
-
-
- 
-
- 
 		vm.ordersRemove = function(orderId){
 			for(var i=0; i<vm.orders.length; i++){
 				if (vm.orders[i].orderId == orderId){
@@ -114,27 +128,75 @@ angular.module('inspinia')
 		
 		
 
-		function pullOrders(callback){
-			var args = vm.pagination.nextURL ? [vm.pagination.ordersPerPage, vm.pagination.nextURL] : vm.pagination.ordersPerPage;
-			bdAPI.call('ordersList', args, function(result){
-				console.log(result);
-				vm.orders.push.apply(vm.orders, result.data.items);
-				if (result.data.next){
-					vm.pagination.nextURL=result.data.next;
-					vm.pagination.next = true;
-				}
-				else vm.pagination.next = false;
+		function pullOrders(filters, callback){
+			//var data = vm.pagination.nextURL ? [vm.pagination.usersPerPage, vm.pagination.nextURL] : vm.pagination.usersPerPage;
+			api.call('ordersList', filters, function(result){
+				if (vm.pagination.total == 0 ) vm.pagination.total = parseInt(result.total)/vm.filters.results_per_page;
+				vm.pagination.current = parseInt(result.page);
+				vm.orders.push.apply(vm.orders, result.results);
 				vm.pagination.loaded++;	
-				if (callback){
-				 callback();
-				}
-				$scope.$apply();
+				if (callback) callback();
 			});
 		}
 		
-		//Init orders
+		//Init users
 		vm.orders = [];
-		pullOrders();
+		vm.filters = {
+			"results_per_page" : 25,
+			"page": 1, 
+			"orderby":"created_at",
+			"order":"ASC",
+		}
+		
+		
+		$scope.$watch(angular.bind(this, function () {
+		  return this.filters.id;
+		}), function (newVal) {
+			if (newVal =="") delete vm.filters.id;
+			if (!newVal) return false;	
+			var arr = newVal.split(',');
+			vm.filters.id=arr;
+		});
+		
+		//Date range filter setter
+		vm.dateRange = {startDate: null, endDate: null}
+		$scope.$watch(angular.bind(this, function () {
+		  return this.dateRange;
+		}), function (newVal) {
+			if (newVal.startDate ==null) delete vm.filters.start_date;
+			else vm.filters.start_date = new Date(newVal.startDate);
+			if (newVal.endDate ==null) delete vm.filters.end_date;
+			else vm.filters.end_date = new Date(newVal.endDate);
+		});    	
+		
+		vm.changeSort = function(col, asc){
+	    var direction = asc ? "ASC" : "DESC";
+	    vm.filters.orderby=col;
+	    vm.filters.order = direction;
+			vm.newQuery();
+    }
+        
+    vm.newQuery = function(){
+	    vm.orders = [];
+	    vm.filters.page=1;
+	    for (var i=0; i<vm.filters.length; i++){
+		    if (vm.filters[i] == "") delete vm.filters[i];
+	    }
+	    pullOrders(vm.filters);
+    }
+    
+		pullOrders(vm.filters);   
+					
+		vm.changePage = function(page){
+			vm.filters.page=parseInt(page);
+			vm.orders=[];
+			pullOrders(vm.filters);
+		}
+		
+		vm.pagination = {
+			total:0,
+			current:0
+		}
 
 		
 	

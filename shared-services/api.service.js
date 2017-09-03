@@ -24,16 +24,14 @@
 		var noTokenNecessary = [
 			'login',
 			'register',
+			'getResetToken',
+			'resetPassword',
 			'forgotPassword',
 			'getJean'
 		];
 		
 		//Call an API function and handle data
 		var call = function(func, data, success, error){
-			console.log("calling "+func);
-			console.log("with...");
-			console.log(data);
-			
 			accessToken = $window.localStorage.getItem('bdAccessToken');
 			
 			if (noTokenNecessary.indexOf(func) < 0 && !accessToken){
@@ -73,17 +71,10 @@
 				var dataKey = method=="POST" ? "data":"params"
 				httpConfig[dataKey] = data;
 			}
-			
 		  return $http(httpConfig);
 		}
 		
 		
-		
-		
-		/*
-		* USER
-		*/
-
 
 		/*
 		* AUTH
@@ -95,6 +86,14 @@
 		
 		var register = function(data){
 			return httpReq("POST", "/api/register", data);
+		}
+	  
+	  var getResetToken = function(data){
+			return httpReq("POST", "/api/passwordtoken",  {email:data});
+		}
+		
+		var resetPassword = function(data){
+			return httpReq("POST", "/api/passwordreset", data);
 		}
 	  
 	  
@@ -112,6 +111,106 @@
 		  return httpReq("GET", "/api/jean/"+data);
 	  }
 	  
+	  function jeanKeytoURL(key){
+			switch(key){
+				case "gender_option_id":
+	      return "g";
+	      break;
+	      
+	      case "style_option_id":
+	      return "s";
+	      break;
+	      
+	      case "fabric_id":
+	      return "f";
+	      break;
+	      
+	      case "top_thread_id":
+	      return "tt";
+	      break;
+	      
+	      case "bottom_thread_id":
+	      return "tb";
+	      break;
+	      
+	      case "accent_thread_id":
+	      return "ta";
+	      
+	      default: return false;
+			}
+		}
+		
+		getDataCode = function(jeanData){
+			var url = "";			
+			for (var property in jeanData) {
+			  if (jeanData.hasOwnProperty(property)) {
+					var id = jeanData[property];
+					var urlKey = jeanKeytoURL(property);
+					if (urlKey) url += "_"+urlKey+id;
+			  }
+			}	
+			url = url.replace(/(^[_\s]+)|([_\s]+$)/g, '');
+			return url;
+		}
+	  
+		function loadImage(src) {
+			return $q(function(resolve,reject) {
+			  var image = new Image();
+			  image.crossOrigin = "";
+			  image.src = src;
+			  image.onload = function() {
+			    resolve(image);
+			  };
+			  image.onerror = function(e) {
+			    reject(e);
+			  };
+			})
+		}   
+    
+	 function searchAndDraw(key, cntxt, images){
+			for(i=0; i<images.length; i++){
+				var image = images[i];
+				if(image.src.indexOf("/"+key+"/") > -1){
+					cntxt.drawImage(image,0,0,600,696);
+				};
+			}
+		}
+		
+	  var createThumb = function(jeanData){
+	  	var canvas = document.createElement('canvas');
+	  	canvas.width=600;
+	  	canvas.height=600;
+	  	var cntxt = canvas.getContext('2d');	
+	  	var promises = [];
+			var images = [
+				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabrics/g'+jeanData.gender_option_id+'/s2/f'+jeanData.fabric_id+'.jpg',
+				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/tb/'+jeanData.bottom_thread_id+'.png',
+				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/tt/'+jeanData.top_thread_id+'.png',
+				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/ta/'+jeanData.accent_thread_id+'.png'
+			];
+	
+	    for(var i=0; i<images.length; i++){
+	      promises.push(loadImage(images[i], cntxt));
+	    }
+	    
+	    return $q.all(promises).then(
+	    	function(results) {
+					searchAndDraw("fabrics", cntxt, results);
+					searchAndDraw("tb", cntxt, results);
+					searchAndDraw("tt", cntxt, results);
+					searchAndDraw("ta", cntxt, results);
+		      var dataUrl = canvas.toDataURL('image/jpeg');
+					return dataUrl;
+		    },    
+		    function(err){
+			    console.log(err);
+		    }
+	    );	
+		}
+		
+		
+		
+	  
 
 	  
 	  
@@ -119,13 +218,13 @@
 	  /*
 		*  CURRENT USER DATA
 		*/
-		var postAddress = function(data){
+		var postMyAddress = function(data){
 			var path = "/api/users/current/addresses"
 			if (data.id) path+="/"+data.id;
 			return httpReq("POST", path, data);
 		}
 
-		var deleteAddress = function(addressId){
+		var deleteMyAddress = function(addressId){
 		  return httpReq("DELETE", "/api/users/current/addresses/"+addressId);			
 		}
 		
@@ -147,19 +246,6 @@
 		
 		var updateMe = function(data){
 			return httpReq("POST", "/api/users/current", data);	
-		}
-	  
-	  
-		var createFabric = function(data){
-			return httpReq("POST", "/api/fabrics", data);
-		}
-		
-		var postThread = function(data){
-			return httpReq("POST", "/api/threads", data);
-		}
-		
-		var postTailor = function(data){
-			return httpReq("POST", "/api/tailors", data);
 		}
 	  
 	  var getMyJeans = function(){
@@ -212,7 +298,26 @@
 		var orderGet = function(orderId){
 			return httpReq("GET", "/api/orders/"+orderId);
 		}
-
+		
+		var ordersDelete = function(orderId){
+			return httpReq("DELETE", "/api/orders/"+orderId);
+		}
+		
+		var ordersPost = function(data){
+			var path = "/api/orders";
+			if (data.id) path += "/"+data.id
+			console.log(path);
+			console.log(data);
+			return httpReq("POST", path, data);
+		}
+		
+		var postAddress = function(data){
+			return httpReq("POST", "/api/users/"+data.userId+"/addresses", data.address);
+		}
+		
+		var commentsCreate = function(data){
+			return httpReq("POST", "/api/orders/"+data.orderId+"/comments", data.comment);
+		}
 		
 		var data = {};
 		
@@ -222,23 +327,23 @@
       call : call,
       login: login,
       register: register,
-      
-      createFabric: createFabric,
-      postThread:postThread,
-      postTailor:postTailor,
+      getResetToken:getResetToken,
+			resetPassword:resetPassword,
       
       getJean:getJean,
+      createThumb:createThumb,
+      getDataCode:getDataCode,
       
       getCurrentUser:getCurrentUser,
       createMyJeans:createMyJeans,
       getMyOrders:getMyOrders,
       getMyJeans:getMyJeans,
       updateMe: updateMe,
-      postAddress:postAddress,
+      postMyAddress:postMyAddress,
       getMyJeans:getMyJeans,
       getMyOrders:getMyOrders,
       deleteMyJean:deleteMyJean,
-      deleteAddress: deleteAddress,
+      deleteMyAddress: deleteMyAddress,
       placeMyOrder: placeMyOrder,
       
       usersList:usersList,
@@ -246,8 +351,12 @@
       usersDelete:usersDelete,
       usersCreateAddress:usersCreateAddress,
       usersPost:usersPost,
+      ordersPost:ordersPost,
       ordersList:ordersList,
-      orderGet:orderGet
+      orderGet:orderGet,
+      ordersDelete:ordersDelete,
+      postAddress:postAddress,
+      commentsCreate:commentsCreate
     };
     
   }

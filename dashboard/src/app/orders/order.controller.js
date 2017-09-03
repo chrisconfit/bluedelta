@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('OrdersController', ['appData', 'bdAPI', '$scope', 'aws', 'SweetAlert', 'user', 'api', function (appData, bdAPI, $scope, aws, SweetAlert, user, api) {
-
+  .controller('OrdersController', ['appData', 'bdAPI', '$scope', 'aws', 'SweetAlert', 'user', 'api', '$stateParams', function (appData, bdAPI, $scope, aws, SweetAlert, user, api, $stateParams) {
 
     var vm = this;
     vm.data = appData;
@@ -17,7 +16,6 @@ angular.module('inspinia')
 	    "12f1a391-02f3-4aaf-92cc-734ed5f38184" : "Chris LeFevre",
 	    "3b9b047a-f148-4f53-9306-bd93139d7b1c": "James Kelleway"
     }
-    console.log(appData);
     
     
     function serializeFilters(obj){
@@ -60,8 +58,7 @@ angular.module('inspinia')
 			SweetAlert.swal(deleteOrderBox,
 		    function (isConfirm) {
 	        if (isConfirm) {
-		        bdAPI.setupHeaders();
-						bdAPI.ordersDelete(orderId).then(function(result){
+						api.call('ordersDelete', orderId, function(result){
 							vm.ordersRemove(orderId);
 	          	SweetAlert.swal("Deleted!", "Order# "+orderId+" has been deleted.", "success");
 	          });
@@ -72,7 +69,7 @@ angular.module('inspinia')
 		
 		vm.ordersRemove = function(orderId){
 			for(var i=0; i<vm.orders.length; i++){
-				if (vm.orders[i].orderId == orderId){
+				if (vm.orders[i].id == orderId){
 					vm.orders.splice(i, 1);
 					return;
 				}
@@ -148,13 +145,15 @@ angular.module('inspinia')
 			"order":"ASC",
 		}
 		
+		if($stateParams.user_id) vm.filters.user_id=$stateParams.user_id;
+		
 		
 		$scope.$watch(angular.bind(this, function () {
 		  return this.filters.id;
 		}), function (newVal) {
 			if (newVal =="") delete vm.filters.id;
 			if (!newVal) return false;	
-			var arr = newVal.split(',');
+			var arr = Array.isArray(newVal) ? newVal : newVal.split(',');
 			vm.filters.id=arr;
 		});
 		
@@ -184,7 +183,7 @@ angular.module('inspinia')
 	    }
 	    pullOrders(vm.filters);
     }
-    
+
 		pullOrders(vm.filters);   
 					
 		vm.changePage = function(page){

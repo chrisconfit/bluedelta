@@ -13,7 +13,8 @@
       controller: 'loginFormCtrl as logvm',
       scope : {
 				redirect : "=?",
-	      callback : "=?"
+	      callback : "=?",
+	      forgot : "=?"
       }
     };
     

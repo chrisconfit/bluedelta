@@ -77,6 +77,22 @@
 			});		
 		}
 		
+		var getResetToken = function(email, success, error){
+			api.call('getResetToken', email, function(response){
+				success(response);
+			}, function(err){
+				if(error) error(err);
+			});		
+		}
+		
+		var resetPassword = function(data, success, error){
+			api.call('resetPassword', data, function(response){
+				success(response);
+			}, function(err){
+				if(error) error(err);
+			});		
+		}
+		
 		var logout = function(){
 			$window.localStorage.removeItem("bdAccessToken");
 			$window.localStorage.removeItem("bdUserRole");
@@ -103,6 +119,8 @@
       logout:logout,
       setup: setup,
       getToken: getToken,
+      getResetToken:getResetToken,
+      resetPassword:resetPassword
     };
 
 	}

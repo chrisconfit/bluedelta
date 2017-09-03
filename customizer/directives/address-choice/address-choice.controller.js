@@ -4,9 +4,9 @@
     .module('bdApp')
     .controller('addressChoiceCtrl', addressChoiceCtrl);
 
-  addressChoiceCtrl.$inject = ['$scope', '$filter', 'bdAPI', 'messages', 'api', 'user'];
+  addressChoiceCtrl.$inject = ['$scope', '$filter', 'messages', 'api', 'user'];
   
-  function addressChoiceCtrl($scope, $filter, bdAPI, messages, api, user) {
+  function addressChoiceCtrl($scope, $filter, messages, api, user) {
 	  
 	  $scope.editing=false;
 	  $scope.active=false;
@@ -89,7 +89,7 @@
 				messages.set("You can't remove your last address", "error");
 				return false;	
 			}
-			api.call('deleteAddress', addressId, function(result){
+			api.call('deleteMyAddress', addressId, function(result){
 				//Remove deleted address...
 				for(i=0; i<$scope.user.addresses.length; i++){
 					var add = $scope.user.addresses[i];

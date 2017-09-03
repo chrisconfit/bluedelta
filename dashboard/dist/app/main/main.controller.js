@@ -1,17 +1,15 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('MainController', ['$state', 'aws', function ($state, aws) {
-		console.log("St");
-		console.log($state);
+  .controller('MainController', ['$state', 'aws', 'user', function ($state, aws, user) {
+
     var vm = this;
-    vm.state = $state;
     
-    vm.userName = 'Example user';
-    vm.helloText = 'Welcome in INSPINIA Gulp SeedProject';
-    vm.descriptionText = 'It is an application skeleton for a typical AngularJS web app. You can use it to quickly bootstrap your angular webapp projects.';
+    vm.state = $state;
+    vm.user = user.get();
+    vm.isLoggedIn = user.isLoggedIn();
     vm.logout = function(){
-	    aws.signCurrentUserOut();
+	    user.logout();
 	    $state.transitionTo('login');
     }
 

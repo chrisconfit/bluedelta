@@ -203,9 +203,12 @@
 		}
 		
 		vm.selectOrder = function(order){
+			console.log("selecting Order");
+			console.log(order);
 			vm.popups.orderProfile = true; 
 			vm.displayOrder=order;
-			vm.displayJean = order.orderItems[0].jean;
+			vm.displayJean = order.order_items[0];
+			console.log(vm.displayOrder);	
 		}
 		
 	

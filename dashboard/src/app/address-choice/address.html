@@ -6,13 +6,13 @@
 	
 	<div class="modal-body">
 		<div class="addresses">
-			<div class="single-address" ng-repeat="add in addresses track by $index">
+			<div class="single-address" ng-repeat="add in addresses">
 				<div class="radio radio-primary">
-			    <input type="radio" id="address_{{$index}}" id="name_{{$index}}"
-			    ng-value="$index"  
-					ng-model="addData.primaryIndex"\
+			    <input type="radio" id="address_{{add.id}}" id="name_{{add.id}}"
+			    ng-value="add.id"  
+					ng-model="a.selected"
 					ng-click="newAdd.editing=false">
-			    <label for="address_{{$index}}">
+			    <label for="address_{{add.id}}">
 			    	{{add.address_line_1}}
 						<br ng-if="add.address_line_2">{{add.address_line_2}}
 						<br>{{add.city}}, {{add.state}} {{add.zip}}
@@ -21,14 +21,12 @@
 				<hr>
 			</div>
 
-			
 			<div class="radio radio-primary">
 				<input name="newAdd_toggle" id="newAdd_toggle" type="radio"  
-				ng-click="newAdd.editing=true; addData.primaryIndex=null"
+				ng-click="newAdd.editing=true; a.selected=null"
 				ng-checked="newAdd.editing">
 			  <label for="newAdd_toggle">Add New Address</label>
 			</div>  
-				
 			
 			<div class="newAdd-form" ng-if="newAdd.editing">
 			  <form method="get" class="form-horizontal">

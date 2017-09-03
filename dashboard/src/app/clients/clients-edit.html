@@ -7,91 +7,80 @@
 	</div>              
 	
 	<div class="wrapper wrapper-content">
-
-        <div class="row">
-					<div class="col-md-6">
-						<div class="ibox ibox-default clearfix">
-							<div class="ibox-title">
-								<h3>
-									Basic Information 
-									<a ng-if="!cvm.clientEditMode" class="pull-right fa fa-edit" ng-click="cvm.beginClientEdit()" href="#"></a>
-									<a ng-if="cvm.clientEditMode" class="pull-right fa fa-save" ng-click="cvm.saveUser()" href="#"></a>
-									<a ng-if="cvm.clientEditMode" class="pull-right fa fa-undo" ng-click="cvm.clearClientEdit()" href="#"></a>
-								</h3> 
-							</div>
-							<div class="ibox-content">
-                <ul class="list-group jean-list-edit list-group-unbordered">
-		              <li class="list-group-item clearfix">
-			              <b>Name</b> 
-			              <span ng-if="!cvm.clientEditMode" class="pull-right">{{cvm.userData.first_name}} {{cvm.userData.last_name}}</span>
-	                  <input style="margin-top:5px" class="form-control pull-right" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.first_name">
-	                  <input style="margin-top:5px" class="form-control pull-right" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.last_name">
-	                </li>
-	                <li class="list-group-item clearfix">
-	                  <b>E-mail</b> 
-	                  <span ng-if="!cvm.clientEditMode" class="pull-right">{{cvm.userData.email}}</span>
-	                  <input style="margin-top:5px" class="form-control pull-right" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.email">
-	                </li>
-	                <li class="list-group-item clearfix">
-	                  <b>Phone</b> 
-	                  <span ng-if="!cvm.clientEditMode" class="pull-right">{{cvm.userData.phone}}</span>
-										<input style="margin-top:5px" class="form-control pull-right" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.phone">
-	                </li>
-	                <li class="list-group-item clearfix">
-	                  <b>User Role</b> 
-	                  <span ng-if="!cvm.clientEditMode" class="pull-right">{{cvm.userData.role_id}}</span>
-										<select class="form-control  pull-right" 
-											ng-if="cvm.clientEditMode" 
-											ng-options="o.id as o.name for o in [{id:1, name:'Client'}, {id:2, name:'Admin'}, {id:3, name:'Super Admin'}]" 	
-											ng-model="cvm.userData.role_id">
-										</select>
-	                </li>
-	                <li ng-if="cvm.newUser" class="list-group-item clearfix">
-	                  <b>Password</b> 
-	                  <span ng-if="!cvm.clientEditMode" class="pull-right">{{cvm.userData.role_id}}</span>
-										<input style="margin-top:5px" class="form-control pull-right" type="password" ng-if="cvm.clientEditMode" ng-model="cvm.userData.password">
-	                </li>
-	              </ul>
-	              <button ng-if="cvm.newUser" ng-click="cvm.saveUser()" href="" class="btn btn-block btn-primary">Create User</button>              
-							</div>
-						</div>
+    <div class="row">
+			<div class="col-md-6">
+				<div class="ibox ibox-default clearfix">
+					<div class="ibox-title">
+						<h3>
+							Basic Information 
+							<a ng-if="!cvm.clientEditMode" class="pull-right fa fa-edit" ng-click="cvm.beginClientEdit()" href="#"></a>
+							<a ng-if="cvm.clientEditMode" class="pull-right fa fa-save" ng-click="cvm.saveUser()" href="#"></a>
+							<a ng-if="cvm.clientEditMode" class="pull-right fa fa-undo" ng-click="cvm.clearClientEdit()" href="#"></a>
+						</h3> 
 					</div>
-					<div ng-if="!cvm.newUser" class="col-md-6">
-						<div class="ibox ibox-default clearfix">
-							<div class="ibox-title">
-								<h3>
-									Address 
-									<a class="pull-right fa fa-edit" ng-click="cvm.editAddress()" href="#"></a>
-								</h3> 
-							</div>
-							<div class="ibox-content">
-								<div class="clearfix">
-	                <p><b>Primary Address</b></p>
-	                <p ng-if="cvm.userData.addresses.length">{{cvm.userData.addresses[0].address_line_1}}<br>
-	                  {{cvm.userData.addresses[0].address_line_2}}<br ng-if="cvm.userData.addresses[0].address_line_2.length">
-	                  {{cvm.userData.addresses[0].city}}, {{cvm.userData.addresses[0].state}} {{cvm.userData.addresses[0].zip}}</p>
-	                <a href="" ng-click="cvm.editAddress()" ng-if="!cvm.userData.addresses.length">Add an address</a>
-	              </div>                
-							</div>
-						</div>
+					<div class="ibox-content">
+            <ul class="list-group jean-list-edit list-group-unbordered">
+              <li class="list-group-item clearfix">
+	              <b>Name</b> 
+	              <span ng-if="!cvm.clientEditMode" class="pull-right">{{cvm.userData.first_name}} {{cvm.userData.last_name}}</span>
+                <input style="margin-top:5px" class="form-control pull-right" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.first_name">
+                <input style="margin-top:5px" class="form-control pull-right" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.last_name">
+              </li>
+              <li class="list-group-item clearfix">
+                <b>E-mail</b> 
+                <span ng-if="!cvm.clientEditMode" class="pull-right">{{cvm.userData.email}}</span>
+                <input style="margin-top:5px" class="form-control pull-right" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.email">
+              </li>
+              <li class="list-group-item clearfix">
+                <b>Phone</b> 
+                <span ng-if="!cvm.clientEditMode" class="pull-right">{{cvm.userData.phone}}</span>
+								<input style="margin-top:5px" class="form-control pull-right" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.phone">
+              </li>
+              <li class="list-group-item clearfix">
+                <b>User Role</b> 
+                <span ng-if="!cvm.clientEditMode" class="pull-right">{{cvm.userData.role_id}}</span>
+								<select class="form-control  pull-right" 
+									ng-if="cvm.clientEditMode" 
+									ng-options="o.id as o.name for o in [{id:1, name:'Client'}, {id:2, name:'Admin'}, {id:3, name:'Super Admin'}]" 	
+									ng-model="cvm.userData.role_id">
+								</select>
+              </li>
+              <li ng-if="cvm.newUser" class="list-group-item clearfix">
+                <b>Password</b> 
+                <span ng-if="!cvm.clientEditMode" class="pull-right">{{cvm.userData.role_id}}</span>
+								<input style="margin-top:5px" class="form-control pull-right" type="password" ng-if="cvm.clientEditMode" ng-model="cvm.userData.password">
+              </li>
+            </ul>
+            <button ng-if="cvm.newUser" ng-click="cvm.saveUser()" href="" class="btn btn-block btn-primary">Create User</button>              
 					</div>
-					
-					<div ng-if="!cvm.newUser" class="col-md-6">
-						<button href="" class="btn btn-block btn-primary">View Client's Orders</button>              
+				</div>
+			</div>
+			<div ng-if="!cvm.newUser" class="col-md-6">
+				<div class="ibox ibox-default clearfix">
+					<div class="ibox-title">
+						<h3>
+							Address 
+							<a class="pull-right fa fa-edit" ng-click="cvm.editAddress()" href="#"></a>
+						</h3> 
 					</div>
-					
-						
-
-
-
-
-		  
-
-
-    	
+					<div class="ibox-content">
+						<div class="clearfix">
+              <p><b>Primary Address</b></p>
+              <p ng-repeat="add in cvm.userData.addresses | filter:{primary:'1'} | limitTo:1" ng-if="cvm.userData.addresses.length">{{add.address_line_1}}<br>
+                {{add.address_line_2}}<br ng-if="add.address_line_2.length">
+                {{add.city}}, {{add.state}} {{add.zip}}</p>
+              <a href="" ng-click="cvm.editAddress()" ng-if="!cvm.userData.addresses.length">Add an address</a>
+            </div>                
+					</div>
+				</div>
+			</div>
+			
+			<div ng-if="!cvm.newUser" class="col-md-6">
+				<button href="" ui-sref="orders.list({user_id:cvm.userData.id})" class="btn btn-block btn-primary">View Client's Orders</button>              
+			</div>
     </div><!-- /.row -->
 
 	</div>
-	<br><br><br>
+
 	
 </div>

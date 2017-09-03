@@ -21,6 +21,11 @@
         controller: 'loginCtrl',
         controllerAs: 'vm'
       })
+      .when('/customer-register/:email?', {
+        templateUrl: '/pages/auth/customer-register/customer-register.view.html',
+        controller: 'loginCtrl',
+        controllerAs: 'vm'
+      })
       .when('/closet', {
         templateUrl: '/pages/closet/closet.view.html',
         controller: 'closetCtrl',
@@ -138,7 +143,6 @@
 		
 		result.data.lookup = function(data, key, value, retKey){
 			var dataSet = this[data];
-			console.log("lookin up !!!");
 			retKey = retKey || false;
 			for (i=0; i<dataSet.length; i++){				
 				if(dataSet[i][key] == value)

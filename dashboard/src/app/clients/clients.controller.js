@@ -3,8 +3,6 @@
 angular.module('inspinia')
   .controller('ClientsController',  ['$scope', 'aws', 'SweetAlert', 'api', function ($scope, aws, SweetAlert, api) {
     var vm = this;
-    
-		
 		var deleteUserBox = {
       title: "Are you sure?",
       text: "This user will be deleted forever!",

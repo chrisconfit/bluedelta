@@ -91,34 +91,7 @@
 		}
 		
 		
-		function jeanKeytoURL(key){
-			switch(key){
-				case "gender_option_id":
-	      return "g";
-	      break;
-	      
-	      case "style_option_id":
-	      return "s";
-	      break;
-	      
-	      case "fabric_id":
-	      return "f";
-	      break;
-	      
-	      case "top_thread_id":
-	      return "tt";
-	      break;
-	      
-	      case "bottom_thread_id":
-	      return "tb";
-	      break;
-	      
-	      case "accent_thread_id":
-	      return "ta";
-	      
-	      default: return false;
-			}
-		}
+		
 		
 		reset = function(){
 			createNew();
@@ -269,79 +242,6 @@
 		}
 		
 		
-		function loadImage(src) {
-			return $q(function(resolve,reject) {
-			  var image = new Image();
-			  image.crossOrigin = "";
-			  image.src = src;
-			  image.onload = function() {
-			    resolve(image);
-			  };
-			  image.onerror = function(e) {
-			    reject(e);
-			  };
-			})
-		}   
-    
-	 function searchAndDraw(key, cntxt, images){
-			for(i=0; i<images.length; i++){
-				var image = images[i];
-				if(image.src.indexOf("/"+key+"/") > -1){
-					cntxt.drawImage(image,0,0,600,696);
-				};
-			}
-		}
-		
-	  var createThumb = function(jeanData){
-	  	var canvas = document.createElement('canvas');
-	  	canvas.width=600;
-	  	canvas.height=600;
-	  	var cntxt = canvas.getContext('2d');	
-	  	var promises = [];
-			var images = [
-				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabrics/g'+jeanData.gender_option_id+'/s2/f'+jeanData.fabric_id+'.jpg',
-				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/tb/'+jeanData.bottom_thread_id+'.png',
-				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/tt/'+jeanData.top_thread_id+'.png',
-				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/ta/'+jeanData.accent_thread_id+'.png'
-			];
-	
-	    for(var i=0; i<images.length; i++){
-	      promises.push(loadImage(images[i], cntxt));
-	    }
-	    
-	    return $q.all(promises).then(
-	    	function(results) {
-					searchAndDraw("fabrics", cntxt, results);
-					searchAndDraw("tb", cntxt, results);
-					searchAndDraw("tt", cntxt, results);
-					searchAndDraw("ta", cntxt, results);
-		      var dataUrl = canvas.toDataURL('image/jpeg');
-					return dataUrl;
-		    },    
-		    function(err){
-			    console.log(err);
-		    }
-	    );	
-		}
-		
-		
-		getDataCode = function(){
-			var url = "";
-			console.log("get data code!!!");
-			console.log(jeanData);
-			
-			for (var property in jeanData) {
-			  if (jeanData.hasOwnProperty(property)) {
-					var id = jeanData[property];
-					var urlKey = jeanKeytoURL(property);
-					console.log(property, urlKey, id);
-					if (urlKey) url += "_"+urlKey+id;
-			  }
-			}	
-			url = url.replace(/(^[_\s]+)|([_\s]+$)/g, '');
-			console.log(url);
-			return url;
-		}
 		
 		var deleter = function (jeanId, callback){
 			api.call('deleteMyJean', jeanId, function(result){
@@ -356,60 +256,21 @@
 			var defer = $q.defer();
 			var jean = this;
 			var jeanData = jean.get();
-			var filename = jean.getDataCode();
+			var filename = api.getDataCode();
 			filename += ".jpg";
 			jeanData.image = {filename:filename};
-			this.createThumb(jeanData).then(function(blob){
+			api.createThumb(jeanData).then(function(blob){
 				jeanData.image.data = blob;
 				api.call('createMyJeans', jeanData, function(result){
-					console.log("We have created the jean");
-					console.log(result);
 					defer.resolve(result);
 				}, function(err){
 					defer.reject(err);
-				});//api.call();
-				
+				});
 			}, function(err){
 				defer.reject(err);
-			}); //createThumb();
+			});
 			
 			return defer.promise;
-			/*
-
-			
-			
-				
-		    var userData = aws.getCurrentUserFromLocalStorage();
-				if (userData){		
-					aws.saveImageTos3(imageURL, userData, filename).then(
-						function(result){	
-
-							//Add image to jean before saving...
-				  		jean.set("imageURL",result);
-							var	userId = aws.getCurrentIdentityId();
-							var args = jeanData.jeanId ? [userId, jeanData.jeanId, jeanData] : [userId, jeanData];
-							var saveFunc = jeanData.jeanId ? 'jeansUpdate' : 'jeansCreate';
-							
-							bdAPI.call(saveFunc, args, function(result){
-								
-								//For new jeans... set the Id..
-								var newJean = result.data.jeans[result.data.jeans.length-1];
-								if (!jeanData.jeanId) jean.set("jeanId", newJean.jeanId);
-								defer.resolve(result);
-							}, function(err){defer.reject(err);});
-
-							
-				  	}, function(err){
-					  	console.log(err);
-					  	defer.reject(err.message);
-					  }
-					);
-				}else{
-					defer.reject("You are not logged in...");
-				}
-				
-	    });
-			*/
 
 		}
 		
@@ -424,8 +285,7 @@
 	    reset : reset,
       set : set,
       createNew :createNew,
-      getDataCode: getDataCode,
-      createThumb: createThumb
+      getDataCode: getDataCode
      }
 			
 		

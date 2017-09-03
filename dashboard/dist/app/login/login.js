@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('LoginController', ['$scope', 'aws', '$state', function ($scope, aws, $state) {
+  .controller('LoginController', ['$scope', 'aws', '$state', 'user', function ($scope, aws, $state, user) {
 
     var logvm = this;
     
@@ -27,16 +27,14 @@ angular.module('inspinia')
 	    if (form.$valid) {
 				
 				logvm.msg.reset();
-	      aws.authenticateCognitoUser(logvm.email,logvm.password).then(
-					function(result){
-						//User is valid
-						$state.go('dashboard.main');
+	      user.login(logvm.email,logvm.password, function(result){
+						$state.go('orders.list');
 					},
 					function(err){
 						if (err.message == "Incorrect username or password.") err.message = "Incorrect Email address or password."
 						logvm.msg.set(err.message,"alert-danger");
 					}
-				);
+					);
 
       } else {
         form.submitted = true;

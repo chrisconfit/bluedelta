@@ -7,13 +7,13 @@
 
   user.$inject = ['$location', '$window', 'api'];
   function user($location, $window, api) {
-		console.log("USERSIN");
-		console.log(api);
+
 	 var user = {};
-	  
-		var isLoggedIn = function(){
-			return $window.localStorage.getItem("bdAccessToken") ? true : false;
-		}
+	 	
+	  var isAdmin = function(){ return $window.localStorage.getItem("bdUserRole") > 0 ? true : false; }
+		var isLoggedIn = function(){ return $window.localStorage.getItem("bdAccessToken") ? true : false; }
+	  var getToken = function(){ return $window.localStorage.getItem("bdAccessToken"); }
+	 
 	  
 		var set = function(key, data){
 			
@@ -21,7 +21,6 @@
 			
 			if (typeof key === 'object'){
 				
-				console.log('setting whole user');
 				var userData = key;
 				for (obKey in userData){
         if(!userData.hasOwnProperty(obKey)) continue;
@@ -33,42 +32,77 @@
       return user;
     };
 		
-		var setup = function(){
+		var setup = function(callback){
 			api.call('getCurrentUser', {}, function(userDetails){
-				console.log(userDetails);
+				$window.localStorage.setItem("userRole", userDetails.roleId);
 				set(userDetails);
-				console.log("IG OT MY USER FROM THE SERVICE");
-				console.log(user);
+				if (callback) callback(userDetails);
+			});
+		}
+		
+		
+		function authCallback(response, callback){
+			$window.localStorage.setItem("bdAccessToken", response.access_token);
+			setup(function(userData){
+				$window.localStorage.setItem("bdUserRole", userData.role_id);
+				$window.localStorage.setItem("bdUserId", userData.id);
+				if (callback) callback(userData);
 			});
 		}
 		
 		var login = function(username, password, success, error){
-			api.login(username, password)
-			.success(function(response){
-				console.log(response);
-				$window.localStorage.setItem("bdAccessToken", response.access_token);
-				if (success) success(response);
-			})
-			.error(function(err){
-				console.log(err);
+			var userData =  {
+				username:username, 
+				password:password
+			}
+			api.call('login', userData, function(response){
+				authCallback(response, success);
+			}, function(err){
 				if(error) error(err);
-			})
+			});
+		}
+		
+		var register = function(username, password, first_name, last_name, success, error){
+			var userData = {
+				email:username,
+				password:password,
+				first_name:first_name,
+				last_name:last_name
+			};
+			
+			api.call('register', userData, function(response){
+				authCallback(response, success);
+			}, function(err){
+				if(error) error(err);
+			});		
 		}
 		
 		var logout = function(){
 			$window.localStorage.removeItem("bdAccessToken");
+			$window.localStorage.removeItem("bdUserRole");
+			$window.localStorage.removeItem("bdUserId");
 			user = {};
-			console.log("logged out");
 			$location.path("/login");
 		}
-	  
+		
+		var update = function(userData, success, error){
+			api.call('updateMe', userData, success, error);
+		}
+	  var jeans = [];
+	  var getMyJeans = function(){
+		  
+	  }
 	  return {
       get:function(){ return user;},
       isLoggedIn : isLoggedIn,
+      isAdmin : isAdmin,
       set: set,
       login:login,
+      register:register,
+      update: update,
       logout:logout,
-      setup: setup
+      setup: setup,
+      getToken: getToken,
     };
 
 	}

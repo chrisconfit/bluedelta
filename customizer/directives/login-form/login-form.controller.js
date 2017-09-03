@@ -4,9 +4,9 @@
     .module('bdApp')
     .controller('loginFormCtrl', loginFormCtrl);
 
-  loginFormCtrl.$inject = ['$location', 'user', 'messages', '$scope', 'aws'];
+  loginFormCtrl.$inject = ['$location', 'user', 'messages', '$scope','api'];
   
-  function loginFormCtrl($location, user, messages, $scope, aws) {
+  function loginFormCtrl($location, user, messages, $scope, api) {
     var logvm = this;
     
 		logvm.messages=messages.get();
@@ -21,13 +21,15 @@
 	    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	    return re.test(email);
 		}
+	
+	
 		
     /*
     *
     * LOGGING IN
     *
     */
-    
+   
     //Log user in and send errors to "messages"
 		logvm.login = function(email, password){
 			messages.reset();
@@ -60,17 +62,11 @@
 		
 		
 		
-		
-		
-		
-		
-		
 		/*
 		*
 		*  Forgot Password
 		*
 		*/
-		
 		
 		function validatePassword(password){
 			var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,50}$/;
@@ -78,22 +74,26 @@
 		}				
 
 		logvm.forgotPassword = false;
-		logvm.forgotPassword2 = false;
+		logvm.forgotPassword2 = false;		
+		if($location.path()=="/customer-register/"){
+			logvm.forgotPassword = true;			
+			logvm.customerReset = true;
+			if($location.search().email){
+				logvm.credentials.loginEmail = $location.search().email;
+			}
+		}
 		
-		/*
-		*  STEP 1
-		*/
-		logvm.forgot = function(){	
+
+		
+		/* STEP 1 */
+		logvm.getResetToken = function(){	
 			messages.reset();
-	    if (logvm.validateForgot()){
-				aws.forgotPassword(logvm.credentials.loginEmail).then(
-					function(result){
-						logvm.forgotPassword2 = true;	
-					},
+	    if (logvm.validateForgot()){	
+		    console.log("running func from user");	    
+				user.getResetToken(logvm.credentials.loginEmail, 
+					function(result){ logvm.forgotPassword2 = true; },
 					function(err){
-						if (err.message == "Username/client id combination not found"){
-							err.message = "We don't have an account registered for that emial";
-						}
+						err.message = err.message == "Username/client id combination not found" ? "We don't have an account registered for that emial" : err.message;
 						messages.set(err.message,"error");
 					}
 				);
@@ -109,16 +109,17 @@
 			return true;	
 		}
 		
-		
-		/*
-		*   STEP 2
-		*/	
-		logvm.forgot2 = function(){
+		/* STEP 2 */	
+		logvm.resetPassword = function(){
 			messages.reset();
 	    if (logvm.validateForgot2()){
-				aws.setNewPassword(logvm.credentials.loginEmail, logvm.credentials.loginVerifcation, logvm.credentials.newPassword).then(
-					function(){
-						//Password reset successfully...
+				data={
+					"email":logvm.credentials.loginEmail, 
+					"token":logvm.credentials.loginVerifcation, 
+					"password":logvm.credentials.newPassword
+				}		    
+		    user.getResetToken(data, 
+					function(result){ 
 						messages.set("Password reset successfully. Try logging in.", "success");
 						logvm.forgotPassword = false;
 						logvm.forgotPassword2 = false;
@@ -153,30 +154,10 @@
 			
 			return true;	
 		}
-		
-		
-		
-		
 	
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		//Log in via Facebook
 		logvm.loginFB = function(){
-			aws.authenticateViaFB().then(
-				function(result){
-					$location.path('/closet');
-				},
-				function(err){
-					messages.set(err.message,"error");
-				}
-			);
+			
 		}
 
 			

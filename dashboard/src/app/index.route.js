@@ -13,11 +13,6 @@
 		  var defer = $q.defer();
 		  $http.get("http://ec2-54-200-231-145.us-west-2.compute.amazonaws.com/api/data").then(function(result){
 			
-				result.data.genders = [
-					{"id":1, "name":"Male"},
-					{"id":2, "name":"Female"},
-				];
-				
 				result.data.lookup = function(data, key, value, retKey){
 					var dataSet = this[data];
 					retKey = retKey || false;
@@ -39,11 +34,9 @@
 		* Resolves Base
 		*/
 		
-		
 	  var listScreenResolve = {
 		  appData: getAppData
 	  }
-	  
 	  
 		var editplugins = [
 		  { insertBefore: '#loadBefore', name: 'toaster', files: ['assets/scripts/toastr/toastr.min.js', 'assets/styles/toastr/toastr.min.css']},
@@ -91,7 +84,7 @@
 		*/
 		
 		var orderAddScreenResolve = angular.copy(editScreenResolve);
-	  orderAddScreenResolve.orderData = function(){return {}}
+	  orderAddScreenResolve.orderData = function(){return null}
 		   
 		var orderEditScreenResolve = angular.copy(editScreenResolve);
 		orderEditScreenResolve.orderData = function($stateParams, $location, api, $q){
@@ -100,7 +93,6 @@
 				$location.path('orders/list');
 			}
 			else{
-				console.log("MADE IT!!!");
 				var defer = $q.defer();
 				var ret = {};
 				api.call('orderGet', $stateParams.orderId,
@@ -210,12 +202,11 @@
             { name: 'datePicker', files: ['assets/styles/datapicker/angular-datapicker.css','assets/scripts/datapicker/angular-datepicker.js'] }
 					]);
 					}
-                
 	      }
       })
       
       .state('orders.list', {
-        url: "/list",
+        url: "/list?:user_id",
         templateUrl: "app/orders/orders.html",
         authenticate: true,
         controller: "OrdersController as ovm",

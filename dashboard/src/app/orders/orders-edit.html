@@ -1,14 +1,19 @@
 <div>
 <toaster-container></toaster-container>
-
 	<div class="row wrapper border-bottom white-bg page-heading">
 		<h1 ng-if="!ovm.newOrder">Order {{ovm.order.id}}</h1>
 		<h1 ng-if="ovm.newOrder">Create New Order</h1>
 	</div>              
 	
+	<br>
+	<pre>
+		{{ovm.order | json}}
+	</pre>
+	<br>
+	
 	<div class="wrapper wrapper-content">
 
-    <div class="row">
+    <div class="row">	    
 
       <div class="col-md-3">
         <!-- Profile Image -->
@@ -30,9 +35,10 @@
               <li class="list-group-item clearfix">
 
                 <p><b>Shipping Address</b><a class="pull-right fa fa-edit" ng-click="ovm.editAddress('Shipping', 'fa-truck')" href="#"></a></p>
-                <p>{{ovm.order.address.address_line_1}}<br>
+                <p ng-if="ovmorder.address">{{ovm.order.address.address_line_1}}<br>
                   {{ovm.order.address.address_line_2}}<br ng-if="ovm.order.address.addressLine2 && ovm.order.address.addressLine2!=''">
                   {{ovm.order.address.city}}, {{ovm.order.address.state}} {{ovm.order.address.zip}}</p>
+                <a ng-if="!ovmorder.address" ng-click="ovm.editAddress('Shipping', 'fa-truck')" href="">Add Address</a>
               </li>
               <!--<li class="list-group-item clearfix">
                 <p><b>Billing Address</b><a class="pull-right fa fa-edit" ng-click="ovm.editAddress('Billing', 'fa-list')" href="#"></a></p>
@@ -42,12 +48,10 @@
                   {{ovm.order.billingAddress.city}}, {{ovm.order.billingAddress.state}} {{ovm.order.billingAddress.zip}}</p>
               </li>-->
             </ul>
-            
             <!--
             <a href="#" class="btn btn-flat btn-danger btn-block"><b>Awaiting Payment</b></a>
             <a href="#" class="btn btn-flat btn-primary btn-block"><b>Re-Send Invoice</b></a>
             -->
-            
           </div>
           <!-- /.ibox-content -->
         </div>
@@ -60,7 +64,7 @@
 						<div class="ibox ibox-default clearfix">
 							<div class="ibox-title">
 								<h3>
-									Jean Build 
+									Jean Build {{ovm.data.genders}}
 									<a ng-if="!ovm.EditMode" class="pull-right fa fa-edit" ng-click="ovm.beginJeanEdit()" href="#"></a>
 									<a ng-if="ovm.EditMode" class="pull-right fa fa-save" ng-click="ovm.saveOrder(); ovm.EditMode=false" href="#"></a>
 									<a ng-if="ovm.EditMode" class="pull-right fa fa-undo" ng-click="ovm.clearJeanEdit()" href="#"></a>
@@ -70,11 +74,11 @@
                 <ul class="list-group jean-list-edit list-group-unbordered">
 		              <li class="list-group-item clearfix">
 	                  <b>Gender</b>
-	                  <span ng-if="!ovm.EditMode" class="pull-right">{{ovm.data.lookup("genders", "id", ovm.order.order_items[0].gender, "name") }}</span>
+	                  <span ng-if="!ovm.EditMode" class="pull-right">{{ovm.data.lookup("gender_options", "id", ovm.order.order_items[0].gender_option_id, "gender") }}</span>
 	                  <select class="form-control pull-right" 
 											ng-if="ovm.EditMode" 
-											ng-model="ovm.order.order_items[0].gender" 
-											ng-options="gender.genderId as gender.label for gender in ovm.genders">
+											ng-model="ovm.order.order_items[0].gender_option_id" 
+											ng-options="g.id as g.gender for g in ovm.data.gender_options">
 										</select>
 	                </li>
 	                <li class="list-group-item clearfix">
@@ -144,8 +148,8 @@
 	                </li>
 	                <li class="list-group-item clearfix">
 	                  <p><b>Order Notes</b></p>
-	                  <p ng-if="!ovm.EditMode">{{ovm.order.orderItems[0].notes}}</p>
-	                  <textarea class="form-control" ng-if="ovm.EditMode" ng-model="ovm.order.orderItems[0].notes"></textarea>
+	                  <p ng-if="!ovm.EditMode">{{ovm.order.order_items[0].notes}}</p>
+	                  <textarea class="form-control" ng-if="ovm.EditMode" ng-model="ovm.order.order_items[0].notes"></textarea>
 	                </li>
 	              </ul>
 							</div>
@@ -176,14 +180,12 @@
 		              ng-options="rep.id as rep.name for rep in ovm.data.reps">
 	                </select>
 	              </div>
-
 	              <div class="form-group">
 	                <label>Order Type</label>
 	                <select class="form-control select2" ng-model="ovm.order.order_type_id" style="width: 100%;"
 									ng-options="type.id as type.name for type in ovm.data.order_types">
                 	</select>
 	              </div>
-              
                 <div class="form-group">
 	                <label>Status</label>
 	                <select class="form-control select2" 
@@ -195,7 +197,6 @@
 	              	<div class="col-sm-6">
 		              	<div class="form-group">
 			                <label>Fitting Date:</label>
-			
 			                <div class="input-group date">
 				                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 												<input type="datetime" class="form-control" ng-model="ovm.order.fitDate" date-time view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
@@ -214,11 +215,8 @@
 			              </div>
 	              	</div>
 	              </div>
-	              
-	              
 	              <div class="form-group">
 	                <label>Jean DOB:</label>
-										{{ovm.order.dob}}
 	                <div class="input-group date">
 		                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 										<input type="datetime" class="form-control" date-time ng-model="ovm.order.dob" view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
@@ -236,7 +234,7 @@
         <div class="tabs-container">
 
           <uib-tabset active="'timeline'">
-            <uib-tab index="timeline" active="true" ng-if="ovm.order.order_items[0].jeanId" heading="Timeline">
+            <uib-tab index="timeline" active="true" ng-if="!ovm.newOrder" heading="Timeline">
               <div class="panel-body">
                 
                 <h3>Timeline</h3>
@@ -251,17 +249,17 @@
 								    </span>
 								  </div>
 								</div>
-														
+								
 								<!--Timeline Display-->
 								<div id="vertical-timeline" class="vertical-container dark-timeline">
-									<div ng-repeat="t in ovm.order.timeline | orderBy: '-timestamp'"class="vertical-timeline-block">
+									<div ng-repeat="t in ovm.timeline | orderBy: '-created_at'"class="vertical-timeline-block">
 										<div class="vertical-timeline-icon navy-bg">
 											<i class="fa fa-circle bg-gray"></i>
 										</div>
 										<div class="vertical-timeline-content">
 											<h3 class="timeline-header no-border">{{t.message}}</h3>
-											<span class="vertical-date"><span class="time"><i class="fa fa-clock-o"></i> </span> {{ovm.timeFromNow(t.timestamp)}} <br/>
-												<small>{{t.timestamp | date : 'd MMM. yyyy'}}</small>
+											<span class="vertical-date"><span class="time"><i class="fa fa-clock-o"></i> </span> {{ovm.timeFromNow(t.created_at)}} <br/>
+												<small>{{t.created_at | date : 'd MMM. yyyy'}}</small>
 												<small ng-if="t.user">&nbsp;&nbsp;<i class="fa fa-user"></i> {{t.user}}</small>
 											</span>
 										</div>
@@ -384,11 +382,7 @@
 										</div>
 									</div>
 								</div>
-								
-								
-								
 								<hr>
-								
 								<div class="row">
 									<div class="col-sm-2">
 										<div class="form-group">
