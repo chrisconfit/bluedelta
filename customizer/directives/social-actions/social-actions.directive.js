@@ -12,7 +12,7 @@
 	      scope : {
 	        jean : '=',
 	        display: '=',
-	        onsave:'='
+	        savefunc:'='
 	      },
 	      controller: 'socialCtrl as sovm',
 

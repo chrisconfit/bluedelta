@@ -46,6 +46,7 @@
 		      //Weight Filter
 		      $scope.weightFilter = function(min, max){
 						return function(fabric){
+							if (fabric.weight == 0) return false;
 							if (min && fabric.weight < min) return false;
 							if (max && fabric.weight > max) return false;
 					    return true;
