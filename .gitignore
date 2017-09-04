@@ -29,8 +29,15 @@ build/Release
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
 
-*/.DS_Store
+bower_components
 
 .DS_Store
+*/.DS_Store
+**/*/.DS_Store
+.DS_Store?.DS_Store
+.idea
+api/dist
+.idea/blue-delta.iml .idea/modules.xml .idea/workspace.xml
+**/.idea
 
-.DS_Store?
+app_dashboard/www/build

@@ -1,0 +1,167 @@
+/*
+ *
+ *   INSPINIA - Responsive Admin Theme
+ *   version 2.7.1
+ *
+*/
+
+// Google Fonts
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
+
+// Variables, Mixins
+@import "variables.less";
+@import "mixins.less";
+
+// INSPINIA Theme Elements
+@import "typography.less";
+@import "navigation.less";
+@import "top_navigation.less";
+@import "buttons.less";
+@import "badget_labels.less";
+@import "elements.less";
+@import "sidebar.less";
+@import "base.less";
+@import "pages.less";
+@import "chat.less";
+@import "metismenu.less";
+@import "spinners.less";
+
+// Landing page styles
+@import "landing.less";
+
+// RTL Support
+@import "rtl.less";
+
+// For demo only - config box style
+@import "theme-config.less";
+
+// INSPINIA Skins
+@import "skins.less";
+@import "md-skin.less";
+
+// Media query style
+@import "media.less";
+
+// Custom style
+// Your custom style to override base style
+@import "custom.less";
+
+// Clear layout on print mode
+@media print {
+  nav.navbar-static-side {
+    display: none;
+  }
+
+  body { overflow: visible !important; }
+
+  #page-wrapper {
+    margin: 0;
+  }
+}
+
+.jean-list-edit{
+	select.form-control.pull-right{
+		width:200px;	
+	}
+	textarea{
+		min-height:150px;
+	}
+}
+
+.search-form-container{
+	max-height: 400px;
+	max-height: 50vh;
+	overflow:auto;
+}
+//Add users widget
+.search-form-container .row{
+	padding-right:55px;
+	position:relative;
+	button{
+		position:absolute;
+		right:15px;
+	}
+}
+
+
+//Clients
+.cft-table{
+	th{
+		position:relative;
+		span.sorter{
+			position: absolute;
+			right: 6px;
+			width: 20px;
+			height: 23px;
+			top: 4px;
+			i{
+				outline:none;
+				cursor: pointer;
+				position:absolute;
+				right:0;
+				&.fa-angle-up{top:0;}
+				&.fa-angle-down{bottom:0;}
+				&.active{color:@blue;}
+			}
+
+		}
+	}
+}
+
+/*
+STATUS	
+1	complete/shipped or picked up
+2	complete
+3	awaiting inspection
+4	cut/DOB
+5	patterned
+6	ordered
+*/
+.label.label-1{
+
+}
+.label.label-2{
+	background:#bdbdbd;
+}
+.label.label-3{
+	color:#fff;
+	background:#5aaac7;
+}
+.label.label-4{
+	color:#fff;
+	background:#177292;
+}
+
+.label.label-5{
+	color:#fff;	
+	background:#004964;
+}
+
+.label.label-6{
+	color:#fff;	
+	background:#34d289;
+}
+
+.pagination{
+  margin: 20px auto;
+  display: block;
+}
+.elips-start-btn{
+	margin-right:40px;
+	&:after{
+		content: "...";
+		position: absolute;
+		right: -26px;
+		bottom: -4px;
+	}	
+}
+
+.elips-end-btn{
+	margin-left:40px!important;
+	&:after{
+		content: "...";
+		position: absolute;
+		left: -26px;
+		bottom: -4px;
+	}	
+}
