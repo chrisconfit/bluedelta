@@ -11,7 +11,8 @@
 				templateUrl: '/directives/social-actions/social-actions.template.html',
 	      scope : {
 	        jean : '=',
-	        display: '='
+	        display: '=',
+	        onsave:'='
 	      },
 	      controller: 'socialCtrl as sovm',
 

@@ -4,17 +4,19 @@
     .module('bdApp')
     .controller('socialCtrl', socialCtrl)
 	
-		socialCtrl.$inject = ['jean'];
+		socialCtrl.$inject = ['$scope'];
 
 		
-		function socialCtrl(jean) {
+		function socialCtrl($scope) {
 	
 			var sovm = this;
-			sovm.jean = jean;
+			sovm.jean = $scope.jean;
 			
+		
 			
 			sovm.jeanToUrl = function(){
-				var url = document.location.origin+"/customizer/d";	
+				if (!$scope.jean.id) return false;
+				var url = document.location.origin+"/customizer/"+$scope.jean.id;	
 				url += "/copy";
 				return url;
 			}
@@ -48,8 +50,8 @@
 				if(url || image) return false;
 				return 'https://pinterest.com/pin/create/button/?url='+url+'&media='+image+'&description='+socialTitle+'%0A'+socialDescription;	
 			}
-
-			sovm.share = function(social){
+			
+			sovm.share = $scope.onsave(function(social){
 				var url = sharingUrls[social](sovm.jeanToUrl());
 				if (url !== false){
 					if (social=='email') window.open(url, '_self');
@@ -57,7 +59,7 @@
 				}
 				else console.log("Error builiding social URL");
 				return false;
-			}
+			});
 		
 		}	
 			

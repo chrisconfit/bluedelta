@@ -262,7 +262,16 @@
 			}
 		}
 
-
+		vm.socialAuthCheck = function(callback){
+			if(!user.isLoggedIn()){
+				vm.authCallback = callback;
+				popups.set('loginOrRegister',true);
+				return false;
+			}
+			else {
+				callback();
+			}
+		}
     //When Save is clicked....
     vm.saveJean = function(){
 			if(!user.isLoggedIn()){
