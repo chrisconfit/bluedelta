@@ -2,7 +2,7 @@
 
 //Directive used to set metisMenu and minimalize button
 angular.module('inspinia')
-    .directive('sideNavigation', function ($timeout) {
+    .directive('sideNavigation', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
             link: function (scope, element) {
@@ -32,8 +32,8 @@ angular.module('inspinia')
 
             }
         };
-    })
-    .directive('minimalizaSidebar', function ($timeout) {
+    }])
+    .directive('minimalizaSidebar', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
             template: '<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="" ng-click="minimalize()"><i class="fa fa-bars"></i></a>',
@@ -54,7 +54,7 @@ angular.module('inspinia')
                 };
             }
         };
-    });
+    }]);
 
 	
 	/**
@@ -87,11 +87,11 @@ angular.module('inspinia')
 		            }
 		    }
 		};
-	}
+	};
 
 	
 	
 	angular
     .module('inspinia')
-    .directive('iboxTools', iboxTools)
+    .directive('iboxTools', ['$timeout', iboxTools]);
     

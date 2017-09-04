@@ -17,7 +17,6 @@
 				if (addresses[i].primary == true) return addresses[i].id;
 			}
 
-			console.log('no address marked as primary... returning first result');
 			return addresses[0].id;
 		}
 		

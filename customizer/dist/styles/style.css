@@ -1529,6 +1529,10 @@ h1.page-title {
     -webkit-transform: translateY(0%);
     transform: translateY(0%);
   }
+  .builder__control-panel .control-panel-inner .build-step-stage .step-container.template-style-chooser.template-style-chooser, .builder__control-panel .control-panel-inner .build-step-stage .step-container.template-gender-chooser.template-style-chooser {
+    height: 372px;
+    overflow: auto;
+  }
   .builder__control-panel .control-panel-inner .build-step-stage .step-container.template-style-chooser h3, .builder__control-panel .control-panel-inner .build-step-stage .step-container.template-gender-chooser h3 {
     display: none;
   }
@@ -1686,10 +1690,10 @@ h1.page-title {
   position: relative;
   z-index: 10;
 }
-.active-item a:not(.fabric) {
+.active-item a:not(.fabric_id) {
   text-decoration: none;
 }
-.active-item a:not(.fabric) i {
+.active-item a:not(.fabric_id) i {
   display: none;
 }
 .active-item a {
@@ -1877,10 +1881,10 @@ h1.page-title {
   line-height: 34px;
 }
 .chooser.style-chooser .chooser-select, .chooser.gender-chooser .chooser-select, .fabric-chooser.style-chooser .chooser-select, .fabric-chooser.gender-chooser .chooser-select, .style-chooser.style-chooser .chooser-select, .style-chooser.gender-chooser .chooser-select, .gender-chooser.style-chooser .chooser-select, .gender-chooser.gender-chooser .chooser-select {
-  left: 30px;
+  left: 15px;
   top: 0px;
   bottom: 0px;
-  width: calc(33.333% - 30px);
+  width: calc(33.333% - 15px);
   height: auto;
   display: block;
   position: absolute;
@@ -1888,12 +1892,13 @@ h1.page-title {
   padding-left: 10px;
 }
 .chooser.gender-chooser .chooser-select, .fabric-chooser.gender-chooser .chooser-select, .style-chooser.gender-chooser .chooser-select, .gender-chooser.gender-chooser .chooser-select {
-  width: calc(50% - 30px);
+  width: calc(50% - 15px);
 }
 @media screen and (min-width: 800px) {
   .chooser.style-chooser .chooser-select, .fabric-chooser.style-chooser .chooser-select, .style-chooser.style-chooser .chooser-select, .gender-chooser.style-chooser .chooser-select {
     width: calc(33.3333% - 15px);
     left: 15px;
+    height: 190px;
   }
   .chooser.gender-chooser .chooser-select, .fabric-chooser.gender-chooser .chooser-select, .style-chooser.gender-chooser .chooser-select, .gender-chooser.gender-chooser .chooser-select {
     width: calc(50% - 15px);
@@ -1954,19 +1959,24 @@ h1.page-title {
 div[style-chooser] .cft-g.chooser-grid, gender-chooser .cft-g.chooser-grid {
   padding: 0;
   width: auto;
-  margin-left: -30px;
-  margin-bottom: 0;
   margin-left: -15px;
+  margin-bottom: 0;
 }
 div[style-chooser] .cft-g.chooser-grid > .cft-gi, gender-chooser .cft-g.chooser-grid > .cft-gi {
-  padding-left: 30px;
+  padding-left: 15px;
   margin-right: 0;
   width: 33.3333%;
+}
+div[style-chooser] .cft-g.chooser-grid#gender-chooser, gender-chooser .cft-g.chooser-grid#gender-chooser {
+  overflow: visible;
 }
 div[style-chooser] .cft-g.chooser-grid#gender-chooser > .cft-gi, gender-chooser .cft-g.chooser-grid#gender-chooser > .cft-gi {
   width: 50%;
 }
 @media screen and (min-width: 800px) {
+  div[style-chooser] .cft-g.chooser-grid#style-chooser > .cft-gi, gender-chooser .cft-g.chooser-grid#style-chooser > .cft-gi {
+    margin-bottom: 15px;
+  }
   div[style-chooser] .cft-g.chooser-grid > .cft-gi, gender-chooser .cft-g.chooser-grid > .cft-gi {
     padding-left: 15px;
     margin-bottom: 0;

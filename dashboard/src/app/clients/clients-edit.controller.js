@@ -1,17 +1,14 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('ClientsEditController',  ['$uibModal', 'userData', 'appData', '$scope', 'api', 'SweetAlert', 'toaster', '$state',
-  function ($uibModal, userData, appData, $scope, api, SweetAlert, toaster, $state) {
-
-    
-    
+  .controller('ClientsEditController',  ['$uibModal', 'userData', '$scope', 'api', 'SweetAlert', 'toaster', '$state',
+  function ($uibModal, userData, $scope, api, SweetAlert, toaster, $state) {
     
     var vm = this;
     
     //Setup
 		vm.userData = userData;
-		vm.appData = appData;
+		vm.appData = api.getData();
 		
 		var defaultUser = {
 			first_name:"",
@@ -67,15 +64,21 @@ angular.module('inspinia')
     }
    
 	  vm.saveAddress = function(add, callback){		
+			if (add === parseInt(add, 10)){
+				for (var i=0; i<vm.userData.addresses.length; i++){
+		  		var thisAdd = vm.userData.addresses[i];
+					if (thisAdd.id == add) add = thisAdd;
+	    	}
+	    }
 			add.primary=1;
 			var data = {userId:vm.userData.id, address:add};
-			var creatingNew = add.newAdd;
 			api.call('postAddress', data, function(result){	
-				if(creatingNew) vm.userData.addresses.push(result);
+				vm.userData.addresses.push(result);
 				setPrimary(result.id);
-		    if(callback)callback();
-			});		
+				if(callback)callback();
+			});
 		}
+		
   
  
 	

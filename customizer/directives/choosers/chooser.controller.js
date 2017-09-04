@@ -49,11 +49,6 @@
 						var newScroll = el.scrollLeft+scrollStep;
 						if (newScroll >= maxLeft) newScroll = maxLeft-1;
 						el.scrollLeft = newScroll;
-						
-						/*
-						console.log(newScroll);
-						console.log(scrollTo);
-						*/
 					}
 					
 					else clearInterval(scrollInterval); 
@@ -110,7 +105,9 @@
 
 
 			chvm.selectAttr = function($event, id, attr, selector){
-				var chooser = angular.element(document.querySelector("#"+attr+"-chooser"));
+				var chAttr = attr.replace("_id", "");
+				var chAttr = chAttr.replace("_option", "");
+				var chooser = angular.element(document.querySelector("#"+chAttr+"-chooser"));
 				var selector = angular.element(document.querySelector("#"+attr+"-selector"));
 				var top = angular.element($event.target).prop('offsetTop');
 				var left = angular.element($event.target).prop('offsetLeft');

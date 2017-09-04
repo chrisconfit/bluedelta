@@ -3,40 +3,24 @@
 
   angular
     .module('inspinia')
-    .config(routerConfig);
+    .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$ocLazyLoadProvider', routerConfig]);
 
   /** @ngInject */
-  function routerConfig($stateProvider, $urlRouterProvider, $locationProvider) {
+  function routerConfig($stateProvider, $urlRouterProvider, $locationProvider, $ocLazyLoadProvider) {
 	  $locationProvider.html5Mode(true);
-	  
-	  var getAppData = function($q, $http){
-		  var defer = $q.defer();
-		  $http.get("http://ec2-54-200-231-145.us-west-2.compute.amazonaws.com/api/data").then(function(result){
-			
-				result.data.lookup = function(data, key, value, retKey){
-					var dataSet = this[data];
-					retKey = retKey || false;
-					for (var i=0; i<dataSet.length; i++){				
-						if(dataSet[i][key] == value)
-							return retKey ? dataSet[i][retKey] : dataSet[i]
-					}
-				}
-				
-				defer.resolve(result.data);
-			});
-			
-			return defer.promise;
-		}
-
+		
+		$ocLazyLoadProvider.config({
+      debug: false
+    });
+		
+	 
 	  
 	  
 	  /*
 		* Resolves Base
 		*/
 		
-	  var listScreenResolve = {
-		  appData: getAppData
-	  }
+
 	  
 		var editplugins = [
 		  { insertBefore: '#loadBefore', name: 'toaster', files: ['assets/scripts/toastr/toastr.min.js', 'assets/styles/toastr/toastr.min.css']},
@@ -46,9 +30,8 @@
 	  ];
 	  
 	  var editScreenResolve = {
-		  appData:getAppData,
-		  loadPlugin: function ($ocLazyLoad) { return $ocLazyLoad.load(editplugins)}
-	  }
+		  loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) { return $ocLazyLoad.load(editplugins)}]
+	  };
 	 
 	 
 		
@@ -61,7 +44,7 @@
 	  clientAddScreenResolve.userData = function(){return {}};
       
     var clientEditScreenResolve = angular.copy(editScreenResolve);
-    clientEditScreenResolve.userData = function($stateParams, $location, api, $q){
+    clientEditScreenResolve.userData = [ '$stateParams', '$location', 'api', '$q', function($stateParams, $location, api, $q){
 			if ($stateParams.clientId === undefined || $stateParams.clientId == ""){
 				$location.path('clients/list');
 			}
@@ -74,7 +57,7 @@
 				);
 		   	return defer.promise; 
 			}
-		}   
+		}];   
 		
 		
 		
@@ -87,7 +70,7 @@
 	  orderAddScreenResolve.orderData = function(){return null}
 		   
 		var orderEditScreenResolve = angular.copy(editScreenResolve);
-		orderEditScreenResolve.orderData = function($stateParams, $location, api, $q){
+		orderEditScreenResolve.orderData = [ '$stateParams', '$location', 'api', '$q', function($stateParams, $location, api, $q){
 		
 			if ($stateParams.orderId === undefined || $stateParams.orderId == ""){
 				$location.path('orders/list');
@@ -104,7 +87,7 @@
 			}
 			
 			return defer.promise; 
-		}	
+		}];	
 		
   
 	  
@@ -164,10 +147,7 @@
       .state('clients.list', {
         url: "/list",
         templateUrl: "app/clients/clients.html",
-        authenticate: true,
-        resolve:{
-	        appData:getAppData
-        }
+        authenticate: true
       })
       
       .state('clients.add', {
@@ -192,7 +172,6 @@
         templateUrl: "app/components/common/content.html",
         authenticate: true,
         resolve: { 
-	        appData:getAppData,
 	        loadPlugin: function ($ocLazyLoad) {
 					return $ocLazyLoad.load([
 				    {	files: ['assets/scripts/sweetalert/sweetalert.min.js', 'assets/styles/sweetalert/sweetalert.css']},
@@ -210,9 +189,6 @@
         templateUrl: "app/orders/orders.html",
         authenticate: true,
         controller: "OrdersController as ovm",
-        resolve:{
-	        appData:getAppData
-        }
       })
       
       .state('orders.edit', {
@@ -232,6 +208,6 @@
       })      
       
     $urlRouterProvider.otherwise('orders/list');
-  }
+  };
 
 })();

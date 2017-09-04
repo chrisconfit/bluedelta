@@ -18,7 +18,6 @@
 			client_secret: "8xHu3MLzZXr3pcUneGCM08XOzMc5rH5AOtJSCdIP",
 			url :  "http://ec2-54-200-231-145.us-west-2.compute.amazonaws.com",
 			headers: {'Content-Type':'application/json'}
-			
 		};
 		
 		var noTokenNecessary = [
@@ -33,7 +32,8 @@
 		//Call an API function and handle data
 		var call = function(func, data, success, error){
 			accessToken = $window.localStorage.getItem('bdAccessToken');
-			
+			console.log('calling '+func+" with...");
+			console.log(data);
 			if (noTokenNecessary.indexOf(func) < 0 && !accessToken){
 				var message = "Request being made with no access token.";
 				var err = new Error(message);
@@ -285,6 +285,14 @@
 			return httpReq("POST", "/api/users/"+data.userId+"/address", data.address);
 		}
 		
+		var usersCreateJean = function(data){
+			return httpReq("POST", "/api/users/"+data.userId+"/jeans", data.jean);
+		}
+		
+		var usersCreateOrder = function(data){
+			return httpReq("POST", "/api/users/"+data.userId+"/orders", data.order);
+		}
+		
 		var usersPost = function(data){
 			var path = "/api/users"
 			if (data.id) path += "/"+data.id;
@@ -306,24 +314,43 @@
 		var ordersPost = function(data){
 			var path = "/api/orders";
 			if (data.id) path += "/"+data.id
-			console.log(path);
-			console.log(data);
 			return httpReq("POST", path, data);
 		}
 		
 		var postAddress = function(data){
-			return httpReq("POST", "/api/users/"+data.userId+"/addresses", data.address);
+			var path = "/api/users/"+data.userId+"/addresses";
+			if (data.address.id) path += "/"+data.address.id;
+			return httpReq("POST", path, data.address);
 		}
 		
 		var commentsCreate = function(data){
 			return httpReq("POST", "/api/orders/"+data.orderId+"/comments", data.comment);
 		}
-		
-		var data = {};
+
+		var getAppData = function(){
+			$http.get("http://ec2-54-200-231-145.us-west-2.compute.amazonaws.com/api/data").then(function(result){
+				for(key in result.data){
+					if(result.data.hasOwnProperty(key)){
+						appData[key] = result.data[key];
+					}
+				}
+			});
+		}
+
+		var appData = {};
+		appData.lookup = function(data, key, value, retKey){
+			var dataSet = this[data];
+			if (!dataSet) return;
+			retKey = retKey || false;
+			for (var i=0; i<dataSet.length; i++){				
+				if(dataSet[i][key] == value)
+					return retKey ? dataSet[i][retKey] : dataSet[i]
+			}
+		}
 		
     return {
-	    getData:function(){ return data;},
-	    
+	    getData:function(){ return appData;},
+	    getAppData:getAppData,
       call : call,
       login: login,
       register: register,
@@ -349,7 +376,9 @@
       usersList:usersList,
       userGet:userGet,
       usersDelete:usersDelete,
+      usersCreateJean:usersCreateJean,
       usersCreateAddress:usersCreateAddress,
+      usersCreateOrder:usersCreateOrder,
       usersPost:usersPost,
       ordersPost:ordersPost,
       ordersList:ordersList,

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('LoginController', ['$scope', 'aws', '$state', 'user', function ($scope, aws, $state, user) {
+  .controller('LoginController', ['$scope', '$state', 'user', function ($scope, $state, user) {
 
     var logvm = this;
     

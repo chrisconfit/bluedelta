@@ -21,4 +21,4 @@ function formValidation($scope) {
 
 angular
     .module('inspinia')
-    .controller('formValidation', formValidation)
+    .controller('formValidation',['$scope', formValidation]);

@@ -4,17 +4,16 @@
 		<h1 ng-if="!ovm.newOrder">Order {{ovm.order.id}}</h1>
 		<h1 ng-if="ovm.newOrder">Create New Order</h1>
 	</div>              
-	
-	<br>
-	<pre>
-		{{ovm.order | json}}
-	</pre> 
-	<br>
-	
+
 	<div class="wrapper wrapper-content">
 
     <div class="row">	    
 
+<!--
+<pre>
+	{{ovm.order | json}}
+</pre>
+-->
       <div class="col-md-3">
         <!-- Profile Image -->
         <div class="ibox ibox-primary">

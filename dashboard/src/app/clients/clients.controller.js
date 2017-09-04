@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('ClientsController',  ['$scope', 'aws', 'SweetAlert', 'api', function ($scope, aws, SweetAlert, api) {
+  .controller('ClientsController',  ['$scope', 'SweetAlert', 'api', function ($scope, SweetAlert, api) {
     var vm = this;
 		var deleteUserBox = {
       title: "Are you sure?",
@@ -60,13 +60,9 @@ angular.module('inspinia')
 		}
 		
 		function pullUsers(filters, callback){
-			console.log("filters!!!");
-			console.log(filters);
 			//var data = vm.pagination.nextURL ? [vm.pagination.usersPerPage, vm.pagination.nextURL] : vm.pagination.usersPerPage;
 			api.call('usersList', filters, function(result){
-				console.log("pulled!");
-				console.log(result);
-				if (vm.pagination.total == 0 ) vm.pagination.total = parseInt(result.total)/vm.filters.results_per_page;
+				if (vm.pagination.total == 0 ) vm.pagination.total = Math.ceil(parseInt(result.total)/vm.filters.results_per_page);
 				vm.pagination.current = parseInt(result.page);
 				vm.users.push.apply(vm.users, result.results);
 				vm.pagination.loaded++;	
@@ -99,6 +95,7 @@ angular.module('inspinia')
     }
         
     vm.newQuery = function(){
+	    vm.pagination.total=0;
 	    vm.users = [];
 	    vm.filters.page=1;
 	    for (var i=0; i<vm.filters.length; i++){

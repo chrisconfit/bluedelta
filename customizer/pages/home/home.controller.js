@@ -8,17 +8,9 @@
 		
 		
     function homeCtrl ($window, user, api) { 	    
-			var vm = this;
-		
-
-			
-			
-			
-			
+			var vm = this;	
 			vm.user = user.get();
 			console.log($window.localStorage.getItem("bdAccessToken"));
-
-	    	
     }
 
 })();

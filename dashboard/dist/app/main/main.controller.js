@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('MainController', ['$state', 'aws', 'user', function ($state, aws, user) {
+  .controller('MainController', ['$state', 'user', function ($state, user) {
 
     var vm = this;
     

@@ -82,10 +82,10 @@
 								<th>ID</th>
 								<th>Customer<sorter change="ovm.changeSort" orderby="ovm.filters.orderby" order="ovm.filters.order" column="'user_name'"></th>
 								<th>Customer Email<sorter change="ovm.changeSort" orderby="ovm.filters.orderby" order="ovm.filters.order" column="'email'"></th>
-								<th>Vendor<sorter change="ovm.changeSort" orderby="ovm.filters.orderby" order="ovm.filters.order" column="'vendor_id'"></th>									
-								<th>Rep<sorter change="ovm.changeSort" orderby="ovm.filters.orderby" order="ovm.filters.order" column="'rep_id'"></th>
+								<th>Vendor</th>									
+								<th>Rep</th>
 								<th>Order Placed<sorter change="ovm.changeSort" orderby="ovm.filters.orderby" order="ovm.filters.order" column="'created_at'"></th>
-								<th>Order Status<sorter change="ovm.changeSort" orderby="ovm.filters.orderby" order="ovm.filters.order" column="'order_status_id'"></th>
+								<th>Order Status</th>
 								<th width=40>Edit</th>
 								<th width=40>Delete</th>
 							</tr>
@@ -99,7 +99,7 @@
 								<td>{{ovm.data.lookup("vendors", "id", order.vendor_id, "name") }}</td>
 								<td>{{ovm.data.lookup("reps", "id", order.rep_id, "name") }}</td>
 								<td>{{order.created_at | date:"M/d/yyyy"}}</td>
-								<td>{{ovm.data.lookup("order_statuses", "id", order.order_status_id, "name") }}</td>
+								<td><span class="label label-{{order.order_status_id}}">{{ovm.data.lookup("order_statuses", "id", order.order_status_id, "name") }}</span></td>
 								<td><a ui-sref="orders.edit({orderId: order.id})"><i class="fa fa-pencil"></i></a>
 								<td><a href="#" ng-click="ovm.deleteOrder(order.id)"><i class="fa fa-close"></i></a>
 							</tr>
@@ -112,7 +112,7 @@
 							<button ng-if="ovm.pagination.next" ng-click="ovm.pagination.changePage('next')"  class="btn btn-white" type="button"><i class="fa fa-chevron-right"></i> </button>
 						</div>
 					</div>
-					
+
 					<pagination total="ovm.pagination.total" current="ovm.pagination.current" change="ovm.changePage"></pagination>        	
 					
 				</div>

@@ -388,6 +388,10 @@ h1.page-title{
 					}
 					@include transform(translateY(-50%));
 					@include at-query($min, $deskMin){
+						&.template-style-chooser{
+							height:372px;
+							overflow:auto;
+						}
 						padding-top:59px;
 						top:0;
 						position:relative;
@@ -565,7 +569,7 @@ h1.page-title{
 	-webkit-box-shadow: 0px -3px 5px 0px rgba(0,0,0,0.15);
 	-moz-box-shadow: 0px -3px 5px 0px rgba(0,0,0,0.15);
 	box-shadow: 0px -3px 5px 0px rgba(0,0,0,0.15);
-	a:not(.fabric){
+	a:not(.fabric_id){
 		text-decoration: none;
 		i{
 			display:none;
@@ -751,10 +755,10 @@ h1.page-title{
 	}
 	
 	&.style-chooser .chooser-select, &.gender-chooser .chooser-select {
-		left: 30px;
+		left: 15px;
     top: 0px;
     bottom:0px;
-    width: calc(33.333% - 30px);
+    width: calc(33.333% - 15px);
     height:auto;
     display: block;
     position: absolute;
@@ -763,13 +767,15 @@ h1.page-title{
 	}
 	
 	&.gender-chooser .chooser-select {
-    width: calc(50% - 30px);
+    width: calc(50% - 15px);
   }
   @include at-query($min, $deskMin){
 	  &.style-chooser .chooser-select {
     	width: calc(33.3333% - 15px);
     	left:15px;
+    	height:190px;
 		}
+		
   	&.gender-chooser .chooser-select {
     	width: calc(50% - 15px);
     	top:0!important;
@@ -828,20 +834,25 @@ h1.page-title{
 	div[style-chooser] &, gender-chooser &{
 		padding:0;
 		width:auto;
-		margin-left:-30px;
+		margin-left:-15px;
 		margin-bottom:0;
 		& >.cft-gi{
-			padding-left:30px;
+			padding-left:15px;
 			margin-right:0;
 			width:33.3333%;
 		}
 		&#gender-chooser{
+			overflow:visible;
 			&>.cft-gi{
 				width:50%;
 			}
 		}
-		margin-left:-15px;
 		@include at-query($min, $deskMin){
+			&#style-chooser{
+				&>.cft-gi{
+					margin-bottom:15px;
+				}
+			}
 			& >.cft-gi{
 				padding-left:15px;
 				margin-bottom:0;
@@ -1018,6 +1029,7 @@ h1.page-title{
 	}
 	
 	@include at-query($min, $deskMin){
+		
 		.template-chooser &, .template-fabric-chooser &,.template-gender-chooser &,.template-style-chooser &{
 			max-height:none;
 			overflow:visible;

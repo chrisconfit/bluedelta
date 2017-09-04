@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('OrdersController', ['appData', 'bdAPI', '$scope', 'aws', 'SweetAlert', 'user', 'api', '$stateParams', function (appData, bdAPI, $scope, aws, SweetAlert, user, api, $stateParams) {
+  .controller('OrdersController', ['$scope', 'SweetAlert', 'user', 'api', '$stateParams', function ($scope, SweetAlert, user, api, $stateParams) {
 
     var vm = this;
-    vm.data = appData;
+    vm.data = api.getData();
     
     vm.user = user.get();
     
@@ -124,11 +124,9 @@ angular.module('inspinia')
 		}
 		
 		
-
 		function pullOrders(filters, callback){
-			//var data = vm.pagination.nextURL ? [vm.pagination.usersPerPage, vm.pagination.nextURL] : vm.pagination.usersPerPage;
 			api.call('ordersList', filters, function(result){
-				if (vm.pagination.total == 0 ) vm.pagination.total = parseInt(result.total)/vm.filters.results_per_page;
+				if (vm.pagination.total == 0 ) vm.pagination.total = Math.ceil(parseInt(result.total)/vm.filters.results_per_page);
 				vm.pagination.current = parseInt(result.page);
 				vm.orders.push.apply(vm.orders, result.results);
 				vm.pagination.loaded++;	
@@ -176,6 +174,7 @@ angular.module('inspinia')
     }
         
     vm.newQuery = function(){
+	    vm.pagination.total = 0;
 	    vm.orders = [];
 	    vm.filters.page=1;
 	    for (var i=0; i<vm.filters.length; i++){
