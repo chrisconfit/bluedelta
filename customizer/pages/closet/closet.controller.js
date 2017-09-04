@@ -193,7 +193,7 @@
 
 		vm.copyJean = function(jeanId){
 			vm.jean = jean.createNew(vm.displayJean);
-			$location.path('/customizer/'+jeanId+'/copy');
+			$location.path('/customizer/');
 		}
 		
 		vm.displayJean={};

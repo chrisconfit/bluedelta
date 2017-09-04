@@ -26,6 +26,9 @@
 		var action = false;
 		if ($routeParams.action) action = $routeParams.action;
 		
+		console.log("JEAN SETUP");
+		console.log(jeanId, action);
+		
 		jean.setup(jeanId, action).then(function(result){
 			vm.jeanData=jean.get();			
 			$scope.$watch(function() {
@@ -272,6 +275,7 @@
 				callback();
 			}
 		}
+		
     //When Save is clicked....
     vm.saveJean = function(){
 			if(!user.isLoggedIn()){

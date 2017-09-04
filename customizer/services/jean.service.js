@@ -103,7 +103,7 @@
 			if(copy==true){
 				delete data.user_id;
 				delete data.id;
-				data.name = "Copy of "+data.name;
+				if(data.name) data.name = "Copy of "+data.name;
 			}
 			for(prop in data){
 				if(data.hasOwnProperty(prop)){
@@ -131,7 +131,20 @@
 				buildJeanData(data, makeCopy);
 				defer.resolve(jeanData);
 			}
-
+			
+			//Copy jean from data URL
+			else if (data !== null && data !== undefined && data.split('-').length){
+				var jeanObj = {};
+				dataArr = data.split('-');
+				for(var i=0; i<dataArr.length; i++){
+					var d = dataArr[i].split(":");
+					var key = parseURLkey(d[0]);
+					jeanObj[key]=d[1];
+				}
+				console.log(jeanObj);
+				buildJeanData(jeanObj, makeCopy);
+				defer.resolve(jeanData);
+			}
 
 			//Copy or Edit Jean from Id
 			else if (data !== null && data !== undefined){
