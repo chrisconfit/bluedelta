@@ -66,10 +66,29 @@ h1 .sub-title {
 	padding:15px;
 	background:$lightGrey;
 	margin-bottom:30px;
+	p {
+		&:last-child {
+			margin: 0px;
+		}
+	}
+	&.inquiry-alert {
+		background: $blue;
+		color: #ffffff;
+		a {
+			color: #ffffff;
+			text-decoration: underline;
+		}
+	}
+	.change {
+		margin-top: 20px;
+	}
 }
 .option-trigger{
 	display:block;
 	font-weight: 600;
+}
+.check-list {
+	margin-bottom: 20px;
 }
 /* Made by Jimmy Gillam */
 $checked-color: $teal;

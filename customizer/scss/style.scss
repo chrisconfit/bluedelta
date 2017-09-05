@@ -546,12 +546,15 @@ form.cft-form{
 		padding-left:115px;
 		width:100%;
 		position: relative;
+		margin-bottom: 20px;
+		vertical-align: top;
 		.box-content{
 			background:$lightGrey;
 			padding:20px;
 		}
 		.box-title{
 			@include font-size(22, 26);
+			margin-bottom: 20px;
 		}
 		&:first-child{
 			margin-bottom:80px;

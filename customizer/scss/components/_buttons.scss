@@ -29,6 +29,10 @@ a.btn {
     padding: 4px 5px;
     @include font-size(13, 24);
   }
+  &.grey {
+    background: #bdbdbd;
+    color: #414648;
+  }
 
   &.full {
     width: 100%;

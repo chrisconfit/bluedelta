@@ -9,7 +9,10 @@
 			<div class="page-title">
 				<h1>Order Inquiry<span class="sub-title">- Get your perfect fit</span></h1>
 			</div>
-			
+			<div class="info-box inquiry-alert">
+				<p><strong>Please note you are placing an order inquiry and not purchasing a pair of Blue Delta Jeans at this step.</strong></p> 
+				<p>A BDJ Representative will be in touch with you within 24 hours to discuss further personalization options. Please contact us with any questions - <strong><a href="mailto:info@bluedeltajeans.com">info@bluedeltajeans.com</a></strong> | <strong>888.963.7879</strong></p>
+			</div>
 			<!--Step 1-->
 			<div class="order-step-1" ng-if="vm.orderForm.step==1">
 				<div ng-if="vm.orders.length">
@@ -52,9 +55,8 @@
 						</span>
 					</div>
 					<div class="single-option" ng-class="{selected:vm.orderCreateObj.order_type_id==3}">
-						<h3>1. Clone your favorite jeans</h3>
-						<p>Can't make it to a tailor? Do you already have a perfect fitting pair of jeans? We can CLONE them.</p>
-						<a class="option-trigger" href="">Learn More</a>
+						<h3>3. Clone your favorite jeans</h3>
+						<p>Can't make it to a tailor? Do you already have a perfect fitting pair of jeans? We can CLONE them. Send us your jeans and we can use the measurements to create your unique pattern.</p>
 						<a href="" ng-click="vm.chooseOrderType(3)" ng-class="{checked:vm.orderCreateObj.order_type_id==3}" class="check-box"></a> 
 						<span class="check-label">I'll clone a pair of my jeans</span>
 					</div>
@@ -102,7 +104,7 @@
 					</div>
 					
 					
-					<a href="" ng-click="vm.orderForm.step=1"><strong>Change order method</strong></a>	
+					<p><a class="btn grey change" href="" ng-click="vm.orderForm.step=1">Change order method</a></p>	
 				</div>
 				<h3>Shipping Information</h3> 
 				<p>Each pair of Blue Delta Jeans is made to fit and will take 4 - 6 weeks to arrive at your doorstep.</p>
@@ -160,7 +162,7 @@
 					<label>Additional Comments</label>
 				</div>
 
-				<button ng-click="vm.placeOrder()" class="btn">Place Order</button>
+				<button ng-click="vm.placeOrder()" class="btn">Place Order Inquiry</button>
 					
 			</div>
       

@@ -325,6 +325,12 @@ a.small.btn-secondary {
   font-size: 1.3rem;
   line-height: 2.4rem;
 }
+.btn.grey, .grey.btn-secondary,
+a.btn.grey,
+a.grey.btn-secondary {
+  background: #bdbdbd;
+  color: #414648;
+}
 .btn.full, .full.btn-secondary,
 a.btn.full,
 a.full.btn-secondary {
@@ -999,6 +1005,8 @@ form.cft-form button.btn, form.cft-form button.btn-secondary {
   padding-left: 115px;
   width: 100%;
   position: relative;
+  margin-bottom: 20px;
+  vertical-align: top;
 }
 .hiw-popup-grid > .cft-gi .box-content {
   background: #f1f1f1;
@@ -1009,6 +1017,7 @@ form.cft-form button.btn, form.cft-form button.btn-secondary {
   line-height: 26px;
   font-size: 2.2rem;
   line-height: 2.6rem;
+  margin-bottom: 20px;
 }
 .hiw-popup-grid > .cft-gi:first-child {
   margin-bottom: 80px;
@@ -2755,10 +2764,28 @@ h1 .sub-title {
   background: #f1f1f1;
   margin-bottom: 30px;
 }
+.info-box p:last-child {
+  margin: 0px;
+}
+.info-box.inquiry-alert {
+  background: #004964;
+  color: #ffffff;
+}
+.info-box.inquiry-alert a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+.info-box .change {
+  margin-top: 20px;
+}
 
 .option-trigger {
   display: block;
   font-weight: 600;
+}
+
+.check-list {
+  margin-bottom: 20px;
 }
 
 /* Made by Jimmy Gillam */
