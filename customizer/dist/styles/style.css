@@ -2064,6 +2064,10 @@ div[style-chooser] .cft-g.chooser-grid#gender-chooser > .cft-gi, gender-chooser 
   margin-right: 10px;
 }
 
+#style-chooser {
+  text-align: center;
+}
+
 .fabric-chooser-container {
   position: relative;
 }
