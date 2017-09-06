@@ -21,7 +21,7 @@
 				      <div class="jean-card">
 								<img ng-click="vm.selectOrder(order)" ng-src="{{order.order_items[0].jean_image_url}}">
 								<div class="box-content">
-						     	<h4 ng-click="vm.selectJean(order.order_items[0])">{{order.order_items[0].jean_name}}</h4>
+						     	<h4 ng-click="vm.selectOrder(order)">{{order.order_items[0].jean_name}}</h4>
 									<h5>Status: {{vm.data.lookup("order_statuses", "id", order.order_status_id, "name")}}</h5>
 									<h5 ng-if="order.dueDate">EST ARRIVAL:<br><b>{{order.dueDate | date : "longDate" : "CST"}}</b></h5>
 								</div>

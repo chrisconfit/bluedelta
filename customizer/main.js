@@ -31,7 +31,7 @@
         controller: 'closetCtrl',
         controllerAs: 'vm'
       })
-      .when('/order/:jeanId?', {
+      .when('/order/:jeanId?/:action?', {
         templateUrl: '/pages/order/order.view.html',
         controller: 'orderCtrl',
         controllerAs: 'vm'
@@ -107,8 +107,9 @@
 		  }  
 		})
 		.filter('displayName',function() {
-			return function(input){				
-				return input ? input.replace(/Raw Denim/g, "") : false;
+			return function(input){	
+				ret = input.gender ? input.gender : input.name;			
+				return ret ? ret.replace(/Raw Denim/g, "") : false;
 		  }  
 		})
 		
@@ -135,12 +136,7 @@
 	}
 	*/
 	$http.get("http://ec2-54-200-231-145.us-west-2.compute.amazonaws.com/api/data").then(function(result){
-		
-		result.data.genders = [
-			{"id":1, "name":"Male"},
-			{"id":2, "name":"Female"},
-		];
-		
+				
 		result.data.lookup = function(data, key, value, retKey){
 			var dataSet = this[data];
 			retKey = retKey || false;

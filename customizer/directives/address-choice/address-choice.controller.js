@@ -23,7 +23,7 @@
 				var add = $scope.user.addresses[a];
 				add.primary = (add.id == address.id ? 1:0);
 			}
-			api.call('postAddress', address);
+			api.call('postMyAddress', address);
 		}
 				
 		$scope.startEditing = function(){
@@ -107,7 +107,7 @@
 		//Save Form
 		$scope.save = function(){
 			var newAdd = $scope.model.id ? false : true;
-			api.call('postAddress', $scope.model, function(result){	
+			api.call('postMyAddress', $scope.model, function(result){	
 				if (newAdd)	$scope.user.addresses.push(result);
 				$scope.active = false;
 				$scope.model = {};	

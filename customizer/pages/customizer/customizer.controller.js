@@ -4,8 +4,8 @@
     .module('bdApp')
     .controller('customizerCtrl', customizerCtrl);
 
-  customizerCtrl.$inject = ['api', 'user', '$q','$filter','$timeout','$location', '$window', '$routeParams', 'bdAPI', 'jean', '$scope', 'popups', 'aws', 'messages', 'loader', 'apiData'];
-  function customizerCtrl(api, user, $q, $filter, $timeout, $location, $window, $routeParams, bdAPI, jean, $scope, popups, aws, messages, loader, apiData) {
+  customizerCtrl.$inject = ['api', 'user', '$q','$filter','$timeout','$location', '$window', '$routeParams', 'jean', '$scope', 'popups', 'messages', 'loader', 'apiData'];
+  function customizerCtrl(api, user, $q, $filter, $timeout, $location, $window, $routeParams, jean, $scope, popups, messages, loader, apiData) {
 		
     var vm = this
 		
@@ -25,9 +25,6 @@
 		if ($routeParams.jeanId) jeanId = $routeParams.jeanId;
 		var action = false;
 		if ($routeParams.action) action = $routeParams.action;
-		
-		console.log("JEAN SETUP");
-		console.log(jeanId, action);
 		
 		jean.setup(jeanId, action).then(function(result){
 			vm.jeanData=jean.get();			
@@ -119,7 +116,7 @@
 		//Gender
 		vm.panel.push({
 			"panelTemplate":"gender-chooser",
-			"dataKey":"genders",
+			"dataKey":"gender_options",
 			"title":"Gender",
 			"jeanKey":"gender_option_id"
 		});
@@ -198,7 +195,6 @@
 		vm.saveCallback;
 		
 		var openSaveOpts = function(){
-			console.log("running openSaveOpts...");
 			popups.set('saveOpts',true);
 			
 		}	
@@ -213,7 +209,6 @@
 		}	
 		
 		vm.saveAndShowOpts = function(){
-			console.log("running!!!");
 			vm.saveCallback = openSaveOpts;
 			vm.runSave();
 		}	
@@ -229,7 +224,6 @@
     vm.startOver = function(){
 	    jean.reset();
 	    vm.jeanData=jean.get();
-	    console.log(jean.get());
 	    popups.closeAll();
     }
     
@@ -290,11 +284,13 @@
 		
     
     vm.registerCallback = function(details){
+	    /*
 	    aws.authenticateCognitoUser(details.email, details.password).then(
 		    function(result){
 					vm.authCallback();	
 		  	}
 	    )
+	    */
     }
     
     

@@ -37,14 +37,31 @@
 		});
 		
 		var jeanId;
-		if ($routeParams.jeanId) jeanId = $routeParams.jeanId;
-		var action = false;
-		if ($routeParams.action) action = $routeParams.action;		
-		jean.setup(jeanId, action).then(function(result){
-			vm.jeanData=jean.get();	
-			vm.orderCreateObj.jean_id = vm.jeanData.id;
-		});
 		
+		if ($routeParams.jeanId && $routeParams.action == 'copy'){
+			console.log($routeParams);
+			/*
+			$scope.$watch('vm.orders', function(orders) {
+				if (orders.length);
+				for(i=0; i<orders.length; i++){
+					if(orders[i].id == $routeParams.jeanId){
+						var urlOrder = orders[i];
+						vm.orderCreateObj.shipping_name = urlOrder.shipping_name;
+						vm.orderCreateObj.shipping_phone = urlOrder.shipping_phone;
+					}					
+				}
+	    }, true);
+*/
+			
+		}
+		
+		else if ($routeParams.jeanId && !routeParams.action){	
+			jean.setup(jeanId, false).then(function(result){
+				vm.jeanData=jean.get();	
+				vm.orderCreateObj.jean_id = vm.jeanData.id;
+			});
+		}
+		vm.lookup = apiData.lookup;
 
 		vm.orderForm={};
 		vm.orderForm.step=1;
@@ -139,7 +156,8 @@
 		vm.editData = {};
 		
 		vm.editField = function(field){
-			vm.editData[field] = angular.copy(vm.orderCreateObj[field]);
+			var editText = vm.orderCreateObj[field] || " ";
+			vm.editData[field] = angular.copy(editText);
 		}
 		
 		vm.revertField = function(field){

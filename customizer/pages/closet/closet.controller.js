@@ -26,10 +26,6 @@
 	    vm.orders = result;
     });
     
-		vm.data=apiData;//jsonData.getData();
-		//vm.jeans = vm.data.jeansList;
-		
-		
 		vm.onload=function(){
 			$scope.vm = vm;	
 		}
@@ -189,11 +185,16 @@
 
 
 
+		vm.reOrder = function(orderId){
+			console.log(orderId);
+			$location.path('/order/'+orderId+'/copy');
+		}
+		
 
-
-		vm.copyJean = function(jeanId){
-			vm.jean = jean.createNew(vm.displayJean);
-			$location.path('/customizer/');
+		vm.copyJean = function(orderItem){
+			dataCode = api.getDataCode(orderItem);
+			jean.setup(dataCode, true);
+			$location.path('/customizer');
 		}
 		
 		vm.displayJean={};

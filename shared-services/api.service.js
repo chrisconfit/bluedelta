@@ -146,11 +146,11 @@
 			  if (jeanData.hasOwnProperty(property)) {
 					var id = jeanData[property];
 					var urlKey = jeanKeytoURL(property);
-					if (urlKey) url += "_"+urlKey+id;
+					if (urlKey) url += "-"+urlKey+":"+id;
 			  }
 			}	
 			url = url.replace(/(^[_\s]+)|([_\s]+$)/g, '');
-			return url;
+			return url.replace('-','');
 		}
 	  
 		function loadImage(src) {
@@ -240,7 +240,9 @@
 			return httpReq("GET", "/api/users/current/jeans");	
 		}
 		
-		var getMyOrders = function(){
+		var getMyOrders = function(data){
+			var path = "/api/users/current/orders";
+			if (data) path+"/data";
 			return httpReq("GET", "/api/users/current/orders");	
 		}
 		
