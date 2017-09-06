@@ -47,8 +47,8 @@
 					<div class="jean-card">
 						<img ng-src="{{vm.displayJean.jean_image_url}}">
 						<div class="box-content">
-							<button class="btn">Re-Order</button>
-							<button ng-click="vm.copyJean()" class="btn">Copy</button>
+							<button ng-click="vm.reOrder(vm.displayOrder.id)" class="btn">Re-Order</button>
+							<button ng-click="vm.copyJean(vm.displayJean)" class="btn">Copy</button>
 						</div>				
 					</div>
 				</div>
@@ -103,8 +103,8 @@
 					<div class="jean-card">
 						<img ng-src="/images/thumbnails/{{vm.displayJean.data.id}}.jpg">
 						<div class="box-content">
-							<button class="btn">Re-Order</button>
-							<button ng-click="vm.copyJean()" class="btn">Copy</button>
+							<button ng-click="vm.reOrder(vm.displayOrder.id)" class="btn">Re-Order</button>
+							<button ng-click="vm.copyJean(vm.displayJean)" class="btn">Copy</button>
 						</div>				
 					</div>
 				</div>

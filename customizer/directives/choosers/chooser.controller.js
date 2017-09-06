@@ -19,6 +19,8 @@
 			
 			
 			function scrollToLeft(el, scrollTo, scrollDuration) {
+				console.log("STL");
+				console.log(el);
 				//Select First Element
 				el = el[0];
 				//Center Scroll To
@@ -105,9 +107,8 @@
 
 
 			chvm.selectAttr = function($event, id, attr, selector){
-				var chAttr = attr.replace("_id", "");
-				var chAttr = chAttr.replace("_option", "");
-				var chooser = angular.element(document.querySelector("#"+chAttr+"-chooser"));
+				
+				var chooser = angular.element(document.querySelector("#"+attr+"-chooser"));
 				var selector = angular.element(document.querySelector("#"+attr+"-selector"));
 				var top = angular.element($event.target).prop('offsetTop');
 				var left = angular.element($event.target).prop('offsetLeft');
@@ -117,7 +118,6 @@
 				selector.css({'top':top+'px', 'left':left+'px'});
 				
 				chvm.selectorCoords = {"top":top,"left":left};
-				
 				if ($window.innerWidth < chvm.breakPoint) scrollToLeft(chooser, left, 200);
 				
 				$timeout(function(){

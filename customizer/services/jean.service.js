@@ -3,9 +3,9 @@
 
   angular
     .module('bdApp')
-    .service('jean', ['$routeParams', '$window', 'bdAPI', '$q', 'aws', 'apiData', 'api', jean]);
+    .service('jean', ['$routeParams', '$window', '$q', 'apiData', 'api', jean]);
 
-  function jean($routeParams, $window, bdAPI, $q, aws, apiData, api) {
+  function jean($routeParams, $window, $q, apiData, api) {
 
 
 		/*
@@ -133,7 +133,9 @@
 			}
 			
 			//Copy jean from data URL
-			else if (data !== null && data !== undefined && data.split('-').length){
+			else if (data !== null && data !== undefined && isNaN(data)){
+				console.log("THIS IS A DATACODE");
+				console.log(data);
 				var jeanObj = {};
 				dataArr = data.split('-');
 				for(var i=0; i<dataArr.length; i++){
@@ -141,16 +143,14 @@
 					var key = parseURLkey(d[0]);
 					jeanObj[key]=d[1];
 				}
+				console.log('jeanObj');
 				console.log(jeanObj);
-				buildJeanData(jeanObj, makeCopy);
+				buildJeanData(jeanObj, true);
 				defer.resolve(jeanData);
 			}
 
 			//Copy or Edit Jean from Id
 			else if (data !== null && data !== undefined){
-				
-				console.log(data, userId, action, makeCopy);
-				console.log("working from ID!");
 				
 				//First get Jean
 				api.call('getJean', data, function(result){
@@ -158,7 +158,6 @@
 					if (result.user_id !== userId) makeCopy = true;
 
 					buildJeanData(result, makeCopy);
-					console.log(jeanData);
 					defer.resolve(jeanData);
 				}, function(err){
 						defer.reject(err)
@@ -167,16 +166,10 @@
 
 			//Jean Data already exists
 			else if (Object.keys(jeanData).length > 0){
-			
-				console.log("jean data already exists!");
-				
 				defer.resolve(jeanData);
 			}
 			
 			else{
-			
-				console.log("creating new jean!");
-				
 				createNew();			
 				defer.resolve(jeanData);
 			}
@@ -264,12 +257,10 @@
 		
 		var save = function(){
 			
-			console.log("saving jean...");
-			
 			var defer = $q.defer();
 			var jean = this;
 			var jeanData = jean.get();
-			var filename = api.getDataCode();
+			var filename = api.getDataCode(jeanData);
 			filename += ".jpg";
 			jeanData.image = {filename:filename};
 			api.createThumb(jeanData).then(function(blob){

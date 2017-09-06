@@ -51,7 +51,7 @@
 				    <label for="jean-name">Jean Name</label>
 				  </div>
 					<btn ng-click="vm.jean.name = vm.newJeanName; vm.runSave()" class="btn">Save</btn>
-					<btn class="btn btn-secondary" ng-click="vm.popups.saver=false">Cancel</btn> 
+					<btn class="btn btn-secondary" ng-click="vm.popups.namer=false">Cancel</btn> 
 				</form>
 			</div><!--./popup-content-inner-->
 		</div>
@@ -116,3 +116,50 @@
 			</div><!--./popup-content-inner-->
 		</div>
 	</div>
+
+
+<!--Raw Denim Weight Popup-->
+	<div ng-show="vm.popups.rawDenim"	ng-click="vm.popups.rawDenim = false" class="popup-window">
+		<div class="popup-content denim-popup" ng-click="$event.stopPropagation()">
+			<a class="popup-closer" href="" ng-click="vm.popups.rawDenim = false"></a>
+			<div class="popup-content-inner">
+				<h3 class="popup-title">Raw Denim</h3>		
+				<div class="">
+					<p>Lightweight raw denim is the first, and easiest to wear category. A raw denim under 10 Oz. is  easy to break in as it won’t require anywhere near as much wearing time as a heavier fabric to attain a pleasant level of comfort.</p>
+					<p>A lightweight raw denim is much more comfortable from the beginning, and is lighter on your legs. There will be much fewer sweaty experiences caused from claustrophobia around your legs. The only drawback is that the fades achieved with this level of denim won’t look quite as spectacular as a heavier weight of denim.</p>
+				</div>
+			</div><!--./popup-content-inner-->
+		</div>
+	</div>
+	
+	<!--Rinsed Denim Weight Popup-->
+	<div ng-show="vm.popups.rinsedDenim"	ng-click="vm.popups.rinsedDenim = false" class="popup-window">
+		<div class="popup-content denim-popup" ng-click="$event.stopPropagation()">
+			<a class="popup-closer" href="" ng-click="vm.popups.rinsedDenim = false"></a>
+			<div class="popup-content-inner">
+				<h3 class="popup-title">Rinsed Denim</h3>		
+				<div class="">
+					<p>Lightweight raw denim is the first, and easiest to wear category. A raw denim under 10 Oz. is  easy to break in as it won’t require anywhere near as much wearing time as a heavier fabric to attain a pleasant level of comfort.</p>
+					<p>A lightweight raw denim is much more comfortable from the beginning, and is lighter on your legs. There will be much fewer sweaty experiences caused from claustrophobia around your legs. The only drawback is that the fades achieved with this level of denim won’t look quite as spectacular as a heavier weight of denim.</p>
+				</div>
+			</div><!--./popup-content-inner-->
+		</div>
+	</div>
+
+
+<!--Raw Denim Weight Popup-->
+	<div ng-show="vm.popups.hollandSherry"	ng-click="vm.popups.hollandSherry = false" class="popup-window">
+		<div class="popup-content denim-popup" ng-click="$event.stopPropagation()">
+			<a class="popup-closer" href="" ng-click="vm.popups.hollandSherry = false"></a>
+			<div class="popup-content-inner">
+				<h3 class="popup-title">Holland & Sherry</h3>		
+				<div class="">
+					<p>Lightweight raw denim is the first, and easiest to wear category. A raw denim under 10 Oz. is  easy to break in as it won’t require anywhere near as much wearing time as a heavier fabric to attain a pleasant level of comfort.</p>
+					<p>A lightweight raw denim is much more comfortable from the beginning, and is lighter on your legs. There will be much fewer sweaty experiences caused from claustrophobia around your legs. The only drawback is that the fades achieved with this level of denim won’t look quite as spectacular as a heavier weight of denim.</p>
+				</div>
+			</div><!--./popup-content-inner-->
+		</div>
+	</div>
+
+
+

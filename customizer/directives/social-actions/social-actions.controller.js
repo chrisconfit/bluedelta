@@ -4,32 +4,17 @@
     .module('bdApp')
     .controller('socialCtrl', socialCtrl)
 	
-		socialCtrl.$inject = ['$scope', 'popups'];
+		socialCtrl.$inject = ['$scope', 'popups', 'api'];
 
 		
-		function socialCtrl($scope, popups) {
+		function socialCtrl($scope, popups, api) {
 	
 			var sovm = this;
 			sovm.jean = $scope.jean;
 			
-			console.log("jean!");
-			console.log(sovm.jean);
-			
 			sovm.jeanToUrl = function(){
 				var url = document.location.origin+"/customizer/";
-				console.log("jeantoURL");
-				console.log(sovm.jean);
-				if (!sovm.jean.id){
-					url += "tt:"+sovm.jean.top_thread_id;
-					url += "-tb:"+sovm.jean.bottom_thread_id;
-					url += "-ta:"+sovm.jean.accent_thread_id;
-					url += "-f:"+sovm.jean.fabric_id;
-					url += "-s:"+sovm.jean.style_option_id;
-					url += "-g:"+sovm.jean.gender_option_id;
-					console.log("url!!");
-					console.log(url);
-				}
-				else url += sovm.jean.id;	
+				url += sovm.jean.id ? sovm.jean.id : api.getDataCode(sovm.jean);
 				url += "/copy";
 				return url;
 			}
@@ -63,7 +48,7 @@
 				if(url || image) return false;
 				return 'https://pinterest.com/pin/create/button/?url='+url+'&media='+image+'&description='+socialTitle+'%0A'+socialDescription;	
 			}
-			console.log($scope);
+
 			sovm.share = function(social){
 				var url = sharingUrls[social](sovm.jeanToUrl());
 				if (url !== false){

@@ -11,6 +11,9 @@ var browserSync = require('browser-sync');
 var browserSyncSpa = require('browser-sync-spa');
 var path = require('path');
 var debug = require('gulp-debug');
+var fs = require("fs");
+var config = JSON.parse(fs.readFileSync('private/awsaccess.json'));
+var s3 = require('gulp-s3-upload')(config);
 
 
 var closureScripts = [
@@ -144,3 +147,23 @@ browserSync.use(browserSyncSpa({
 gulp.task('serve', ['watch'], function () {
   browserSyncInit([path.join(".tmp", '/serve'), "./"]);
 });
+
+
+gulp.task("deploy", function() {
+	var dist = [
+		'!./private/**',
+		'!./node_modules/**',
+		'!./bower_components/**',
+		'!./.sass-cache/**',
+		'!./scss/**',
+		'!./vendor/**',
+		'./**',
+	];
+  gulp.src(dist)
+	.pipe(s3({
+	  Bucket: 'build.bluedeltajeans.com', //  Required 
+	  ACL:    'public-read'       //  Needs to be user-defined 
+	}, {
+	  maxRetries: 5
+	}));
+});    
