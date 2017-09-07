@@ -16,10 +16,8 @@
 			for (var i=0; i<addresses.length; i++) {
 				if (addresses[i].primary == true) return addresses[i].id;
 			}
-
 			return addresses[0].id;
 		}
-		
 
 		vm.orderCreateObj = {}
 		vm.user = {};
@@ -39,24 +37,25 @@
 		var jeanId;
 		
 		if ($routeParams.jeanId && $routeParams.action == 'copy'){
-			console.log($routeParams);
-			/*
+			
 			$scope.$watch('vm.orders', function(orders) {
 				if (orders.length);
 				for(i=0; i<orders.length; i++){
 					if(orders[i].id == $routeParams.jeanId){
 						var urlOrder = orders[i];
-						vm.orderCreateObj.shipping_name = urlOrder.shipping_name;
-						vm.orderCreateObj.shipping_phone = urlOrder.shipping_phone;
+						vm.orderCreateObj.copy_order_item_id = urlOrder.order_items[0].id;
+						vm.jeanData = urlOrder.order_items[0];
+						vm.jeanData.image_url =	vm.jeanData.jean_image_url;
+						vm.jeanData.name =	vm.jeanData.jean_name;
 					}					
 				}
 	    }, true);
-*/
+
 			
 		}
 		
-		else if ($routeParams.jeanId && !routeParams.action){	
-			jean.setup(jeanId, false).then(function(result){
+		else if ($routeParams.jeanId && !$routeParams.action){	
+			jean.setup($routeParams.jeanId, false).then(function(result){
 				vm.jeanData=jean.get();	
 				vm.orderCreateObj.jean_id = vm.jeanData.id;
 			});

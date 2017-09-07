@@ -3,11 +3,13 @@
 
 <h3>Raw Denim <a href="" class="info-pop" ng-click="chvm.popups.rawDenim = !chvm.popups.rawDenim"><i class="fa fa-question-circle"></i></a></h3>
 <div class="cft-g chooser-grid">
-	<div class="cft-gi" ng-repeat="fabric in dataset | filter:{'fabric_type':'Raw Denim'} | orderBy:'weight'">
+	<div class="cft-gi" ng-repeat="fabric in dataset | filter:{'fabric_type':'Raw Denim', 'deleted_at':null} | orderBy:'weight'">
+		{{fabric.deleted_at}}
 		<a ng-class="{ active: chvm.jeanData.fabric==fabric }" id="fabric_id_{{fabric.id}}" 
 		href="" ng-click="chvm.selectAttr($event, fabric.id, 'fabric_id')">
-			<img ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabrics/thumb/{{fabric.id}}.jpg">
+			<img alt="{{fabric.name}}" ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabrics/thumb/{{fabric.id}}.jpg">
 			<span class="fabric-weight">{{fabric.weight}}<span class="oz">oz</span></span>
+			
 		</a>
 	</div>
 </div>
@@ -17,7 +19,7 @@
 	<div class="cft-gi" ng-repeat="fabric in dataset | filter:{'fabric_type':'Rinsed Denim'} | orderBy:'weight'">
 		<a ng-class="{ active: chvm.jeanData.fabric==fabric }" id="fabric_id_{{fabric.id}}" 
 		href="" ng-click="chvm.selectAttr($event, fabric.id, 'fabric_id')">
-			<img ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabrics/thumb/{{fabric.id}}.jpg">
+			<img alt="{{fabric.name}}"  ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabrics/thumb/{{fabric.id}}.jpg">
 			<span class="fabric-weight">{{fabric.weight}}<span class="oz">oz</span></span>
 		</a>
 	</div>
@@ -28,7 +30,7 @@
 	<div class="cft-gi" ng-repeat="fabric in dataset | filter:{'fabric_type':'Holland & Sherry'} | orderBy:'weight'">
 		<a ng-class="{ active: chvm.jeanData.fabric==fabric }" id="fabric_id_{{fabric.id}}" 
 		href="" ng-click="chvm.selectAttr($event, fabric.id, 'fabric_id')">
-			<img ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabrics/thumb/{{fabric.id}}.jpg">
+			<img alt="{{fabric.name}}" ng-src="http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabrics/thumb/{{fabric.id}}.jpg">
 			<span class="fabric-weight">{{fabric.weight}}<span class="oz">oz</span></span>
 		</a>
 	</div>
