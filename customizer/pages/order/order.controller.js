@@ -90,7 +90,7 @@
 				vm.copyItem = copyItem;
 			}
 			else{
-				delete vm.orderCreateObj.copy_order_item_id;	
+				if($routeParams.action != 'copy') delete vm.orderCreateObj.copy_order_item_id;	
 				vm.copyItem = {};
 			}
 		}
