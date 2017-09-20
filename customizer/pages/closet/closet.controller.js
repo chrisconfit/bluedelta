@@ -8,7 +8,6 @@
   function closetCtrl($location, $window, jean, popups, $scope, messages, loader, user, api, apiData, $routeParams) {
 	    
     var vm = this;   
-		
 		popups.closeAll();
 		vm.popups=popups.get();
 
@@ -88,7 +87,6 @@
 		vm.userForm.save = function(field){
 			//if (vm.user[field] == "") vm.user[field] = null;
 			if (vm.userForm.validate(field, vm.user[field])){
-				console.log(vm.user);
 				user.update(vm.user, function(result){
 					vm.userForm.saving[field] = false;
 					vm.userForm.editing[field] = false;
@@ -186,7 +184,6 @@
 
 
 		vm.reOrder = function(orderId){
-			console.log(orderId);
 			$location.path('/order/'+orderId+'/copy');
 		}
 		
@@ -204,12 +201,9 @@
 		}
 		
 		vm.selectOrder = function(order){
-			console.log("selecting Order");
-			console.log(order);
 			vm.popups.orderProfile = true; 
 			vm.displayOrder=order;
 			vm.displayJean = order.order_items[0];
-			console.log(vm.displayOrder);	
 		}
 		
 	
@@ -221,14 +215,12 @@
 
 		vm.deleteJean = function(jeanId){
 			api.call('deleteMyJean', jeanId, function(result){
-				console.log(result);
 				var index = findJeanbyId(jeanId);
 				vm.jeans.splice(index, 1);
 			});
 		}
 		
 		vm.orderJean = function(jeanId){
-			console.log("going to order");
 			$location.path('/order/'+jeanId);
 		}
 	

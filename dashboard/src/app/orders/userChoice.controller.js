@@ -4,9 +4,13 @@ angular.module('inspinia')
   .controller('UserChoiceController', ['$scope', '$uibModalInstance', 'orderUser', 'choose', 'api',
   function ($scope, $uibModalInstance, orderUser, choose, api) {
 		$scope.users=[];
-		
+		$scope.showCreate=false;
 		$scope.orderUser = orderUser;
 	
+		$scope.showCreateForm = function(){
+			alert("here it am");
+			$scope.showCreate=true;
+		}
 		$scope.searchClient="";
 		$scope.cancel = function(){
 			$uibModalInstance.dismiss('cancel');

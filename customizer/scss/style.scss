@@ -621,9 +621,11 @@ form.cft-form{
 //Secondary pages 
 
 .container.page-container{
+	padding-bottom:30px;
 	margin-top:30px;
 	@include at-query($min, 800px){
 		margin-top:50px;
+		padding-bottom:50px;
 	}
 }
 .page-title{

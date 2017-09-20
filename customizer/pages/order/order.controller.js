@@ -35,9 +35,9 @@
 		});
 		
 		var jeanId;
-		
+		vm.copyingOrder = true;
 		if ($routeParams.jeanId && $routeParams.action == 'copy'){
-			
+			vm.copyingOrder = false;			
 			$scope.$watch('vm.orders', function(orders) {
 				if (orders.length);
 				for(i=0; i<orders.length; i++){

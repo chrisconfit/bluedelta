@@ -98,7 +98,7 @@
 								<td>{{order.user.email}}</td>
 								<td>{{ovm.data.lookup("vendors", "id", order.vendor_id, "name") }}</td>
 								<td>{{ovm.data.lookup("reps", "id", order.rep_id, "name") }}</td>
-								<td>{{order.created_at | date:"M/d/yyyy"}}</td>
+								<td>{{ovm.formatDate(order.created_at)}}</td>
 								<td><span class="label label-{{order.order_status_id}}">{{ovm.data.lookup("order_statuses", "id", order.order_status_id, "name") }}</span></td>
 								<td><a ui-sref="orders.edit({orderId: order.id})"><i class="fa fa-pencil"></i></a>
 								<td><a href="#" ng-click="ovm.deleteOrder(order.id)"><i class="fa fa-close"></i></a>
