@@ -428,12 +428,24 @@ a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.acti
   margin-bottom: 0;
 }
 
+
+.list-group {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 0;
+}
+
+.list-group-item:first-child {
+   border-top-right-radius: 0px;
+   border-top-left-radius: 0px;
+}
+
 .list-group-item {
   background-color: inherit;
-  border: 1px solid @border-color;
+  border: none;
+  border-top: 1px solid @border-color;
   display: block;
   margin-bottom: -1px;
-  padding: 10px 15px;
+  padding: 15px 0px;
   position: relative;
 }
 
@@ -892,7 +904,7 @@ div.dt-button-info {
 .form-control, .single-line {
   background-color: #FFFFFF;
   background-image: none;
-  border: 1px solid #e5e6e7;
+  border: 1px solid @border-color;
   border-radius: 1px;
   color: inherit;
   display: block;
@@ -1837,6 +1849,7 @@ a.forum-item-title:hover {
   padding: 0;
   margin-top: 2em;
   margin-bottom: 2em;
+  width: 100%;
 }
 
 #vertical-timeline::before {
