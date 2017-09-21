@@ -1,10 +1,12 @@
 <div class="inmodal">
 	<div class="modal-header">
-	  <h4 class="modal-title"><i class="fa fa-user" aria-hidden="true"></i> User</h4>
-	  <small class="font-bold">Assign a user to this order.</small>
+	  <h4 class="modal-title"><i class="fa fa-user" aria-hidden="true"></i> Clients</h4>
+	  <small class="font-bold">Assign a client to this order.</small>
 	</div>
 	<div class="modal-body">
-		<div class="search-form-container">
+		
+		<!--Client Search-->
+		<div class="search-form-container" ng-if="!showCreate">
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
@@ -40,9 +42,72 @@
 			</table>
 			<a ng-if="clients.length < totalClients" ng-click="getMoreUsers()" href="">Load More Users...</a>
 		</div>
+		
+		<!--Create New Client-->
+		<div ng-if="showCreate" class="client-form-container">
+			<form class='client-form'>
+				<fieldset>
+					<h3>Client Details</h3>
+					<div class="form-group">
+			      <label>Client First Name:</label>
+						<input type="text" class="form-control" style="width: 100%;" ng-model="clientForm.first_name">
+			    </div>
+			    <div class="form-group">
+			      <label>Client Last Name:</label>
+						<input type="text" class="form-control" style="width: 100%;" ng-model="clientForm.last_name">
+			    </div>
+			    <div class="form-group">
+			      <label>Client Email:</label>
+						<input type="text" class="form-control" style="width: 100%;" ng-model="clientForm.email">
+			    </div>
+			    <div class="form-group">
+			      <label>Client Password:</label>
+						<input type="text" class="form-control" style="width: 100%;" ng-model="clientForm.password">
+			    </div>
+				</fieldset>
+				<fieldset>
+					<h3>Address</h3>
+					<div class="form-group">
+			      <label>Address Line 1:</label>
+						<input type="text" class="form-control" style="width: 100%;" ng-model="clientForm.create_addresses[0].address_line_1">
+			    </div>
+			    <div class="form-group">
+			      <label>Address Line 2:</label>
+						<input type="text" class="form-control" style="width: 100%;" ng-model="clientForm.create_addresses[0].address_line_2">
+			    </div>
+			    <div class="form-group">
+			      <label>City:</label>
+						<input type="text" class="form-control" style="width: 100%;" ng-model="clientForm.create_addresses[0].city">
+			    </div>
+			    <div class="row">
+			    	<div class="col-sm-6">
+							<div class="form-group">
+					      <label>State:</label>
+								<select ng-options="state.abbreviation as state.name for state in states" ng-model="clientForm.create_addresses[0].state" class="form-control"></select>
+					    </div>
+			    	</div>
+			    	<div class="col-sm-6">
+					    <div class="form-group">
+					      <label>Zip:</label>
+								<input type="text" class="form-control" style="width: 100%;" ng-model="clientForm.create_addresses[0].zip">
+					    </div>
+			    	</div>
+		    	</div>
+				</fieldset>
+			</form>
+	  </div>
 	</div>
+	
 	<div class="modal-footer clearfix">
-		<a class="btn btn-flat btn-primary pull-right" href="" ng-click="cancel();">Close</a>
+		<div ng-if="!showCreate">
+			<a class="btn btn-flat btn-primary pull-right" href="" ng-click="cancel();">Close</a>
+			&nbsp;<a class="btn btn-flat btn-primary pull-right" href="" ng-click="showCreateForm()">Create New</a>
+		</div>
+		<div ng-if="showCreate">
+			<a class="btn btn-flat btn-primary pull-right" href="" ng-click="cancelCreateForm();">Cancel</a>
+			&nbsp;<a class="btn btn-flat btn-primary pull-right" href="" ng-click="postCreateForm();">Create</a>
+		</div>
 	</div>
+	
 </div>
 

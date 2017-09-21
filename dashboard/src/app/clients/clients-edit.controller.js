@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('ClientsEditController',  ['$uibModal', 'userData', '$scope', 'api', 'SweetAlert', 'toaster', '$state',
-  function ($uibModal, userData, $scope, api, SweetAlert, toaster, $state) {
+  .controller('ClientsEditController',  ['user', '$uibModal', 'userData', '$scope', 'api', 'SweetAlert', 'toaster', '$state',
+  function (user, $uibModal, userData, $scope, api, SweetAlert, toaster, $state) {
     
     var vm = this;
     
@@ -13,11 +13,11 @@ angular.module('inspinia')
 		var defaultUser = {
 			first_name:"",
 			last_name:"",
+			role_id:1,
 			email:"",
 			phone:"",
 			addresses:[],
 		}
-		
 
 		vm.newUser = Object.keys(vm.userData).length>0 ? false : true;
 		vm.userData = vm.newUser ? defaultUser : userData;		
@@ -80,55 +80,345 @@ angular.module('inspinia')
 		}
 		
   
- 
+		/*														*\
+		*															*
+		*															*
+		* * * * * Save/Create	* * * * * 
+		*															*	
+		\*	  												*/
 	
-
-
-	/*														*\
-	*															*
-	*															*
-	* * * * * Save/Create	* * * * * 
-	*															*	
-	\*	  												*/	
-	vm.saveUser = function(){
-		
-		toaster.pop({
-		  type: 'wait',
-		  title: "Saving...",
-		  showCloseButton: true,
-		  timeout: 3000
+		vm.availableRoles = [
+			{id:1, name:'Client'}, 
+			{id:2, name:'Admin'}, 
+		];	
+	
+		vm.user=user.get();
+		$scope.$watch(angular.bind(this, function () {
+		  return this.user;
+		}), function (newVal) {
+			if(newVal.role_id>2)
+				vm.availableRoles.push({id:3, name:'Super Admin'});
 		});
+	
+		
+		function validateAddress(){
 			
-		var args = vm.userData;
-		var succMessage = vm.newUser ? "User Created" : "User Saved";
-		var errMessage = vm.newUser ? "Could not create user" : "Could not Save user";	
+			//Address has not been touched
+			if (!vm.userData.create_addresses) return true;
+
+			var add = vm.userData.create_addresses[0];
+			if(!add.address_line_1 && !add.address_line_2 && !add.city && !add.state && !add.zip){
+				delete vm.userData.create_addresses;
+				return true;
+			}
+			
+			console.log("add object is set..");
+			return false;
+				
+		}
 		
-		console.log('about to post!');
+		function validateUserForm(){
+			console.log("validateUserForm");
+			console.log(vm.userData);
+			console.log(validateAddress());
+			return false;// {message:"No user name"};
+		}
 		
-		api.call('usersPost', args, function(result){
-			vm.clientEditMode=false
+		
+		
+		
+		vm.saveUser = function(){
+			
+			
+			var err = validateUserForm();
+			
+			return false;
+			
+			if(err){
+				toaster.pop({
+				  type: 'error',
+				  title: "Could not submit user from",
+				  body: err.message,
+				  showCloseButton: true,
+				  timeout: 7000
+				});
+				return false;
+			}
+			
+			
 			toaster.pop({
-			  type: 'success',
-			  title: succMessage,
+			  type: 'wait',
+			  title: "Saving...",
 			  showCloseButton: true,
 			  timeout: 3000
 			});
+				
+			var args = vm.userData;
+			var succMessage = vm.newUser ? "User Created" : "User Saved";
+			var errMessage = vm.newUser ? "Could not create user" : "Could not Save user";	
 			
-			if(vm.newUser) $state.transitionTo('clients.edit', {clientId:result.id});
-					
-		}, function(err){
-			toaster.pop({
-			  type: 'error',
-			  title: errMessage,
-			  body: err.message,
-			  showCloseButton: true,
-			  timeout: 7000
+			
+			api.call('usersPost', args, function(result){
+				vm.clientEditMode=false
+				toaster.pop({
+				  type: 'success',
+				  title: succMessage,
+				  showCloseButton: true,
+				  timeout: 3000
+				});
+				
+				if(vm.newUser) $state.transitionTo('clients.edit', {clientId:result.id});
+						
+			}, function(err){
+				toaster.pop({
+				  type: 'error',
+				  title: errMessage,
+				  body: err.message,
+				  showCloseButton: true,
+				  timeout: 7000
+				});
 			});
-		});
+	
+		}
 
-	}
-
-		
+		vm.states = [
+			{
+			  "name": "Alabama",
+			  "abbreviation": "AL"
+			},
+			{
+			  "name": "Alaska",
+			  "abbreviation": "AK"
+			},
+			{
+			  "name": "American Samoa",
+			  "abbreviation": "AS"
+			},
+			{
+			  "name": "Arizona",
+			  "abbreviation": "AZ"
+			},
+			{
+			  "name": "Arkansas",
+			  "abbreviation": "AR"
+			},
+			{
+			  "name": "California",
+			  "abbreviation": "CA"
+			},
+			{
+			  "name": "Colorado",
+			  "abbreviation": "CO"
+			},
+			{
+			  "name": "Connecticut",
+			  "abbreviation": "CT"
+			},
+			{
+			  "name": "Delaware",
+			  "abbreviation": "DE"
+			},
+			{
+			  "name": "District Of Columbia",
+			  "abbreviation": "DC"
+			},
+			{
+			  "name": "Federated States Of Micronesia",
+			  "abbreviation": "FM"
+			},
+			{
+			  "name": "Florida",
+			  "abbreviation": "FL"
+			},
+			{
+			  "name": "Georgia",
+			  "abbreviation": "GA"
+			},
+			{
+			  "name": "Guam",
+			  "abbreviation": "GU"
+			},
+			{
+			  "name": "Hawaii",
+			  "abbreviation": "HI"
+			},
+			{
+			  "name": "Idaho",
+			  "abbreviation": "ID"
+			},
+			{
+			  "name": "Illinois",
+			  "abbreviation": "IL"
+			},
+			{
+			  "name": "Indiana",
+			  "abbreviation": "IN"
+			},
+			{
+			  "name": "Iowa",
+			  "abbreviation": "IA"
+			},
+			{
+			  "name": "Kansas",
+			  "abbreviation": "KS"
+			},
+			{
+			  "name": "Kentucky",
+			  "abbreviation": "KY"
+			},
+			{
+			  "name": "Louisiana",
+			  "abbreviation": "LA"
+			},
+			{
+			  "name": "Maine",
+			  "abbreviation": "ME"
+			},
+			{
+			  "name": "Marshall Islands",
+			  "abbreviation": "MH"
+			},
+			{
+			  "name": "Maryland",
+			  "abbreviation": "MD"
+			},
+			{
+			  "name": "Massachusetts",
+			  "abbreviation": "MA"
+			},
+			{
+			  "name": "Michigan",
+			  "abbreviation": "MI"
+			},
+			{
+			  "name": "Minnesota",
+			  "abbreviation": "MN"
+			},
+			{
+			  "name": "Mississippi",
+			  "abbreviation": "MS"
+			},
+			{
+			  "name": "Missouri",
+			  "abbreviation": "MO"
+			},
+			{
+			  "name": "Montana",
+			  "abbreviation": "MT"
+			},
+			{
+			  "name": "Nebraska",
+			  "abbreviation": "NE"
+			},
+			{
+			  "name": "Nevada",
+			  "abbreviation": "NV"
+			},
+			{
+			  "name": "New Hampshire",
+			  "abbreviation": "NH"
+			},
+			{
+			  "name": "New Jersey",
+			  "abbreviation": "NJ"
+			},
+			{
+			  "name": "New Mexico",
+			  "abbreviation": "NM"
+			},
+			{
+			  "name": "New York",
+			  "abbreviation": "NY"
+			},
+			{
+			  "name": "North Carolina",
+			  "abbreviation": "NC"
+			},
+			{
+			  "name": "North Dakota",
+			  "abbreviation": "ND"
+			},
+			{
+			  "name": "Northern Mariana Islands",
+			  "abbreviation": "MP"
+			},
+			{
+			  "name": "Ohio",
+			  "abbreviation": "OH"
+			},
+			{
+			  "name": "Oklahoma",
+			  "abbreviation": "OK"
+			},
+			{
+			  "name": "Oregon",
+			  "abbreviation": "OR"
+			},
+			{
+			  "name": "Palau",
+			  "abbreviation": "PW"
+			},
+			{
+			  "name": "Pennsylvania",
+			  "abbreviation": "PA"
+			},
+			{
+			  "name": "Puerto Rico",
+			  "abbreviation": "PR"
+			},
+			{
+			  "name": "Rhode Island",
+			  "abbreviation": "RI"
+			},
+			{
+			  "name": "South Carolina",
+			  "abbreviation": "SC"
+			},
+			{
+			  "name": "South Dakota",
+			  "abbreviation": "SD"
+			},
+			{
+			  "name": "Tennessee",
+			  "abbreviation": "TN"
+			},
+			{
+			  "name": "Texas",
+			  "abbreviation": "TX"
+			},
+			{
+			  "name": "Utah",
+			  "abbreviation": "UT"
+			},
+			{
+			  "name": "Vermont",
+			  "abbreviation": "VT"
+			},
+			{
+			  "name": "Virgin Islands",
+			  "abbreviation": "VI"
+			},
+			{
+			  "name": "Virginia",
+			  "abbreviation": "VA"
+			},
+			{
+			  "name": "Washington",
+			  "abbreviation": "WA"
+			},
+			{
+			  "name": "West Virginia",
+			  "abbreviation": "WV"
+			},
+			{
+			  "name": "Wisconsin",
+			  "abbreviation": "WI"
+			},
+			{
+			  "name": "Wyoming",
+			  "abbreviation": "WY"
+			}
+		]
 		
 		
   }]);

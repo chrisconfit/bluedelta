@@ -8,40 +8,46 @@
 	
 	<div class="wrapper wrapper-content">
     <div class="row">
+	    
+	    <!--Basic info form-->
 			<div class="col-md-6">
-				<div class="ibox ibox-default clearfix">
+				<div class="ibox ibox-default">
 					<div class="ibox-title">
 						<h3>
 							Basic Information 
+							<div ng-if="!cvm.newUser" class="pull-right">
 							<a ng-if="!cvm.clientEditMode" class="pull-right fa fa-edit" ng-click="cvm.beginClientEdit()" href="#"></a>
 							<a ng-if="cvm.clientEditMode" class="pull-right fa fa-save" ng-click="cvm.saveUser()" href="#"></a>
 							<a ng-if="cvm.clientEditMode" class="pull-right fa fa-undo" ng-click="cvm.clearClientEdit()" href="#"></a>
+							</div>
 						</h3> 
 					</div>
-					<div class="ibox-content">
+					<div class="ibox-content clearfix">
             <ul class="list-group jean-list-edit list-group-unbordered">
               <li class="list-group-item clearfix">
-	              <b>Name</b> 
+	              <b ng-if="!cvm.clientEditMode">Name</b> 
 	              <span ng-if="!cvm.clientEditMode" class="pull-right">{{cvm.userData.first_name}} {{cvm.userData.last_name}}</span>
-                <input style="margin-top:5px" class="form-control pull-right" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.first_name">
-                <input style="margin-top:5px" class="form-control pull-right" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.last_name">
+	              <b ng-if="cvm.clientEditMode">First Name</b>
+                <input style="margin-top:5px" class="form-control" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.first_name">
+                <b ng-if="cvm.clientEditMode">Last Name</b>
+                <input style="margin-top:5px" class="form-control" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.last_name">
               </li>
               <li class="list-group-item clearfix">
                 <b>E-mail</b> 
                 <span ng-if="!cvm.clientEditMode" class="pull-right">{{cvm.userData.email}}</span>
-                <input style="margin-top:5px" class="form-control pull-right" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.email">
+                <input style="margin-top:5px" class="form-control" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.email">
               </li>
               <li class="list-group-item clearfix">
                 <b>Phone</b> 
                 <span ng-if="!cvm.clientEditMode" class="pull-right">{{cvm.userData.phone}}</span>
-								<input style="margin-top:5px" class="form-control pull-right" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.phone">
+								<input style="margin-top:5px" class="form-control" type="text" ng-if="cvm.clientEditMode" ng-model="cvm.userData.phone">
               </li>
               <li class="list-group-item clearfix">
                 <b>User Role</b> 
                 <span ng-if="!cvm.clientEditMode" class="pull-right">{{cvm.userData.role_id}}</span>
-								<select class="form-control  pull-right" 
+								<select class="form-control" 
 									ng-if="cvm.clientEditMode" 
-									ng-options="o.id as o.name for o in [{id:1, name:'Client'}, {id:2, name:'Admin'}, {id:3, name:'Super Admin'}]" 	
+									ng-options="o.id as o.name for o in cvm.availableRoles" 	
 									ng-model="cvm.userData.role_id">
 								</select>
               </li>
@@ -51,10 +57,47 @@
 								<input style="margin-top:5px" class="form-control pull-right" type="password" ng-if="cvm.clientEditMode" ng-model="cvm.userData.password">
               </li>
             </ul>
-            <button ng-if="cvm.newUser" ng-click="cvm.saveUser()" href="" class="btn btn-block btn-primary">Create User</button>              
+            
+            <br ng-if="cvm.newUser">
+            <a href="#" ng-if="cvm.newUser" ng-click="cvm.saveUser()" class="btn btn-success pull-right btn-flat btn-lg"><b>Create User</b></a>
 					</div>
 				</div>
 			</div>
+			
+			<!--Address Form for new user-->
+			<div ng-if="cvm.newUser" class="col-md-6">
+				<div class="ibox ibox-default clearfix">
+					<div class="ibox-title">
+						<h3>Client Address</h3> 
+					</div>
+					<div class="ibox-content">
+            <ul class="list-group list-group-unbordered">
+              <li class="list-group-item clearfix">
+                <b>Address Line 1</b> 
+                <input style="margin-top:5px" class="form-control" type="text" ng-model="cvm.userData.create_addresses[0].address_line_1">
+              </li>
+              <li class="list-group-item clearfix">
+                <b>Address Line 2</b> 
+                <input style="margin-top:5px" class="form-control" type="text" ng-model="cvm.userData.create_addresses[0].address_line_2">
+              </li>
+              <li class="list-group-item clearfix">
+                <b>City</b> 
+                <input style="margin-top:5px" class="form-control" type="text" ng-model="cvm.userData.create_addresses[0].city">
+              </li>
+              <li class="list-group-item clearfix">
+                <b>State</b> 
+               <select ng-options="state.abbreviation as state.name for state in vm.states" ng-model="cvm.userData.create_addresses[0].state" class="form-control"></select>
+              </li>
+              <li class="list-group-item clearfix">
+                <b>Zip</b> 
+                <input style="margin-top:5px" class="form-control" type="text" ng-model="cvm.userData.create_addresses[0].zip">
+              </li>
+            </ul>
+					</div>
+				</div>       
+			</div>
+			
+			<!--Address Chooser for existing user-->
 			<div ng-if="!cvm.newUser" class="col-md-6">
 				<div class="ibox ibox-default clearfix">
 					<div class="ibox-title">
@@ -75,9 +118,11 @@
 				</div>
 			</div>
 			
+			<!--Navigation Button-->
 			<div ng-if="!cvm.newUser" class="col-md-6">
 				<button href="" ui-sref="orders.list({user_id:cvm.userData.id})" class="btn btn-block btn-primary">View Client's Orders</button>              
 			</div>
+			
     </div><!-- /.row -->
 
 	</div>

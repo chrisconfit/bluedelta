@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('OrdersController', ['$scope', 'SweetAlert', 'user', 'api', '$stateParams', function ($scope, SweetAlert, user, api, $stateParams) {
+  .controller('OrdersController', ['$filter','$scope', 'SweetAlert', 'user', 'api', '$stateParams', function ($filter, $scope, SweetAlert, user, api, $stateParams) {
 
     var vm = this;
     vm.data = api.getData();
@@ -140,7 +140,7 @@ angular.module('inspinia')
 			"results_per_page" : 25,
 			"page": 1, 
 			"orderby":"created_at",
-			"order":"ASC",
+			"order":"DESC",
 		}
 		
 		if($stateParams.user_id) vm.filters.user_id=$stateParams.user_id;
@@ -185,6 +185,10 @@ angular.module('inspinia')
 
 		pullOrders(vm.filters);   
 					
+		vm.formatDate = function(date){
+			var date = new Date(date);
+			return $filter('date')(date, "MM/dd/yyyy");
+		}			
 		vm.changePage = function(page){
 			vm.filters.page=parseInt(page);
 			vm.orders=[];
@@ -197,8 +201,6 @@ angular.module('inspinia')
 		}
 
 		
-	
 			
-		
 
   }]);

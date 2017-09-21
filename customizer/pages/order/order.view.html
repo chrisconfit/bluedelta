@@ -20,7 +20,7 @@
 					<p>Use a fit from a previous purchase</p>
 					<div class="cft-g fit-grid">
 						<div ng-repeat="order in vm.orders | filter:vm.hasMeasurements | orderBy: '-dob' | limitTo: 3" class="cft-gi">							
-							<div ng-click="vm.chooseOrderType(4, order.order_items[0]);" class="jean-card" 
+							<div ng-click="vm.chooseOrderType(4, order);" class="jean-card" 
 								ng-class="{active: vm.orderCreateObj.copy_order_item_id == order.order_items[0].id}">
 					      <img ng-src="{{order.order_items[0].jean_image_url}}">
 								<div class="box-content">
@@ -93,6 +93,7 @@
 					<div ng-if="vm.orderCreateObj.order_type_id==4" class="clone-message">
 						<h3>You are Cloning a previous order</h3>
 						<p>We'll use the measurements from this previous order to cut your new jeans. After placing your order inquiry, we will be in touch to walk you through the next steps.</p>
+						<p><b>Please note that if your order was placed more than 6 months ago, we recommend getting re-fitted. If you choose to copy the old measurements, Blue Delta is not responsible for jeans that don't fit!</b></p>
 						<div class="clone-display">
 							<div class="cft-g clone-grid">
 								<div class="cft-gi">

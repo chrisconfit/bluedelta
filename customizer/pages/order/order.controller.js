@@ -77,8 +77,9 @@
 			});
 		}
 
-		vm.chooseOrderType = function(type, copyItem){
-			
+		vm.chooseOrderType = function(type, copyOrder){
+			var copyItem = copyOrder.order_items[0];
+			vm.orderCreateObj.fitDate = copyOrder.fit_date;
 			vm.orderCreateObj.order_type_id = type;
 			if (type == 2 && !vm.orderCreateObj.tailor_id){
 				vm.popups.tailors=true;

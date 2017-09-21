@@ -6,6 +6,7 @@ angular.module('inspinia')
 
     var vm = this;
 		vm.user = user.get();
+
 		var newOrderData = {
 			order_items:[{
 				gender_option_id:1,
@@ -21,7 +22,7 @@ angular.module('inspinia')
 		vm.order = vm.newOrder ? newOrderData : orderData;
 		console.log(vm.order);
 		vm.originalJean = vm.newOrder ? null : angular.copy(vm.order.order_items[0]);
-		vm.order.fitDate =  vm.order.fitDate ? vm.order.fitDate: null;
+		vm.order.fit_date =  vm.order.fit_date ? vm.order.fit_date: null;
 		vm.order.dob =  vm.order.dob ? vm.order.dob: null;
 		vm.order.dueDate =  vm.order.dueDate ? vm.order.dueDate: null;
 		vm.orderUser = vm.newOrder ? null : orderData.user;
@@ -54,7 +55,32 @@ angular.module('inspinia')
 		}
 		*/
 		
+		$scope.$watch(angular.bind(this, function () {
+		  return this.order.fit_date;
+		}), function (newVal) {
+			if (newVal && newVal._d){
+				var d = newVal._d.toISOString().slice(0,10);
+				vm.order.fit_date = d;
+			}
+		});
 		
+		$scope.$watch(angular.bind(this, function () {
+		  return this.order.due_date;
+		}), function (newVal) {
+			if (newVal && newVal._d){
+				var d = newVal._d.toISOString().slice(0,10);
+				vm.order.fit_date = d;
+			}
+		});
+		
+		$scope.$watch(angular.bind(this, function () {
+		  return this.order.dob;
+		}), function (newVal) {
+			if (newVal && newVal._d){
+				var d = newVal._d.toISOString().slice(0,10);
+				vm.order.fit_date = d;
+			}
+		});
 		
 		
 		/*										    				*\

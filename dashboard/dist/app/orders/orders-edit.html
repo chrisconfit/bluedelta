@@ -99,15 +99,6 @@
 										</select>
 	                </li>
 	                <li class="list-group-item clearfix">
-	                  <b>Accent Thread</b> 
-	                  <span ng-if="!ovm.EditMode" class="pull-right">{{ovm.data.lookup("threads", "id", ovm.order.order_items[0].accent_thread_id, "name") }}</span>
-										<select class="form-control  pull-right" 
-											ng-if="ovm.EditMode" 
-											ng-options="thread.id as thread.name for thread in ovm.data.threads" 	
-											ng-model="ovm.order.order_items[0].accent_thread_id">
-										</select>
-	                </li>
-	                <li class="list-group-item clearfix">
 	                  <b>Top Thread</b> 
 	                  <span ng-if="!ovm.EditMode" class="pull-right">{{ovm.data.lookup("threads", "id", ovm.order.order_items[0].top_thread_id, "name") }}</span>
 	                  <select class="form-control  pull-right" 
@@ -125,6 +116,15 @@
 											ng-model="ovm.order.order_items[0].bottom_thread_id">
 										</select>
 									</li>
+									<li class="list-group-item clearfix">
+	                  <b>Accent Thread</b> 
+	                  <span ng-if="!ovm.EditMode" class="pull-right">{{ovm.data.lookup("threads", "id", ovm.order.order_items[0].accent_thread_id, "name") }}</span>
+										<select class="form-control  pull-right" 
+											ng-if="ovm.EditMode" 
+											ng-options="thread.id as thread.name for thread in ovm.data.threads" 	
+											ng-model="ovm.order.order_items[0].accent_thread_id">
+										</select>
+	                </li>
 									<!--
 									<li ng-if="ovm.order.order_items[0].rivets" class="list-group-item">
 	                  <b>Rivets</b>
@@ -135,7 +135,7 @@
 											<option ng-value="1">Yes</option>
 										</select>
 	                </li>
-	                -->
+	                
 	                <li class="list-group-item" ng-if="ovm.order.order_items[0].fake_pocket">
 	                  <b>Fake Pocket</b> 
 	                  <a ng-if="!ovm.EditMode" href="#" class="form-control  pull-right">No</a>
@@ -143,6 +143,66 @@
 											ng-model="ovm.order.order_items[0].fake_pocket">
 											<option ng-value="0">No</option>
 											<option ng-value="1">Yes</option>
+										</select>
+	                </li>
+	                -->
+	                <li class="list-group-item clearfix">
+	                  <b>Desired Fit</b>
+	                  <a ng-if="!ovm.EditMode" href="#" ng-click="ovm.beginJeanEdit()" class="pull-right">Select</a>
+	                  <select ng-if="ovm.EditMode" class="form-control  pull-right" 
+		                  ng-model="ovm.order.order_items[0].desired_fit">
+											<option ng-value="0">Trim</option>
+											<option ng-value="1">Regular</option>
+											<option ng-value="2">Easy</option>
+										</select>
+	                </li>
+	                <li class="list-group-item clearfix">
+	                  <b>Front Pockets</b>
+	                  <a ng-if="!ovm.EditMode" href="#" ng-click="ovm.beginJeanEdit()" class="pull-right">Select</a>
+	                  <select ng-if="ovm.EditMode" class="form-control  pull-right" 
+		                  ng-model="ovm.order.order_items[0].front_pockets">
+											<option ng-value="0">Real</option>
+											<option ng-value="1">Fake</option>
+										</select>
+	                </li>
+	                <li class="list-group-item clearfix">
+	                  <b>Rivets</b>
+	                  <a ng-if="!ovm.EditMode" href="#" ng-click="ovm.beginJeanEdit()" class="pull-right">Select</a>
+	                  <select ng-if="ovm.EditMode" class="form-control  pull-right" 
+		                  ng-model="ovm.order.order_items[0].rivets">
+											<option ng-value="0">No</option>
+											<option ng-value="1">Yes</option>
+										</select>
+	                </li>
+
+	                <li class="list-group-item clearfix" >
+	                  <b>Watch Pocket</b> 
+	                  <a ng-if="!ovm.EditMode" href="#" ng-click="ovm.beginJeanEdit()" class="pull-right">Select</a>
+	                  <select ng-if="ovm.EditMode" class="form-control pull-right" 
+											ng-model="ovm.order.order_items[0].watch_pocket">
+											<option ng-value="0">No</option>
+											<option ng-value="1">Yes</option>
+										</select>
+	                </li>
+	                
+
+	                <li class="list-group-item clearfix" >
+	                  <b>Monogram</b> 
+	                  <a ng-if="!ovm.EditMode" href="#" ng-click="ovm.beginJeanEdit()" class="pull-right">Select</a>
+	                  <select ng-if="ovm.EditMode" class="form-control pull-right" 
+											ng-model="ovm.order.order_items[0].monogram">
+											<option ng-value="0">No</option>
+											<option ng-value="1">Yes</option>
+										</select>
+	                </li>
+	                <li class="list-group-item clearfix" >
+	                  <b>Belt Loops</b> 
+	                  <a ng-if="!ovm.EditMode" href="#" ng-click="ovm.beginJeanEdit()" class="pull-right">Select</a>
+	                  <select ng-if="ovm.EditMode" class="form-control pull-right" 
+											ng-model="ovm.order.order_items[0].belt_loops">
+											<option ng-value="0">Centered</option>
+											<option ng-value="1">Split</option>
+											<option ng-value="2">X-Pattern</option>
 										</select>
 	                </li>
 	                <li class="list-group-item clearfix">
@@ -191,6 +251,10 @@
 	                ng-options="status.id as status.name for status in ovm.data.order_statuses"  
 		              ng-model="ovm.order.order_status_id" style="width: 100%;">
 	                </select>
+	              </div>	            
+              	<div class="form-group">
+	                <label>Shipping Tracking Link:</label>
+									<input type="text" class="form-control" style="width: 100%;" ng-model="ovm.order.tracking">
 	              </div>
 	              <div class="row">
 	              	<div class="col-sm-6">
@@ -198,7 +262,7 @@
 			                <label>Fitting Date:</label>
 			                <div class="input-group date">
 				                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-												<input type="datetime" class="form-control" ng-model="ovm.order.fitDate" date-time view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
+												<input type="datetime" class="form-control" ng-model="ovm.order.fit_date" date-time view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
 											</div>
 			                <!-- /.input group -->
 			              </div>
@@ -229,7 +293,7 @@
         </div>
       </div><!-- /.col -->
 
-    	<div class="col-md-9 pull-right">
+    	<div class="col-md-9 timeline-measurements">
         <div class="tabs-container">
 
           <uib-tabset active="'timeline'">

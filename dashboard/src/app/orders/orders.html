@@ -4,9 +4,9 @@
 		</div>
 		<div class="wrapper wrapper-content animated fadeInRight">
 			<div class="row">
-				<div class="ibox float-e-margins">
+				<div class="ibox" ng-click="primaryBox=1" ng-class="{'ibox-primary':primaryBox==1}">
 					<div class="ibox-title">
-						<h5>Filters</h5>
+						<h3>Filters</h3>
 					</div>
 					<div class="ibox-content">
 						<div class="row">
@@ -70,38 +70,34 @@
 		</div><!--.row-->
 		
 		<div class="row">
-			<div class="ibox float-e-margins">
+			<div class="ibox float-e-margins" ng-click="primaryBox=2" ng-class="{'ibox-primary':primaryBox==2}">
 				<div class="ibox-title">
-					<h5>Orders List</h5>
+					<h3>Orders List</h3>
 				</div>
-				<div class="ibox-content">
+				<div class="no-padding ibox-content">
 					
-					<table ng-if="ovm.orders.length" class="table cft-table table-striped table-bordered table-hover">
+					<table ng-if="ovm.orders.length" class="table cft-table table-hover">
 						<thead>
 							<tr>
 								<th>ID</th>
 								<th>Customer</th>
-								<th>Customer Email<sorter change="ovm.changeSort" orderby="ovm.filters.orderby" order="ovm.filters.order" column="'email'"></th>
 								<th>Vendor</th>									
 								<th>Rep</th>
 								<th>Order Placed<sorter change="ovm.changeSort" orderby="ovm.filters.orderby" order="ovm.filters.order" column="'created_at'"></th>
 								<th>Order Status</th>
-								<th width=40>Edit</th>
 								<th width=40>Delete</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="order in ovm.orders | limitTo : ovm.pagination.ordersPerPage : ovm.pagination.startIndex">
 
-								<td>{{order.id}}</td>
+								<td><strong><a ui-sref="orders.edit({orderId: order.id})">{{order.id}}</a></strong></td>
 								<td>{{order.user.first_name}} {{order.user.last_name}}</td>
-								<td>{{order.user.email}}</td>
 								<td>{{ovm.data.lookup("vendors", "id", order.vendor_id, "name") }}</td>
 								<td>{{ovm.data.lookup("reps", "id", order.rep_id, "name") }}</td>
 								<td>{{ovm.formatDate(order.created_at)}}</td>
 								<td><span class="label label-{{order.order_status_id}}">{{ovm.data.lookup("order_statuses", "id", order.order_status_id, "name") }}</span></td>
-								<td><a ui-sref="orders.edit({orderId: order.id})"><i class="fa fa-pencil"></i></a>
-								<td><a href="#" ng-click="ovm.deleteOrder(order.id)"><i class="fa fa-close"></i></a>
+								<td><a href="#" class="warning" ng-click="ovm.deleteOrder(order.id)"><i class="fa fa-close"></i></a>
 							</tr>
 						</tbody>
 					</table>

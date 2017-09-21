@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('OrdersEditController', ['$timeout', '$filter', '$q', '$scope', 'orderData', 'toaster', '$uibModal','api', 'user', '$state',
-  function ($timeout, $filter, $q, $scope, orderData, toaster, $uibModal, api, user, $state) {
+  .controller('OrdersEditController', ['$timeout', '$filter', '$q', '$scope', 'orderData', 'toaster', '$uibModal','api', 'user', '$state', 'SweetAlert',
+  function ($timeout, $filter, $q, $scope, orderData, toaster, $uibModal, api, user, $state, SweetAlert) {
 
     var vm = this;
 		vm.user = user.get();
+
 		var newOrderData = {
 			order_items:[{
 				gender_option_id:1,
@@ -199,7 +200,7 @@ angular.module('inspinia')
 		vm.timelineForm = {
 			message:null
 		}
-		
+
 	  //Init timeline with created_at date.
 	  vm.timeline = [{message:"Order Created", created_at:vm.order.created_at}]
 		vm.timeline.push.apply(vm.timeline, vm.order.order_comments);	
@@ -240,6 +241,51 @@ angular.module('inspinia')
 	
 	
 	
+	
+		    
+    var deleteOrderBox = {
+      title: "Are you sure?",
+      text: "This order will be deleted forever and you will be redirected to the orders list!",
+      type: "warning",
+      showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+      closeOnConfirm: true,
+      closeOnCancel: true 
+    }
+    console.log(SweetAlert);
+		vm.deleteThisOrder = function(){
+			SweetAlert.swal(deleteOrderBox,
+		    function (isConfirm) {
+	        if (isConfirm) {
+		        api.call('ordersDelete', vm.order.id, function(result){
+							$state.transitionTo('orders.list');
+	          });
+	        }
+		    }
+		  );
+		}
+		
+		
+		//{"shipping_name":"Chris LeFevre","shipping_phone":"66250210265","shipping_address_id":29,"copy_order_item_id":293,"order_type_id":1}
+		vm.reOrder = function(){
+			console.log(vm.order);
+			var copyOrderObject = {
+				"shipping_name":vm.order.shipping_name,
+				"shipping_phone":vm.order.shipping_phone,
+				"shipping_address_id":vm.order.shipping_address_id,
+				"copy_order_item_id":vm.order.order_items[0].id,
+				"order_type_id":vm.order.order_type_id,
+				"user_id":vm.orderUser.id
+			}
+			
+			api.call('ordersPost', copyOrderObject, function(result){
+				console.log("copied an order...");
+				console.log(result);				
+			});
+			
+		}
 	  
 		
 		function jeanHasChanged(){
