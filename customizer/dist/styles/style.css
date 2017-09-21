@@ -3012,11 +3012,13 @@ ul.tailor-list {
 }
 
 .container.page-container {
+  padding-bottom: 30px;
   margin-top: 30px;
 }
 @media screen and (min-width: 800px) {
   .container.page-container {
     margin-top: 50px;
+    padding-bottom: 50px;
   }
 }
 

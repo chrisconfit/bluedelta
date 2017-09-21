@@ -42,7 +42,7 @@
 				jeanData = {
 					"gender_option_id" : 1,
 					"style_option_id" : 1,
-					"fabric_id" : 1004,
+					"fabric_id" : 1704,
 					"accent_thread_id" :1,
 					"top_thread_id" : 1,
 					"bottom_thread_id" : 1

@@ -16,7 +16,8 @@
 			chvm.jeanData = jean.get();
 			chvm.breakPoint = 800;
 			
-			
+			chvm.touched = false;
+			console.log('chooser init...');
 			
 			function scrollToLeft(el, scrollTo, scrollDuration) {
 				console.log("STL");
@@ -73,9 +74,6 @@
 						//Get the data id 
 						var dataId = chvm.jeanData[$scope.step.jeanKey];
 					
-						//Make sure this isn't an embedded model
-						if (typeof(dataId)== 'object') dataId = dataId[$scope.step.dataKey4];
-						
 						var elementId = $scope.step.jeanKey+"_"+dataId;												
 					
 						var activeElement = angular.element(document.querySelector('#'+elementId));
@@ -95,8 +93,10 @@
 						
 						//Desktop Choosers
 						else{						
-							var chooser = angular.element($element[0]);	
-							chooser.prop('scrollTop', chvm.selectorCoords.top - 15);
+							if(chvm.touched){
+								var chooser = angular.element($element[0]);	
+								chooser.prop('scrollTop', chvm.selectorCoords.top - 15);
+							}
 						}
 						
 					}, 200);
@@ -107,7 +107,7 @@
 
 
 			chvm.selectAttr = function($event, id, attr, selector){
-				
+				if (chvm.touched == false) chvm.touched = true;
 				var chooser = angular.element(document.querySelector("#"+attr+"-chooser"));
 				var selector = angular.element(document.querySelector("#"+attr+"-selector"));
 				var top = angular.element($event.target).prop('offsetTop');
