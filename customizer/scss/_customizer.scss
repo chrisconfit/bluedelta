@@ -1324,11 +1324,11 @@ a.overview-trigger{
 			vertical-align: bottom;
 			text-transform: uppercase;
 			color:$blue;
-			border-bottom:1px solid #ebebeb;
+			border-bottom:1px solid #dcdcdc;
 			font-weight:500;
 			padding-right:30px;
-			&:first-of-type{border-top:1px solid #ebebeb;}
-			&:last-of-type{border-bottom:0px;}
+			&:first-of-type{border-top:1px solid #bac2c5;}
+			&:last-of-type{border-bottom:1px solid #bac2c5;;}
 		}
 		dd{
 			padding:10px 15px;
@@ -1337,9 +1337,9 @@ a.overview-trigger{
 			width:60%;
 			display: inline-block;
 			vertical-align: bottom;
-			border-bottom:1px solid #ebebeb;
-			&:first-of-type{border-top:1px solid #ebebeb;}
-			&:last-of-type{border-bottom:0px;}
+			border-bottom:1px solid #dcdcdc;
+			&:first-of-type{border-top:1px solid #bac2c5;}
+			&:last-of-type{border-bottom:1px solid #bac2c5;;}
 		}
 	}
 	@include at-query($min, $deskMin){

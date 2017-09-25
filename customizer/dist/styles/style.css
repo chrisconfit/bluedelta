@@ -2532,15 +2532,15 @@ a.overview-trigger i {
   vertical-align: bottom;
   text-transform: uppercase;
   color: #004964;
-  border-bottom: 1px solid #ebebeb;
+  border-bottom: 1px solid #dcdcdc;
   font-weight: 500;
   padding-right: 30px;
 }
 .jean-list dl dt:first-of-type {
-  border-top: 1px solid #ebebeb;
+  border-top: 1px solid #bac2c5;
 }
 .jean-list dl dt:last-of-type {
-  border-bottom: 0px;
+  border-bottom: 1px solid #bac2c5;
 }
 .jean-list dl dd {
   padding: 10px 15px;
@@ -2549,13 +2549,13 @@ a.overview-trigger i {
   width: 60%;
   display: inline-block;
   vertical-align: bottom;
-  border-bottom: 1px solid #ebebeb;
+  border-bottom: 1px solid #dcdcdc;
 }
 .jean-list dl dd:first-of-type {
-  border-top: 1px solid #ebebeb;
+  border-top: 1px solid #bac2c5;
 }
 .jean-list dl dd:last-of-type {
-  border-bottom: 0px;
+  border-bottom: 1px solid #bac2c5;
 }
 @media screen and (min-width: 800px) {
   .jean-list {
@@ -3082,6 +3082,37 @@ ul.tailor-list {
 .jean-card h3:not(.box-title), .jean-card h4:not(.box-title), .jean-card h5:not(.box-title) {
   margin-bottom: 5px;
 }
+.jean-card.horiz-card {
+  margin-bottom: 30px;
+  background: #f1f1f1;
+}
+.jean-card.horiz-card .cft-gi {
+  width: 100%;
+}
+.jean-card.horiz-card .cft-gi .jean-list {
+  margin-top: 20px;
+}
+.jean-card.horiz-card .cft-gi .jean-list dl dt {
+  padding: 10px 0px;
+}
+@media screen and (min-width: 650px) {
+  .jean-card.horiz-card {
+    margin-left: 0;
+  }
+  .jean-card.horiz-card .cft-gi {
+    padding-left: 0;
+    width: 60%;
+    vertical-align: top;
+  }
+  .jean-card.horiz-card .cft-gi:first-child {
+    width: 40%;
+  }
+  .jean-card.horiz-card img {
+    width: 94%;
+    margin: 0 auto;
+    margin-top: 3%;
+  }
+}
 
 .box-content {
   background: #f1f1f1;
@@ -3107,6 +3138,35 @@ ul.tailor-list {
   font-size: 1.5rem;
   line-height: 1.9rem;
   color: #363839;
+}
+
+.user-card h4 {
+  margin-bottom: 0;
+}
+.user-card h5 {
+  margin-bottom: 6px;
+}
+.user-card p {
+  margin-bottom: 6px;
+}
+.user-card span {
+  display: block;
+}
+.user-card .user-stats {
+  margin-top: 20px;
+}
+.user-card .user-stats .box-content {
+  background: #d9e7ec;
+  color: #004964;
+}
+.user-card .user-stats h4 {
+  font-size: 18px;
+  line-height: 22px;
+  font-size: 1.8rem;
+  line-height: 2.2rem;
+  background: #40778b;
+  color: #ffffff;
+  padding: 10px;
 }
 
 .box-title {
@@ -3173,7 +3233,6 @@ ul.tailor-list {
 .pop-group:not(:last-of-type) {
   margin-bottom: 15px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #bac2c5;
 }
 .pop-group i {
   color: #41778b;
