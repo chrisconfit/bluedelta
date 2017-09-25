@@ -4,7 +4,7 @@
 		</div>
 		<div class="wrapper wrapper-content animated fadeInRight">
 			<div class="row">
-				<div class="ibox float-e-margins">
+				<div class="ibox" ng-click="primaryBox=1" ng-class="{'ibox-primary':primaryBox==1}">
 					<div class="ibox-title">
 						<h3>Filters</h3>
 					</div>
@@ -70,7 +70,7 @@
 		</div><!--.row-->
 		
 		<div class="row">
-			<div class="ibox float-e-margins">
+			<div class="ibox float-e-margins" ng-click="primaryBox=2" ng-class="{'ibox-primary':primaryBox==2}">
 				<div class="ibox-title">
 					<h3>Orders List</h3>
 				</div>

@@ -99,13 +99,13 @@
 	</div>
 	
 	<div class="modal-footer clearfix">
-		<div ng-if="!showCreate">
-			<a class="btn btn-flat btn-primary pull-right" href="" ng-click="cancel();">Close</a>
-			&nbsp;<a class="btn btn-flat btn-primary pull-right" href="" ng-click="showCreateForm()">Create New</a>
+		<div class="pull-right" ng-if="!showCreate">
+			<a class="btn btn-flat btn-primary" href="" ng-click="showCreateForm()">Create New</a>
+			<a class="btn btn-flat btn-danger" href="" ng-click="cancel();">Close</a>
 		</div>
-		<div ng-if="showCreate">
-			<a class="btn btn-flat btn-primary pull-right" href="" ng-click="cancelCreateForm();">Cancel</a>
-			&nbsp;<a class="btn btn-flat btn-primary pull-right" href="" ng-click="postCreateForm();">Create</a>
+		<div class="pull-right" ng-if="showCreate">
+			<a class="btn btn-flat btn-primary" href="" ng-click="postCreateForm();">Create</a>
+			<a class="btn btn-flat btn-danger" href="" ng-click="cancelCreateForm();">Cancel</a>
 		</div>
 	</div>
 	

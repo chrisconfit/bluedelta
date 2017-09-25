@@ -21,22 +21,33 @@ angular.module('inspinia')
     }
 		
 		if(!$scope.addresses.length){ $scope.newAdd.editing=true; }
-		
-    $scope.ok = function () {
+		$scope.forms = {};
+    $scope.ok = function (form) {
+			
+			//Validation if submitting new address...
+	    if (form && !form.$valid){
+				form.submitted = true;
+				console.log("form is not valid");
+				return false;
+			} 
+			
 		  var saveAdd = $scope.a.selected == null ?  $scope.newAdd.form : $scope.a.selected;
     	save(saveAdd, function(){
 	    	$uibModalInstance.close();	
     	});
+    	
     };
 
     $scope.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
     
-    
+    $scope.validCheck = function(field){
+			return field.$invalid && (field.$touched || field.$$parentForm.submitted);
+    };
 
 
-
+		
     $scope.states = [
 			{
 			  "name": "Alabama",

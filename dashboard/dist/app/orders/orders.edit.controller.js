@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('OrdersEditController', ['$timeout', '$filter', '$q', '$scope', 'orderData', 'toaster', '$uibModal','api', 'user', '$state',
-  function ($timeout, $filter, $q, $scope, orderData, toaster, $uibModal, api, user, $state) {
+  .controller('OrdersEditController', ['$timeout', '$filter', '$q', '$scope', 'orderData', 'toaster', '$uibModal','api', 'user', '$state', 'SweetAlert',
+  function ($timeout, $filter, $q, $scope, orderData, toaster, $uibModal, api, user, $state, SweetAlert) {
 
     var vm = this;
 		vm.user = user.get();
-
+		$scope.f = {};
 		var newOrderData = {
+			order_status_id: 6,
 			order_items:[{
 				gender_option_id:1,
 				style_option_id:1,
@@ -55,6 +56,11 @@ angular.module('inspinia')
 		}
 		*/
 		
+		vm.formatDate = function(date){
+			var date = new Date(date);
+			return $filter('date')(date, "MM/dd/yyyy h:s a");
+		}			
+		
 		$scope.$watch(angular.bind(this, function () {
 		  return this.order.fit_date;
 		}), function (newVal) {
@@ -69,7 +75,7 @@ angular.module('inspinia')
 		}), function (newVal) {
 			if (newVal && newVal._d){
 				var d = newVal._d.toISOString().slice(0,10);
-				vm.order.fit_date = d;
+				vm.order.due_date = d;
 			}
 		});
 		
@@ -78,7 +84,7 @@ angular.module('inspinia')
 		}), function (newVal) {
 			if (newVal && newVal._d){
 				var d = newVal._d.toISOString().slice(0,10);
-				vm.order.fit_date = d;
+				vm.order.dob = d;
 			}
 		});
 		
@@ -200,7 +206,7 @@ angular.module('inspinia')
 		vm.timelineForm = {
 			message:null
 		}
-		
+
 	  //Init timeline with created_at date.
 	  vm.timeline = [{message:"Order Created", created_at:vm.order.created_at}]
 		vm.timeline.push.apply(vm.timeline, vm.order.order_comments);	
@@ -213,12 +219,16 @@ angular.module('inspinia')
 		    orderId:vm.order.id, 
 		    comment:{
 		    	message:vm.timelineForm.message,
-		    	user_id:vm.user.id
+		    	user_id:vm.user.id,
 	    	}
 	    };
 			api.call('commentsCreate', data, 
 				function(result){
-					console.log("comment created");
+					//Quick fix since this endpoint does not return user name
+					result.user={
+			    	first_name:vm.user.first_name,
+			    	last_name:vm.user.last_name,
+		    	}
 					vm.timeline.push(result);
 					vm.timelineForm.message = null;
 				}
@@ -241,6 +251,70 @@ angular.module('inspinia')
 	
 	
 	
+	
+		    
+    var deleteOrderBox = {
+      title: "Are you sure?",
+      text: "This order will be deleted forever and you will be redirected to the orders list!",
+      type: "warning",
+      showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+      closeOnConfirm: true,
+      closeOnCancel: true 
+    }
+   
+		vm.deleteThisOrder = function(){
+			SweetAlert.swal(deleteOrderBox,
+		    function (isConfirm) {
+	        if (isConfirm) {
+		        api.call('ordersDelete', vm.order.id, function(result){
+							$state.transitionTo('orders.list');
+	          });
+	        }
+		    }
+		  );
+		}
+		
+		
+		
+		var reOrderBox = {
+      title: "Re-Order this pair of Jeans?",
+      text: "If you confirm, this order will be saved and you will be re-directed to your new order",
+      type: "warning",
+      showCancelButton: true,
+			confirmButtonColor: "#34d289",
+      confirmButtonText: "Re-Order",
+      cancelButtonText: "Cancel",
+      closeOnConfirm: true,
+      closeOnCancel: true 
+    }
+		
+		//{"shipping_name":"Chris LeFevre","shipping_phone":"66250210265","shipping_address_id":29,"copy_order_item_id":293,"order_type_id":1}
+		vm.reOrder = function(){
+			
+			SweetAlert.swal(reOrderBox,
+		    function (isConfirm) {
+	        if (isConfirm) { 
+			      var copyOrderObject = {
+							"shipping_name":vm.order.shipping_name,
+							"shipping_phone":vm.order.shipping_phone,
+							"shipping_address_id":vm.order.shipping_address_id,
+							"copy_order_item_id":vm.order.order_items[0].id,
+							"order_type_id":vm.order.order_type_id,
+							"user_id":vm.orderUser.id
+						}
+						vm.saveOrder(function(){
+							api.call('ordersPost', copyOrderObject, function(result){
+								$state.transitionTo('orders.edit', {orderId:result.id});
+							});
+						});
+	        }
+		    }
+			);
+	
+		}
 	  
 		
 		function jeanHasChanged(){
@@ -249,7 +323,15 @@ angular.module('inspinia')
 			return !angular.equals(o1, o2);
 		}
 		
-		vm.saveOrder = function(){
+		vm.saveOrder = function(callback){
+			
+			if (!$scope.f.orderForm.$valid){
+				$scope.f.orderForm.submitted = true;
+				return false;
+			}  
+					
+		
+			console.log(jeanHasChanged());
 			
 			if(vm.orderUser==null){
 				console.log("We don't have a user yet!");
@@ -300,6 +382,8 @@ angular.module('inspinia')
 						orderData.jean_id = newJean.id
 						
 						api.call('ordersPost', orderData, function(newOrder){
+							console.log("new order created!!!");
+							console.log(newOrder);
 							$state.transitionTo('orders.edit', {orderId:newOrder.id});
 						});
 	
@@ -309,14 +393,10 @@ angular.module('inspinia')
 				
 				//Update existing order...
 				else{
-					console.log("updating existing...");
-					
 					api.call('ordersPost', vm.order, function(result){
-						console.log("order saved!");
-						console.log(result.order_items[0].fabric_id);
-						
 						toaster.clear(savingToast);
 						toaster.success('Saved Order!');
+						if (callback)callback();						
 						vm.order.order_items[0] = result.order_items[0];
 					}, function(err){
 						toaster.clear(savingToast);

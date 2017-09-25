@@ -10,10 +10,11 @@
 
 	 var user = {};
 	 	
-	  var isAdmin = function(){ return $window.localStorage.getItem("bdUserRole") > 0 ? true : false; }
+	  var isAdmin = function(){ return $window.localStorage.getItem("bdUserRole") > 1 ? true : false; }
 		var isLoggedIn = function(){ return $window.localStorage.getItem("bdAccessToken") ? true : false; }
+		var isLoggedInDash = function(){ return $window.localStorage.getItem("bdDashAccessToken") ? true : false; }
 	  var getToken = function(){ return $window.localStorage.getItem("bdAccessToken"); }
-	 
+		var getDashToken = function(){ return $window.localStorage.getItem("bdDashAccessToken"); }
 	  
 		var set = function(key, data){
 			
@@ -41,9 +42,13 @@
 		}
 		
 		
-		function authCallback(response, callback){
-			$window.localStorage.setItem("bdAccessToken", response.access_token);
+		function authCallback(response, callback, token){
+			var tokenName = tokenName || "bdAccessToken";
+			var dash = token != "bdAccessToken" ? true : false;
+			
+			$window.localStorage.setItem(tokenName, response.access_token);
 			setup(function(userData){
+				
 				$window.localStorage.setItem("bdUserRole", userData.role_id);
 				$window.localStorage.setItem("bdUserId", userData.id);
 				if (callback) callback(userData);

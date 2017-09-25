@@ -1432,3 +1432,51 @@ body.mini-navbar.fixed-sidebar .logo-element {
   animation: none;
 }
 
+
+
+
+#form-control-buttons{
+	position:fixed;
+	bottom:0;
+	z-index:999;
+	background:#cdd5de;
+	left:0;
+	right:0;
+	padding:20px;
+	text-align: center;
+}
+.footer{
+	text-align:center;
+	.pull-right{
+		width:100%;
+	}
+}
+body.orders-edit, body.clients-add, body.orders-add, body.clients-edit{
+	#wrapper{
+		padding-bottom:75px;
+	}
+}
+@media (min-width: 768px) {
+	body.orders-edit, body.clients-add, body.orders-add, body.clients-edit{
+		#wrapper{
+			padding-bottom:0;
+		}
+	}
+	
+	.footer{
+		text-align:left;
+		.pull-right{
+			width:auto;
+		}
+	}
+	
+	#form-control-buttons{
+	position:relative;
+	background:transparent;
+	left:auto;
+	right:auto;
+	bottom:auto;
+	padding:0px;
+	text-align: left;
+	}
+}

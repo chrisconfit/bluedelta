@@ -62,23 +62,36 @@ angular.module('inspinia')
 		  	else thisAdd.primary=0;
 	    }
     }
+    
+    function hasProp (obj, prop) {
+			return Object.prototype.hasOwnProperty.call(obj, prop);
+		}
    
-	  vm.saveAddress = function(add, callback){		
+	  vm.saveAddress = function(add, callback){	
+			var creatingNew = true;
 			if (add === parseInt(add, 10)){
+				creatingNew = false;
 				for (var i=0; i<vm.userData.addresses.length; i++){
 		  		var thisAdd = vm.userData.addresses[i];
 					if (thisAdd.id == add) add = thisAdd;
+					else thisAdd.primary=false;
 	    	}
 	    }
 			add.primary=1;
 			var data = {userId:vm.userData.id, address:add};
+
 			api.call('postAddress', data, function(result){	
-				vm.userData.addresses.push(result);
+				console.log(result);
+				if(creatingNew) vm.userData.addresses.push(result);
 				setPrimary(result.id);
 				if(callback)callback();
 			});
 		}
 		
+		
+		
+	
+	
   
 		/*														*\
 		*															*
@@ -101,26 +114,31 @@ angular.module('inspinia')
 		});
 	
 		
-		function validateUserForm(){
-			return {message:"No user name"};
-			
-			
-			
-			
-		}
-		vm.saveUser = function(){
-			
-			var err = validateUserForm();
-			if(err){
-				toaster.pop({
-				  type: 'error',
-				  title: "Could not submit user from",
-				  body: err.message,
-				  showCloseButton: true,
-				  timeout: 7000
-				});
+		function checkForAddress(){			
+			//Address has not been touched
+			if (!vm.userData.create_addresses) return false;
+
+			var add = vm.userData.create_addresses[0];
+			if(!add.address_line_1 && !add.address_line_1 && !add.city && !add.state && !add.zip){
+				delete vm.userData.create_addresses;
 				return false;
-			}
+			}	
+			
+			return true;
+				
+		}
+		
+		
+		vm.useAddress = false;
+		
+		vm.saveUser = function(){
+			checkForAddress();
+			
+			if (!$scope.userDataForm.$valid){
+				$scope.userDataForm.submitted = true;
+				return false;
+			}  
+						
 			
 			toaster.pop({
 			  type: 'wait',
@@ -133,7 +151,6 @@ angular.module('inspinia')
 			var succMessage = vm.newUser ? "User Created" : "User Saved";
 			var errMessage = vm.newUser ? "Could not create user" : "Could not Save user";	
 			
-			console.log('about to post!');
 			
 			api.call('usersPost', args, function(result){
 				vm.clientEditMode=false
@@ -155,7 +172,7 @@ angular.module('inspinia')
 				  timeout: 7000
 				});
 			});
-	
+
 		}
 
 		vm.states = [
