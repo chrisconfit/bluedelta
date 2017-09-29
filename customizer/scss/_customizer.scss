@@ -813,6 +813,8 @@ h1.page-title{
 	
 	& >.cft-gi{
 		width:80px;
+		height:80px;
+		position:relative;
 		margin-right:15px;
 		&:last-of-type{margin-right:0;}
 		padding-left:0;
@@ -837,6 +839,7 @@ h1.page-title{
 		margin-left:-15px;
 		margin-bottom:0;
 		& >.cft-gi{
+			height:auto;
 			padding-left:15px;
 			margin-right:0;
 			width:33.3333%;
@@ -882,7 +885,7 @@ h1.page-title{
 			font-weight: 700;
 			color:rgba($teal,.8);						
 			position: absolute;
-			font-size: 21px;
+			font-size: 18px;
 			background: transparent;
 			text-align: right;
 			color: rgba(255, 255, 255, 0.6);				
@@ -897,6 +900,11 @@ h1.page-title{
 	
 	@include at-query($min, $deskMin){
 		white-space: normal;
+		a{
+			span.fabric-weight{
+				font-size:21px;
+			}
+		}
 	}
 }
 .chooser-group{
@@ -949,7 +957,33 @@ h1.page-title{
 	}
 }
 
-
+//Fabric chooser mobile ...
+.gt-bkg{
+	background:$blue;
+	position:absolute;
+	top:-5px;
+	bottom:-1px;
+	pointer-events: none;
+	left:0;
+	right:0;
+	span.grid-title{
+		position:absolute;
+		width:90%;
+		margin:auto;
+		text-transform: uppercase;
+		margin-top:5px;
+		top:50%;
+		@include transform(translateY(-50%));
+		color:#fff;
+		left: 0;
+    right: 0;
+    white-space: normal;
+    font-weight: 700;
+    text-align: center;
+    @include font-size(14,16);
+		
+	}
+}
 
 
 //Builder Stage
@@ -1324,11 +1358,11 @@ a.overview-trigger{
 			vertical-align: bottom;
 			text-transform: uppercase;
 			color:$blue;
-			border-bottom:1px solid #ebebeb;
+			border-bottom:1px solid #dcdcdc;
 			font-weight:500;
 			padding-right:30px;
-			&:first-of-type{border-top:1px solid #ebebeb;}
-			&:last-of-type{border-bottom:0px;}
+			&:first-of-type{border-top:1px solid #bac2c5;}
+			&:last-of-type{border-bottom:1px solid #bac2c5;;}
 		}
 		dd{
 			padding:10px 15px;
@@ -1337,9 +1371,9 @@ a.overview-trigger{
 			width:60%;
 			display: inline-block;
 			vertical-align: bottom;
-			border-bottom:1px solid #ebebeb;
-			&:first-of-type{border-top:1px solid #ebebeb;}
-			&:last-of-type{border-bottom:0px;}
+			border-bottom:1px solid #dcdcdc;
+			&:first-of-type{border-top:1px solid #bac2c5;}
+			&:last-of-type{border-bottom:1px solid #bac2c5;;}
 		}
 	}
 	@include at-query($min, $deskMin){

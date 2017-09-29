@@ -657,6 +657,19 @@ form.cft-form{
 	}
 }
 
+.cft-g.order-grid{
+	margin-left:-40px;
+	.cft-gi{
+		vertical-align: top;
+		padding-left:40px;
+		width:100%;
+		margin-bottom:40px;
+		@include at-query($min, 650px){
+			width:50%;
+		}
+	}
+}
+
 .cft-g.jean-grid{
 	margin-left:-40px;
 	.cft-gi{
@@ -680,9 +693,69 @@ form.cft-form{
 			margin-bottom:5px;
 		}
 	}
+	&.jean-order-card{
+		.jean-image-order-preview{
+			width:100%;
+			padding-bottom:52.5%;
+			position:relative;
+			overflow: hidden;
+			img{
+				position: absolute;
+				width: 220%;
+				margin: 0;
+				display: block;
+				top: 50%;
+				left: 50%;
+				transform: translate(-44%,-29%) rotate(5deg);
+				-moz-transform: translate(-44%,-29%) rotate(5deg);
+				-o-transform: translate(-44%,-29%) rotate(5deg);
+				-webkit-transform: translate(-44%,-29%) rotate(5deg);
+			}
+		}
+		
+		.jean-list dl dt{
+			padding-left:0;
+			@include font-size(12,18);
+		}
+		.jean-list dl dd{
+			padding-right:0;
+			@include font-size(14,18);
+		}
+	}
+	&.horiz-card {
+		margin-bottom: 30px;
+		background: #f1f1f1;
+		.cft-gi {
+			width: 100%;
+			.jean-list {
+				margin-top: 20px;
+				dl{
+					dt{
+						padding:10px 0px;
+					}
+				}
+			}
+		}
+		@include at-query($min, 650px){
+			margin-left:0;
+			.cft-gi {
+				padding-left: 0;
+				width: 60%;
+				vertical-align: top;
+				&:first-child {
+					width: 40%;
+				}
+			}
+			img {
+				width: 94%;
+				margin: 0 auto;
+				margin-top: 3%;
+			}
+		}
+	}
 }
 
-.box-content{
+.box-content{ 
 	.btn{
 		display:block;
 		width:100%;
@@ -699,6 +772,34 @@ form.cft-form{
 	h5{
 		@include font-size(15,19);
 		color:$darkGrey;
+	}
+}
+
+.user-card {
+	h4 {
+		margin-bottom: 0;
+	}
+	h5 {
+		margin-bottom: 6px;
+	}
+	p {
+		margin-bottom: 6px;
+	}
+	span {
+		display: block;
+	}
+	.user-stats {
+		margin-top: 20px;
+		.box-content {
+			background: #d9e7ec;
+			color: $blue;
+		}
+		h4 {
+			@include font-size(18,22);
+	    background: #40778b;
+	    color: #ffffff;
+	    padding: 10px;
+		}
 	}
 }
 
@@ -763,7 +864,6 @@ form.cft-form{
 	&:not(:last-of-type){
 		margin-bottom:15px;
 		padding-bottom:15px;
-		border-bottom:1px solid $grey;
 	}
 	i{
 		color:$teal;
@@ -860,3 +960,34 @@ form.cft-form{
 	}
 }
 
+//BANNER TITLE
+.banner-title{
+	position: relative;
+	background: url('../../images/closet.png') no-repeat center center;
+	height:400px; 
+	width: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	&:before{
+		content:"";
+		position:absolute;
+		top:0;
+		bottom:0;
+		left:0;
+		right:0;
+		background:rgba(0,0,0,.15);
+	}
+	h1{
+		color:#fff;
+		position:absolute;
+		left:0;
+		right:0;
+		width:90%;
+		margin:auto;
+		text-align: center;
+		top:50%;
+		@include transform(translateY(-50%));
+	}
+}

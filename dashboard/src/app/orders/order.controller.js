@@ -6,7 +6,7 @@ angular.module('inspinia')
     var vm = this;
     vm.data = api.getData();
     
-    vm.user = user.get();
+    vm.user = user.get(true);
     
     vm.userNames = {
 	    "8144148a-2ad6-4353-8850-0e1b301fa227" : "Creighton Hardy",

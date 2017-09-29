@@ -105,7 +105,7 @@ angular.module('inspinia')
 			{id:2, name:'Admin'}, 
 		];	
 	
-		vm.user=user.get();
+		vm.user=user.get(true);
 		$scope.$watch(angular.bind(this, function () {
 		  return this.user;
 		}), function (newVal) {

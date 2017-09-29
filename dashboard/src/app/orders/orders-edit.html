@@ -6,12 +6,14 @@
 			<button ng-click="ovm.saveOrder()" class="btn btn-primary btn-success"><span ng-if="!ovm.newOrder">Save</span><span ng-if="ovm.newOrder">Create</span></button>&nbsp;&nbsp;
 			<button ng-click="ovm.reOrder()" ng-if="!ovm.newOrder" class="btn btn-primary btn-flat">Re-Order</button>&nbsp;&nbsp;
 			<button ng-click="ovm.deleteThisOrder()" ng-if="!ovm.newOrder" class="btn btn-primary btn-danger">Delete</button>
+			<a href="{{ovm.squareLink}}">Open in Square</a>
 		</div>
 		
 		<h1 ng-if="!ovm.newOrder">Order {{ovm.order.id}}</h1>
 		<h1 ng-if="ovm.newOrder">Create New Order</h1>
 	</div>              
 	<div class="wrapper wrapper-content">
+		{{ovm.squareLink}}
     <div class="row">	    
 			<form name="f.orderForm">
 

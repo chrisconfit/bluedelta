@@ -7,15 +7,17 @@
 
   user.$inject = ['$location', '$window', 'api'];
   function user($location, $window, api) {
-
-	 var user = {};
-	 	
-	  var isAdmin = function(){ return $window.localStorage.getItem("bdUserRole") > 1 ? true : false; }
-		var isLoggedIn = function(){ return $window.localStorage.getItem("bdAccessToken") ? true : false; }
-		var isLoggedInDash = function(){ return $window.localStorage.getItem("bdDashAccessToken") ? true : false; }
-	  var getToken = function(){ return $window.localStorage.getItem("bdAccessToken"); }
-		var getDashToken = function(){ return $window.localStorage.getItem("bdDashAccessToken"); }
-	  
+		
+		var isCustomizer = ($location.$$host=="localhost" && $location.$$port == 4000);
+		var userRoleProp = isCustomizer ? "bdUserRole" : "bdDashUserRole";
+		var tokenProp = isCustomizer ? "bdAccessToken":"bdDashAccessToken";	
+		var idProp = isCustomizer ? "bdUserId":"bdDashUserId";
+		var user = {};
+		 	
+	  var isAdmin = function(){ return $window.localStorage.getItem(userRoleProp) > 1 ? true : false; }
+		var isLoggedIn = function(){ return $window.localStorage.getItem(tokenProp) ? true : false; }
+	  var getToken = function(){ return $window.localStorage.getItem(tokenProp); }
+			
 		var set = function(key, data){
 			
 			if (key == null) return false;
@@ -35,22 +37,17 @@
 		
 		var setup = function(callback){
 			api.call('getCurrentUser', {}, function(userDetails){
-				$window.localStorage.setItem("userRole", userDetails.roleId);
+				$window.localStorage.setItem(userRoleProp, userDetails.roleId);
 				set(userDetails);
 				if (callback) callback(userDetails);
 			});
 		}
 		
-		
-		function authCallback(response, callback, token){
-			var tokenName = tokenName || "bdAccessToken";
-			var dash = token != "bdAccessToken" ? true : false;
-			
-			$window.localStorage.setItem(tokenName, response.access_token);
-			setup(function(userData){
-				
-				$window.localStorage.setItem("bdUserRole", userData.role_id);
-				$window.localStorage.setItem("bdUserId", userData.id);
+		function authCallback(response, callback){
+			$window.localStorage.setItem(tokenProp, response.access_token);
+			setup(function(userData){	
+				$window.localStorage.setItem(userRoleProp, userData.role_id);		
+				$window.localStorage.setItem(idProp, userData.id);
 				if (callback) callback(userData);
 			});
 		}
@@ -68,6 +65,7 @@
 		}
 		
 		var register = function(username, password, first_name, last_name, success, error){
+			
 			var userData = {
 				email:username,
 				password:password,
@@ -99,9 +97,9 @@
 		}
 		
 		var logout = function(){
-			$window.localStorage.removeItem("bdAccessToken");
-			$window.localStorage.removeItem("bdUserRole");
-			$window.localStorage.removeItem("bdUserId");
+			$window.localStorage.removeItem(tokenProp);
+			$window.localStorage.removeItem(userRoleProp);
+			$window.localStorage.removeItem(idProp);
 			user = {};
 			$location.path("/login");
 		}

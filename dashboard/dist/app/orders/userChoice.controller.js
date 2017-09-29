@@ -16,7 +16,6 @@ angular.module('inspinia')
 		
 		function pullUsers(filters, callback){
 			api.call('usersList', filters, function(result){
-				console.log(result);
 				$scope.clients.push.apply($scope.clients, result.results);
 				$scope.totalClients = result.total;
 				if (callback) callback();

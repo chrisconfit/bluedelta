@@ -5,7 +5,7 @@ angular.module('inspinia')
   function ($timeout, $filter, $q, $scope, orderData, toaster, $uibModal, api, user, $state, SweetAlert) {
 
     var vm = this;
-		vm.user = user.get();
+		vm.user = user.get(true);
 		$scope.f = {};
 		var newOrderData = {
 			order_status_id: 6,
@@ -413,5 +413,21 @@ angular.module('inspinia')
 	
 		}//.saveOrder()...
 	
+	
+	
+	  var dataParameter = {
+    "amount_money": {
+      "amount" : "100",
+      "currency_code" : "USD"
+    },
+    "callback_url" : "https://google.com", // Replace this value with your application's callback URL
+    "client_id" : "sq0idp-Ix0BKq70y9xTbYuMuBPZkQ", // Replace this value with your application's ID
+    "version": "1.3",
+    "notes": "notes for the transaction",
+    "options" : {
+      "supported_tender_types" : ["CREDIT_CARD","CASH","OTHER","SQUARE_GIFT_CARD","CARD_ON_FILE"]
+    }
+  };
+  vm.squareLink = "square-commerce-v1://payment/create?data=" + encodeURIComponent(JSON.stringify(dataParameter));
 
 }]);
