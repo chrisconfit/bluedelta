@@ -248,8 +248,8 @@
 		
 		var getMyOrders = function(data){
 			var path = "/api/users/current/orders";
-			if (data) path+"/data";
-			return httpReq("GET", "/api/users/current/orders");	
+			if (data) path +="/"+data;
+			return httpReq("GET", path);
 		}
 		
 		var updateMe = function(data){
@@ -259,10 +259,7 @@
 	  var getMyJeans = function(){
 		  return httpReq("GET", "/api/users/current/jeans");
 	  }
-	  
-	  var getMyOrders = function(){
-		  return httpReq("GET", "/api/users/current/orders");
-	  }
+
 	  var deleteMyJean = function(jeanId){
 			return httpReq("DELETE", "/api/users/current/jeans/"+jeanId);
 		}

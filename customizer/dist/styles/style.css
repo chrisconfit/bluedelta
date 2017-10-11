@@ -1962,6 +1962,7 @@ h1.page-title {
   .cft-g.chooser-grid > .cft-gi {
     display: inline-block;
     width: 33.3333%;
+    height: auto;
     padding-left: 15px;
     margin-right: 0;
     margin-bottom: 15px;
@@ -3450,4 +3451,26 @@ ul.tailor-list {
   -ms-transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
+}
+
+.checkout-form {
+  max-width: 600px;
+  margin: auto;
+}
+.checkout-form h3.price-display {
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #f1f1f1;
+  color: #bac2c5;
+}
+.checkout-form h3.price-display .total-price {
+  color: #41778b;
+  float: right;
+}
+
+.cft-g.cc-form-grid > .cft-gi {
+  width: 20%;
+}
+.cft-g.cc-form-grid > .cft-gi.name {
+  width: 60%;
 }

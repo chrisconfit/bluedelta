@@ -11,6 +11,11 @@
         controller: 'homeCtrl',
         controllerAs: 'vm',
       })
+      .when('/pay/:orderId?', {
+        templateUrl: '/pages/pay/pay.view.html',
+        controller: 'payCtrl',
+        controllerAs: 'vm',
+      })
       .when('/register', {
         templateUrl: '/pages/auth/register/register.view.html',
         controller: 'registerCtrl',
@@ -59,7 +64,8 @@
 
 	    var locked = [
 		    '/closet',
-		    '/order'
+		    '/order',
+            '/pay'
 	    ];
 	    
 	    if (locked.indexOf($location.path()) >= 0 && !user.isLoggedIn() ){
