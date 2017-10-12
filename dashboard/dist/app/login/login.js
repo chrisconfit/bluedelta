@@ -33,8 +33,8 @@ angular.module('inspinia')
 					function(err){
 						if (err.message == "Incorrect username or password.") err.message = "Incorrect Email address or password."
 						logvm.msg.set(err.message,"alert-danger");
-					}
-					);
+					},
+				true );
 
       } else {
         form.submitted = true;

@@ -11,6 +11,8 @@
 	  api.getAppData();
 		
 		//Set up user if already logged in	
+		console.log("get tok");
+		console.log(user.getToken());
 		
 		if (user.getToken()){
 			user.setup();

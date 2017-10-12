@@ -1,6 +1,6 @@
 <dl>
-	<dt ng-repeat-start="(key, value) in filterFields(jean)">{{ findLabel(key) }}:</dt><!--
-	--><dd ng-repeat-end>{{dataLookup(key, value)}}</dd>
+	<dt ng-repeat-start="field in fields">{{ findLabel(field) }}:</dt><!--
+	--><dd ng-repeat-end>{{dataLookup(field)}}</dd>
 </dl>
 
 <!-- {}-->

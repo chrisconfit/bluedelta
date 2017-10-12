@@ -15,16 +15,16 @@
 			</div>
 			<!--Step 1-->
 			<div class="order-step-1" ng-if="vm.orderForm.step==1">
-				
+				{{vm.orderCreateObj.copy_order_item_id}}
 				<div ng-if="(vm.orders | filter:vm.hasMeasurements).length">
 					<p>Use a fit from a previous purchase</p>
 					<div class="cft-g fit-grid">
 						<div ng-repeat="order in vm.orders | filter:vm.hasMeasurements | orderBy: '-dob' | limitTo: 3" class="cft-gi">							
-							<div ng-click="vm.chooseOrderType(4, order.order_items[0]);" class="jean-card" 
+							<div ng-click="vm.chooseOrderType(4, order);" class="jean-card" 
 								ng-class="{active: vm.orderCreateObj.copy_order_item_id == order.order_items[0].id}">
 					      <img ng-src="{{order.order_items[0].jean_image_url}}">
 								<div class="box-content">
-					      	<h4>{{order.order_items[0].jean_name}}</h4>
+					      	<h4>{{order.order_items[0].jean_name}} {{order.order_items[0].id}}</h4>
 									<h5 ng-if="{{order.due_date}}">Born: {{order.due_date | date : "longDate" : "CST" }}</h5>
 								</div>
 				      </div>
@@ -93,11 +93,12 @@
 					<div ng-if="vm.orderCreateObj.order_type_id==4" class="clone-message">
 						<h3>You are Cloning a previous order</h3>
 						<p>We'll use the measurements from this previous order to cut your new jeans. After placing your order inquiry, we will be in touch to walk you through the next steps.</p>
+						<p><strong>Please review the measurements below, and let us know if anything has changed in the "Additional Comments" box, before placing your order inquiry.</strong></p>
 						<div class="clone-display">
 							<div class="cft-g clone-grid">
 								<div class="cft-gi">
 									<img ng-src="{{vm.copyItem.jean_image_url}}">
-									<h5>{{vm.copyItem.jean_name}}</h5>
+									<h5>Cloned Jean Name: {{vm.copyItem.jean_name}}</h5>
 								</div><!--
 								--><div class="cft-gi">
 									<ul>

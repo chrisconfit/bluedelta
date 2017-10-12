@@ -5,9 +5,9 @@
     .module('api', [])
     .service('api', api);
 		
-	api.$inject = ['$http', '$q', '$rootScope', '$window'];
+	api.$inject = ['$location', '$http', '$q', '$rootScope', '$window'];
 
-  function api($http, $q, $rootScope, $window) {
+  function api($location, $http, $q, $rootScope, $window) {
 
 		/*
 		* SETUP
@@ -30,10 +30,16 @@
 		];
 		
 		//Call an API function and handle data
+		var isCustomizer = ($location.$$host=="localhost" && $location.$$port == 4000);
+		var tokenProp = isCustomizer ? "bdAccessToken":"bdDashAccessToken";	
+		
 		var call = function(func, data, success, error){
-			accessToken = $window.localStorage.getItem('bdAccessToken');
+			
+			accessToken = $window.localStorage.getItem(tokenProp);
+
 			console.log('calling '+func+" with...");
 			console.log(data);
+			
 			if (noTokenNecessary.indexOf(func) < 0 && !accessToken){
 				var message = "Request being made with no access token.";
 				var err = new Error(message);
@@ -59,7 +65,7 @@
 	  var httpReq = function(method, path, data){
 		
 		  var headers=config.headers;
-		  var token = $window.localStorage.getItem('bdAccessToken');
+		  var token = $window.localStorage.getItem(tokenProp);
 		  if (token) headers.Authorization = "Bearer "+token;
       
 			var httpConfig = {
@@ -146,11 +152,11 @@
 			  if (jeanData.hasOwnProperty(property)) {
 					var id = jeanData[property];
 					var urlKey = jeanKeytoURL(property);
-					if (urlKey) url += "_"+urlKey+id;
+					if (urlKey) url += "-"+urlKey+":"+id;
 			  }
 			}	
 			url = url.replace(/(^[_\s]+)|([_\s]+$)/g, '');
-			return url;
+			return url.replace('-','');
 		}
 	  
 		function loadImage(src) {
@@ -240,7 +246,9 @@
 			return httpReq("GET", "/api/users/current/jeans");	
 		}
 		
-		var getMyOrders = function(){
+		var getMyOrders = function(data){
+			var path = "/api/users/current/orders";
+			if (data) path+"/data";
 			return httpReq("GET", "/api/users/current/orders");	
 		}
 		
@@ -268,6 +276,11 @@
 	  /*
 		* Admin API
 		*/
+	  var postOrderItem = function(data){
+		  var path = "/api/orderItem"
+			if (data.id) path += "/"+data.id;
+		  return httpReq("POST", path, data);
+	  }
 	  
 	  var usersList = function(data){
 			return httpReq("GET", "/api/users", data);
@@ -373,6 +386,7 @@
       deleteMyAddress: deleteMyAddress,
       placeMyOrder: placeMyOrder,
       
+      postOrderItem:postOrderItem,
       usersList:usersList,
       userGet:userGet,
       usersDelete:usersDelete,

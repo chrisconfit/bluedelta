@@ -781,7 +781,8 @@
                 views.unshift(view);
 
                 function formatter(value) {
-                    return dateFilter(value, format, timezone);
+	                var d = dateFilter(value, format, timezone);
+	                return d == "Invalid date" ? "" : d; 
                 }
 
                 function parser(viewValue) {

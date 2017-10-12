@@ -18,7 +18,9 @@
 			}
 			return addresses[0].id;
 		}
-
+		
+		vm.orderForm={};
+		vm.orderForm.step=1;
 		vm.orderCreateObj = {}
 		vm.user = {};
 		vm.user = user.get();		
@@ -35,23 +37,31 @@
 		});
 		
 		var jeanId;
-		
-		if ($routeParams.jeanId && $routeParams.action == 'copy'){
-			
+
+		if ($routeParams.jeanId && $routeParams.action == 'copy'){		
 			$scope.$watch('vm.orders', function(orders) {
-				if (orders.length);
+				if (!orders.length) return false;
+				
 				for(i=0; i<orders.length; i++){
 					if(orders[i].id == $routeParams.jeanId){
 						var urlOrder = orders[i];
-						vm.orderCreateObj.copy_order_item_id = urlOrder.order_items[0].id;
+						
+						//Set up new order via copy...
 						vm.jeanData = urlOrder.order_items[0];
+						vm.copyItem = urlOrder.order_items[0];
 						vm.jeanData.image_url =	vm.jeanData.jean_image_url;
 						vm.jeanData.name =	vm.jeanData.jean_name;
+						
+						//If order we're copying has measurements, go ahead and set them up and skip to step 2 of the form.
+						if(vm.hasMeasurements(urlOrder)){
+							vm.orderCreateObj.order_type_id = 4;
+							vm.orderCreateObj.copy_order_item_id = urlOrder.order_items[0].id;
+							vm.orderForm.step=2;
+						}
+						break;
 					}					
 				}
 	    }, true);
-
-			
 		}
 		
 		else if ($routeParams.jeanId && !$routeParams.action){	
@@ -60,13 +70,12 @@
 				vm.orderCreateObj.jean_id = vm.jeanData.id;
 			});
 		}
+		
 		vm.lookup = apiData.lookup;
 
-		vm.orderForm={};
-		vm.orderForm.step=1;
-
-
+		
 		vm.goToCloset = function(){ $location.path('/closet'); }
+		
 		vm.startOver = function(){ 
 			jean.reset();
 			$location.path('/customizer'); 
@@ -77,8 +86,11 @@
 			});
 		}
 
-		vm.chooseOrderType = function(type, copyItem){
-			
+		vm.chooseOrderType = function(type, copyOrder){
+			if(copyOrder){
+				var copyItem = copyOrder.order_items[0];
+				vm.orderCreateObj.fitDate = copyOrder.fit_date;
+			}
 			vm.orderCreateObj.order_type_id = type;
 			if (type == 2 && !vm.orderCreateObj.tailor_id){
 				vm.popups.tailors=true;
@@ -90,6 +102,7 @@
 				vm.copyItem = copyItem;
 			}
 			else{
+				//if($routeParams.action != 'copy') delete vm.orderCreateObj.copy_order_item_id;
 				delete vm.orderCreateObj.copy_order_item_id;	
 				vm.copyItem = {};
 			}

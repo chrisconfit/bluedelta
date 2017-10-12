@@ -15,13 +15,14 @@
 								<input type="text" ng-model="vm.displayJean.jean_name">
 								<div class="icon-controls">
 									<i ng-click="vm.displayJean.jean_name=vm.oldTitle; vm.titleEdit=false;" class="fa fa-undo"></i>
-									<i ng-click="vm.titleEdit=false" class="fa fa-check"></i>
+									<i ng-click="vm.changeOrderItemName()" class="fa fa-check"></i>
 								</div>
 							</div>
 							<div class="order-details">
-								<span ng-if="vm.displayOrder.order_status_id">Status: {{vm.displayOrder.order_status_id}}</span>
+								<span ng-if="vm.displayOrder.order_status_id">Status: {{vm.data.lookup("order_statuses", "id", vm.displayOrder.order_status_id, "name")}}</span>
 								<span ng-if="vm.displayJean.dob">Estimated Arrival: {{vm.displayJean.dob}}</span>
 								<span>Order#: {{vm.displayOrder.id}}</span>
+								<a ng-if="vm.displayOrder.tracking && vm.displayOrder.order_status_id!=0" target="_blank" href="{{vm.displayOrder.tracking}}">Track Order</a>
 							</div>
 						</div>
 					</div>
@@ -31,7 +32,11 @@
 							<jean-list jean="vm.displayJean"></jean-list>						
 						</div>
 					</div>
-
+					<div class="pop-group">
+						<p>Contact us for any questions about your order or alterations</p>
+						<a href="mailto:info@bluedeltajeans.com?&subject=Inquiry%20regarding%20Order#%20{{vm.displayOrder.id}}" class="btn">Contact</a>
+					</div>
+<!--
 					<div class="pop-group">
 						<form class="cft-form">
 							<div ng-class="{active: vm.displayOrder.order_items[0].notes.length}" class="input-group">
@@ -41,7 +46,7 @@
 							<button class="btn">Send</button>
 						</form>
 					</div>
-					
+		-->			
 				</div><!--
 				--><div class="cft-gi sidebar">
 					<div class="jean-card">

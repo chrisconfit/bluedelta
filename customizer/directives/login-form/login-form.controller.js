@@ -118,7 +118,7 @@
 					"token":logvm.credentials.loginVerifcation, 
 					"password":logvm.credentials.newPassword
 				}		    
-		    user.getResetToken(data, 
+		    user.resetPassword(data, 
 					function(result){ 
 						messages.set("Password reset successfully. Try logging in.", "success");
 						logvm.forgotPassword = false;

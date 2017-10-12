@@ -12,7 +12,7 @@ var browserSyncSpa = require('browser-sync-spa');
 var path = require('path');
 var debug = require('gulp-debug');
 var fs = require("fs");
-var config = JSON.parse(fs.readFileSync('private/awsaccess.json'));
+var config = JSON.parse(fs.readFileSync('../private/awsaccess.json'));
 var s3 = require('gulp-s3-upload')(config);
 
 
@@ -137,6 +137,7 @@ function browserSyncInit(baseDir, browser) {
     startPath: '/',
     server: server,
     browser: browser,
+    port: 4000
   });
 }
 

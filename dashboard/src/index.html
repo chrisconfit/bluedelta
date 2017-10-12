@@ -13,6 +13,8 @@
 		<link rel="manifest" href="/assets/images/manifest.json">
 		<link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="#5bbad5">
 		<meta name="theme-color" content="#ffffff">
+		<script src="https://use.typekit.net/rjf0vtn.js"></script>
+		<script>try{Typekit.load({ async: true });}catch(e){}</script>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
@@ -27,7 +29,8 @@
     <!-- endinject -->
     <!-- endbuild -->
   </head>
-  <body ng-controller="MainController as main">
+  <body ng-controller="MainController as main" class="{{main.state.current.name | routeToClass}}">
+	
     <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
