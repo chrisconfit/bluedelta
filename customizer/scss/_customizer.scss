@@ -755,15 +755,15 @@ h1.page-title{
 	}
 	
 	&.style-chooser .chooser-select, &.gender-chooser .chooser-select {
-		left: 15px;
-    top: 0px;
-    bottom:0px;
-    width: calc(33.333% - 15px);
-    height:auto;
-    display: block;
-    position: absolute;
-    z-index: 999;
-    padding-left: 10px;	
+      left: 15px;
+      top: 0px;
+      bottom:0px;
+      width: calc(33.333% - 15px);
+      height:auto;
+      display: block;
+      position: absolute;
+      z-index: 999;
+      padding-left: 10px;
 	}
 	
 	&.gender-chooser .chooser-select {
@@ -775,7 +775,6 @@ h1.page-title{
     	left:15px;
     	height:190px;
 		}
-		
   	&.gender-chooser .chooser-select {
     	width: calc(50% - 15px);
     	top:0!important;
@@ -814,10 +813,13 @@ h1.page-title{
 	& >.cft-gi{
 		width:80px;
 		height:80px;
-		position:relative;
+		position: static;
 		margin-right:15px;
 		&:last-of-type{margin-right:0;}
 		padding-left:0;
+		&.bkg-container{
+			position:relative;
+		}
 	}
 	@include at-query($min, $deskMin){
 		margin-left:-15px;
@@ -827,6 +829,7 @@ h1.page-title{
 		& >.cft-gi{
 			display:inline-block;
 			width:33.3333%;
+      height:auto;
 			padding-left:15px;
 			margin-right:0;
 			margin-bottom:15px;

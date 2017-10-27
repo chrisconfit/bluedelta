@@ -21,7 +21,8 @@ angular.module('inspinia')
 		
 		vm.newOrder = orderData ? false : true;
 		vm.order = vm.newOrder ? newOrderData : orderData;
-		console.log(vm.order);
+		vm.order.payment_status_id=1;
+
 		vm.originalJean = vm.newOrder ? null : angular.copy(vm.order.order_items[0]);
 		vm.order.fit_date =  vm.order.fit_date ? vm.order.fit_date: null;
 		vm.order.dob =  vm.order.dob ? vm.order.dob: null;
@@ -37,7 +38,12 @@ angular.module('inspinia')
     
 		//Set up app data...    
 		vm.data = api.getData();
-	
+	  vm.data.payment_statuses = [
+      {"id":1, "label": "Awaiting Payment"},
+      {"id":2, "label": "Paid"},
+      {"id":3, "label": "Comped"},
+    ];
+
 		//Edit Jean details...
 		vm.EditMode= vm.newOrder ? true : false;
 		vm.beginJeanEdit = function(){
@@ -188,6 +194,30 @@ angular.module('inspinia')
 	    });
 	  }
 
+    /*  	  						    		  		*\
+		*								    			  			*
+		*				   								 		  	*
+		* * * * *  Key In Modal 	* * * * *
+		*				  	 					    		  	*
+		\*	  							    				  */
+    vm.keyinPayment = function(){
+
+      var modalInstance = $uibModal.open({
+        templateUrl: 'app/orders/keyInModal.html',
+        controller: 'KeyInController',
+        resolve: {
+          orderUser : function() {
+            return vm.orderUser;
+          },
+          chargeAmount: function(){
+            return vm.order.price;
+          },
+          cards : function(){
+						return api;
+					}
+        }
+      });
+    };
     
     
 	  /*														*\

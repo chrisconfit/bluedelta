@@ -1,0 +1,56 @@
+
+<div class="container page-container">
+
+  <div class="order-errors" ng-if="vm.orderErr">
+    <h3>{{vm.orderErr}}</h3>
+    Try going back to your <a ng-href="/closet">closet</a>
+  </div>
+
+	<div class="order-details">
+  {{vm.order.order_items[0].jean_name}}<br>
+   <img width="200px" ng-src="{{vm.order.order_items[0].jean_image_url}}">
+	</div>
+
+	<div class="fit-match-details">
+
+	</div>
+
+
+
+
+  <hr>
+
+	<div ng-if="vm.order || vm.fitMatch" class="checkout-form">
+		<form novalidate class="cft-form checkout-form">
+      <h3 class="price-display">Total:<span class="total-price">${{vm.checkoutForm.price}}</span></h3>
+      <input type="hidden" ng-model="vm.checkoutForm.price">
+			<div ng-class="{active: vm.checkoutForm.creditCardNumber.length}" class="input-group">
+				<input type="text" class="form-control" name="creditCardNumber" id="creditCardNumber" ng-model="vm.checkoutForm.creditCardNumber">
+				<label for="creditCardNumber">Credit Card Number</label>
+			</div>
+      <div class="cft-g cc-form-grid">
+        <div class="cft-gi name">
+          <div ng-class="{active: vm.checkoutForm.ccName.length}" class="input-group">
+            <input type="text" class="form-control" name="ccName" id="ccName" ng-model="vm.checkoutForm.ccName">
+            <label for="ccName">Name on Card</label>
+          </div>
+        </div><!--
+        --><div class="cft-gi">
+          <div ng-class="{active: vm.checkoutForm.expiration.length}" class="input-group">
+            <input type="text" class="form-control" name="expiration" id="expiration" ng-model="vm.checkoutForm.expiration">
+            <label for="expiration">MM/YY</label>
+          </div>
+        </div><!--
+        --><div class="cft-gi">
+          <div ng-class="{active: vm.checkoutForm.cvv.length}" class="input-group">
+            <input type="text" class="form-control" name="cvv" id="cvv" ng-model="vm.checkoutForm.cvv">
+            <label for="cvv">CVV</label>
+          </div>
+        </div>
+      </div>
+      <input type="submit" class="btn" value="Submit">
+		</form>
+	</div>
+
+
+</div><!--./page-container

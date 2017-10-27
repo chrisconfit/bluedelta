@@ -6,7 +6,6 @@
 			<button ng-click="ovm.saveOrder()" class="btn btn-primary btn-success"><span ng-if="!ovm.newOrder">Save</span><span ng-if="ovm.newOrder">Create</span></button>&nbsp;&nbsp;
 			<button ng-click="ovm.reOrder()" ng-if="!ovm.newOrder" class="btn btn-primary btn-flat">Re-Order</button>&nbsp;&nbsp;
 			<button ng-click="ovm.deleteThisOrder()" ng-if="!ovm.newOrder" class="btn btn-primary btn-danger">Delete</button>
-			
 		</div>
 		
 		<h1 ng-if="!ovm.newOrder">Order {{ovm.order.id}}</h1>
@@ -73,13 +72,19 @@
 	                  {{ovm.order.billingAddress.addressLine2}}<br ng-if="ovm.order.billingAddress.addressLine2.length">
 	                  {{ovm.order.billingAddress.city}}, {{ovm.order.billingAddress.state}} {{ovm.order.billingAddress.zip}}</p>
 	              </li>-->
+								<li class="list-group-item clearfix">
+									<p><b>Payment Status</b></p>
+									<p class="payment_class_{{ovm.order.payment_status_id}}">
+                    {{ovm.data.lookup("payment_statuses", "id", ovm.order.payment_status_id, "label")}}
+                  </p>
+                  PAY: {{ovm.order.payment_status_id}}
+                  <div ng-if="ovm.order.payment_status_id==1 && ovm.order.price && ovm.order.price!='Please enter a valid price'">
+                    <a href="#" class="btn btn-flat btn-primary"><b>Send Invoice</b></a>
+                    <a href="#" ng-click="ovm.keyinPayment()" class="btn btn-flat btn-primary"><b>Capture Payment</b></a>
+                    <!--<a class="btn btn-primary" ng-if="ovm.squareLink" ng-href="{{ovm.squareLink}}">Swipe in Square</a>-->
+                  </div>
+								</li>
 	            </ul>
-	            
-	            <a class="btn btn-primary" ng-if="ovm.squareLink" ng-href="{{ovm.squareLink}}">Swipe in Square</a>
-	            <!--
-	            <a href="#" class="btn btn-flat btn-danger btn-block"><b>Awaiting Payment</b></a>
-	            <a href="#" class="btn btn-flat btn-primary btn-block"><b>Re-Send Invoice</b></a>
-	            -->
 	          </div>
 	          <!-- /.ibox-content -->
 	        </div>

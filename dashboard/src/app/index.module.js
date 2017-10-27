@@ -2,12 +2,25 @@
   'use strict';
 
   angular
-    .module('inspinia', [ 'oc.lazyLoad', 'ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'ui.bootstrap', 'user', 'api'])
+    .module('inspinia', [ 'oc.lazyLoad', 'ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'ui.bootstrap', 'user', 'api', 'sqPaymentForm'])
     .config( ['$compileProvider', function( $compileProvider ){   
 	      $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|square-commerce-v1):/);
 	      // Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
 		  }
 		])
+			.filter('ccName', function(){
+				return function(input){
+					switch (input){
+						case "AMERICAN_EXPRESS":
+							var ret = "AMEX";
+							break;
+
+						default:
+							var ret = input;
+					}
+					return ret;
+				}
+			})
     .filter('paginate', function() {
 		  return function(input, limit, begin) {
 			  if (!input)return false;

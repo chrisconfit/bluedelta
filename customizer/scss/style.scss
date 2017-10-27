@@ -1,3 +1,5 @@
+
+
 @import "components/variables";
 @import "components/mixins";
 @import "components/reset";
@@ -991,3 +993,30 @@ form.cft-form{
 		@include transform(translateY(-50%));
 	}
 }
+
+
+.checkout-form{
+  max-width:600px;
+  margin:auto;
+  h3.price-display {
+    padding-bottom:30px;
+    margin-bottom:30px;
+    border-bottom:1px solid $lightGrey;
+    color:$grey;
+    .total-price {
+      color: $teal;
+      float: right;
+    }
+  }
+}
+
+
+.cft-g.cc-form-grid{
+  &>.cft-gi{
+    width:20%;
+    &.name{
+      width:60%;
+    }
+  }
+}
+
