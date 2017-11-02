@@ -205,7 +205,14 @@
         authenticate: true,
         controller: "OrdersEditController as ovm",
         resolve: orderAddScreenResolve
-      })      
+      })
+
+      .state('orders.callback', {
+        url: "/callback",
+        template: " ",
+        authenticate: false,
+        controller: "OrdersCallbackController as vm",
+      })
       
     $urlRouterProvider.otherwise('orders/list');
   };

@@ -24,12 +24,14 @@
 		  console.log(arguments);
 		});
 		$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
-			
 	    if (toState.authenticate && !(user.isLoggedIn() || user.isAdmin()) ){
 	      $state.transitionTo("login");
 	      event.preventDefault(); 
 	    }
 	  });
+    $rootScope.$on('$stateChangeSuccess', function() {
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+    });
 	
    
   }

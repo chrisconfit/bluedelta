@@ -16,10 +16,9 @@
 		var config = {
 			client_id:2,
 			client_secret: "8xHu3MLzZXr3pcUneGCM08XOzMc5rH5AOtJSCdIP",
-			url :  "http://ec2-54-200-231-145.us-west-2.compute.amazonaws.com",
+			url :  "https://api.bluedeltajeans.com",
 			headers: {'Content-Type':'application/json'}
 		};
-
 
 		if($location.$$host == "localhost"){
 			config.url = "http://bluedelta.local";
@@ -31,7 +30,8 @@
 			'getResetToken',
 			'resetPassword',
 			'forgotPassword',
-			'getJean'
+			'getJean',
+        'swipeCallback'
 		];
 		
 		//Call an API function and handle data
@@ -44,6 +44,7 @@
 
 			console.log('calling '+func+" with...");
 			console.log(data);
+
 			if (noTokenNecessary.indexOf(func) < 0 && !accessToken){
 				var message = "Request being made with no access token.";
 				var err = new Error(message);
@@ -353,8 +354,11 @@
 			return httpReq("POST", "/api/orders/"+data.orderId+"/comments", data.comment);
 		}
 
+		var swipeCallback = function(data){
+		  return httpReq("POST", "/api/swipe", data);
+    }
 		var getAppData = function(){
-			$http.get("http://ec2-54-200-231-145.us-west-2.compute.amazonaws.com/api/data").then(function(result){
+			$http.get("https://api.bluedeltajeans.com/api/data").then(function(result){
 				for(key in result.data){
 					if(result.data.hasOwnProperty(key)){
 						appData[key] = result.data[key];
@@ -415,7 +419,9 @@
 			ordersDelete:ordersDelete,
       ordersCharge:ordersCharge,
 			postAddress:postAddress,
-			commentsCreate:commentsCreate
+			commentsCreate:commentsCreate,
+      swipeCallback:swipeCallback
+
     };
     
   }
