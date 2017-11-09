@@ -1,0 +1,116 @@
+<div class="order-page orders-edit-page">
+  <toaster-container></toaster-container>
+  <div class="row wrapper border-bottom white-bg page-heading">
+
+    <div id="form-control-buttons" class="pull-right" style="margin-top:20px;">
+      <button ng-click="vm.saveFM()" class="btn btn-primary btn-success"><span ng-if="!vm.newFitMatch">Save</span><span ng-if="vm.newFitMatch">Create</span></button>&nbsp;&nbsp;
+      <button ng-click="vm.orderFM()" ng-if="!vm.newFitMatch" class="btn btn-primary btn-flat">Order</button>&nbsp;&nbsp;
+      <button ng-click="vm.deleteFM()" ng-if="!vm.newFitMatch" class="btn btn-primary btn-danger">Delete</button>
+    </div>
+
+    <h1 ng-if="!vm.newFitMatch">Fit Match {{vm.fmData.id}}</h1>
+    <h1 ng-if="vm.newFitMatch">Create New Fit Match Request</h1>
+  </div>
+  
+  <div class="wrapper wrapper-content">
+   FM DAT {{vm.user}}
+    <br><br> {{vm.fmData}}
+    <div class="row">
+      <form name="f.fmForm">
+
+        <div class="col-md-6">
+
+          <div class="ibox" ng-click="primaryBox=1" ng-class="{'ibox-primary':primaryBox==1}">
+
+            <div class="ibox-title">
+              <h3>Client </h3>
+            </div>
+
+            <div class="ibox-content ibox-profile">
+              
+              <!--Add Client Button-->
+              <a ng-if="!vm.fmData.user" href="" ng-click="vm.editUser()" class="btn btn-flat btn-primary btn-block">Add a Client</a>
+
+              <!--Order User Validation-->
+              <input type="hidden" name="user_id" ng-model="vm.vm.fmData.user.id" required>
+              <small ng-show="f.fmForm.submitted && f.fmForm.user_id.$error.required" class="text-danger">Please Choose a Client</small>
+
+              <ul ng-if="vm.fmData.user.id" class="list-group list-group-unbordered">
+                <li class="list-group-item clearfix">
+                  <b>Customer</b>
+                  <div class="pull-right">
+                    <a ui-sref="clients.edit({clientId: vm.fmData.user.id})">{{vm.fmData.user.first_name}} {{vm.fmData.user.last_name}}</a>
+                    &nbsp;&nbsp;<a ng-click="vm.editUser()"><i class="fa fa-edit"></i></a>
+                  </div>
+                </li>
+                <li class="list-group-item clearfix">
+                  <b>Email</b> <a href="mailto:{{vm.fmData.user.email}}" class="pull-right">{{vm.fmData.user.email}}</a>
+                </li>
+                <li class="list-group-item clearfix">
+
+                  <p><b>Shipping Address</b><a class="pull-right fa fa-edit" ng-click="vm.editAddress('Shipping', 'fa-truck')" href="#"></a></p>
+                  <p ng-if="vm.fitMatch.address">{{vm.fitMatch.shipping_name}}<br ng-if="vm.fitMatch.shipping_name">
+                    {{vm.fitMatch.shipping_phone | tel}}<br ng-if="vm.fitMatch.shipping_phone">
+                    {{vm.fitMatch.address.address_line_1}}
+                    {{vm.fitMatch.address.address_line_2}}<br ng-if="vm.fitMatch.address.addressLine2 && vm.fitMatch.address.addressLine2!=''">
+                    {{vm.fitMatch.address.city}}, {{vm.fitMatch.address.state}} {{vm.fitMatch.address.zip}}</p>
+                  <a ng-if="!vm.fitMatch.address" ng-click="vm.editAddress('Shipping', 'fa-truck')" href="">Add Address</a>
+
+                  <!--Address Validation-->
+                  <input type="hidden" ng-model="vm.fitMatch.shipping_address_id" name="shipping_address_id" required>
+                  <br ng-if="f.fmForm.submitted && f.fmForm.shipping_address_id.$error.required" >
+                  <small ng-show="f.fmForm.submitted && f.fmForm.shipping_address_id.$error.required" class="text-danger">Please Choose a Shipping Address</small>
+
+                </li>
+
+                <li class="list-group-item clearfix">
+                  <p><b>Payment Status</b></p>
+
+                  <p>{{vm.fitMatch.credit_card_id}}</p>
+                    <a style="margin-bottom:5px" href="#" ng-click="vm.saveCC()" class="btn btn-flat btn-primary btn-success"><b>Save Credit Card</b></a>
+                </li>
+
+              </ul>
+            </div>
+            <!-- /.ibox-content -->
+          </div>
+          <!-- /.ibox -->
+        </div><!-- /.col -->
+
+        <div class="col-md-6">
+          <div class="ibox clearfix" ng-click="primaryBox=2" ng-class="{'ibox-primary':primaryBox==2}">
+            <div class="ibox-title">
+              <h3>
+                Requested Fabircs
+                <div class="pull-right" ng-if="!vm.newFitMatch">
+                  <a ng-if="!vm.EditMode" class="fa fa-edit" ng-click="vm.beginJeanEdit()" href="#"></a>
+                  <a ng-if="vm.EditMode" class="fa fa-save" ng-click="vm.saveOrder(); vm.EditMode=false" href="#"></a>
+                  <a ng-if="vm.EditMode" class="fa fa-undo" ng-click="vm.clearJeanEdit()" href="#"></a>
+                </div>
+              </h3>
+            </div>
+            <div class="ibox-content">
+              <ul class="list-group jean-list-edit list-group-unbordered">
+                <li class="list-group-item clearfix">
+                  <b>Gender</b>
+                  <span ng-if="!vm.EditMode" class="pull-right" ng-click="vm.beginJeanEdit()">
+                    {{vm.data.lookup("gender_options", "id", vm.fitMatch.order_items[0].gender_option_id, "gender") }}
+                  </span>
+                  <select class="form-control pull-right"
+                          ng-if="vm.EditMode"
+                          ng-model="vm.fitMatch.order_items[0].gender_option_id"
+                          ng-options="g.id as g.gender for g in vm.data.gender_options">
+                  </select>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </form>
+    </div><!-- /.row -->
+  </div>
+</div>
