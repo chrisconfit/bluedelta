@@ -15,13 +15,13 @@ angular.module('inspinia')
 				top_thread_id:1,
 				accent_thread_id:1,
 				bottom_thread_id:1,
-				fabric_id:1000
+				fabric_id:1000,
+        payment_status_id:1
 			}]
 		}
 		
 		vm.newOrder = orderData ? false : true;
 		vm.order = vm.newOrder ? newOrderData : orderData;
-		vm.order.payment_status_id=1;
 
 		vm.originalJean = vm.newOrder ? null : angular.copy(vm.order.order_items[0]);
 		vm.order.fit_date =  vm.order.fit_date ? vm.order.fit_date: null;
@@ -194,39 +194,60 @@ angular.module('inspinia')
 	    });
 	  }
 
+	  vm.compOrder = function(){
+      var order_object = {
+        id:vm.order.id,
+        payment_status_id:3
+      };
+
+      api.call('ordersPost', order_object, function(result){
+        console.log(result);
+        vm.order.payment_status_id=3;
+      });
+
+    }
+
+
     /*  	  						    		  		*\
 		*								    			  			*
 		*				   								 		  	*
 		* * * * *  Key In Modal 	* * * * *
 		*				  	 					    		  	*
 		\*	  							    				  */
+
+
+
     vm.keyinPayment = function(){
 
       var modalInstance = $uibModal.open({
         templateUrl: 'app/orders/keyInModal.html',
         controller: 'KeyInController',
         resolve: {
-          orderUser : function() {
-            return vm.orderUser;
+          orderData : function() {
+            return {
+              "user":vm.orderUser,
+              "order":vm.order
+            };
+
           },
-          chargeAmount: function(){
-            return vm.order.price;
-          },
-          cards : function(){
+          api : function(){
 						return api;
-					}
+					},
+          confirmation : function(){
+            return function(swalSettings){SweetAlert.swal(swalSettings)};
+          },
         }
       });
     };
-    
-    
+
 	  /*														*\
 		*															*
 		*															*
-		* * * * *  Timeline 	* * * * * 
-		*															*	
+		* * * * *  Timeline 	* * * * *
+		*															*
 		\*	  												*/
-		
+
+
 		//Create the "Time from now" text...
 		vm.timeFromNow = function(timestamp){
 			return moment(timestamp).fromNow();
@@ -300,7 +321,7 @@ angular.module('inspinia')
 		    function (isConfirm) {
 	        if (isConfirm) {
 		        api.call('ordersDelete', vm.order.id, function(result){
-							$state.transitionTo('orders.list');
+              $state.transitionTo('orders.list');
 	          });
 	        }
 		    }
@@ -450,10 +471,10 @@ angular.module('inspinia')
       "amount" : "100",
       "currency_code" : "USD"
     },
-    "callback_url" : "https://google.com", // Replace this value with your application's callback URL
+    "callback_url" : "https://requestb.in/17ok6gh1", // Replace this value with your application's callback URL
     "client_id" : "sq0idp-Ix0BKq70y9xTbYuMuBPZkQ", // Replace this value with your application's ID
     "version": "1.3",
-    "notes": "notes for the transaction",
+    "notes": "Payment for Order #"+vm.order.id,
     "options" : {
       "supported_tender_types" : ["CREDIT_CARD","CASH","OTHER","SQUARE_GIFT_CARD","CARD_ON_FILE"]
     }

@@ -8,6 +8,19 @@ angular.module('inspinia')
     
     //Setup
 		vm.userData = userData;
+    vm.cardsSearched=false;
+		if(vm.userData.square_id){
+			api.call('usersGetUserCreditCards', vm.userData.id, function(data){
+				vm.userData.cards = data;
+				vm.cardsSearched=true;
+			}, function(err){
+				console.log(err);
+        vm.cardsSearched=true;
+			});
+		}else{
+      vm.cardsSearched=true;
+      vm.userData.cards=[];
+		}
 		vm.appData = api.getData();
 		
 		var defaultUser = {
@@ -66,7 +79,8 @@ angular.module('inspinia')
     function hasProp (obj, prop) {
 			return Object.prototype.hasOwnProperty.call(obj, prop);
 		}
-   
+
+
 	  vm.saveAddress = function(add, callback){	
 			var creatingNew = true;
 			if (add === parseInt(add, 10)){
@@ -99,7 +113,15 @@ angular.module('inspinia')
 		* * * * * Save/Create	* * * * * 
 		*															*	
 		\*	  												*/
-	
+		vm.createCreditCard = function(nonce){
+			api.call('usersCreateCreditCard', {userId:vm.userData.id, nonce:nonce}, function(result){
+				console.log("DONE!");
+				console.log(result);
+				result.card.brand = result.card.card_brand;
+				vm.userData.cards.push(result.card);
+			});
+		};
+
 		vm.availableRoles = [
 			{id:1, name:'Client'}, 
 			{id:2, name:'Admin'}, 
@@ -130,7 +152,7 @@ angular.module('inspinia')
 		
 		
 		vm.useAddress = false;
-		
+
 		vm.saveUser = function(){
 			checkForAddress();
 			

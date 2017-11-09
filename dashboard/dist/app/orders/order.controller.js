@@ -17,7 +17,20 @@ angular.module('inspinia')
 	    "3b9b047a-f148-4f53-9306-bd93139d7b1c": "James Kelleway"
     }
     
-    
+    vm.createCard = function(nonce){
+		//alert("Let's create a CC!! "+nonce);
+		var data = {
+			userId:1,
+			nonce:nonce
+		}
+
+		console.log(data);
+		api.call('usersCreateCreditCard', data, function(result){
+			console.log("here's the result!");
+			console.log(result);
+		});
+  	}
+
     function serializeFilters(obj){
 	    var result = [];
 			for (var property in obj)

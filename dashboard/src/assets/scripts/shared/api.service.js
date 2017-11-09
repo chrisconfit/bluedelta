@@ -16,10 +16,9 @@
 		var config = {
 			client_id:2,
 			client_secret: "8xHu3MLzZXr3pcUneGCM08XOzMc5rH5AOtJSCdIP",
-			url :  "http://ec2-54-200-231-145.us-west-2.compute.amazonaws.com",
+			url :  "https://api.bluedeltajeans.com",
 			headers: {'Content-Type':'application/json'}
 		};
-
 
 		if($location.$$host == "localhost"){
 			config.url = "http://bluedelta.local";
@@ -31,7 +30,8 @@
 			'getResetToken',
 			'resetPassword',
 			'forgotPassword',
-			'getJean'
+			'getJean',
+        'swipeCallback'
 		];
 		
 		//Call an API function and handle data
@@ -44,6 +44,7 @@
 
 			console.log('calling '+func+" with...");
 			console.log(data);
+
 			if (noTokenNecessary.indexOf(func) < 0 && !accessToken){
 				var message = "Request being made with no access token.";
 				var err = new Error(message);
@@ -92,19 +93,19 @@
 		
 		var login = function(data){
 			return httpReq("POST", "/api/login", data);
-		}
+		};
 		
 		var register = function(data){
 			return httpReq("POST", "/api/register", data);
-		}
+		};
 	  
 	  var getResetToken = function(data){
 			return httpReq("POST", "/api/passwordtoken",  {email:data});
-		}
+		};
 		
 		var resetPassword = function(data){
 			return httpReq("POST", "/api/passwordreset", data);
-		}
+		};
 	  
 	  
 
@@ -161,7 +162,7 @@
 			}	
 			url = url.replace(/(^[_\s]+)|([_\s]+$)/g, '');
 			return url.replace('-','');
-		}
+		};
 	  
 		function loadImage(src) {
 			return $q(function(resolve,reject) {
@@ -182,7 +183,7 @@
 				var image = images[i];
 				if(image.src.indexOf("/"+key+"/") > -1){
 					cntxt.drawImage(image,0,0,600,696);
-				};
+				}
 			}
 		}
 		
@@ -216,7 +217,7 @@
 			    console.log(err);
 		    }
 	    );	
-		}
+		};
 		
 		
 		
@@ -232,44 +233,44 @@
 			var path = "/api/users/current/addresses"
 			if (data.id) path+="/"+data.id;
 			return httpReq("POST", path, data);
-		}
+		};
 
 		var deleteMyAddress = function(addressId){
 		  return httpReq("DELETE", "/api/users/current/addresses/"+addressId);			
-		}
+		};
 		
 		var createMyJeans = function(data){
 		  return httpReq("POST", "/api/users/current/jeans", data);
-	  }
+	  };
 		
 		var getCurrentUser = function(){
 			return httpReq("GET", "/api/users/current");
-		}
+		};
 		
 		var getMyJeans = function(){
 			return httpReq("GET", "/api/users/current/jeans");	
-		}
+		};
 		
 		var getMyOrders = function(data){
 			var path = "/api/users/current/orders";
 			if (data) path +="/"+data;
 			return httpReq("GET", path);
-		}
+		};
 		
 		var updateMe = function(data){
 			return httpReq("POST", "/api/users/current", data);	
-		}
+		};
 	  
 	  var getMyJeans = function(){
 		  return httpReq("GET", "/api/users/current/jeans");
-	  }
+	  };
 
 	  var deleteMyJean = function(jeanId){
 			return httpReq("DELETE", "/api/users/current/jeans/"+jeanId);
-		}
+		};
 		var placeMyOrder = function(orderCreateObj){
 			return httpReq("POST", "/api/users/current/orders", orderCreateObj);
-		}
+		};
 	  
 	  
 	  
@@ -281,80 +282,93 @@
 		  var path = "/api/orderItem"
 			if (data.id) path += "/"+data.id;
 		  return httpReq("POST", path, data);
-	  }
+	  };
 	  
 	  var usersList = function(data){
 			return httpReq("GET", "/api/users", data);
-	  }
+	  };
 
 		var userGet = function(userId){
 			return httpReq("GET", "/api/users/"+userId);
-		}
+		};
 		
 		var usersDelete = function(userId){
 			return httpReq("DELETE", "/api/users/"+userId);
-		}
+		};
 		
 		var usersCreateAddress = function(data){
 			return httpReq("POST", "/api/users/"+data.userId+"/address", data.address);
-		}
+		};
 		
 		var usersCreateJean = function(data){
 			return httpReq("POST", "/api/users/"+data.userId+"/jeans", data.jean);
-		}
+		};
 		
 		var usersCreateOrder = function(data){
 			return httpReq("POST", "/api/users/"+data.userId+"/orders", data.order);
-		}
+		};
 
 		var usersCreateCreditCard = function(data){
 			return httpReq("POST", "/api/users/"+data.userId+"/cc", data);
-		}
+		};
 
 	  	var usersGetUserCreditCards = function(userId){
 			return httpReq("GET", "/api/users/"+userId+"/cc");
-		}
+		};
 
 		var usersPost = function(data){
 			var path = "/api/users"
 			if (data.id) path += "/"+data.id;
 			return httpReq("POST", path, data);			
-		}
+		};
 		
 		var ordersList = function(data){
 			return httpReq("GET", "/api/orders", data);
-	  }
-	  
+	  };
+
 		var orderGet = function(orderId){
 			return httpReq("GET", "/api/orders/"+orderId);
-		}
+		};
 		
 		var ordersDelete = function(orderId){
 			return httpReq("DELETE", "/api/orders/"+orderId);
-		}
+		};
 		
 		var ordersPost = function(data){
 			var path = "/api/orders";
 			if (data.id) path += "/"+data.id
 			return httpReq("POST", path, data);
-		}
+		};
 
 		var ordersCharge = function(data){
 		  return httpReq("POST", "/api/orders/"+data.orderId+"/charge", data);
-    }
+    };
 		
 		var postAddress = function(data){
 			var path = "/api/users/"+data.userId+"/addresses";
 			if (data.address.id) path += "/"+data.address.id;
 			return httpReq("POST", path, data.address);
-		}
+		};
 		
 		var commentsCreate = function(data){
 			return httpReq("POST", "/api/orders/"+data.orderId+"/comments", data.comment);
-		}
+		};
+
+		var swipeCallback = function(data){
+		  return httpReq("POST", "/api/swipe", data);
+    };
+
+    var fitmatchList = function(data){
+      return httpReq("GET", "/api/fitmatchrequests", data);
+    };
+
+    var fitmatchGet = function(fmId){
+      return httpReq("GET", "/api/fitmatchrequests/"+fmId);
+    };
+
 
 		var getAppData = function(){
-			$http.get("http://ec2-54-200-231-145.us-west-2.compute.amazonaws.com/api/data").then(function(result){
+			$http.get("https://api.bluedeltajeans.com/api/data").then(function(result){
 				for(key in result.data){
 					if(result.data.hasOwnProperty(key)){
 						appData[key] = result.data[key];
@@ -393,8 +407,6 @@
 			getMyJeans:getMyJeans,
 			updateMe: updateMe,
 			postMyAddress:postMyAddress,
-			getMyJeans:getMyJeans,
-			getMyOrders:getMyOrders,
 			deleteMyJean:deleteMyJean,
 			deleteMyAddress: deleteMyAddress,
 			placeMyOrder: placeMyOrder,
@@ -414,8 +426,11 @@
 			orderGet:orderGet,
 			ordersDelete:ordersDelete,
       ordersCharge:ordersCharge,
-			postAddress:postAddress,
-			commentsCreate:commentsCreate
+      postAddress:postAddress,
+			commentsCreate:commentsCreate,
+      swipeCallback:swipeCallback,
+      fitmatchList:fitmatchList,
+      fitmatchGet:fitmatchGet
     };
     
   }

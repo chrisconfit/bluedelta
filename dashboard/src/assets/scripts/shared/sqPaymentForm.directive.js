@@ -35,11 +35,15 @@
             link:function($scope){
 
               var sandboxId ="sandbox-sq0idp-Ix0BKq70y9xTbYuMuBPZkQ";
-              //var applicationId = 'sq0idp-Ix0BKq70y9xTbYuMuBPZkQ'; // <-- Add your application's ID here
-              var applicationId = sandboxId; //Comment out to go live
-              var locationId = '9PZNFDJTA6SQ4';    // <-- For Apple Pay, set your location ID here
+              var applicationId = 'sq0idp-Ix0BKq70y9xTbYuMuBPZkQ'; // <-- Add your application's ID here
+              applicationId = sandboxId; //Comment out to go live
 
+              var sandboxLocation = 'CBASEN9Li-GLHOlc4cpGQaL58MogAQ';
+              var locationId = '9PZNFDJTA6SQ4';
+              locationId = sandboxLocation;
 
+              console.log("INIT!");
+              console.log(applicationId, locationId);
 
 
               $scope.requestCardNonce = function() {
