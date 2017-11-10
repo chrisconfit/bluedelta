@@ -65,7 +65,7 @@ angular.module('inspinia')
       cancelButtonText: "Cancel",
       closeOnConfirm: false,
       closeOnCancel: true 
-    }
+    };
     
 		vm.deleteOrder = function(orderId){
 			SweetAlert.swal(deleteOrderBox,
@@ -78,7 +78,7 @@ angular.module('inspinia')
 	        }
 		    }
 		  );
-		}
+		};
 		
 		vm.ordersRemove = function(orderId){
 			for(var i=0; i<vm.orders.length; i++){
@@ -87,7 +87,7 @@ angular.module('inspinia')
 					return;
 				}
 			}
-		}
+		};
  
  
 	

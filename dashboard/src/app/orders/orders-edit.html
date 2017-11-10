@@ -14,7 +14,7 @@
 	<div class="wrapper wrapper-content">
 
     <div class="row">	    
-			<form name="f.orderForm">
+			<form name="f.fmForm">
 
 	      <div class="col-md-3">
 	
@@ -36,7 +36,7 @@
 							
 							<!--Order User Validation-->
 							<input type="hidden" name="user_id" ng-model="ovm.orderUser.id" required>
-							<small ng-show="f.orderForm.submitted && f.orderForm.user_id.$error.required" class="text-danger">Please Choose a Client</small>
+							<small ng-show="f.fmForm.submitted && f.fmForm.user_id.$error.required" class="text-danger">Please Choose a Client</small>
 							
 		          <ul ng-if="ovm.orderUser.id" class="list-group list-group-unbordered">
 	              <li class="list-group-item clearfix">
@@ -61,8 +61,8 @@
 									
 									<!--Address Validation-->
 	                <input type="hidden" ng-model="ovm.order.shipping_address_id" name="shipping_address_id" required>
-	                <br ng-if="f.orderForm.submitted && f.orderForm.shipping_address_id.$error.required" >
-	                <small ng-show="f.orderForm.submitted && f.orderForm.shipping_address_id.$error.required" class="text-danger">Please Choose a Shipping Address</small>
+	                <br ng-if="f.fmForm.submitted && f.fmForm.shipping_address_id.$error.required" >
+	                <small ng-show="f.fmForm.submitted && f.fmForm.shipping_address_id.$error.required" class="text-danger">Please Choose a Shipping Address</small>
 	                
 	              </li>
 	              <!--<li class="list-group-item clearfix">
@@ -74,8 +74,10 @@
 	              </li>-->
 								<li class="list-group-item clearfix">
 									<p><b>Payment Status</b></p>
-
-                  <p class="payment_class_{{ovm.order.payment_status_id}}">
+									<input type="hidden" name="payment_status_id" id="payment_status_id" ng-model="">
+												 
+									<small ng-show="f.fmForm.submitted && f.fmForm.payment_status_id.$error.required" class="text-danger">Please Choose a Payment Method</small>
+									<p class="payment_class_{{ovm.order.payment_status_id}}">
                     {{ovm.data.lookup("payment_statuses", "id", ovm.order.payment_status_id, "label")}}
                   </p>
 

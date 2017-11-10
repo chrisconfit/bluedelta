@@ -89,6 +89,14 @@
 			return defer.promise; 
 		}];
 
+
+    /*
+    * Fit Match Resolves
+    */
+
+    var fitMatchAddScreenResolve = angular.copy(editScreenResolve);
+    fitMatchAddScreenResolve.fmData = function(){return null};
+
 		var fitMatchEditScreenResolve = angular.copy(editScreenResolve);
     fitMatchEditScreenResolve.fmData = [ '$stateParams', '$location', 'api', '$q', function($stateParams, $location, api, $q){
 
@@ -234,47 +242,46 @@
         controller: "OrdersCallbackController as vm",
       })
 
-
-        .state('fitmatch', {
-          abstract: true,
-          url: "/fitmatch",
-          templateUrl: "app/components/common/content.html",
-          authenticate: true,
-          resolve: {
-            loadPlugin: function ($ocLazyLoad) {
-              return $ocLazyLoad.load([
-                {	files: ['assets/scripts/sweetalert/sweetalert.min.js', 'assets/styles/sweetalert/sweetalert.css']},
-                { name: 'oitozero.ngSweetAlert', files: ['assets/scripts/sweetalert/angular-sweetalert.min.js'] },
-                { serie: true, files: ['assets/scripts/daterangepicker/daterangepicker.js', 'assets/styles/daterangepicker/daterangepicker-bs3.css'] },
-                { name: 'daterangepicker', files: ['assets/scripts/daterangepicker/angular-daterangepicker.js']},
-                { name: 'datePicker', files: ['assets/styles/datapicker/angular-datapicker.css','assets/scripts/datapicker/angular-datepicker.js'] }
-              ]);
-            }
+      .state('fitmatch', {
+        abstract: true,
+        url: "/fitmatch",
+        templateUrl: "app/components/common/content.html",
+        authenticate: true,
+        resolve: {
+          loadPlugin: function ($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              {	files: ['assets/scripts/sweetalert/sweetalert.min.js', 'assets/styles/sweetalert/sweetalert.css']},
+              { name: 'oitozero.ngSweetAlert', files: ['assets/scripts/sweetalert/angular-sweetalert.min.js'] },
+              { serie: true, files: ['assets/scripts/daterangepicker/daterangepicker.js', 'assets/styles/daterangepicker/daterangepicker-bs3.css'] },
+              { name: 'daterangepicker', files: ['assets/scripts/daterangepicker/angular-daterangepicker.js']},
+              { name: 'datePicker', files: ['assets/styles/datapicker/angular-datapicker.css','assets/scripts/datapicker/angular-datepicker.js'] }
+            ]);
           }
-        })
+        }
+      })
 
-        .state('fitmatch.list', {
-          url: "/list?:user_id",
-          templateUrl: "app/fitmatch/fitmatch.html",
-          authenticate: true,
-          controller: "FitMatchController as vm",
-        })
+      .state('fitmatch.list', {
+        url: "/list?:user_id",
+        templateUrl: "app/fitmatch/fitmatch.html",
+        authenticate: true,
+        controller: "FitMatchController as vm",
+      })
 
-        .state('fitmatch.edit', {
-          url: "/edit/:fmId",
-          templateUrl: "app/fitmatch/fitmatch-edit.html",
-          authenticate: true,
-          controller: "FitMatchEditController as vm",
-          resolve: fitMatchEditScreenResolve
-        })
-/*
-        .state('fitmatch.add', {
-          url: "/add",
-          templateUrl: "app/orders/orders-edit.html",
-          authenticate: true,
-          controller: "OrdersEditController as ovm",
-          resolve: orderAddScreenResolve
-        })*/
+      .state('fitmatch.edit', {
+        url: "/edit/:fmId",
+        templateUrl: "app/fitmatch/fitmatch-edit.html",
+        authenticate: true,
+        controller: "FitMatchEditController as vm",
+        resolve: fitMatchEditScreenResolve
+      })
+
+      .state('fitmatch.add', {
+        url: "/add",
+        templateUrl: "app/fitmatch/fitmatch-edit.html",
+        authenticate: true,
+        controller: "FitMatchEditController as vm",
+        resolve: fitMatchAddScreenResolve
+      });
       
     $urlRouterProvider.otherwise('orders/list');
   };

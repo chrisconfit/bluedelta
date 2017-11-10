@@ -29,7 +29,7 @@ angular.module('inspinia')
 
       var deleteFitMatchBox = {
         title: "Are you sure?",
-        text: "This order will be deleted forever!",
+        text: "This Fit Match Request will be deleted forever!",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
@@ -37,34 +37,31 @@ angular.module('inspinia')
         cancelButtonText: "Cancel",
         closeOnConfirm: false,
         closeOnCancel: true
-      }
+      };
 
-      vm.deleteFMReq = function(fmId){
+      vm.deleteFM = function(fmId){
         SweetAlert.swal(deleteFitMatchBox,
             function (isConfirm) {
               if (isConfirm) {
-                alert("DEL!! " + fmId);
-                /*
-                api.call('ordersDelete', orderId, function(result){
-                  vm.ordersRemove(orderId);
-                  SweetAlert.swal("Deleted!", "Order# "+orderId+" has been deleted.", "success");
+                api.call('fitmatchDelete', fmId, function(result){
+                  vm.fmRemove(fmId);
+                  SweetAlert.swal("Deleted!", "Fit Match Request #"+fmId+" has been deleted.", "success");
                 });
-                */
               }
             }
         );
-      }
-/*
-      vm.ordersRemove = function(orderId){
-        for(var i=0; i<vm.orders.length; i++){
-          if (vm.orders[i].id == orderId){
-            vm.orders.splice(i, 1);
+      };
+
+      vm.fmRemove = function(fmId){
+        for(var i=0; i<vm.fitmatchrequests.length; i++){
+          if (vm.fitmatchrequests[i].id === orderId){
+            vm.fitmatchrequests.splice(i, 1);
             return;
           }
         }
-      }
+      };
 
-*/
+
 
       //Get requests
       vm.pagination = {

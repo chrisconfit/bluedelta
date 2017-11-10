@@ -104,7 +104,7 @@ angular.module('inspinia')
 	
 	  vm.editAddress = function (type, icon) {
 	    var modalInstance = $uibModal.open({
-	      templateUrl: 'app/address-choice/address.html',
+	      templateUrl: 'app/components/address-choice/address.html',
 	      controller: 'AddressController',
 	      resolve: {
 	        data: {
@@ -124,10 +124,6 @@ angular.module('inspinia')
   
   
 	  vm.saveAddress = function(add, callback){
-		  
-		  console.log( "SAVING ADDRESS!!");
-		  console.log(add);
-		  
 	    if (add === parseInt(add, 10)){
 		    vm.order.shipping_address_id = add;
 		    for (var i=0; i<vm.orderUser.addresses.length; i++){
@@ -158,7 +154,7 @@ angular.module('inspinia')
 	     
 	  vm.editUser = function(){
 	    var modalInstance = $uibModal.open({
-	      templateUrl: 'app/orders/userChoice.html',
+	      templateUrl: 'app/components/user-choice/userChoice.html',
 	      controller: 'UserChoiceController',
 	      resolve: {
 	        choose : function(){
@@ -220,7 +216,7 @@ angular.module('inspinia')
     vm.keyinPayment = function(){
 
       var modalInstance = $uibModal.open({
-        templateUrl: 'app/orders/keyInModal.html',
+        templateUrl: 'app/components/key-in-cc/keyInModal.html',
         controller: 'KeyInController',
         resolve: {
           orderData : function() {

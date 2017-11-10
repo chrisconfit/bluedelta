@@ -366,6 +366,15 @@
       return httpReq("GET", "/api/fitmatchrequests/"+fmId);
     };
 
+    var fitmatchDelete = function(fmId){
+      return httpReq("DELETE", "/api/fitmatchrequests/"+fmId);
+    };
+
+    var fitmatchPost = function(data){
+      var path = "/api/fitmatchrequests";
+      if (data.id) path += "/"+data.id
+      return httpReq("POST", path, data);
+    };
 
 		var getAppData = function(){
 			$http.get("https://api.bluedeltajeans.com/api/data").then(function(result){
@@ -430,7 +439,9 @@
 			commentsCreate:commentsCreate,
       swipeCallback:swipeCallback,
       fitmatchList:fitmatchList,
-      fitmatchGet:fitmatchGet
+      fitmatchGet:fitmatchGet,
+      fitmatchDelete:fitmatchDelete,
+      fitmatchPost:fitmatchPost
     };
     
   }

@@ -3,7 +3,10 @@
 angular.module('inspinia')
   .controller('AddressController', ['$scope', '$uibModalInstance', 'data', 'address', 'save',
   function ($scope, $uibModalInstance, data, address, save) {
-	  
+
+  	console.log("ADDDDD");
+  	console.log(address);
+
 	  $scope.a = {selected:data.selected};
 		$scope.addresses=address;
 		$scope.addressType = data.addressType;
