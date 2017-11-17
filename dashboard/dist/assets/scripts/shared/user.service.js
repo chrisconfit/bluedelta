@@ -7,16 +7,20 @@
 
   user.$inject = ['$location', '$window', 'api'];
   function user($location, $window, api) {
-		
-		var isCustomizer = ($location.$$host=="localhost" && $location.$$port == 4000);
+
+		var isCustomizer = ($location.$$host=="localhost" && $location.$$port == 4000) || $location.$$host.split('.')[0]=="build";
 		var userRoleProp = isCustomizer ? "bdUserRole" : "bdDashUserRole";
 		var tokenProp = isCustomizer ? "bdAccessToken":"bdDashAccessToken";	
 		var idProp = isCustomizer ? "bdUserId":"bdDashUserId";
 		var user = {};
-		 	
-	  var isAdmin = function(){ return $window.localStorage.getItem(userRoleProp) > 1 ? true : false; }
-		var isLoggedIn = function(){ return $window.localStorage.getItem(tokenProp) ? true : false; }
-	  var getToken = function(){ return $window.localStorage.getItem(tokenProp); }
+
+
+	  var isAdmin = function(){
+	  	return parseInt($window.localStorage.getItem(userRoleProp)) > 1;
+	  };
+
+		var isLoggedIn = function(){ return !!$window.localStorage.getItem(tokenProp); };
+	  var getToken = function(){ return $window.localStorage.getItem(tokenProp); };
 			
 		var set = function(key, data){
 			
@@ -96,12 +100,13 @@
 			});		
 		}
 		
-		var logout = function(){
+		var logout = function(callback, redirect){
 			$window.localStorage.removeItem(tokenProp);
 			$window.localStorage.removeItem(userRoleProp);
 			$window.localStorage.removeItem(idProp);
 			user = {};
-			$location.path("/login");
+			if(callback) callback();
+			if(redirect !== false) $location.path("/login");
 		}
 		
 		var update = function(userData, success, error){

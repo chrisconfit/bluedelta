@@ -37,7 +37,7 @@
 		    console.log('valid');
 	      user.login(email, password, function(){
 					if ($scope.callback) $scope.callback();
-					if ($scope.redirect) $location.path($scope.redirect);
+					if ($scope.redirect && $scope.redirect !== "NULL") $location.path($scope.redirect);
 					if (!$scope.callback && !$scope.redirect)	$location.path('/closet');
 				},
 				function(err){

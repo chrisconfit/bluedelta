@@ -14,7 +14,6 @@ angular.module('inspinia')
 				vm.userData.cards = data;
 				vm.cardsSearched=true;
 			}, function(err){
-				console.log(err);
         vm.cardsSearched=true;
 			});
 		}else{
@@ -30,21 +29,22 @@ angular.module('inspinia')
 			email:"",
 			phone:"",
 			addresses:[],
-		}
+		};
 
-		vm.newUser = Object.keys(vm.userData).length>0 ? false : true;
+		vm.newUser = !vm.userData.id;
+
 		vm.userData = vm.newUser ? defaultUser : userData;		
 		vm.originalUser = vm.newUser ? null : angular.copy(userData);
 		vm.clientEditMode= vm.newUser ? true : false;
 		
 		vm.beginClientEdit = function(){
 			vm.clientEditMode = true;
-		}
+		};
 		
 		vm.clearClientEdit = function(item){
 			vm.clientEditMode = false;
 			item = vm.originalUser;
-		}
+		};
 	
 		vm.editAddress = function (type, icon) {
       var modalInstance = $uibModal.open({
@@ -95,12 +95,11 @@ angular.module('inspinia')
 			var data = {userId:vm.userData.id, address:add};
 
 			api.call('postAddress', data, function(result){	
-				console.log(result);
 				if(creatingNew) vm.userData.addresses.push(result);
-				setPrimary(result.id);
+        setPrimary(result.id);
 				if(callback)callback();
 			});
-		}
+		};
 		
 		
 		
@@ -115,8 +114,6 @@ angular.module('inspinia')
 		\*	  												*/
 		vm.createCreditCard = function(nonce){
 			api.call('usersCreateCreditCard', {userId:vm.userData.id, nonce:nonce}, function(result){
-				console.log("DONE!");
-				console.log(result);
 				result.card.brand = result.card.card_brand;
 				vm.userData.cards.push(result.card);
 			});
@@ -124,7 +121,7 @@ angular.module('inspinia')
 
 		vm.availableRoles = [
 			{id:1, name:'Client'}, 
-			{id:2, name:'Admin'}, 
+			{id:2, name:'Admin'}
 		];	
 	
 		vm.user=user.get(true);
@@ -139,29 +136,25 @@ angular.module('inspinia')
 		function checkForAddress(){			
 			//Address has not been touched
 			if (!vm.userData.create_addresses) return false;
-
 			var add = vm.userData.create_addresses[0];
 			if(!add.address_line_1 && !add.address_line_1 && !add.city && !add.state && !add.zip){
 				delete vm.userData.create_addresses;
 				return false;
-			}	
-			
+			}
 			return true;
-				
 		}
 		
 		
 		vm.useAddress = false;
 
 		vm.saveUser = function(){
+
 			checkForAddress();
-			
 			if (!$scope.userDataForm.$valid){
 				$scope.userDataForm.submitted = true;
 				return false;
 			}  
-						
-			
+
 			toaster.pop({
 			  type: 'wait',
 			  title: "Saving...",

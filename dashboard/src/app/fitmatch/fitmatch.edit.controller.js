@@ -21,15 +21,8 @@ angular.module('inspinia')
       vm.EditMode= !!vm.newFM;
 
       if(!vm.newFM) vm.fmData.requested_fabric_ids = JSON.parse(vm.fmData.requested_fabric_ids);
-      //vm.originalJean = vm.newOrder ? null : angular.copy(vm.order.order_items[0]);
-      //vm.order.fit_date =  vm.order.fit_date ? vm.order.fit_date: null;
-      //vm.order.dob =  vm.order.dob ? vm.order.dob: null;
-      //vm.order.dueDate =  vm.order.dueDate ? vm.order.dueDate: null;
-      //vm.orderUser = vm.newOrder ? null : orderData.user;
 
       vm.pullingCards = false;
-      console.log("VMFMD");
-      console.log(vm.fmData);
       if(vm.fmData.credit_card_id && vm.fmData.user.square_id){
         vm.pullingCards = true;
         api.call('usersGetUserCreditCards', vm.fmData.user.id, function (cards) {
@@ -182,7 +175,8 @@ angular.module('inspinia')
             orderData : function() {
               var data = {
                 "user":vm.fmData.user,
-                "fitmatch":vm.fmData
+                "fitmatch":vm.fmData,
+                "amount":50
               };
               if (vm.fmData.credit_card_id) data.selectedCard = vm.fmData.credit_card_id;
               return data;
@@ -192,7 +186,9 @@ angular.module('inspinia')
               return api;
             },
             confirmation : function(){
-              return function(swalSettings){SweetAlert.swal(swalSettings)};
+              return function(swalSettings){
+                SweetAlert.swal(swalSettings);
+              };
             }
           }
         });
@@ -217,7 +213,7 @@ angular.module('inspinia')
         cancelButtonText: "Cancel",
         closeOnConfirm: true,
         closeOnCancel: true
-      }
+      };
 
       vm.deleteFM = function(){
         SweetAlert.swal(deleteOrderBox,
@@ -229,7 +225,11 @@ angular.module('inspinia')
             }
           }
         );
-      }
+      };
+
+      vm.orderFM = function(){
+        $state.transitionTo('orders.add', {fitMatchId:vm.fmData.id});
+      };
 
       //Save...
       vm.saveFM = function(callback){
@@ -239,7 +239,7 @@ angular.module('inspinia')
           return false;
         }
 
-        if(vm.fmData.user==null){
+        if(vm.fmData.user===null){
           console.log("We don't have a user yet!");
           return false;
         }
@@ -256,6 +256,7 @@ angular.module('inspinia')
         api.call('fitmatchPost', saveData, function(result){
           toaster.clear(savingToast);
           toaster.success('Saved Fit Match Request!');
+          $state.transitionTo('fitmatch.edit', {fmId:result.id});
           if (callback)callback();
         }, function(err){
           toaster.clear(savingToast);
@@ -266,11 +267,11 @@ angular.module('inspinia')
           });
         });
 
-      }//.saveOrder()...
+      };//.saveOrder()...
 
       vm.formatDate = function(date){
-        var date = new Date(date);
-        return $filter('date')(date, "MM/dd/yyyy h:s a");
+        var fdate = new Date(date);
+        return $filter('date')(fdate, "MM/dd/yyyy h:s a");
       };
 
       $scope.$watch(angular.bind(this, function () {
@@ -291,34 +292,16 @@ angular.module('inspinia')
         }
       });
 
+      console.log(vm.data.fabrics);
+      vm.fabric_list_item_name = function(fabric_id){
+        var name = vm.data.lookup("fabrics", "id", fabric_id, "name");
+        var id = vm.data.lookup("fabrics", "id", fabric_id, "display_id");
+        var ret = "";
+        if(vm.data.lookup("fabrics", "id", fabric_id, "deleted_at"))
+          ret+="(deleted) ";
+        ret+=name;
+        if (id) ret+=" - "+id;
+        return ret;
+      }
 
-      return;
-
-
-
-
-
-
-
-
-
-
-
-        var dataParameter = {
-          "amount_money": {
-            "amount" : "100",
-            "currency_code" : "USD"
-          },
-          "callback_url" : "https://requestb.in/17ok6gh1", // Replace this value with your application's callback URL
-          "client_id" : "sq0idp-Ix0BKq70y9xTbYuMuBPZkQ", // Replace this value with your application's ID
-          "version": "1.3",
-          "notes": "Payment for Order #"+vm.order.id,
-          "options" : {
-            "supported_tender_types" : ["CREDIT_CARD","CASH","OTHER","SQUARE_GIFT_CARD","CARD_ON_FILE"]
-          }
-        };
-        var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        var timestamp = Math.floor(Date.now() / 1000);
-        vm.squareLink = iOS ? "square-commerce-v1://payment/create?data=" + encodeURIComponent(JSON.stringify(dataParameter)) +"&time="+timestamp : false;
-
-      }]);
+  }]);

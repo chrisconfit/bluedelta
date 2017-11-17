@@ -1,6 +1,6 @@
 (function () {
 
-  angular.module('bdApp', ['ngRoute', 'ngAnimate','ngSanitize', 'ngCookies', 'angular-gestures', 'user', 'api']); 
+  angular.module('bdApp', ['ngRoute', 'ngAnimate','ngSanitize', 'ngCookies', 'angular-gestures', 'user', 'api', 'sqPaymentForm']);
   
 
 
@@ -11,7 +11,7 @@
         controller: 'homeCtrl',
         controllerAs: 'vm',
       })
-      .when('/pay/:orderId?', {
+      .when('/pay/:orderDetails', {
         templateUrl: '/pages/pay/pay.view.html',
         controller: 'payCtrl',
         controllerAs: 'vm',

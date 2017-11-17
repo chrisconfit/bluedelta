@@ -1,0 +1,67 @@
+<div class="inmodal">
+  <div class="modal-header">
+    <h4 class="modal-title"><i class="fa fa-credit-card" aria-hidden="true"></i> Credit Cards</h4>
+    <small class="font-bold">Choose a credit card to charge for this order.</small>
+  </div>
+  <div class="modal-body">
+    <b>Charge Amount:</b>
+    <span ng-if="!cardForm.editingAmount">{{cardForm.chargeAmount | currency}}&nbsp;</span>
+    <input style="margin:0 7px;" type="text" ng-model="cardForm.chargeAmount" ng-if="cardForm.editingAmount">
+    <i ng-click="cardForm.editingAmount=!cardForm.editingAmount" class="fa"
+       ng-class="!cardForm.editingAmount ? 'fa-pencil' : 'fa-check'"></i>
+
+    <br>
+
+    <div ng-if="!cardForm.addCard">
+
+      <!--Messages...-->
+      <p ng-if="!cardsSearched">Looking for Credit Cards...</p>
+      <p ng-if="cardsSearched && cards.length < 1">No Credit Cards on file.</p>
+
+      <!--Card List-->
+      <div  ng-repeat="cc in cards" class="radio radio-primary">
+        <input type="radio" id="cc_{{cc.id}}"
+              ng-model="cardForm.selectedCard" ng-value="cc.id">
+        <label for="cc_{{cc.id}}">
+          <span style="width:45px; display:inline-block; font-weight:700;">{{cc.brand | ccName}}</span> -
+          &nbsp;&nbsp;**** **** **** {{cc.last_4}}
+        </label>
+      </div>
+
+    </div>
+
+      
+    <div ng-if="cardForm.addCard">
+      <br>
+      <sq-payment-form external-control="cardForm.fire" nonce-received-callback="cardChosen"></sq-payment-form>
+      <input type="checkbox" ng-model="cardForm.saveCard">&nbsp;&nbsp;
+      <label>Save Card on Charge</label>
+    </div>
+
+  </div>
+
+  <div class="modal-footer clearfix">
+    <div class="pull-left">
+      <a href="" ng-if="!cardForm.addCard" ng-click="cardForm.addCard=true">Add a Credit Card</a>
+      <a href="" ng-if="cardForm.addCard && cards.length" ng-click="cardForm.addCard=false">Choose a saved Credit Card</a>
+    </div>
+    <div class="pull-right key-in-modal-buttons">
+      <div ng-if="cardForm.addCard" class="button-container">
+        <a class="btn btn-flat btn-primary"  href="" ng-click="saveCCToUser()">Save Card</a>
+        <a class="btn btn-flat btn-success btn-primary" href="" ng-if="cardForm.addCard" ng-click="cardForm.fire()">
+          <span ng-class="{'disabled':!cardForm.chargeAmount}" ng-if="!cardForm.saveCard">Charge Card</span>
+          <span ng-if="cardForm.saveCard">Charge & Save Card</span>
+        </a>
+      </div>
+      <div ng-if="!cardForm.addCard" class="button-container">
+        <a class="btn btn-flat btn-success btn-primary" ng-if="!cardForm.addCard && cards.length" href="" ng-class="{'disabled':!cardForm.selectedCard}"
+           ng-click="cardChosen(cardForm.selectedCard)">Charge Card</a>
+        <a ng-class="{'disabled':!cardForm.selectedCard}" class="btn btn-flat btn-primary"
+           ng-click="saveCardToOrder(cardForm.selectedCard)">Save as Primary</a>
+      </div>
+      <a class="btn btn-flat btn-danger" href="" ng-click="closeForm();">Cancel</a>
+    </div>
+  </div>
+
+</div>
+

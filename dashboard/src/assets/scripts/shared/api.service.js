@@ -178,14 +178,14 @@
 			})
 		}   
     
-	 function searchAndDraw(key, cntxt, images){
-			for(i=0; i<images.length; i++){
-				var image = images[i];
-				if(image.src.indexOf("/"+key+"/") > -1){
-					cntxt.drawImage(image,0,0,600,696);
-				}
-			}
-		}
+    function searchAndDraw(key, cntxt, images){
+      for(i=0; i<images.length; i++){
+        var image = images[i];
+        if(image.src.indexOf("/"+key+"/") > -1){
+          cntxt.drawImage(image,0,0,600,696);
+        }
+      }
+    }
 		
 	  var createThumb = function(jeanData){
 	  	var canvas = document.createElement('canvas');
@@ -271,10 +271,18 @@
 		var placeMyOrder = function(orderCreateObj){
 			return httpReq("POST", "/api/users/current/orders", orderCreateObj);
 		};
+
+    var getMyCreditCards = function(){
+      return httpReq("GET", "/api/users/current/cc");
+    };
+
+    var createMyCreditCard = function(data){
+      return httpReq("POST", "/api/users/current/cc", data);
+    };
 	  
-	  
-	  
-	  
+	  var createMyFitMatch = function(data){
+      return httpReq("POST", "/api/users/current/fitmatch", data);
+		};
 	  /*
 		* Admin API
 		*/
@@ -312,7 +320,7 @@
 			return httpReq("POST", "/api/users/"+data.userId+"/cc", data);
 		};
 
-	  	var usersGetUserCreditCards = function(userId){
+		var usersGetUserCreditCards = function(userId){
 			return httpReq("GET", "/api/users/"+userId+"/cc");
 		};
 
@@ -375,16 +383,35 @@
       if (data.id) path += "/"+data.id
       return httpReq("POST", path, data);
     };
-
+    var fitmatchCharge = function(data){
+      return httpReq("POST", "/api/fitmatchrequests/"+data.fitmatchId+"/charge", data);
+    };
 		var getAppData = function(){
-			$http.get("https://api.bluedeltajeans.com/api/data").then(function(result){
+      httpReq("GET", "/api/data").then(function(result){
 				for(key in result.data){
 					if(result.data.hasOwnProperty(key)){
 						appData[key] = result.data[key];
 					}
 				}
+				appData.belt_loop_options = [
+					{"id":1, "label":"Centered"},
+          {"id":2, "label":"Split"},
+          {"id":3, "label":"X-Pattern"}
+
+				];
+        appData.payment_statuses = [
+          {"id":1, "label": "Awaiting Payment"},
+          {"id":2, "label": "Paid"},
+          {"id":3, "label": "Comped"}
+        ];
+        appData.pocket_options = [
+          {"id":1, "label": "Normal"},
+          {"id":2, "label": "Watch Pocket"},
+          {"id":3, "label": "Fake Pocket"}
+        ];
+        
 			});
-		}
+		};
 
 		var appData = {};
 		appData.lookup = function(data, key, value, retKey){
@@ -395,7 +422,7 @@
 				if(dataSet[i][key] == value)
 					return retKey ? dataSet[i][retKey] : dataSet[i]
 			}
-		}
+		};
 		
     return {
 			getData:function(){ return appData;},
@@ -419,6 +446,9 @@
 			deleteMyJean:deleteMyJean,
 			deleteMyAddress: deleteMyAddress,
 			placeMyOrder: placeMyOrder,
+      getMyCreditCards:getMyCreditCards,
+			createMyCreditCard:createMyCreditCard,
+      createMyFitMatch:createMyFitMatch,
 
 			postOrderItem:postOrderItem,
 			usersList:usersList,
@@ -441,7 +471,8 @@
       fitmatchList:fitmatchList,
       fitmatchGet:fitmatchGet,
       fitmatchDelete:fitmatchDelete,
-      fitmatchPost:fitmatchPost
+      fitmatchPost:fitmatchPost,
+      fitmatchCharge:fitmatchCharge
     };
     
   }

@@ -5,31 +5,7 @@ angular.module('inspinia')
 
     var vm = this;
     vm.data = api.getData();
-    
     vm.user = user.get(true);
-    
-    vm.userNames = {
-	    "8144148a-2ad6-4353-8850-0e1b301fa227" : "Creighton Hardy",
-	    "865eda13-2e89-4564-9f7c-0d1accfdcebe":"Dan Terzo",
-	    "357bae03-cce3-47ea-8875-3cfddab19e08": "Adam Lewis",
-	    "58c978b5-b518-46fc-9276-6e880bd670e3":"Ryan Jetton",
-	    "12f1a391-02f3-4aaf-92cc-734ed5f38184" : "Chris LeFevre",
-	    "3b9b047a-f148-4f53-9306-bd93139d7b1c": "James Kelleway"
-    }
-    
-    vm.createCard = function(nonce){
-		//alert("Let's create a CC!! "+nonce);
-		var data = {
-			userId:1,
-			nonce:nonce
-		}
-
-		console.log(data);
-		api.call('usersCreateCreditCard', data, function(result){
-			console.log("here's the result!");
-			console.log(result);
-		});
-  	}
 
     function serializeFilters(obj){
 	    var result = [];
@@ -38,20 +14,15 @@ angular.module('inspinia')
         else result.push(encodeURIComponent(property) + "=" + encodeURIComponent(obj[property]));
 			return result.join("&");
     }
+
     vm.filterOrders = function(){
 	    var filters = angular.copy(vm.filters);
 	    var range = filters.dateRange;
 	    delete filters.dateRange;
 	    filters.startDate = range.startDate;
 	    filters.endDate = range.endDate;
-    }
+    };
 
-    
-    
-    
-    
-    
-    
     
     //Delete Orders
     
@@ -65,7 +36,7 @@ angular.module('inspinia')
       cancelButtonText: "Cancel",
       closeOnConfirm: false,
       closeOnCancel: true 
-    }
+    };
     
 		vm.deleteOrder = function(orderId){
 			SweetAlert.swal(deleteOrderBox,
@@ -78,7 +49,7 @@ angular.module('inspinia')
 	        }
 		    }
 		  );
-		}
+		};
 		
 		vm.ordersRemove = function(orderId){
 			for(var i=0; i<vm.orders.length; i++){
@@ -87,7 +58,7 @@ angular.module('inspinia')
 					return;
 				}
 			}
-		}
+		};
  
  
 	
@@ -107,7 +78,7 @@ angular.module('inspinia')
 	      if(vm.orders[i].orderId === orderId) return i;
 	    }
 	    return -1;
-		}
+		};
 		
 		function incrementPage(inc){
 			vm.pagination.page = vm.pagination.page+inc;
@@ -134,7 +105,7 @@ angular.module('inspinia')
 			}else{
 				incrementPage(-1);				
 			}	
-		}
+		};
 		
 		
 		function pullOrders(filters, callback){
@@ -154,7 +125,7 @@ angular.module('inspinia')
 			"page": 1, 
 			"orderby":"created_at",
 			"order":"DESC",
-		}
+		};
 		
 		if($stateParams.user_id) vm.filters.user_id=$stateParams.user_id;
 		
@@ -184,7 +155,7 @@ angular.module('inspinia')
 	    vm.filters.orderby=col;
 	    vm.filters.order = direction;
 			vm.newQuery();
-    }
+    };
         
     vm.newQuery = function(){
 	    vm.pagination.total = 0;
@@ -194,24 +165,24 @@ angular.module('inspinia')
 		    if (vm.filters[i] == "") delete vm.filters[i];
 	    }
 	    pullOrders(vm.filters);
-    }
+    };
 
 		pullOrders(vm.filters);   
 					
 		vm.formatDate = function(date){
-			var date = new Date(date);
-			return $filter('date')(date, "MM/dd/yyyy");
-		}			
+			return $filter('date')(new Date(date), "MM/dd/yyyy");
+		};
+
 		vm.changePage = function(page){
 			vm.filters.page=parseInt(page);
 			vm.orders=[];
 			pullOrders(vm.filters);
-		}
+		};
 		
 		vm.pagination = {
 			total:0,
 			current:0
-		}
+		};
 
 		
 			

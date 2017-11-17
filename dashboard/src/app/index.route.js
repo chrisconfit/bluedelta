@@ -67,7 +67,22 @@
 		*/
 		
 		var orderAddScreenResolve = angular.copy(editScreenResolve);
-	  orderAddScreenResolve.orderData = function(){return null}
+    orderAddScreenResolve.orderData = [ '$stateParams', '$location', 'api', '$q', function($stateParams, $location, api, $q){
+
+      if ($stateParams.fitMatchId === undefined || $stateParams.fitMatchId == ""){
+        return null;
+      }
+
+      else{
+        var defer = $q.defer();
+        api.call('fitmatchGet', $stateParams.fitMatchId,
+          function(result){defer.resolve(result);},
+          function(err){ defer.reject(err); }
+        );
+      }
+
+      return defer.promise;
+    }];
 		   
 		var orderEditScreenResolve = angular.copy(editScreenResolve);
 		orderEditScreenResolve.orderData = [ '$stateParams', '$location', 'api', '$q', function($stateParams, $location, api, $q){
@@ -77,11 +92,8 @@
 			}
 			else{
 				var defer = $q.defer();
-				var ret = {};
 				api.call('orderGet', $stateParams.orderId,
-					function(result){	
-						defer.resolve(result);
-					},
+					function(result){defer.resolve(result);},
 					function(err){ defer.reject(err); }
 				);
 			}
@@ -228,7 +240,7 @@
       })
 
       .state('orders.add', {
-        url: "/add",
+        url: "/add/:fitMatchId?",
         templateUrl: "app/orders/orders-edit.html",
         authenticate: true,
         controller: "OrdersEditController as ovm",

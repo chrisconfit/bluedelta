@@ -13,7 +13,6 @@
 		$scope.addForm = {};
 		$scope.model = {};
 		$scope.user = user.get();
-
 		var addFormFields = ['address_line_1','address_line_2','city','state','zip'];
 		
 		
@@ -24,6 +23,7 @@
 				add.primary = (add.id == address.id ? 1:0);
 			}
 			api.call('postMyAddress', address);
+			$scope.addressObject = address;
 		}
 				
 		$scope.startEditing = function(){

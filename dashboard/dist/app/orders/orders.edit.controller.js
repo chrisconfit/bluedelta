@@ -7,8 +7,15 @@ angular.module('inspinia')
     var vm = this;
 		vm.user = user.get(true);
 		$scope.f = {};
+
+		//Determine whether or not this is a new order
+    vm.newOrder = orderData===null || orderData.hasOwnProperty('requested_fabric_ids');
+
+		//Base object for new orders
 		var newOrderData = {
 			order_status_id: 6,
+			payment_status_id: 1,
+			order_type_id:null,
 			order_items:[{
 				gender_option_id:1,
 				style_option_id:1,
@@ -18,19 +25,29 @@ angular.module('inspinia')
 				fabric_id:1000,
         payment_status_id:1
 			}]
-		}
-		
-		vm.newOrder = orderData ? false : true;
-		vm.order = vm.newOrder ? newOrderData : orderData;
+		};
 
+		//Add extra data for fit match orders
+		if (orderData && orderData.hasOwnProperty('requested_fabric_ids')){
+			newOrderData.order_type_id = 3;
+      newOrderData.shipping_name = orderData.user.first_name+" "+orderData.user.last_name;
+      newOrderData.fit_match_id = orderData.id;
+      newOrderData.shipping_address_id = orderData.shipping_address_id;
+      newOrderData.address = orderData.address;
+		}
+
+		//Build Order data
+		vm.order = vm.newOrder ? newOrderData : orderData;
 		vm.originalJean = vm.newOrder ? null : angular.copy(vm.order.order_items[0]);
-		vm.order.fit_date =  vm.order.fit_date ? vm.order.fit_date: null;
-		vm.order.dob =  vm.order.dob ? vm.order.dob: null;
-		vm.order.dueDate =  vm.order.dueDate ? vm.order.dueDate: null;
-		vm.orderUser = vm.newOrder ? null : orderData.user;
-    
+    vm.orderUser = orderData && orderData.user ? orderData.user : null;
+		if (!vm.newOrder) {
+      vm.order.fit_date = vm.order.fit_date ? vm.order.fit_date : null;
+      vm.order.dob = vm.order.dob ? vm.order.dob : null;
+      vm.order.dueDate = vm.order.dueDate ? vm.order.dueDate : null;
+    }
+
     vm.convertToCurrency = function(){
-	    price = vm.order.price.replace("$","");
+	    var price = vm.order.price.replace("$","");
 	    var price = $filter('currency')(price, "");
 	    if(!price) price = "Please enter a valid price";
 			vm.order.price = price
@@ -49,12 +66,12 @@ angular.module('inspinia')
 		vm.beginJeanEdit = function(){
 			vm.EditMode = true;
 			vm.BeforeEdit = angular.copy(vm.order.order_items[0]);
-		}
+		};
 		vm.clearJeanEdit = function(){
 			vm.EditMode = false;
 			vm.order.order_items[0] = angular.copy(vm.BeforeEdit);
-		}
-		
+		};
+
 		/*
 		vm.billingSameAsShipping = function(){
 			if (!vm.order.billingAddress || Object.keys(vm.order.billingAddress)<1) vm.order.billingAddress = vm.order.shippingAddress;
@@ -63,16 +80,14 @@ angular.module('inspinia')
 		*/
 		
 		vm.formatDate = function(date){
-			var date = new Date(date);
-			return $filter('date')(date, "MM/dd/yyyy h:s a");
-		}			
+			return $filter('date')(new Date(date), "MM/dd/yyyy h:s a");
+		};
 		
 		$scope.$watch(angular.bind(this, function () {
 		  return this.order.fit_date;
 		}), function (newVal) {
 			if (newVal && newVal._d){
-				var d = newVal._d.toISOString().slice(0,10);
-				vm.order.fit_date = d;
+        vm.order.fit_date = newVal._d.toISOString().slice(0,10);
 			}
 		});
 		
@@ -104,7 +119,7 @@ angular.module('inspinia')
 	
 	  vm.editAddress = function (type, icon) {
 	    var modalInstance = $uibModal.open({
-	      templateUrl: 'app/address-choice/address.html',
+	      templateUrl: 'app/components/address-choice/address.html',
 	      controller: 'AddressController',
 	      resolve: {
 	        data: {
@@ -124,10 +139,6 @@ angular.module('inspinia')
   
   
 	  vm.saveAddress = function(add, callback){
-		  
-		  console.log( "SAVING ADDRESS!!");
-		  console.log(add);
-		  
 	    if (add === parseInt(add, 10)){
 		    vm.order.shipping_address_id = add;
 		    for (var i=0; i<vm.orderUser.addresses.length; i++){
@@ -145,7 +156,7 @@ angular.module('inspinia')
 			    if(callback)callback();
 				});
 			}
-	  }
+	  };
     
     
     
@@ -158,7 +169,7 @@ angular.module('inspinia')
 	     
 	  vm.editUser = function(){
 	    var modalInstance = $uibModal.open({
-	      templateUrl: 'app/orders/userChoice.html',
+	      templateUrl: 'app/components/user-choice/userChoice.html',
 	      controller: 'UserChoiceController',
 	      resolve: {
 	        choose : function(){
@@ -177,14 +188,12 @@ angular.module('inspinia')
 	  function getPrimaryAddress(addresses){
 			if(!addresses || !addresses.length) return false;
 			for (var i=0; i<addresses.length; i++) {
-				if (addresses[i].primary == true) return addresses[i];
+				if (addresses[i].primary === true) return addresses[i];
 			}
 		}
 					
 	  vm.chooseClient = function(client){
 			api.call('userGet', client.id, function(result){
-				console.log('got users!');
-				console.log(result);
 		    vm.orderUser = result;
 		    var primary = getPrimaryAddress(result.addresses);
 		    if (primary){
@@ -192,20 +201,17 @@ angular.module('inspinia')
 					vm.order.shipping_address_id=primary.id;
 				}
 	    });
-	  }
+	  };
 
 	  vm.compOrder = function(){
       var order_object = {
         id:vm.order.id,
         payment_status_id:3
       };
-
       api.call('ordersPost', order_object, function(result){
-        console.log(result);
         vm.order.payment_status_id=3;
       });
-
-    }
+    };
 
 
     /*  	  						    		  		*\
@@ -220,7 +226,7 @@ angular.module('inspinia')
     vm.keyinPayment = function(){
 
       var modalInstance = $uibModal.open({
-        templateUrl: 'app/orders/keyInModal.html',
+        templateUrl: 'app/components/key-in-cc/keyInModal.html',
         controller: 'KeyInController',
         resolve: {
           orderData : function() {
@@ -235,7 +241,7 @@ angular.module('inspinia')
 					},
           confirmation : function(){
             return function(swalSettings){SweetAlert.swal(swalSettings)};
-          },
+          }
         }
       });
     };
@@ -251,26 +257,191 @@ angular.module('inspinia')
 		//Create the "Time from now" text...
 		vm.timeFromNow = function(timestamp){
 			return moment(timestamp).fromNow();
-		}	
+		};
 		
 		//Object 
 		vm.timelineForm = {
 			message:null
-		}
+		};
 
 	  //Init timeline with created_at date.
-	  vm.timeline = [{message:"Order Created", created_at:vm.order.created_at}]
-		vm.timeline.push.apply(vm.timeline, vm.order.order_comments);	
-		
+		if(!vm.newOrder) {
+      vm.timeline = [{message: "Order Created", created_at: vm.order.created_at}];
+      for (var i = 0; i < vm.order.order_comments.length; i++) {
+        vm.order.order_comments[i].type = "comment";
+      }
+      vm.timeline.push.apply(vm.timeline, vm.order.order_comments);
+    }
+
+    function timelineLookupKeys(field){
+      var label, lookup='id', data, ret='name';
+      switch(field) {
+				case "style_option_id":
+					label = "Style";
+					data = "style_options";
+					break;
+
+				case "fit_option_id":
+					label = "Fit";
+					data = "fit_options";
+					break;
+
+				case "gender_option_id":
+					label = "Gender";
+					data = "gender_options";
+					ret ="gender";
+          break;
+
+				case "monogram_thread_id":
+					label = "Monogram Thread";
+					data = "threads";
+          break;
+
+				case "fabric_id":
+					label = "Fabric";
+					data = "fabrics";
+					break;
+
+				case "top_thread_id":
+					label = "Top Thread";
+					data = "threads";
+					break;
+
+				case "bottom_thread_id":
+          label = "Bottom Thread";
+          data = "threads";
+          break;
+
+				case "accent_thread_id":
+          label = "Accent Thread";
+          data = "threads";
+					break;
+
+        case "vendor_id":
+          label = "Vendor";
+          data = 'vendors';
+          break;
+
+				case "rep_id":
+          label = "Rep";
+          data = 'reps';
+          break;
+
+				case "order_status_id":
+					label = "Order Status";
+					data = 'order_statuses';
+					break;
+
+        case "order_type_id":
+          label = "Order Type";
+          data = 'order_types';
+          break;
+
+				case "payment_status_id":
+					label = "Payment Status";
+					data = "payment_statuses";
+					break;
+
+				default:
+					return false;
+      }
+      return{
+        label:label,
+        lookup:lookup,
+        data:data,
+        ret:ret
+      }
+
+    }
+
+    function correctFieldTitle(title){
+    	title = title.replace(/_/g, ' ');
+    	return title.charAt(0).toUpperCase() + title.slice(1);
+		}
+
+		var simpleFields = [
+      "due_date",
+			"fit_date",
+			"monogram",
+			"tracking",
+      'jean_name',
+      'monogram',
+      'waist',
+      'seat_down',
+      'seat_right',
+      'rise',
+      'full_rise',
+      'thigh_upper_down',
+      'thigh_upper_right',
+      'thigh_middle_down',
+      'thigh_middle_right',
+      'thigh_lower_down',
+      'thigh_lower_right',
+      'outseam',
+      'knee_up',
+      'knee_right',
+      'calf_up',
+      'calf_right',
+      'leg_opening'
+		];
+
+
+
+		if(!vm.newOrder){
+      var logs = vm.order.logs;
+      logs.push.apply(logs, vm.order.order_items[0].logs);
+      processLogs(logs);
+		}
+
+		function processLogs(logs) {
+      var groupedLogs = {};
+      for (var i = 0; i < logs.length; i++) {
+        var key = logs[i].created_at + "__" + logs[i].user_id;
+        if (!groupedLogs[key]) groupedLogs[key] = [];
+        groupedLogs[key].push(logs[i]);
+      }
+
+      for (var key in groupedLogs) {
+        if (groupedLogs.hasOwnProperty(key)) {
+          var entryData = key.split("__");
+          var entry = {
+            created_at: entryData[0],
+            user: groupedLogs[key][0].user,
+            type: "pencil"
+          };
+          var messages = [];
+          for (var i = 0; i < groupedLogs[key].length; i++) {
+            var log = groupedLogs[key][i];
+            var keys = timelineLookupKeys(log.field);
+            if (keys) {
+              var old_value = vm.data.lookup(keys.data, keys.lookup, log.old_value, keys.ret);
+              var new_value = vm.data.lookup(keys.data, keys.lookup, log.new_value, keys.ret);
+              messages.push("Changed " + keys.label + " from '" + old_value + "' to '" + new_value + "'");
+            }
+
+            if (simpleFields.indexOf(log.field) > -1)
+              messages.push("Changed " + correctFieldTitle(log.field) + " from '" + log.old_value + "' to '" + log.new_value + "'");
+            if (log.field === "notes") messages.push("Edited notes");
+            if (log.field === "shipping_address_id") messages.push("Changed Shipping Address");
+            if (log.field === "user_id") messages.push("Changed Client");
+          }
+          if (messages.length) {
+            entry.message = messages.join("<br>");
+            vm.timeline.push(entry);
+          }
+        }
+      }
+    }
+
 		//Function to add timeline item
 	  vm.addTimelineItem = function(){
-		  console.log(user);
 	    if (!vm.timelineForm.message) return false;
 	    var data = {
 		    orderId:vm.order.id, 
 		    comment:{
 		    	message:vm.timelineForm.message,
 		    	user_id:vm.user.id,
+					type:"message"
 	    	}
 	    };
 			api.call('commentsCreate', data, 
@@ -278,13 +449,13 @@ angular.module('inspinia')
 					//Quick fix since this endpoint does not return user name
 					result.user={
 			    	first_name:vm.user.first_name,
-			    	last_name:vm.user.last_name,
-		    	}
+			    	last_name:vm.user.last_name
+		    	};
 					vm.timeline.push(result);
 					vm.timelineForm.message = null;
 				}
 			);
-	  }
+	  };
     
     
     
@@ -314,7 +485,7 @@ angular.module('inspinia')
       cancelButtonText: "Cancel",
       closeOnConfirm: true,
       closeOnCancel: true 
-    }
+    };
    
 		vm.deleteThisOrder = function(){
 			SweetAlert.swal(deleteOrderBox,
@@ -326,7 +497,7 @@ angular.module('inspinia')
 	        }
 		    }
 		  );
-		}
+		};
 		
 		
 		
@@ -340,7 +511,7 @@ angular.module('inspinia')
       cancelButtonText: "Cancel",
       closeOnConfirm: true,
       closeOnCancel: true 
-    }
+    };
 		
 		//{"shipping_name":"Chris LeFevre","shipping_phone":"66250210265","shipping_address_id":29,"copy_order_item_id":293,"order_type_id":1}
 		vm.reOrder = function(){
@@ -365,7 +536,7 @@ angular.module('inspinia')
 		    }
 			);
 	
-		}
+		};
 	  
 		
 		function jeanHasChanged(){
@@ -379,15 +550,10 @@ angular.module('inspinia')
 			if (!$scope.f.orderForm.$valid){
 				$scope.f.orderForm.submitted = true;
 				return false;
-			}  
-					
-		
-			console.log(jeanHasChanged());
-			
-			if(vm.orderUser==null){
-				console.log("We don't have a user yet!");
-				return false;
 			}
+			
+			if(vm.orderUser==null){ return false; }
+
 			//toaster.wait('Saving Order...');
 			
 			var savingToast = toaster.pop({
@@ -400,8 +566,7 @@ angular.module('inspinia')
 			var filename = api.getDataCode(jeanData);
 			filename += ".jpg";
 			jeanData.image = {filename:filename};
-			api.createThumb(jeanData).then(function(blob){	
-				console.log(blob);
+			api.createThumb(jeanData).then(function(blob){
 				if (!blob){
 					delete jeanData.image;
 					jeanData.jean_image_url = "https://s3.amazonaws.com/bluedelta-customizer/images/thumbnails/default.jpg";
@@ -413,8 +578,6 @@ angular.module('inspinia')
 				//Save new order...
 				if (vm.newOrder){
 					var data = {userId:vm.orderUser.id, jean:jeanData};
-					console.log("We've created the thumbnail... now creating the jean...");
-					console.log(data);
 					
 					//1. Create jean
 					api.call('usersCreateJean', data, function(newJean){
@@ -433,8 +596,6 @@ angular.module('inspinia')
 						orderData.jean_id = newJean.id
 						
 						api.call('ordersPost', orderData, function(newOrder){
-							console.log("new order created!!!");
-							console.log(newOrder);
 							$state.transitionTo('orders.edit', {orderId:newOrder.id});
 						});
 	
@@ -465,20 +626,21 @@ angular.module('inspinia')
 		}//.saveOrder()...
 	
 	
-	
-	  var dataParameter = {
-    "amount_money": {
-      "amount" : "100",
-      "currency_code" : "USD"
-    },
-    "callback_url" : "https://requestb.in/17ok6gh1", // Replace this value with your application's callback URL
-    "client_id" : "sq0idp-Ix0BKq70y9xTbYuMuBPZkQ", // Replace this value with your application's ID
-    "version": "1.3",
-    "notes": "Payment for Order #"+vm.order.id,
-    "options" : {
-      "supported_tender_types" : ["CREDIT_CARD","CASH","OTHER","SQUARE_GIFT_CARD","CARD_ON_FILE"]
-    }
-  };
+
+	var dataParameter = {
+		"amount_money": {
+			"amount" : "100",
+			"currency_code" : "USD"
+		},
+		"callback_url" : "https://requestb.in/17ok6gh1", // Replace this value with your application's callback URL
+		"client_id" : "sq0idp-Ix0BKq70y9xTbYuMuBPZkQ", // Replace this value with your application's ID
+		"version": "1.3",
+		"notes": "Payment for Order #"+vm.order.id,
+		"options" : {
+			"supported_tender_types" : ["CREDIT_CARD","CASH","OTHER","SQUARE_GIFT_CARD","CARD_ON_FILE"]
+		}
+	};
+
   var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 	var timestamp = Math.floor(Date.now() / 1000);
   vm.squareLink = iOS ? "square-commerce-v1://payment/create?data=" + encodeURIComponent(JSON.stringify(dataParameter)) +"&time="+timestamp : false;

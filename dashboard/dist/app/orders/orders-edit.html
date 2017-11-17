@@ -17,32 +17,32 @@
 			<form name="f.orderForm">
 
 	      <div class="col-md-3">
-	
+
 	        <div class="ibox" ng-click="primaryBox=1" ng-class="{'ibox-primary':primaryBox==1}">
-						
-						<div class="ibox-title">
-							<h3>Jean Name: 
+
+						<div class="ibox-title" ng-if="!ovm.newOrder">
+							<h3>Jean Name:
 								<span ng-if="ovm.order.order_items[0].jean_name">{{ovm.order.order_items[0].jean_name}}</span>
 							</h3>
 						</div>
-						
-	          <div class="ibox-content ibox-profile">              
-									          
+
+	          <div class="ibox-content ibox-profile">
+
 							<!--Jean thumbnial-->
 							<img ng-if="ovm.order.order_items[0].jean_image_url" width="100%" ng-src="{{ovm.order.order_items[0].jean_image_url}}">
-						
-							<!--Add Client Button-->	
+
+							<!--Add Client Button-->
 							<a ng-if="!ovm.orderUser" href="" ng-click="ovm.editUser()" class="btn btn-flat btn-primary btn-block">Add a Client</a>
-							
+
 							<!--Order User Validation-->
 							<input type="hidden" name="user_id" ng-model="ovm.orderUser.id" required>
 							<small ng-show="f.orderForm.submitted && f.orderForm.user_id.$error.required" class="text-danger">Please Choose a Client</small>
-							
+
 		          <ul ng-if="ovm.orderUser.id" class="list-group list-group-unbordered">
 	              <li class="list-group-item clearfix">
-	                <b>Customer</b> 
+	                <b>Customer</b>
 	                <div class="pull-right">
-	  	              <a ui-sref="clients.edit({clientId: ovm.orderUser.id})">{{ovm.orderUser.first_name}} {{ovm.orderUser.last_name}}</a> 
+	  	              <a ui-sref="clients.edit({clientId: ovm.orderUser.id})">{{ovm.orderUser.first_name}} {{ovm.orderUser.last_name}}</a>
 		                &nbsp;&nbsp;<a ng-click="ovm.editUser()"><i class="fa fa-edit"></i></a>
 	                </div>
 	              </li>
@@ -50,7 +50,7 @@
 	                <b>Email</b> <a href="mailto:{{ovm.orderUser.email}}" class="pull-right">{{ovm.orderUser.email}}</a>
 	              </li>
 	              <li class="list-group-item clearfix">
-								
+
 	                <p><b>Shipping Address</b><a class="pull-right fa fa-edit" ng-click="ovm.editAddress('Shipping', 'fa-truck')" href="#"></a></p>
 	                <p ng-if="ovm.order.address">{{ovm.order.shipping_name}}<br ng-if="ovm.order.shipping_name">
 		                {{ovm.order.shipping_phone | tel}}<br ng-if="ovm.order.shipping_phone">
@@ -58,12 +58,12 @@
 	                  {{ovm.order.address.address_line_2}}<br ng-if="ovm.order.address.addressLine2 && ovm.order.address.addressLine2!=''">
 	                  {{ovm.order.address.city}}, {{ovm.order.address.state}} {{ovm.order.address.zip}}</p>
 	                <a ng-if="!ovm.order.address" ng-click="ovm.editAddress('Shipping', 'fa-truck')" href="">Add Address</a>
-									
+
 									<!--Address Validation-->
 	                <input type="hidden" ng-model="ovm.order.shipping_address_id" name="shipping_address_id" required>
 	                <br ng-if="f.orderForm.submitted && f.orderForm.shipping_address_id.$error.required" >
 	                <small ng-show="f.orderForm.submitted && f.orderForm.shipping_address_id.$error.required" class="text-danger">Please Choose a Shipping Address</small>
-	                
+
 	              </li>
 	              <!--<li class="list-group-item clearfix">
 	                <p><b>Billing Address</b><a class="pull-right fa fa-edit" ng-click="ovm.editAddress('Billing', 'fa-list')" href="#"></a></p>
@@ -74,8 +74,10 @@
 	              </li>-->
 								<li class="list-group-item clearfix">
 									<p><b>Payment Status</b></p>
+									<input type="hidden" name="payment_status_id" id="payment_status_id" ng-model="vm.order.payment_status_id">
 
-                  <p class="payment_class_{{ovm.order.payment_status_id}}">
+									<small ng-show="f.orderForm.submitted && f.orderForm.payment_status_id.$error.required" class="text-danger">Please Choose a Payment Method</small>
+									<p class="payment_class_{{ovm.order.payment_status_id}}">
                     {{ovm.data.lookup("payment_statuses", "id", ovm.order.payment_status_id, "label")}}
                   </p>
 
@@ -392,10 +394,10 @@
 									<div id="vertical-timeline" class="vertical-container dark-timeline">
 										<div ng-repeat="t in ovm.timeline | orderBy: '-created_at'"class="vertical-timeline-block">
 											<div class="vertical-timeline-icon navy-bg">
-												<i class="fa fa-circle bg-gray"></i>
+												<i class="fa fa-{{t.type || 'circle'}} bg-gray"></i>
 											</div>
 											<div class="vertical-timeline-content">
-												<h3 class="timeline-header no-border">{{t.message}}</h3>
+												<h3 class="timeline-header no-border" ng-bind-html="t.message"></h3>
 												<span class="vertical-date"><span class="time"><i class="fa fa-clock-o"></i> </span> {{ovm.timeFromNow(t.created_at)}} <br/>
 													<small>{{ovm.formatDate(t.created_at)}}</small>
 													<small ng-if="t.user">&nbsp;&nbsp;<i class="fa fa-user"></i> {{t.user.first_name}} {{t.user.last_name}}</small>

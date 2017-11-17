@@ -169,7 +169,7 @@
 							<div class="clearfix">
 								<p ng-if="!cvm.cardsSearched">Looking for Credit Cards...</p>
 								<p ng-if="cvm.cardsSearched && cvm.userData.cards.length < 1">No Credit Cards on file.</p>
-								<p ng-repeat="cc in cvm.userData.cards">
+								<p ng-if="!cvm.addingCard" ng-repeat="cc in cvm.userData.cards">
 									<span style="width:45px; display:inline-block; font-weight:700;">{{cc.brand | ccName}}</span> -
 									&nbsp;&nbsp;**** **** **** {{cc.last_4}}
 								</p>

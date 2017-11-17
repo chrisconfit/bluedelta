@@ -13,7 +13,7 @@ angular.module('inspinia')
       cancelButtonText: "Cancel",
       closeOnConfirm: false,
       closeOnCancel: true 
-    }
+    };
     
     
 		vm.deleteUser = function(userId){
@@ -28,7 +28,7 @@ angular.module('inspinia')
 	        }
 		    }
 		  );
-		}
+		};
 
 		vm.usersRemove = function(userId){
 			for(var i=0; i<vm.users.length; i++){
@@ -37,7 +37,7 @@ angular.module('inspinia')
 					return;
 				}
 			}
-		}
+		};
 		
     
   		

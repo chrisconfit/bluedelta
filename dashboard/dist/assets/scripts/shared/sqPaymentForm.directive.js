@@ -11,28 +11,29 @@
 
         return {
             restrict: 'EA',
-            template: '<div class="clearfix"><label>Card Number</label>\n' +
-            '    <div id="sq-card-number"></div>\n' +
-            '    <small style="display:block; margin-bottom:10px;" ng-show="errors.cardNumber" class="text-danger">{{errors.cardNumber}}</small>\n' +
-            '    <label>CVV</label>\n' +
-            '    <div id="sq-cvv"></div>\n' +
-            '    <small style="display:block; margin-bottom:10px;" ng-show="errors.cvv" class="text-danger">{{errors.cvv}}</small>\n' +
-            '    <label>Expiration Date</label>\n' +
-            '    <div id="sq-expiration-date"></div>\n' +
-            '    <small style="display:block; margin-bottom:10px;" ng-show="errors.expirationDate" class="text-danger">{{errors.expirationDate}}</small>\n' +
-            '    <label>Postal Code</label>\n' +
-            '    <div id="sq-postal-code"></div>\n' +
-            '    <small style="display:block; margin-bottom:10px;" ng-show="errors.postalCode" class="text-danger">{{errors.postalCode}}</small>\n' +
-            '    <small style="display:block; margin-bottom:10px;" ng-show="errors.request" class="text-danger">{{errors.request}}</small>\n' +
+            template: '<div class="clearfix">\n' +
+            '   <div class="sq-input-container cardNumber" ng-class="{active:f.cardNumber}"><div id="sq-card-number"></div><label>Card Number</label>\n' +
+            '   <small style="display:block; margin-bottom:10px;" ng-show="errors.cardNumber" class="text-danger">{{errors.cardNumber}}</small>\n' +
+            '   </div><div class="sq-input-container cvv" ng-class="{active:f.cvv}"><div id="sq-cvv"></div><label>CVV</label>\n' +
+            '   <small style="display:block; margin-bottom:10px;" ng-show="errors.cvv" class="text-danger">{{errors.cvv}}</small>\n' +
+            '   </div><div class="sq-input-container expirationDate" ng-class="{active:f.expirationDate}"><div id="sq-expiration-date"></div><label>Expiration Date</label>' +
+            '   <small style="display:block; margin-bottom:10px;" ng-show="errors.expirationDate" class="text-danger">{{errors.expirationDate}}</small>\n' +
+            '   </div><div class="sq-input-container postalCode" ng-class="{active:f.postalCode}"><div id="sq-postal-code"></div><label>Postal Code</label>\n' +
+            '   <small style="display:block; margin-bottom:10px;" ng-show="errors.postalCode" class="text-danger">{{errors.postalCode}}</small>\n' +
+            '   </div><small style="display:block; margin-bottom:10px;" ng-show="errors.request" class="text-danger">{{errors.request}}</small>\n' +
             '      <button ng-if="!externalControl" class="btn btn-flat btn-primary pull-right" ' +
-            '       type="submit" ng-click="requestCardNonce()">Submit</button>\n' +
+            '       type="button" ng-click="requestCardNonce()">Submit</button>\n' +
             '    </div>',
             replace:true,
             scope : {
                 'nonceReceivedCallback' : '=',
                 'externalControl' : '=?',
+                'inputStyles' : '=?',
+                'inputConfigOverrides': '=?'
             },
             link:function($scope){
+
+              $scope.f = {};
 
               var sandboxId ="sandbox-sq0idp-Ix0BKq70y9xTbYuMuBPZkQ";
               var applicationId = 'sq0idp-Ix0BKq70y9xTbYuMuBPZkQ'; // <-- Add your application's ID here
@@ -42,18 +43,14 @@
               var locationId = '9PZNFDJTA6SQ4';
               locationId = sandboxLocation;
 
-              console.log("INIT!");
-              console.log(applicationId, locationId);
-
-
               $scope.requestCardNonce = function() {
-                  $scope.errors ={};
-                  $scope.paymentForm.requestCardNonce();
-                }
+                $scope.errors ={};
+                $scope.paymentForm.requestCardNonce();
+              };
 
-                if ($scope.externalControl) {
-                  $scope.externalControl = $scope.requestCardNonce;
-                }
+              if ($scope.externalControl) {
+                $scope.externalControl = $scope.requestCardNonce;
+              }
 
 
                 // Credit card payments are always supported, but the Web Apple Pay
@@ -61,13 +58,14 @@
                 // domain. Apple Pay support is determined by the SqPaymentForm library
                 // when the page loads. You do not need to modify this function.
                 $scope.methodsSupported = function (methods) {
-                    if (methods.applePay === true) {
-                        // Show apple pay button
-                        var element = document.getElementById('sq-apple-pay');
-                        element.style.display = 'inline-block';
-                    }
+                  if (methods.applePay === true) {
+                    // Show apple pay button
+                    var element = document.getElementById('sq-apple-pay');
+                    element.style.display = 'inline-block';
+                  }
                 };
-              // createPaymentRequest is triggered when the Apple Pay button is
+
+                // createPaymentRequest is triggered when the Apple Pay button is
                 // clicked. The payment request object is used by digital wallets
                 // (like Apple Pay) to create their equivalent of a credit card nonce.
                 // NOTE: The payment request below is provided as guidance. You should
@@ -136,7 +134,9 @@
                             break;
                         case 'focusClassRemoved':
                             // Handle as desired
-                            break;
+                          $scope.f[inputEvent.field] = true;
+                          $scope.$apply();
+                          break;
                         case 'errorClassAdded':
                             // Handle as desired
                             break;
@@ -156,54 +156,81 @@
                     // Fill in this callback to perform actions after the payment form is
                     // done loading (such as setting the postal code field programmatically).
                     // paymentForm.setPostalCode('94103');
+                };
+
+
+                //Setup Default input styles
+                if (!$scope.inputStyles) {
+                  $scope.inputStyles = [
+                    {
+                      backgroundColor: '#FFFFFF',
+                      padding: '6px 12px',
+                      fontSize: '14px',
+                      lineHeight: '18px'
+                    }
+                  ];
+                };
+
+
+                var sqInputConfig = {
+                  cardNumber: {
+                    elementId: 'sq-card-number',
+                    placeholder: '•••• •••• •••• ••••'
+                  },
+                  cvv: {
+                    elementId: 'sq-cvv',
+                    placeholder: 'CVV'
+                  },
+                  expirationDate: {
+                    elementId: 'sq-expiration-date',
+                    placeholder: 'MM/YY'
+                  },
+                  postalCode: {
+                    elementId: 'sq-postal-code'
+                  },
+                  applePay:{
+                    elementId:'sq-apple-pay'
+                  }
+                };
+
+
+                if($scope.inputConfigOverrides){
+                  for (var k in $scope.inputConfigOverrides) {
+                    if ($scope.inputConfigOverrides.hasOwnProperty(k)) {
+                      var itemName = k;
+                      var itemConfig = $scope.inputConfigOverrides[k];
+                      for(ov in itemConfig){
+                        if (itemConfig.hasOwnProperty(ov)) {
+                          sqInputConfig[itemName][ov] = itemConfig[ov];
+                        }
+                      }
+                    }
+                  }
                 }
 
                 // Create and initialize a payment form object
                 $scope.paymentForm = new SqPaymentForm({
-                    applicationId: applicationId,
-                    locationId: locationId,
-                    inputClass: "sq-input",
-                    inputStyles: [
-                      {
-                        backgroundColor: '#FFFFFF',
-                        padding: '6px 12px',
-                        fontSize:'14px',
-                        lineHeight:'18px'
-                      }
-                    ],
-                    // Used for credit card payments
-                    cardNumber: {
-                        elementId: 'sq-card-number',
-                        placeholder: '•••• •••• •••• ••••'
-                    },
-                    cvv: {
-                        elementId: 'sq-cvv',
-                        placeholder: 'CVV'
-                    },
-                    expirationDate: {
-                        elementId: 'sq-expiration-date',
-                        placeholder: 'MM/YY'
-                    },
-                    postalCode: {
-                        elementId: 'sq-postal-code'
-                    },
-                    // Used for Web Apple Pay payments
-                    applePay: {
-                        elementId: 'sq-apple-pay'
-                    },
-                    // Payment form callback functions
-                    callbacks: {
-                        methodsSupported: $scope.methodsSupported,
-                        cardNonceResponseReceived: $scope.cardNonceResponseReceived,
-                        unsupportedBrowserDetected: $scope.unsupportedBrowserDetected,
-                        inputEventReceived: $scope.inputEventReceived,
-                        paymentFormLoaded: $scope.paymentFormLoaded,
-                        createPaymentRequest: $scope.createPaymentRequest
-                    }
+                  applicationId: applicationId,
+                  locationId: locationId,
+                  inputClass: "sq-input",
+                  inputStyles: $scope.inputStyles,
+                  cardNumber: sqInputConfig.cardNumber,
+                  cvv: sqInputConfig.cvv,
+                  expirationDate:sqInputConfig.expirationDate,
+                  postalCode:sqInputConfig.postalCode,
+                  applePay: sqInputConfig.applePay,
+                  callbacks: {
+                    methodsSupported: $scope.methodsSupported,
+                    cardNonceResponseReceived: $scope.cardNonceResponseReceived,
+                    unsupportedBrowserDetected: $scope.unsupportedBrowserDetected,
+                    inputEventReceived: $scope.inputEventReceived,
+                    paymentFormLoaded: $scope.paymentFormLoaded,
+                    createPaymentRequest: $scope.createPaymentRequest
+                  }
                 });
 
                 $scope.$evalAsync(function() {
-                    $scope.paymentForm.build();
+                  $scope.paymentForm.build();
                 } );
 
             }

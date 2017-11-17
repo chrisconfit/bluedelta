@@ -1,56 +1,139 @@
+<div class="cart-header">
+  <img src="/images/bluedelta-logo-blue.jpg">
+</div>
 
-<div class="container page-container">
 
-  <div class="order-errors" ng-if="vm.orderErr">
-    <h3>{{vm.orderErr}}</h3>
-    Try going back to your <a ng-href="/closet">closet</a>
+
+<div class="container pay-page page-container">
+
+  <div ng-if="!vm.user.loaded" class="pay-user-loading">
+    <p><i class="fa fa-spin fa-circle-o-notch"></i>&nbsp;&nbsp;Getting user data...</p>
   </div>
 
-	<div class="order-details">
-  {{vm.order.order_items[0].jean_name}}<br>
-   <img width="200px" ng-src="{{vm.order.order_items[0].jean_image_url}}">
-	</div>
+  <div ng-show="vm.user.id" class="user-box clearfix">
+    <h5><i class="fa fa-user"></i> {{vm.user.first_name}} {{vm.user.last_name}}</h5>
+    <a class="btn btn-primary" ng-click="vm.logout()">Logout</a>
+  </div>
 
-	<div class="fit-match-details">
+  <div ng-if="!vm.userLoggedIn" class="pay-login-form">
+    <h3 class="popup-title">Login or Register to Continue</h3>
+    <div class="cft-g login-reg-grid">
+      <div class="cft-gi">
+        <h4>Log In</h4>
+        <login-form callback="vm.authCallback" redirect="NULL"></login-form>
+      </div><!--
+			--><div class="cft-gi">
+        <h4>Register</h4>
+        <register-form callback="vm.authCallback" redirect="NULL"></register-form>
+      </div>
+    </div>
+  </div>
 
-	</div>
+  <div ng-if="(vm.order || vm.fitMatch) && vm.formStep==1 && vm.userLoggedIn" class="checkout-form">
 
+    <form novalidate class="cft-form checkout-form">
+      <!--Orders-->
+      <div ng-if="vm.orderId">
+        <div class="order-errors" ng-if="vm.orderErr">
+          <h3>{{vm.orderErr}}</h3>
+          Try going back to your <a ng-href="/closet">closet</a>
+        </div>
+        <div class="order-details">
+          {{vm.order.order_items[0].jean_name}}<br>
+          <img width="200px" ng-src="{{vm.order.order_items[0].jean_image_url}}">
+        </div>
 
+        <!--
 
+    <h3 class="price-display">Total:<span class="total-price">${{vm.checkoutForm.price}}</span></h3>
+    <input type="hidden" ng-model="vm.checkoutForm.price">
+    <div ng-class="{active: vm.checkoutForm.creditCardNumber.length}" class="input-group">
+    <input type="text" class="form-control" name="creditCardNumber" id="creditCardNumber" ng-model="vm.checkoutForm.creditCardNumber">
+    <label for="creditCardNumber">Credit Card Number</label>
+    </div>
+    <div class="cft-g cc-form-grid">
+    <div class="cft-gi name">
+      <div ng-class="{active: vm.checkoutForm.ccName.length}" class="input-group">
+        <input type="text" class="form-control" name="ccName" id="ccName" ng-model="vm.checkoutForm.ccName">
+        <label for="ccName">Name on Card</label>
+      </div>
+    </div>
+    <div class="cft-gi">
+      <div ng-class="{active: vm.checkoutForm.expiration.length}" class="input-group">
+        <input type="text" class="form-control" name="expiration" id="expiration" ng-model="vm.checkoutForm.expiration">
+        <label for="expiration">MM/YY</label>
+      </div>
+    </div><!--
+    --<div class="cft-gi">
+      <div ng-class="{active: vm.checkoutForm.cvv.length}" class="input-group">
+        <input type="text" class="form-control" name="cvv" id="cvv" ng-model="vm.checkoutForm.cvv">
+        <label for="cvv">CVV</label>
+      </div>
+    </div>
+    </div>
+    -->
+      </div>
 
-  <hr>
-
-	<div ng-if="vm.order || vm.fitMatch" class="checkout-form">
-		<form novalidate class="cft-form checkout-form">
-      <h3 class="price-display">Total:<span class="total-price">${{vm.checkoutForm.price}}</span></h3>
-      <input type="hidden" ng-model="vm.checkoutForm.price">
-			<div ng-class="{active: vm.checkoutForm.creditCardNumber.length}" class="input-group">
-				<input type="text" class="form-control" name="creditCardNumber" id="creditCardNumber" ng-model="vm.checkoutForm.creditCardNumber">
-				<label for="creditCardNumber">Credit Card Number</label>
-			</div>
-      <div class="cft-g cc-form-grid">
-        <div class="cft-gi name">
-          <div ng-class="{active: vm.checkoutForm.ccName.length}" class="input-group">
-            <input type="text" class="form-control" name="ccName" id="ccName" ng-model="vm.checkoutForm.ccName">
-            <label for="ccName">Name on Card</label>
-          </div>
-        </div><!--
-        --><div class="cft-gi">
-          <div ng-class="{active: vm.checkoutForm.expiration.length}" class="input-group">
-            <input type="text" class="form-control" name="expiration" id="expiration" ng-model="vm.checkoutForm.expiration">
-            <label for="expiration">MM/YY</label>
-          </div>
-        </div><!--
-        --><div class="cft-gi">
-          <div ng-class="{active: vm.checkoutForm.cvv.length}" class="input-group">
-            <input type="text" class="form-control" name="cvv" id="cvv" ng-model="vm.checkoutForm.cvv">
-            <label for="cvv">CVV</label>
-          </div>
+      <!--Fit Match-->
+      <div ng-if="vm.fitMatch">
+        <h1>{{vm.user.first_name}} {{vm.user.last_name}}'s Fit Match Package</h1>
+        <p>Your fit match package will include the following fabrics:</p>
+        <ul class="fm-fabric-list">
+          <li ng-repeat="id in vm.fitMatch">
+            <img ng-src="https://images.bluedeltajeans.com/images/components/fabrics/thumb/{{id}}.jpg">
+            {{vm.data.lookup("fabrics", "id", id, "name")}}</li>
+        </ul>
+        <a href="">Edit Fabrics</a>
+        <p class="payment-instruction">Enter your shipping and payment details below. As long as you return the package within 30 days you will not be charged.</p>
+        <hr>
+        <div class="shipping-addresses">
+          <h3>Shipping Address</h3>
+          <address-choice address-object="vm.add" user="vm.user"></address-choice>
+          <input type="hidden" ng-model="vm.add.id" name="shipping_address" id="shippping_address">
         </div>
       </div>
-      <input type="submit" class="btn" value="Submit">
-		</form>
-	</div>
+      <hr>
+
+      <!--Payment-->
+      <div class="cc-info-box">
+        <h3>Credit Card Information</h3>
+        <ul ng-show="!vm.cardForm.addingCard" class="card-list">
+          <li ng-if="vm.cardForm.loadingCards">Getting Credit Card Information...</li>
+          <li ng-repeat="cc in vm.cards">
+            <a href="" ng-click="vm.credit_card_id = cc.id" ng-class="{checked:vm.credit_card_id == cc.id}" class="check-box small"></a>
+            <label>
+              <span style="width:45px; display:inline-block; font-weight:700;">{{cc.brand}}</span> -
+              &nbsp;&nbsp;**** **** **** {{cc.last_4}}
+            </label>
+          </li>
+        </ul>
+
+        <div class="new-card-form" ng-show="vm.cardForm.addingCard">
+          <sq-payment-form
+            input-styles="vm.inputStyles"
+            external-control="vm.fire"
+            input-config-overrides="vm.inputConfigOverrides"
+            nonce-received-callback="vm.nonceReceived"></sq-payment-form>
+        </div>
+
+        <a href="" ng-if="!vm.cardForm.loadingCards" ng-click="vm.cardForm.addingCard = !vm.cardForm.addingCard">
+          <span ng-if="!vm.cardForm.addingCard">Add New Card</span>
+          <span ng-if="vm.cardForm.addingCard && vm.cards.length">Use Existing Card</span>
+        </a>
+
+      </div>
+      <hr>
+      <input type="submit" ng-if="!vm.cardForm.addingCard" ng-class="{disabled:!vm.credit_card_id}" class="btn" ng-click="vm.orderFitMatch(vm.credit_card_id)" value="Submit">
+      <input type="submit" ng-if="vm.cardForm.addingCard" class="btn" ng-click="vm.fire()" value="Submit">
+    </form>
+  </div>
+
+  <div ng-if="vm.formStep == 2 && vm.userLoggedIn">
+    <div class="container thin">
+      <h2>Thanks for your order!</h2>
+      <p>You can expect to receive your fit match package in 10 - 12 days. We'll be in touch if we need any more information before sending it out.</p>
+    </div>
+  </div>
 
 
 </div><!--./page-container

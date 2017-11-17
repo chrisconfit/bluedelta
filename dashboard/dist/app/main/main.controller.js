@@ -6,8 +6,6 @@ angular.module('inspinia')
     var vm = this;
     vm.state = $state;
     vm.user = user.get();
-    console.log("USER!!!");
-    console.log(vm.user);
     vm.isLoggedIn = user.isLoggedIn(true);
     vm.logout = function(){
 	    user.logout();

@@ -754,11 +754,11 @@ body {
   display: block;
 }
 
-.input-group {
+.input-group, .sq-input-container {
   position: relative;
   margin-bottom: 25px;
 }
-.input-group label {
+.input-group label, .sq-input-container label {
   pointer-events: none;
   display: block;
   font-size: 20px;
@@ -776,7 +776,7 @@ body {
   -o-transition: all 300ms ease;
   transition: all 300ms ease;
 }
-.input-group.active label, .input-group input:focus + label, .input-group textarea:focus + label, .input-group select:focus + label {
+.input-group.active label, .active.sq-input-container label, .input-group input:focus + label, .sq-input-container input:focus + label, .input-group textarea:focus + label, .sq-input-container textarea:focus + label, .input-group select:focus + label, .sq-input-container select:focus + label {
   top: -18px;
   font-size: 12px;
   left: 0;
@@ -785,7 +785,7 @@ body {
   padding: 0px 4px;
   background: #004964;
 }
-.input-group input, .input-group select, .input-group textarea {
+.input-group input, .sq-input-container input, .input-group select, .sq-input-container select, .input-group textarea, .sq-input-container textarea {
   border-radius: 0;
   -moz-border-radius: 0;
   -o-border-radius: 0;
@@ -803,13 +803,13 @@ body {
   appearance: none;
   -webkit-appearance: none;
 }
-.input-group textarea {
+.input-group textarea, .sq-input-container textarea {
   min-height: 150px;
 }
-.input-group select {
+.input-group select, .sq-input-container select {
   padding-right: 45px;
 }
-.input-group i.select-icon {
+.input-group i.select-icon, .sq-input-container i.select-icon {
   pointer-events: none;
   position: absolute;
   top: 0px;
@@ -819,26 +819,26 @@ body {
   font-size: 2.5rem;
   line-height: 4rem;
 }
-.input-group.icon-control {
+.input-group.icon-control, .icon-control.sq-input-container {
   padding-right: 50px;
   margin-bottom: 15px;
   display: inline-block;
   width: 300px;
   margin-bottom: 15px;
 }
-.input-group.icon-control input {
+.input-group.icon-control input, .icon-control.sq-input-container input {
   width: 100%;
 }
-.input-group.icon-control .icon-controls {
+.input-group.icon-control .icon-controls, .icon-control.sq-input-container .icon-controls {
   position: absolute;
   top: 7px;
   right: 0;
 }
-.input-group.icon-control .icon-controls i {
+.input-group.icon-control .icon-controls i, .icon-control.sq-input-container .icon-controls i {
   display: inline-block;
   margin-right: 5px;
 }
-.input-group.icon-control .icon-controls i:last-child {
+.input-group.icon-control .icon-controls i:last-child, .icon-control.sq-input-container .icon-controls i:last-child {
   margin-right: 0;
 }
 
@@ -3336,7 +3336,7 @@ ul.tailor-list {
 .user-form .input-container {
   margin-bottom: 7px;
 }
-.user-form .input-group.icon-control {
+.user-form .input-group.icon-control, .user-form .icon-control.sq-input-container {
   margin-bottom: 0;
 }
 .user-form .empty-value-button {
@@ -3460,6 +3460,9 @@ ul.tailor-list {
   max-width: 600px;
   margin: auto;
 }
+.checkout-form hr {
+  margin: 30px 0;
+}
 .checkout-form h3.price-display {
   padding-bottom: 30px;
   margin-bottom: 30px;
@@ -3476,4 +3479,155 @@ ul.tailor-list {
 }
 .cft-g.cc-form-grid > .cft-gi.name {
   width: 60%;
+}
+
+.cft-g.fit-match-grid > .cft-gi {
+  width: 20%;
+}
+
+.fit-match-grid img {
+  width: 100%;
+}
+
+.pay-page .user-box {
+  background: #e8edef;
+  padding: 10px;
+  max-width: 600px;
+  margin: auto;
+}
+.pay-page .user-box a.btn, .pay-page .user-box a.btn-secondary {
+  float: right;
+}
+.pay-page .user-box h5 {
+  display: inline-block;
+  margin-top: 10px;
+}
+@media screen and (min-width: 1100px) {
+  .pay-page .user-box {
+    position: absolute;
+    right: 30px;
+    top: 0;
+    text-align: right;
+  }
+  .pay-page .user-box a.btn, .pay-page .user-box a.btn-secondary {
+    width: 100%;
+    float: none;
+  }
+  .pay-page .user-box h5 {
+    display: block;
+    margin-top: 0px;
+  }
+}
+
+.fm-fabric-list {
+  list-style-type: none;
+  margin-bottom: 10px;
+}
+.fm-fabric-list li {
+  margin-bottom: 5px;
+}
+.fm-fabric-list img {
+  width: 25px;
+  vertical-align: middle;
+}
+
+.payment-instruction {
+  margin-top: 30px;
+}
+
+.user-address {
+  padding: 5px;
+  position: relative;
+}
+.user-address:nth-of-type(odd) {
+  background: #e8edef;
+}
+.user-address a.check-box {
+  position: absolute;
+}
+.user-address .address-details {
+  padding-left: 40px;
+}
+
+.checkout-form h3 {
+  margin-bottom: 18px;
+}
+
+.sq-input-container.active .sq-input,
+.sq-input--focus {
+  outline-width: 1px;
+  outline-style: dashed;
+  outline-color: rgba(65, 119, 139, 0.7);
+  outline-offset: -3px;
+}
+
+.sq-input--focus ~ label {
+  top: -18px;
+  font-size: 12px;
+  left: 0;
+  font-weight: 700;
+  color: #fff;
+  padding: 0px 4px;
+  background: #004964;
+}
+
+@media screen and (min-width: 600px) {
+  .sq-input-container.postalCode, .sq-input-container.expirationDate, .sq-input-container.cvv {
+    display: inline-block;
+    width: 32%;
+  }
+  .sq-input-container.cvv, .sq-input-container.expirationDate {
+    margin-right: 2%;
+  }
+}
+.cc-info-box .card-list {
+  list-style-type: none;
+  margin-bottom: 15px;
+}
+.cc-info-box .card-list li {
+  margin-bottom: 5px;
+}
+
+.cart-header {
+  border-bottom: 1px solid #e8edef;
+}
+.cart-header img {
+  display: block;
+  margin: auto;
+  width: 80%;
+  max-width: 200px;
+}
+
+.pay-login-form {
+  max-width: 800px;
+  display: block;
+  margin: auto;
+}
+.pay-login-form h3 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.pay-user-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+}
+.pay-user-loading p {
+  width: 90%;
+  text-align: center;
+  margin: auto;
+  display: block;
+  left: 0;
+  right: 0;
+  top: 50%;
+  position: absolute;
+  -moz-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
 }

@@ -39,7 +39,14 @@
 	      return Date.parse(dateString);
 	    };
 	  })
-	  .filter('tel', function () {
+		.filter('spaceless',function() {
+			return function(input) {
+				if (input) {
+					return input.replace(/\s+/g, '-');
+				}
+			}
+		})
+		.filter('tel', function () {
 	    return function (tel) {
 	        if (!tel) { return ''; }
 	
