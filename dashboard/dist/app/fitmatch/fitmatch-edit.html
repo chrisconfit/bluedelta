@@ -4,11 +4,11 @@
   <!--Header-->
   <div class="row wrapper border-bottom white-bg page-heading">
     <div id="form-control-buttons" class="pull-right" style="margin-top:20px;">
-      <button ng-click="vm.saveFM()" class="btn btn-primary btn-success"><span ng-if="!vm.newFitMatch">Save</span><span ng-if="vm.newFitMatch">Create</span></button>&nbsp;&nbsp;
-      <button ng-click="vm.orderFM()" ng-if="!vm.newFitMatch" ng-class="{disabled:vm.fmData.ordered_at}" class="btn btn-primary btn-flat">
+      <button ng-click="vm.saveFM()" class="btn btn-primary btn-success"><span ng-if="!vm.newFitMatch">Save</span><span ng-if="vm.newFitMatch">Create</span></button>
+      <button ng-click="vm.orderFM()" ng-if="!vm.newFM" ng-class="{disabled:vm.fmData.ordered_at}" class="btn btn-primary btn-flat">
         <span ng-if="!vm.fmData.ordered_at">Create Order</span>
         <span ng-if="vm.fmData.ordered_at">Already Ordered</span>
-      </button>&nbsp;&nbsp;
+      </button>
       <button ng-click="vm.deleteFM()" ng-if="!vm.newFitMatch" class="btn btn-primary btn-danger">Delete</button>
     </div>
     <h1 ng-if="!vm.newFitMatch">Fit Match {{vm.fmData.id}}</h1>
@@ -69,7 +69,7 @@
 
 
                 <!--Payment Info-->
-                <li class="list-group-item clearfix">
+                <p class="list-group-item clearfix">
                   <p><b>Payment Info</b></p>
                   <!--Primary Card Information-->
                   <p ng-if="vm.fmData.primary_card">
@@ -77,6 +77,7 @@
                     &nbsp;&nbsp;**** **** **** {{vm.fmData.primary_card.last_4}}
                   </p>
                   <!--Payment Buttons-->
+                  <p><b>If customer did not return fit match box, charge card on file and cancel the order</b></p>
                   <p ng-if="vm.pullingCards">Getting Credit Card info...</p>
                   <a ng-class="{'disabled':vm.pullingCards}" style="margin-bottom:5px" href="#" ng-click="vm.captureCC()"
                      class="btn btn-flat btn-success btn-primary">
@@ -120,14 +121,17 @@
               <label class="control-label">Requested Fabrics</label>
               <ul class="list-group jean-list-edit list-group-unbordered">
                 <li class="list-group-item clearfix" ng-repeat="fabric_id in vm.fmData.requested_fabric_ids track by $index">
-                  {{vm.data.lookup("fabrics", "id", fabric_id, "name")}} - {{ vm.data.lookup("fabrics", "id", fabric_id, "display_id") || id}}
+                  {{vm.fabric_list_item_name(fabric_id)}}
                   <a ng-if="vm.EditMode" class="pull-right" ng-click="vm.removeFabric($index)"><i class="fa fa-close"></i></a>
                 </li>
               </ul>
               <div ng-if="vm.EditMode && vm.fmData.requested_fabric_ids.length<10" class="clearfix">
                 <select class="form-control pull-right"
                         style="width:100%; margin-top:10px;"
-                        ng-options="fabric.id as fabric.display_id+' - '+fabric.name disable when vm.fmData.requested_fabric_ids.indexOf(fabric.id) > -1 for fabric in vm.data.fabrics"
+                        ng-options="fabric.id as vm.fabric_list_item_name(fabric.id)
+                        group by fabric.fabric_type
+                        disable when vm.fmData.requested_fabric_ids.indexOf(fabric.id) > -1 for fabric in
+                        vm.data.fabrics | orderBy:['-deleted_at','fabric_type']"
                         ng-model="vm.fabric_id_to_add">
                 </select>
                 <a ng-click="vm.fmData.requested_fabric_ids.push(vm.fabric_id_to_add)"
@@ -160,10 +164,11 @@
               <!--FM Status-->
               <br>
               <label>Status:</label>
-              <p ng-if="vm.fmData.shipped_date==null && vm.fmData.form_received_date==null">Requested</p>
-              <p ng-if="vm.fmData.shipped_date && vm.fmData.form_received_date==null">Shipped</p>
-              <p ng-if="vm.fmData.shipped_date && vm.fmData.form_received_date && vm.fmData.ordered_at==null">Form Received</p>
-              <p ng-if="vm.fmData.shipped_date && vm.fmData.form_received_date && vm.fmData.ordered_at">Order Created</p>
+              <p ng-if="vm.fmData.shipped_date==null && vm.fmData.form_received_date==null&& vm.paid_at==null">Requested</p>
+              <p ng-if="vm.fmData.shipped_date && vm.fmData.form_received_date==null&& vm.paid_at==null">Shipped</p>
+              <p ng-if="vm.fmData.shipped_date && vm.fmData.form_received_date && vm.fmData.ordered_at==null&& vm.paid_at==null">Form Received</p>
+              <p ng-if="vm.fmData.shipped_date && vm.fmData.form_received_date && vm.fmData.ordered_at && vm.paid_at==null">Order Created</p>
+              <p ng-if="vm.fmData.paid_at">Canceled</p>
               {{vm.form_received_date}}
               <!--<p ng-if="">Ordered</p>-->
 

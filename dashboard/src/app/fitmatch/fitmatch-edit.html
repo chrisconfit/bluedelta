@@ -4,11 +4,11 @@
   <!--Header-->
   <div class="row wrapper border-bottom white-bg page-heading">
     <div id="form-control-buttons" class="pull-right" style="margin-top:20px;">
-      <button ng-click="vm.saveFM()" class="btn btn-primary btn-success"><span ng-if="!vm.newFitMatch">Save</span><span ng-if="vm.newFitMatch">Create</span></button>&nbsp;&nbsp;
-      <button ng-click="vm.orderFM()" ng-if="!vm.newFitMatch" ng-class="{disabled:vm.fmData.ordered_at}" class="btn btn-primary btn-flat">
+      <button ng-click="vm.saveFM()" class="btn btn-primary btn-success"><span ng-if="!vm.newFitMatch">Save</span><span ng-if="vm.newFitMatch">Create</span></button>
+      <button ng-click="vm.orderFM()" ng-if="!vm.newFM" ng-class="{disabled:vm.fmData.ordered_at}" class="btn btn-primary btn-flat">
         <span ng-if="!vm.fmData.ordered_at">Create Order</span>
         <span ng-if="vm.fmData.ordered_at">Already Ordered</span>
-      </button>&nbsp;&nbsp;
+      </button>
       <button ng-click="vm.deleteFM()" ng-if="!vm.newFitMatch" class="btn btn-primary btn-danger">Delete</button>
     </div>
     <h1 ng-if="!vm.newFitMatch">Fit Match {{vm.fmData.id}}</h1>

@@ -13,7 +13,7 @@ angular.module('inspinia')
 
 		//Base object for new orders
 		var newOrderData = {
-			order_status_id: 6,
+			order_status_id: 5,
 			payment_status_id: 1,
 			order_type_id:null,
 			order_items:[{
@@ -26,7 +26,9 @@ angular.module('inspinia')
         payment_status_id:1
 			}]
 		};
-
+	
+		
+		
 		//Add extra data for fit match orders
 		if (orderData && orderData.hasOwnProperty('requested_fabric_ids')){
 			newOrderData.order_type_id = 3;
@@ -34,6 +36,7 @@ angular.module('inspinia')
       newOrderData.fit_match_id = orderData.id;
       newOrderData.shipping_address_id = orderData.shipping_address_id;
       newOrderData.address = orderData.address;
+      newOrderData.comment = "Order created from Fit Match #"+$state.params.fitMatchId;
 		}
 
 		//Build Order data
@@ -53,13 +56,21 @@ angular.module('inspinia')
 			vm.order.price = price
   	};
     
-		//Set up app data...    
+		//Set up app data...
+		vm.dataLoaded = false;
 		vm.data = api.getData();
-	  vm.data.payment_statuses = [
-      {"id":1, "label": "Awaiting Payment"},
-      {"id":2, "label": "Paid"},
-      {"id":3, "label": "Comped"},
-    ];
+    $scope.$watch(angular.bind(this, function () {
+      return this.data;
+    }), function (newVal) {
+    	if(!newVal) return false;
+    	if(!vm.dataLoaded){
+    		vm.dataLoaded=true;
+    		//After data has been loaded..
+    		buildTimeline();
+			}
+    });
+		
+
 
 		//Edit Jean details...
 		vm.EditMode= vm.newOrder ? true : false;
@@ -80,7 +91,7 @@ angular.module('inspinia')
 		*/
 		
 		vm.formatDate = function(date){
-			return $filter('date')(new Date(date), "MM/dd/yyyy h:s a");
+			return $filter('date')(new Date(date+" UTC"), "MM/dd/yyyy h:m a");
 		};
 		
 		$scope.$watch(angular.bind(this, function () {
@@ -221,8 +232,7 @@ angular.module('inspinia')
 		*				  	 					    		  	*
 		\*	  							    				  */
 
-
-
+		
     vm.keyinPayment = function(){
 
       var modalInstance = $uibModal.open({
@@ -234,7 +244,6 @@ angular.module('inspinia')
               "user":vm.orderUser,
               "order":vm.order
             };
-
           },
           api : function(){
 						return api;
@@ -256,94 +265,104 @@ angular.module('inspinia')
 
 		//Create the "Time from now" text...
 		vm.timeFromNow = function(timestamp){
-			return moment(timestamp).fromNow();
+			return moment(new Date(timestamp+' UTC')).fromNow();
 		};
 		
 		//Object 
 		vm.timelineForm = {
 			message:null
 		};
-
-	  //Init timeline with created_at date.
-		if(!vm.newOrder) {
-      vm.timeline = [{message: "Order Created", created_at: vm.order.created_at}];
-      for (var i = 0; i < vm.order.order_comments.length; i++) {
-        vm.order.order_comments[i].type = "comment";
-      }
-      vm.timeline.push.apply(vm.timeline, vm.order.order_comments);
-    }
-
+  
     function timelineLookupKeys(field){
       var label, lookup='id', data, ret='name';
       switch(field) {
-				case "style_option_id":
-					label = "Style";
-					data = "style_options";
-					break;
-
-				case "fit_option_id":
-					label = "Fit";
-					data = "fit_options";
-					break;
-
-				case "gender_option_id":
-					label = "Gender";
-					data = "gender_options";
-					ret ="gender";
+        case "style_option_id":
+          label = "Style";
+          data = "style_options";
           break;
-
-				case "monogram_thread_id":
-					label = "Monogram Thread";
-					data = "threads";
+      
+        case "fit_option_id":
+          label = "Fit";
+          data = "fit_options";
           break;
-
-				case "fabric_id":
-					label = "Fabric";
-					data = "fabrics";
-					break;
-
-				case "top_thread_id":
-					label = "Top Thread";
-					data = "threads";
-					break;
-
-				case "bottom_thread_id":
+      
+        case "gender_option_id":
+          label = "Gender";
+          data = "gender_options";
+          ret ="gender";
+          break;
+      
+        case "monogram_thread_id":
+          label = "Monogram Thread";
+          data = "threads";
+          break;
+      
+        case "fabric_id":
+          label = "Fabric";
+          data = "fabrics";
+          break;
+      
+        case "top_thread_id":
+          label = "Top Thread";
+          data = "threads";
+          break;
+      
+        case "bottom_thread_id":
           label = "Bottom Thread";
           data = "threads";
           break;
-
-				case "accent_thread_id":
+      
+        case "accent_thread_id":
           label = "Accent Thread";
           data = "threads";
-					break;
-
+          break;
+      
         case "vendor_id":
           label = "Vendor";
           data = 'vendors';
           break;
-
-				case "rep_id":
+      
+        case "rep_id":
           label = "Rep";
           data = 'reps';
           break;
-
-				case "order_status_id":
-					label = "Order Status";
-					data = 'order_statuses';
-					break;
-
+      
+        case "order_status_id":
+          label = "Order Status";
+          data = 'order_statuses';
+          break;
+      
         case "order_type_id":
           label = "Order Type";
           data = 'order_types';
           break;
-
-				case "payment_status_id":
-					label = "Payment Status";
-					data = "payment_statuses";
-					break;
-
-				default:
-					return false;
+      
+        case "payment_status_id":
+          label = "Payment Status";
+          data = "payment_statuses";
+          ret = "label";
+          break;
+      
+        case "belt_loop_options_id":
+          label = "Belt Loops";
+          data = "belt_loop_options";
+          ret='label';
+          break;
+      
+        case "hardware_option_id":
+          label = "Rivets";
+          data = "hardware_options";
+          ret = "name";
+          break;
+      
+        case "pocket_option_id":
+          label = "Pocket Option";
+          data = "pocket_options";
+          ret = "label";
+          break;
+      
+        default:
+          return false;
       }
       return{
         label:label,
@@ -351,19 +370,19 @@ angular.module('inspinia')
         data:data,
         ret:ret
       }
-
+    
     }
-
+  
     function correctFieldTitle(title){
-    	title = title.replace(/_/g, ' ');
-    	return title.charAt(0).toUpperCase() + title.slice(1);
-		}
-
-		var simpleFields = [
+      title = title.replace(/_/g, ' ');
+      return title.charAt(0).toUpperCase() + title.slice(1);
+    }
+  
+    var simpleFields = [
       "due_date",
-			"fit_date",
-			"monogram",
-			"tracking",
+      "fit_date",
+      "monogram",
+      "tracking",
       'jean_name',
       'monogram',
       'waist',
@@ -382,25 +401,20 @@ angular.module('inspinia')
       'knee_right',
       'calf_up',
       'calf_right',
-      'leg_opening'
-		];
-
-
-
-		if(!vm.newOrder){
-      var logs = vm.order.logs;
-      logs.push.apply(logs, vm.order.order_items[0].logs);
-      processLogs(logs);
-		}
-
-		function processLogs(logs) {
+      'leg_opening',
+      'price',
+      'height',
+      'weight'
+    ];
+  
+    function processLogs(logs) {
       var groupedLogs = {};
       for (var i = 0; i < logs.length; i++) {
         var key = logs[i].created_at + "__" + logs[i].user_id;
         if (!groupedLogs[key]) groupedLogs[key] = [];
         groupedLogs[key].push(logs[i]);
       }
-
+    
       for (var key in groupedLogs) {
         if (groupedLogs.hasOwnProperty(key)) {
           var entryData = key.split("__");
@@ -418,7 +432,7 @@ angular.module('inspinia')
               var new_value = vm.data.lookup(keys.data, keys.lookup, log.new_value, keys.ret);
               messages.push("Changed " + keys.label + " from '" + old_value + "' to '" + new_value + "'");
             }
-
+          
             if (simpleFields.indexOf(log.field) > -1)
               messages.push("Changed " + correctFieldTitle(log.field) + " from '" + log.old_value + "' to '" + log.new_value + "'");
             if (log.field === "notes") messages.push("Edited notes");
@@ -432,6 +446,25 @@ angular.module('inspinia')
         }
       }
     }
+    
+		function buildTimeline() {
+      if (vm.newOrder) return false;
+			
+      //Init timeline with created_at date.
+      vm.timeline = [{message: "Order Created", created_at: vm.order.created_at}];
+      
+      //Add order comments
+      for (var i = 0; i < vm.order.order_comments.length; i++) {
+        vm.order.order_comments[i].type = "comment";
+      }
+      vm.timeline.push.apply(vm.timeline, vm.order.order_comments);
+      
+      //Add in order logs and order item logs
+      var logs = vm.order.logs;
+      logs.push.apply(logs, vm.order.order_items[0].logs);
+      processLogs(logs);
+    }
+		
 
 		//Function to add timeline item
 	  vm.addTimelineItem = function(){
@@ -525,9 +558,12 @@ angular.module('inspinia')
 							"shipping_address_id":vm.order.shipping_address_id,
 							"copy_order_item_id":vm.order.order_items[0].id,
 							"order_type_id":vm.order.order_type_id,
-							"user_id":vm.orderUser.id
+							"user_id":vm.orderUser.id,
+							"comment":"Order Copied from order #"+vm.order.id
 						}
+						
 						vm.saveOrder(function(){
+							
 							api.call('ordersPost', copyOrderObject, function(result){
 								$state.transitionTo('orders.edit', {orderId:result.id});
 							});

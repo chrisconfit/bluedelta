@@ -27,7 +27,6 @@
 			if (key == null) return false;
 			
 			if (typeof key === 'object'){
-				
 				var userData = key;
 				for (obKey in userData){
         if(!userData.hasOwnProperty(obKey)) continue;
@@ -40,14 +39,19 @@
     };
 		
 		var setup = function(callback){
+   
 			api.call('getCurrentUser', {}, function(userDetails){
-				$window.localStorage.setItem(userRoleProp, userDetails.roleId);
+				console.log("get current user");
+				console.log(userDetails);
+				$window.localStorage.setItem(userRoleProp, userDetails.role_id);
 				set(userDetails);
 				if (callback) callback(userDetails);
 			});
-		}
+		};
 		
 		function authCallback(response, callback){
+			console.log("Auth callback");
+			console.log(response);
 			$window.localStorage.setItem(tokenProp, response.access_token);
 			setup(function(userData){	
 				$window.localStorage.setItem(userRoleProp, userData.role_id);		

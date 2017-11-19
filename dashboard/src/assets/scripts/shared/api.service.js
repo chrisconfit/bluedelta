@@ -55,6 +55,8 @@
 
 			this[func](data)
 			.success(function(result){
+				console.log(func+" was a success:");
+				console.log(result);
 				if (success) success(result);
 				$rootScope.$$phase || $rootScope.$apply();
 			})

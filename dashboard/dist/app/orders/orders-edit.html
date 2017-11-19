@@ -177,28 +177,7 @@
 												ng-model="ovm.order.order_items[0].accent_thread_id">
 											</select>
 		                </li>
-										<!--
-										<li ng-if="ovm.order.order_items[0].rivets" class="list-group-item">
-		                  <b>Rivets</b>
-		                  <a ng-if="!ovm.EditMode" href="#" class="pull-right">No</a>
-		                  <select ng-if="ovm.EditMode" class="form-control  pull-right" 
-												ng-model="ovm.order.order_items[0].fake_pocket">
-												<option ng-value="0">No</option>
-												<option ng-value="1">Yes</option>
-											</select>
-		                </li>
-		                
-		                <li class="list-group-item" ng-if="ovm.order.order_items[0].fake_pocket">
-		                  <b>Fake Pocket</b> 
-		                  <a ng-if="!ovm.EditMode" href="#" class="form-control  pull-right">No</a>
-		                  <select ng-if="ovm.EditMode" class="pull-right" 
-												ng-model="ovm.order.order_items[0].fake_pocket">
-												<option ng-value="0">No</option>
-												<option ng-value="1">Yes</option>
-											</select>
-		                </li>
-		                -->
-		                
+
 		                <li class="list-group-item clearfix">
 		                  <b>Desired Fit</b>
 		                  <div ng-if="!ovm.EditMode" ng-click="ovm.beginJeanEdit()" class="pull-right">
@@ -208,55 +187,57 @@
 			                  <a ng-if="!ovm.order.order_items[0].fit_option_id" href="">Select</a>
 		                  </div>
 		                  <select ng-if="ovm.EditMode" class="form-control  pull-right" 
-			                  ng-model="ovm.order.order_items[0].fit_option_id" ng-options="fit.id as fit.name for fit in ovm.data.fit_options">
+			                  ng-model="ovm.order.order_items[0].fit_option_id"
+												ng-options="fit.id as fit.name for fit in ovm.data.fit_options">
 				                <option value="">None</option>
 											</select>
 		                </li>
-	
-		                <li class="list-group-item clearfix" ng-init="ovm.order.order_items[0].rivets='Yes'">
+
+
+
+
+										<!---!!!!FIX!!!!-->
+
+
+		                <li class="list-group-item clearfix">
 		                  <b>Rivets</b>
 		                  <div ng-if="!ovm.EditMode" ng-click="ovm.beginJeanEdit()" class="pull-right">
-			                  <span ng-if="ovm.order.order_items[0].rivets">
-			                  	{{ovm.order.order_items[0].rivets}}
+			                  <span ng-if="ovm.order.order_items[0].hardware_option_id">
+			                  	{{ovm.data.lookup("hardware_options", "id", ovm.order.order_items[0].hardware_option_id, "name")}}
 			                  </span>
-			                  <a ng-if="!ovm.order.order_items[0].rivets" href="">Select</a>
+			                  <a ng-if="!ovm.order.order_items[0].hardware_option_id" href="">Select</a>
 		                  </div>
-		                  <select ng-if="ovm.EditMode" class="form-control  pull-right" 
-			                  ng-model="ovm.order.order_items[0].rivets">
-												<option>No</option>
-												<option>Yes</option>
+		                  <select ng-if="ovm.EditMode" class="form-control  pull-right"
+			                  ng-model="ovm.order.order_items[0].hardware_option_id"
+												ng-options="o.id as o.name for o in ovm.data.hardware_options">
 											</select>
 		                </li>
-		                
-		                <li class="list-group-item clearfix" ng-init="ovm.order.order_items[0].pocket_option='Normal'">
+
+		                <li class="list-group-item clearfix">
 		                  <b>Pocket Option</b>
 		                  <div ng-if="!ovm.EditMode" ng-click="ovm.beginJeanEdit()" class="pull-right">
-			                  <span ng-if="ovm.order.order_items[0].pocket_option">
-			                  	{{ovm.order.order_items[0].pocket_option}}
+			                  <span ng-if="ovm.order.order_items[0].pocket_option_id">
+			                  	{{ovm.data.lookup("pocket_options", "id", ovm.order.order_items[0].pocket_option_id, "label")}}
 			                  </span>
-			                  <a ng-if="!ovm.order.order_items[0].pocket_option" href="">Select</a>
+			                  <a ng-if="!ovm.order.order_items[0].pocket_option_id" href="">Select</a>
 		                  </div>
 		                  <select ng-if="ovm.EditMode" class="form-control  pull-right" 
-			                  ng-model="ovm.order.order_items[0].pocket_option">
-												<option>Normal</option>
-												<option>Watch Pocket</option>
-												<option>Fake Pockets</option>
+			                  ng-model="ovm.order.order_items[0].pocket_option_id"
+												ng-options="o.id as o.label for o in ovm.data.pocket_options">
 											</select>
 		                </li>
-		                	                
-		                <li class="list-group-item clearfix" ng-init="ovm.order.order_items[0].belt_loops='Centered'">
-		                  <b>Belt Loops</b> 
+
+		                <li class="list-group-item clearfix">
+		                  <b>Belt Loops</b>
 		                  <div ng-if="!ovm.EditMode" ng-click="ovm.beginJeanEdit()" class="pull-right">
-			                  <span ng-if="ovm.order.order_items[0].belt_loops">
-			                  	{{ovm.order.order_items[0].belt_loops}}
+			                  <span ng-if="ovm.order.order_items[0].belt_loop_option_id">
+			                  	{{ovm.data.lookup("belt_loop_options", "id", ovm.order.order_items[0].belt_loop_option_id, "label")}}
 			                  </span>
-			                  <a ng-if="!ovm.order.order_items[0].belt_loops" href="">Select</a>
+			                  <a ng-if="!ovm.order.order_items[0].belt_loop_option_id" href="">Select</a>
 		                  </div>
-		                  <select ng-if="ovm.EditMode" class="form-control pull-right" 
-												ng-model="ovm.order.order_items[0].belt_loops">
-												<option>Centered</option>
-												<option>Split</option>
-												<option>X-Pattern</option>
+		                  <select ng-if="ovm.EditMode" class="form-control pull-right"
+												ng-options="o.id as o.label for o in ovm.data.belt_loop_options"
+												ng-model="ovm.order.order_items[0].belt_loop_option_id">
 											</select>
 		                </li>
 		                

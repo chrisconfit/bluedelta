@@ -175,7 +175,8 @@ angular.module('inspinia')
             orderData : function() {
               var data = {
                 "user":vm.fmData.user,
-                "fitmatch":vm.fmData
+                "fitmatch":vm.fmData,
+                "amount":50
               };
               if (vm.fmData.credit_card_id) data.selectedCard = vm.fmData.credit_card_id;
               return data;
@@ -185,7 +186,9 @@ angular.module('inspinia')
               return api;
             },
             confirmation : function(){
-              return function(swalSettings){SweetAlert.swal(swalSettings)};
+              return function(swalSettings){
+                SweetAlert.swal(swalSettings);
+              };
             }
           }
         });
@@ -289,6 +292,16 @@ angular.module('inspinia')
         }
       });
 
-
+      console.log(vm.data.fabrics);
+      vm.fabric_list_item_name = function(fabric_id){
+        var name = vm.data.lookup("fabrics", "id", fabric_id, "name");
+        var id = vm.data.lookup("fabrics", "id", fabric_id, "display_id");
+        var ret = "";
+        if(vm.data.lookup("fabrics", "id", fabric_id, "deleted_at"))
+          ret+="(deleted) ";
+        ret+=name;
+        if (id) ret+=" - "+id;
+        return ret;
+      }
 
   }]);

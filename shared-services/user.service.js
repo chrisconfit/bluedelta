@@ -39,14 +39,19 @@
     };
 		
 		var setup = function(callback){
+   
 			api.call('getCurrentUser', {}, function(userDetails){
+				console.log("get current user");
+				console.log(userDetails);
 				$window.localStorage.setItem(userRoleProp, userDetails.role_id);
 				set(userDetails);
 				if (callback) callback(userDetails);
 			});
-		}
+		};
 		
 		function authCallback(response, callback){
+			console.log("Auth callback");
+			console.log(response);
 			$window.localStorage.setItem(tokenProp, response.access_token);
 			setup(function(userData){	
 				$window.localStorage.setItem(userRoleProp, userData.role_id);		

@@ -55,6 +55,8 @@
 
 			this[func](data)
 			.success(function(result){
+				console.log(func+" was a success:");
+				console.log(result);
 				if (success) success(result);
 				$rootScope.$$phase || $rootScope.$apply();
 			})
@@ -178,14 +180,14 @@
 			})
 		}   
     
-	 function searchAndDraw(key, cntxt, images){
-			for(i=0; i<images.length; i++){
-				var image = images[i];
-				if(image.src.indexOf("/"+key+"/") > -1){
-					cntxt.drawImage(image,0,0,600,696);
-				}
-			}
-		}
+    function searchAndDraw(key, cntxt, images){
+      for(i=0; i<images.length; i++){
+        var image = images[i];
+        if(image.src.indexOf("/"+key+"/") > -1){
+          cntxt.drawImage(image,0,0,600,696);
+        }
+      }
+    }
 		
 	  var createThumb = function(jeanData){
 	  	var canvas = document.createElement('canvas');
@@ -383,16 +385,35 @@
       if (data.id) path += "/"+data.id
       return httpReq("POST", path, data);
     };
-
+    var fitmatchCharge = function(data){
+      return httpReq("POST", "/api/fitmatchrequests/"+data.fitmatchId+"/charge", data);
+    };
 		var getAppData = function(){
-			$http.get("https://api.bluedeltajeans.com/api/data").then(function(result){
+      httpReq("GET", "/api/data").then(function(result){
 				for(key in result.data){
 					if(result.data.hasOwnProperty(key)){
 						appData[key] = result.data[key];
 					}
 				}
+				appData.belt_loop_options = [
+					{"id":1, "label":"Centered"},
+          {"id":2, "label":"Split"},
+          {"id":3, "label":"X-Pattern"}
+
+				];
+        appData.payment_statuses = [
+          {"id":1, "label": "Awaiting Payment"},
+          {"id":2, "label": "Paid"},
+          {"id":3, "label": "Comped"}
+        ];
+        appData.pocket_options = [
+          {"id":1, "label": "Normal"},
+          {"id":2, "label": "Watch Pocket"},
+          {"id":3, "label": "Fake Pocket"}
+        ];
+        
 			});
-		}
+		};
 
 		var appData = {};
 		appData.lookup = function(data, key, value, retKey){
@@ -403,7 +424,7 @@
 				if(dataSet[i][key] == value)
 					return retKey ? dataSet[i][retKey] : dataSet[i]
 			}
-		}
+		};
 		
     return {
 			getData:function(){ return appData;},
@@ -452,7 +473,8 @@
       fitmatchList:fitmatchList,
       fitmatchGet:fitmatchGet,
       fitmatchDelete:fitmatchDelete,
-      fitmatchPost:fitmatchPost
+      fitmatchPost:fitmatchPost,
+      fitmatchCharge:fitmatchCharge
     };
     
   }
