@@ -26,12 +26,12 @@ a.btn {
 	font-weight: 600;
 	letter-spacing: 0.05em;
   &.small {
-    padding: 4px 5px;
-    @include font-size(13, 24);
+    padding: 4px 12px;
+    @include font-size(14, 24);
   }
   &.grey {
     background: #bdbdbd;
-    color: #414648;
+    color: #282a2b;
   }
 
   &.full {

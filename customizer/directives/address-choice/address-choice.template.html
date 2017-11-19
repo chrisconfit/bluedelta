@@ -3,7 +3,7 @@
 		<span class='add-line'>{{add.address_line_1}}</span>
 		<span class='add-line' ng-if="add.address_line_2">{{add.address_line_2}}</span>
 		<span class='add-line'>{{add.city}}, {{add.state}} {{add.zip}}</span>
-		<a href="" ng-click="startEditing()">Change</a>
+		<a href="" ng-click="startEditing()" class="edit-existing">Change</a>
 	</div>
 	<a ng-if="!user.addresses.length && !active" ng-click="startEditing(); open();">Add a Shipping Address</a>
 
@@ -20,10 +20,10 @@
 			</div>
 		</div>
 	
-		<a ng-if="!active" class="address-action-link" ng-click="open()" href="">Add Address</a>						
-		<a ng-if="!active" class="address-action-link" ng-click="stopEditing()" href="">Done</a>						
+		<a ng-if="!active" class="address-action-link" ng-click="open()" href="">Add Address <i class="fa fa-plus-circle"></i></a>						
+		<a ng-if="!active" class="address-action-link edit-existing" ng-click="stopEditing()" href="">Done</a>						
 	
-		<form ng-if="active" class="cft-form">
+		<div ng-if="active" class="cft-form">
 			<div ng-class="{active: model.address_line_1.length}" class="input-group">
 		    <input type="text" class="form-control" id="addLine1" ng-model="model.address_line_1">
 		    <label for="addLine1">Address Line 1</label>
@@ -48,7 +48,7 @@
 		    <label for="zip">Zip</label>
 		  </div>
 		  <button ng-click="save()" class="btn">Save</button><button ng-click="clear()" class="btn secondary">Close</button>
-		</form>
+		</div>
 		
 	</div>
 </div>

@@ -755,15 +755,15 @@ h1.page-title{
 	}
 	
 	&.style-chooser .chooser-select, &.gender-chooser .chooser-select {
-		left: 15px;
-    top: 0px;
-    bottom:0px;
-    width: calc(33.333% - 15px);
-    height:auto;
-    display: block;
-    position: absolute;
-    z-index: 999;
-    padding-left: 10px;	
+      left: 15px;
+      top: 0px;
+      bottom:0px;
+      width: calc(33.333% - 15px);
+      height:auto;
+      display: block;
+      position: absolute;
+      z-index: 999;
+      padding-left: 10px;
 	}
 	
 	&.gender-chooser .chooser-select {
@@ -775,7 +775,6 @@ h1.page-title{
     	left:15px;
     	height:190px;
 		}
-		
   	&.gender-chooser .chooser-select {
     	width: calc(50% - 15px);
     	top:0!important;
@@ -813,9 +812,14 @@ h1.page-title{
 	
 	& >.cft-gi{
 		width:80px;
+		height:80px;
+		position: static;
 		margin-right:15px;
 		&:last-of-type{margin-right:0;}
 		padding-left:0;
+		&.bkg-container{
+			position:relative;
+		}
 	}
 	@include at-query($min, $deskMin){
 		margin-left:-15px;
@@ -825,6 +829,7 @@ h1.page-title{
 		& >.cft-gi{
 			display:inline-block;
 			width:33.3333%;
+      height:auto;
 			padding-left:15px;
 			margin-right:0;
 			margin-bottom:15px;
@@ -837,6 +842,7 @@ h1.page-title{
 		margin-left:-15px;
 		margin-bottom:0;
 		& >.cft-gi{
+			height:auto;
 			padding-left:15px;
 			margin-right:0;
 			width:33.3333%;
@@ -882,7 +888,7 @@ h1.page-title{
 			font-weight: 700;
 			color:rgba($teal,.8);						
 			position: absolute;
-			font-size: 21px;
+			font-size: 18px;
 			background: transparent;
 			text-align: right;
 			color: rgba(255, 255, 255, 0.6);				
@@ -897,6 +903,11 @@ h1.page-title{
 	
 	@include at-query($min, $deskMin){
 		white-space: normal;
+		a{
+			span.fabric-weight{
+				font-size:21px;
+			}
+		}
 	}
 }
 .chooser-group{
@@ -949,7 +960,33 @@ h1.page-title{
 	}
 }
 
-
+//Fabric chooser mobile ...
+.gt-bkg{
+	background:$blue;
+	position:absolute;
+	top:-5px;
+	bottom:-1px;
+	pointer-events: none;
+	left:0;
+	right:0;
+	span.grid-title{
+		position:absolute;
+		width:90%;
+		margin:auto;
+		text-transform: uppercase;
+		margin-top:5px;
+		top:50%;
+		@include transform(translateY(-50%));
+		color:#fff;
+		left: 0;
+    right: 0;
+    white-space: normal;
+    font-weight: 700;
+    text-align: center;
+    @include font-size(14,16);
+		
+	}
+}
 
 
 //Builder Stage

@@ -4,8 +4,8 @@
     .module('bdApp')
     .controller('closetCtrl', closetCtrl);
 
-  closetCtrl.$inject = ['$location', '$window', 'jean','popups', '$scope', 'messages', 'loader', 'user', 'api', 'apiData', '$routeParams'];
-  function closetCtrl($location, $window, jean, popups, $scope, messages, loader, user, api, apiData, $routeParams) {
+  closetCtrl.$inject = ['$filter', '$location', '$window', 'jean','popups', '$scope', 'messages', 'loader', 'user', 'api', 'apiData', '$routeParams'];
+  function closetCtrl($filter, $location, $window, jean, popups, $scope, messages, loader, user, api, apiData, $routeParams) {
 	    
     var vm = this;   
 		popups.closeAll();
@@ -39,7 +39,15 @@
 			"message":"",
 		}
 		
-
+		vm.changeOrderItemName = function(){
+			var changeOrder = vm.displayOrder.order_items[0].id;
+			var changeName = vm.displayJean.jean_name;
+			api.call('postOrderItem', {id:changeOrder, jean_name:changeName}, function(result){
+				console.log("Changed Name!");
+				console.log(result);
+			});
+		}
+		
 		vm.userForm.cancel = function(field){
 			vm.userForm.editing[field] = false;
 			vm.user[field] = vm.userForm.data[field];
@@ -50,6 +58,12 @@
 			vm.userForm.editing[field]=true;
 			
 		}
+		
+		vm.formatDate = function(date, format){
+			var format = format || "MM/dd/yyyy"
+			var date = new Date(date);
+			return $filter('date')(date, format);
+		}		
 		
 		//Validation functions
 		function validateEmail(email) {
@@ -98,29 +112,7 @@
 
     
    	
-    
-    //Get user details and orders...
- //     var identityID = aws.getCurrentIdentityId();
- /*
-    if (!identityID){ $location.path('/'); }
-	  else{
-			
-	  	//Todo: Just get orders for user...
-			bdAPI.call('ordersList', 100, function(result){
-				vm.orders=result.data.items;
-			});	
-				
-			bdAPI.call('usersGet', identityID, function(result){
-				loader.hide();
-				//vm.user = result.data;							
-				vm.userForm.data = angular.copy(result.data);	
-			});
-			
-			vm.user = user.get();
-			
-    }
-	    	*/
-	    vm.user = user.get();	
+	 vm.user = user.get();	
 
 	    	
 				

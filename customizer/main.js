@@ -1,6 +1,6 @@
 (function () {
 
-  angular.module('bdApp', ['ngRoute', 'ngAnimate','ngSanitize', 'ngCookies', 'angular-gestures', 'user', 'api']); 
+  angular.module('bdApp', ['ngRoute', 'ngAnimate','ngSanitize', 'ngCookies', 'angular-gestures', 'user', 'api', 'sqPaymentForm']);
   
 
 
@@ -9,6 +9,11 @@
       .when('/', {
         templateUrl: '/pages/home/home.view.html',
         controller: 'homeCtrl',
+        controllerAs: 'vm',
+      })
+      .when('/pay/:orderDetails', {
+        templateUrl: '/pages/pay/pay.view.html',
+        controller: 'payCtrl',
         controllerAs: 'vm',
       })
       .when('/register', {
@@ -59,7 +64,8 @@
 
 	    var locked = [
 		    '/closet',
-		    '/order'
+		    '/order',
+            '/pay'
 	    ];
 	    
 	    if (locked.indexOf($location.path()) >= 0 && !user.isLoggedIn() ){
@@ -135,8 +141,8 @@
 		);	
 	}
 	*/
-	$http.get("http://ec2-54-200-231-145.us-west-2.compute.amazonaws.com/api/data").then(function(result){
-				
+	$http.get("https://api.bluedeltajeans.com/api/data").then(function(result){
+
 		result.data.lookup = function(data, key, value, retKey){
 			var dataSet = this[data];
 			retKey = retKey || false;

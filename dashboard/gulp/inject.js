@@ -32,8 +32,6 @@ gulp.task('inject', ['scripts', 'styles'], function () {
   	path.join('../shared-services/**/*.js'),
   ])
   
-  
-  
   .pipe($.angularFilesort()).on('error', conf.errorHandler('AngularFilesort'));
 
   var injectOptions = {

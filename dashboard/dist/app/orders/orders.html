@@ -1,10 +1,11 @@
 	<div>
-		<div class="row wrapper border-bottom white-bg page-heading">
+		<div class="order-page orders-list-page row wrapper border-bottom white-bg page-heading">
 			<h2>Orders</h2>
 		</div>
+
 		<div class="wrapper wrapper-content animated fadeInRight">
 			<div class="row">
-				<div class="ibox float-e-margins">
+				<div class="ibox" ng-click="primaryBox=1" ng-class="{'ibox-primary':primaryBox==1}">
 					<div class="ibox-title">
 						<h3>Filters</h3>
 					</div>
@@ -20,7 +21,7 @@
 							  <div class="form-group">
 							    <label>Status</label>
 							    <select ng-options="s.id as s.name for s in ovm.data.order_statuses" class="form-control" 
-								  style="width: 100%;" ng-model="ovm.filters.status">
+								  style="width: 100%;" ng-model="ovm.filters.order_status_id">
 									  <option value="">All</option>
 							    </select>
 							  </div>
@@ -70,7 +71,7 @@
 		</div><!--.row-->
 		
 		<div class="row">
-			<div class="ibox float-e-margins">
+			<div class="ibox float-e-margins" ng-click="primaryBox=2" ng-class="{'ibox-primary':primaryBox==2}">
 				<div class="ibox-title">
 					<h3>Orders List</h3>
 				</div>
@@ -95,7 +96,7 @@
 								<td>{{order.user.first_name}} {{order.user.last_name}}</td>
 								<td>{{ovm.data.lookup("vendors", "id", order.vendor_id, "name") }}</td>
 								<td>{{ovm.data.lookup("reps", "id", order.rep_id, "name") }}</td>
-								<td>{{order.created_at | date:"M/d/yyyy"}}</td>
+								<td>{{ovm.formatDate(order.created_at)}}</td>
 								<td><span class="label label-{{order.order_status_id}}">{{ovm.data.lookup("order_statuses", "id", order.order_status_id, "name") }}</span></td>
 								<td><a href="#" class="warning" ng-click="ovm.deleteOrder(order.id)"><i class="fa fa-close"></i></a>
 							</tr>

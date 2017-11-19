@@ -38,6 +38,10 @@
     display: block;
     font-size: 14px;
 }
+
+.date-edge-right [date-picker-wrapper] {
+	right:0;
+}
 [date-picker-wrapper] > div {
     -webkit-box-shadow: 0 0 3px rgba(86, 96, 117, 0.7);
     -moz-box-shadow: 0 0 3px rgba(86, 96, 117, 0.7);

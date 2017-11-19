@@ -196,7 +196,6 @@
 		
 		var openSaveOpts = function(){
 			popups.set('saveOpts',true);
-			
 		}	
 		
 		var redirectToOrder = function(jean){
@@ -280,18 +279,10 @@
 			else vm.saveAndShowOpts();
   	}
     
-    //Set default auth callback
-		
     
+    //Set default auth callback  
     vm.registerCallback = function(details){
-	    /*
-	    aws.authenticateCognitoUser(details.email, details.password).then(
-		    function(result){
-					vm.authCallback();	
-		  	}
-	    )
-	    */
-    }
+	  }
     
     
 

@@ -1,3 +1,5 @@
+
+
 @import "components/variables";
 @import "components/mixins";
 @import "components/reset";
@@ -657,6 +659,19 @@ form.cft-form{
 	}
 }
 
+.cft-g.order-grid{
+	margin-left:-40px;
+	.cft-gi{
+		vertical-align: top;
+		padding-left:40px;
+		width:100%;
+		margin-bottom:40px;
+		@include at-query($min, 650px){
+			width:50%;
+		}
+	}
+}
+
 .cft-g.jean-grid{
 	margin-left:-40px;
 	.cft-gi{
@@ -678,6 +693,35 @@ form.cft-form{
 	h3,h4,h5{
 		&:not(.box-title){
 			margin-bottom:5px;
+		}
+	}
+	&.jean-order-card{
+		.jean-image-order-preview{
+			width:100%;
+			padding-bottom:52.5%;
+			position:relative;
+			overflow: hidden;
+			img{
+				position: absolute;
+				width: 220%;
+				margin: 0;
+				display: block;
+				top: 50%;
+				left: 50%;
+				transform: translate(-44%,-29%) rotate(5deg);
+				-moz-transform: translate(-44%,-29%) rotate(5deg);
+				-o-transform: translate(-44%,-29%) rotate(5deg);
+				-webkit-transform: translate(-44%,-29%) rotate(5deg);
+			}
+		}
+		
+		.jean-list dl dt{
+			padding-left:0;
+			@include font-size(12,18);
+		}
+		.jean-list dl dd{
+			padding-right:0;
+			@include font-size(14,18);
 		}
 	}
 	&.horiz-card {
@@ -918,3 +962,216 @@ form.cft-form{
 	}
 }
 
+//BANNER TITLE
+.banner-title{
+	position: relative;
+	background: url('../../images/closet.png') no-repeat center center;
+	height:400px; 
+	width: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	&:before{
+		content:"";
+		position:absolute;
+		top:0;
+		bottom:0;
+		left:0;
+		right:0;
+		background:rgba(0,0,0,.15);
+	}
+	h1{
+		color:#fff;
+		position:absolute;
+		left:0;
+		right:0;
+		width:90%;
+		margin:auto;
+		text-align: center;
+		top:50%;
+		@include transform(translateY(-50%));
+	}
+}
+
+
+.checkout-form{
+  max-width:600px;
+  margin:auto;
+	hr{
+		margin:30px 0;
+	}
+  h3.price-display {
+    padding-bottom:30px;
+    margin-bottom:30px;
+    border-bottom:1px solid $lightGrey;
+    color:$grey;
+    .total-price {
+      color: $teal;
+      float: right;
+    }
+  }
+}
+
+
+.cft-g.cc-form-grid{
+  &>.cft-gi{
+    width:20%;
+    &.name{
+      width:60%;
+    }
+  }
+}
+
+.cft-g.fit-match-grid{
+	&>.cft-gi{
+		width:20%;
+	}
+}
+
+.fit-match-grid{
+	img{ width:100%; }
+}
+
+.pay-page .user-box{
+  background:$greyBlue;
+  padding:10px;
+  max-width:600px;
+  margin:auto;
+  a.btn{float:right;}
+  h5{
+    display:inline-block;
+    margin-top:10px;
+    margin-bottom: 5px;
+  }
+  @include at-query($min, 1100px){
+    a.btn{
+      width:100%;
+      float:none;
+    }
+    h5{
+      display: block;
+      margin-top:0px;
+    }
+	position: absolute;
+	right:30px;
+	top:0;
+	text-align: right;
+  }
+}
+.fm-fabric-list{
+	list-style-type: none;
+	margin-bottom:10px;
+	border-top: 1px solid #cccccc;
+  padding-top: 15px;
+  border-bottom: 1px solid #cccccc;
+  padding-bottom: 10px;
+	li{margin-bottom:5px;}
+	img{
+		width:25px;
+		vertical-align: middle;
+	}
+}
+.payment-instruction {
+	margin-top: 20px;
+}
+
+.edit-existing {
+	font-weight: bold;
+	color: #1f7fa2;
+	display: inline-block;
+}
+
+.user-address{
+	&:nth-of-type(odd){
+		background:$greyBlue;
+	}
+	padding:5px;
+	position: relative;
+	a.check-box{
+		position: absolute;
+	}
+	.address-details{
+		padding-left:40px;
+	}
+}
+
+.checkout-form h3{margin-bottom:18px;}
+
+.sq-input-container{
+	@extend .input-group;
+}
+.sq-input-container.active .sq-input,
+.sq-input--focus{
+	outline-width: 1px;
+	outline-style: dashed;
+	outline-color: rgba(65, 119, 139, 0.7);
+	outline-offset: -3px;
+}
+.sq-input--focus ~ label{
+	top: -18px;
+
+	font-size: 12px;
+	left: 0;
+	font-weight: 700;
+	color: #fff;
+	padding: 0px 4px;
+	background: #004964;
+}
+@include at-query($min, 600px) {
+	.sq-input-container {
+		&.postalCode, &.expirationDate, &.cvv {
+			display: inline-block;
+			width: 32%;
+		}
+		&.cvv, &.expirationDate{
+			margin-right:2%;
+		}
+	}
+}
+
+.cc-info-box .card-list{
+	list-style-type: none;
+	li{margin-bottom:5px;}
+	margin-bottom: 10px;
+}
+
+.cart-header{
+  border-bottom:1px solid $greyBlue;
+  img{
+    display: block;
+    margin:auto;
+    width:80%;
+    max-width:200px;
+  }
+}
+
+.pay-login-form{
+  h3{
+    text-align:center;
+    margin-bottom:30px;
+  }
+  max-width:800px;
+  display:block;
+  margin:auto;
+}
+
+.pay-user-loading{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#fff;
+  p{
+    width:90%;
+    text-align:center;
+    margin:auto;
+    display:block;
+    left:0;
+    right:0;
+    top:50%;
+    position: absolute;
+    @include transform(translateY(-50%));
+  }
+}

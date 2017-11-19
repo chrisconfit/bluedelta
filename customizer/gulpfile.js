@@ -137,6 +137,7 @@ function browserSyncInit(baseDir, browser) {
     startPath: '/',
     server: server,
     browser: browser,
+    port: 4000
   });
 }
 

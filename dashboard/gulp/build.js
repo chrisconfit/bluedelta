@@ -3,6 +3,7 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
+var debug = require('gulp-debug');
 
 var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'main-bower-files', 'uglify-save-license', 'del']
@@ -98,6 +99,7 @@ gulp.task('clean', function () {
 
 gulp.task('shared', function(){
 	return gulp.src('../shared-services/**/*.js')
+    .pipe(debug())
 	.pipe(gulp.dest(path.join(conf.paths.dist, '/assets/scripts/shared/')))
 });
 

@@ -27,7 +27,7 @@
 
 		
 		/*
-		*.  Jean Data
+		*  Jean Data
 		*/
 		
   	var jeanData = {};

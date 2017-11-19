@@ -4,7 +4,6 @@ body {
   font-size: 15px;
   color: @text-color;
   overflow-x: hidden;
-
 }
 
 html, body {
@@ -198,7 +197,7 @@ a.warning {
 }
 
 .wrapper-content {
-  padding: 20px 10px 40px;
+  padding: 20px 10px 80px;
 }
 
 #page-wrapper {
@@ -295,7 +294,7 @@ body.body-small .footer.fixed {
 
 .page-heading {
   border-top: 0;
-  padding: 0 10px 20px 20px;
+  padding: 0 20px 20px 20px;
   h1 {
 	  font-weight: 600;
 	  text-transform: uppercase;
@@ -1432,3 +1431,70 @@ body.mini-navbar.fixed-sidebar .logo-element {
   animation: none;
 }
 
+
+
+
+#form-control-buttons{
+	position:fixed;
+	bottom:0;
+	z-index:999;
+	background:#cdd5de;
+	left:0;
+	right:0;
+	padding:20px;
+	text-align: center;
+}
+.footer{
+	text-align:center;
+	.pull-right{
+		width:100%;
+	}
+}
+body.orders-edit, body.clients-add, body.orders-add, body.clients-edit{
+	#wrapper{
+		padding-bottom:75px;
+	}
+}
+@media (min-width: 768px) {
+	body.orders-edit, body.clients-add, body.orders-add, body.clients-edit{
+		#wrapper{
+			padding-bottom:0;
+		}
+	}
+	
+	.footer{
+		text-align:left;
+		.pull-right{
+			width:auto;
+		}
+	}
+	
+	#form-control-buttons{
+	position:relative;
+	background:transparent;
+	left:auto;
+	right:auto;
+	bottom:auto;
+	padding:0px;
+	text-align: left;
+	}
+}
+.sq-input{
+  border:1px solid #ddd;
+}
+.sq-input-container{
+  position: relative;
+  padding-top:25px;
+  label{
+    position:absolute;
+    top:0;
+    left:0;
+  }
+}
+
+.key-in-modal-buttons{
+  .button-container{
+    display:inline-block;
+    margin-right:4px;
+  }
+}
