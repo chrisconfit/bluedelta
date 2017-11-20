@@ -260,16 +260,22 @@ body{
 	}
 	h3 {
 		@include font-size(24,30);
-		margin-bottom: 60px;
+		margin-bottom: 30px;
 		color: #ffffff;
 		@include at-query($min, 650px){
 			@include font-size(28,36);
+			margin-bottom: 50px;
 		}
 	}
 }
 
 .intro-text{
 	text-align:center;
+	p {
+		padding: 0 20px 20px;
+		text-shadow: 0 0 5px #6f6f6f;
+		@include font-size(23, 30);
+	}
 	.callouts{
 		max-width:600px;
 		margin:30px auto;
@@ -554,7 +560,12 @@ form.cft-form{
 		}
 		.box-title{
 			@include font-size(22, 26);
-			margin-bottom: 20px;
+			margin: -20px -20px 20px -20px;
+			padding-left: 20px;
+		}
+		.price {
+			@include font-size(24, 28);
+			color: #004963;
 		}
 		&:first-child{
 			margin-bottom:80px;
@@ -1035,7 +1046,7 @@ form.cft-form{
   background:$greyBlue;
   padding:10px;
   max-width:600px;
-  margin:auto;
+  margin: 0 auto 20px;
   a.btn{float:right;}
   h5{
     display:inline-block;
@@ -1141,9 +1152,14 @@ form.cft-form{
     margin:auto;
     width:80%;
     max-width:200px;
-  }
+  } 
 }
-
+.pay-page {
+	.container.thin {
+		max-width: 600px; 
+		padding: 0;
+	}
+}
 .pay-login-form{
   h3{
     text-align:center;

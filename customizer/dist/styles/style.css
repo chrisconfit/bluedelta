@@ -681,7 +681,7 @@ body {
   line-height: 30px;
   font-size: 2.4rem;
   line-height: 3rem;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   color: #ffffff;
 }
 @media screen and (min-width: 650px) {
@@ -690,11 +690,20 @@ body {
     line-height: 36px;
     font-size: 2.8rem;
     line-height: 3.6rem;
+    margin-bottom: 50px;
   }
 }
 
 .intro-text {
   text-align: center;
+}
+.intro-text p {
+  padding: 0 20px 20px;
+  text-shadow: 0 0 5px #6f6f6f;
+  font-size: 23px;
+  line-height: 30px;
+  font-size: 2.3rem;
+  line-height: 3rem;
 }
 .intro-text .callouts {
   max-width: 600px;
@@ -1017,7 +1026,15 @@ form.cft-form button.btn, form.cft-form button.btn-secondary {
   line-height: 26px;
   font-size: 2.2rem;
   line-height: 2.6rem;
-  margin-bottom: 20px;
+  margin: -20px -20px 20px -20px;
+  padding-left: 20px;
+}
+.hiw-popup-grid > .cft-gi .price {
+  font-size: 24px;
+  line-height: 28px;
+  font-size: 2.4rem;
+  line-height: 2.8rem;
+  color: #004963;
 }
 .hiw-popup-grid > .cft-gi:first-child {
   margin-bottom: 80px;
@@ -3433,7 +3450,7 @@ ul.tailor-list {
   background: #e8edef;
   padding: 10px;
   max-width: 600px;
-  margin: auto;
+  margin: 0 auto 20px;
 }
 .pay-page .user-box a.btn, .pay-page .user-box a.btn-secondary {
   float: right;
@@ -3547,6 +3564,11 @@ ul.tailor-list {
   margin: auto;
   width: 80%;
   max-width: 200px;
+}
+
+.pay-page .container.thin {
+  max-width: 600px;
+  padding: 0;
 }
 
 .pay-login-form {
