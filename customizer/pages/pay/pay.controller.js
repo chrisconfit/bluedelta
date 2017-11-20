@@ -37,9 +37,9 @@
          vm.user = {};
          vm.user.loaded=true;
          vm.userLoggedIn = user.isLoggedIn();
-
         }, false)
       };
+      
       vm.fire = function(){};
 
       //After User is init'd
@@ -50,9 +50,7 @@
         if(!vm.user.id) return false;
         //Only run this once..
         if(vm.user.loaded) return false;
-
         vm.user.loaded = true;
-
         //Set primary address to shipping address
         if(vm.user.addresses.length){
           for(i=0; i<vm.user.addresses.length; i++){
@@ -79,12 +77,14 @@
           vm.cardForm.loadingCards=false;
         }
       }, true);
+      
 
       vm.inputConfigOverrides = {
         cardNumber: {placeholder: ''},
         cvv: {placeholder: ''},
         expirationDate: {placeholder: ''},
       };
+      
       vm.inputStyles = [
         {
           backgroundColor: '#e8edef',
@@ -93,33 +93,28 @@
           lineHeight: '20px',
         }
       ];
-
-      $scope.$watch(function() {
-        return vm.add;
-      }, function(current, original) {
-        console.log("VMadd");
-        console.log(current.id);
-      }, true);
+      
 
       //Create CC from nonce and place order
       vm.nonceReceived =  function(nonce, err){
         api.call('createMyCreditCard', {'nonce':nonce}, function(card){
-          vm.orderFitMatch(card.card_id);
+          vm.payInvoice(card.card_id);
         });
       };
 
-      vm.orderFitMatch = function(card){
-        console.log("let's order a FM!!!");
+      vm.payInvoice = function(card){
+        
         var fmObject = {
           "credit_card_id":card,
           "shipping_address_id":vm.add.id,
           "requested_fabric_ids":JSON.stringify(vm.fitMatch)
         };
+        
         api.call('createMyFitMatch', fmObject, function(){
           vm.formStep = 2;
         });
 
-      }
+      };
 
       //Fit Match
       if ($routeParams.orderDetails.substring(0,2) === "fm"){
