@@ -6,7 +6,7 @@ angular.module('inspinia')
     var vm = this;
     vm.data = api.getData();
     vm.user = user.get(true);
-
+		console.log(vm.data);
     function serializeFilters(obj){
 	    var result = [];
 			for (var property in obj)

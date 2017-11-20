@@ -343,10 +343,10 @@ angular.module('inspinia')
           ret = "label";
           break;
       
-        case "belt_loop_options_id":
+        case "belt_loop_option_id":
           label = "Belt Loops";
           data = "belt_loop_options";
-          ret='label';
+          ret="label";
           break;
       
         case "hardware_option_id":
@@ -414,7 +414,7 @@ angular.module('inspinia')
         if (!groupedLogs[key]) groupedLogs[key] = [];
         groupedLogs[key].push(logs[i]);
       }
-    
+    	console.log(vm.data);
       for (var key in groupedLogs) {
         if (groupedLogs.hasOwnProperty(key)) {
           var entryData = key.split("__");
@@ -424,6 +424,8 @@ angular.module('inspinia')
             type: "pencil"
           };
           var messages = [];
+          
+          
           for (var i = 0; i < groupedLogs[key].length; i++) {
             var log = groupedLogs[key][i];
             var keys = timelineLookupKeys(log.field);
