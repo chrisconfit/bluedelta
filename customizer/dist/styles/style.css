@@ -2832,11 +2832,19 @@ h1 .sub-title {
   margin: 0px;
 }
 .info-box.inquiry-alert {
-  background: #004964;
-  color: #ffffff;
+  font-size: 16px;
+  line-height: 24px;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  color: #4c4c4c;
+}
+.info-box.inquiry-alert p {
+  margin-bottom: 10px;
+}
+.info-box.inquiry-alert p:last-child {
+  margin-bottom: 0;
 }
 .info-box.inquiry-alert a {
-  color: #ffffff;
   text-decoration: underline;
 }
 .info-box .change {
@@ -3005,6 +3013,10 @@ ul.tailor-list {
   -webkit-column-gap: 20px;
   column-count: 2;
   column-gap: 20px;
+  font-size: 16px;
+  line-height: 26px;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
 }
 @media screen and (min-width: 750px) {
   ul.tailor-list {
@@ -3015,6 +3027,9 @@ ul.tailor-list {
     column-count: 4;
     column-gap: 20px;
   }
+}
+ul.tailor-list li input {
+  margin-top: -1px;
 }
 
 .address-block {

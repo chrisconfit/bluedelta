@@ -72,10 +72,15 @@ h1 .sub-title {
 		}
 	}
 	&.inquiry-alert {
-		background: $blue;
-		color: #ffffff;
+		@include font-size(16, 24);
+		color: #4c4c4c;
+		p {
+			margin-bottom: 10px;
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
 		a {
-			color: #ffffff;
 			text-decoration: underline;
 		}
 	}
@@ -208,6 +213,7 @@ ul.tailor-list{
 	-webkit-column-gap: 20px;
 	column-count: 2;
 	column-gap: 20px;
+	@include font-size (16,26);
 	@include at-query($min, 750px){
 		-moz-column-count: 4;
 		-moz-column-gap: 20px;
@@ -217,7 +223,9 @@ ul.tailor-list{
 		column-gap: 20px;
 	}
 	li{
-		
+		input {
+			margin-top: -1px;
+		}
 	}
 }
 
