@@ -1002,7 +1002,11 @@ form.cft-form{
 		@include transform(translateY(-50%));
 	}
 }
-
+//
+.order-errors,.fit-match-errors,.thank-you-message{
+	max-width:600px;
+	margin:auto;
+}
 
 .checkout-form{
   max-width:600px;

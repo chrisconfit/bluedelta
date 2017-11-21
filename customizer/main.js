@@ -16,6 +16,11 @@
         controller: 'payCtrl',
         controllerAs: 'vm',
       })
+      .when('/thank-you/:type', {
+        templateUrl: '/pages/thank-you/thank-you.view.html',
+        controller: 'tyCtrl',
+        controllerAs: 'vm',
+      })
       .when('/register', {
         templateUrl: '/pages/auth/register/register.view.html',
         controller: 'registerCtrl',
@@ -62,13 +67,26 @@
 	  if (user.isLoggedIn()) user.setup();
     $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
 
+    	
+    	console.log("PTH!!");
+    	console.log($location.path());
 	    var locked = [
 		    '/closet',
-		    '/order',
-            '/pay'
+		    '/order'
 	    ];
-	    
-	    if (locked.indexOf($location.path()) >= 0 && !user.isLoggedIn() ){
+  		var lockedPage = false;
+	    for(var i=0; i<locked.length; i++){
+	    	if ($location.path().includes(locked[i]))
+	    		lockedPage = true;
+			}
+      if (lockedPage){
+      	console.log("LOCKED");
+			}else{
+      	console.log("NOT LOCKED");
+			}
+			
+        if (lockedPage && !user.isLoggedIn() ){
+	    	
 				$location.path('/login');
 	  	}
 	  	/* TODO
@@ -117,7 +135,7 @@
 				ret = input.gender ? input.gender : input.name;			
 				return ret ? ret.replace(/Raw Denim/g, "") : false;
 		  }  
-		})
+		});
 		
 		
 		
@@ -126,21 +144,7 @@
 	
 	// Get Angular's $http module.
 	var initInjector = angular.injector(['ng']);
-	
 	var $http = initInjector.get('$http');
-	var $q = initInjector.get('$q');
-	
-	/*
-	var awsJsonUrl = "http://bluedelta-data.s3-website-us-east-1.amazonaws.com/data/"
-	
-	var jsonDataKeys = ['style', 'thread', 'button', 'fabric', 'gender', 'tailors'];
-	var promises = [];				
-	for (d = 0; d < jsonDataKeys.length; d++){
-		promises.push(
-			$http.get(awsJsonUrl+jsonDataKeys[d]+'.json')
-		);	
-	}
-	*/
 	$http.get("https://api.bluedeltajeans.com/api/data").then(function(result){
 
 		result.data.lookup = function(data, key, value, retKey){
@@ -155,20 +159,7 @@
 		var body = document.getElementById('bdApp');
 		angular.bootstrap(angular.element(body), ['bdApp']);		
 	});
-	/*
-	$q.all(promises).then(
-		function(result){
-			var jsonData = {};
-			for(r=0;r<result.length;r++){
-				var key = result[r].config.url.replace(awsJsonUrl,"").replace(".json","");
-				jsonData[key] = result[r].data;
-			}
-			angular.module('bdApp').constant('jsonData', jsonData);
-			var body = document.getElementById('bdApp');
-			angular.bootstrap(angular.element(body), ['bdApp']);		
-		}
-	);
-	*/
+	
 
 	
 
