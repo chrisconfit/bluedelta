@@ -79,6 +79,7 @@
 									<small ng-show="f.orderForm.submitted && f.orderForm.payment_status_id.$error.required" class="text-danger">Please Choose a Payment Method</small>
 									<p class="payment_class_{{ovm.order.payment_status_id}}">
                     {{ovm.data.lookup("payment_statuses", "id", ovm.order.payment_status_id, "label")}}
+                    <span class="payment-message">To charge the client, first enter a price</span>
                   </p>
 
                   <div ng-if="ovm.order.payment_status_id==1 && ovm.order.price && ovm.order.price!='Please enter a valid price'">
@@ -390,127 +391,143 @@
 	              </div>
 	            </uib-tab>
 	            <uib-tab index="measurements" heading="Measurements">
-	              <div class="panel-body">
-	                     
+	              <div class="panel-body measurements">
+	                <h3>Waist</h3>   
 	                <div class="row">
-										<div class="col-sm-2">
+		               
+										<div class="col-sm-6">
 											<div class="form-group">
 										    <label class="control-label" for="customer">Waist</label>
 										    <input type="text" ng-model="ovm.order.order_items[0].waist" name="waist" id="waist" class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+	                </div>
+	                <h3>Seat</h3>
+	                <div class="row">
+										<div class="col-xs-6">
 											<div class="form-group">
-												<label class="control-label" for="customer">Seat-Down</label>
+												<label class="control-label" for="customer">Seat Down</label>
 												<input type="text" ng-model="ovm.order.order_items[0].seat_down" name="seat_down" id="seat_down" class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+										<div class="col-xs-6">
 											<div class="form-group">
-												<label class="control-label" for="customer">Seat-Right</label>
+												<label class="control-label" for="customer">Seat Right</label>
 												<input type="text" ng-model="ovm.order.order_items[0].seat_right" name="seat_right" id="seat_right"  class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+									</div>
+									<h3>Rise</h3>
+	                <div class="row">
+										<div class="col-xs-6">
 											<div class="form-group">
 												<label class="control-label" for="customer">Rise</label>
 												<input type="text" ng-model="ovm.order.order_items[0].rise" name="rise" id="rise"  class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+										<div class="col-xs-6">
 											<div class="form-group">
 												<label class="control-label" for="customer">Full Rise</label>
 												<input type="text" ng-model="ovm.order.order_items[0].full_rise" name="full_rise" id="full_rise"  class="form-control">
 											</div>
 										</div>
 									</div>
-									
-									<div class="row">
-										<div class="col-sm-2">
+									<h3>Thigh</h3>
+		              <div class="row">
+										<div class="col-xs-6 col-sm-4">
 											<div class="form-group">
-												<label class="control-label" for="customer">Thigh-Upper-Down</label>
+												<label class="control-label" for="customer">Thigh Upper Down</label>
 												<input type="text" ng-model="ovm.order.order_items[0].thigh_upper_down" name="thigh_upper_down" id="thigh_upper_down"  class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+										<div class="col-xs-6 col-sm-4">
 											<div class="form-group">
-												<label class="control-label" for="customer">Thigh-Upper-Right</label>
+												<label class="control-label" for="customer">Thigh Upper Right</label>
 												<input type="text" ng-model="ovm.order.order_items[0].thigh_upper_right" name="thigh_upper_right" id="thigh_upper_right"  class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+										<div class="col-xs-6 col-sm-4">
 											<div class="form-group">
-												<label class="control-label" for="customer">Thigh-Middle-Down</label>
+												<label class="control-label" for="customer">Thigh Middle Down</label>
 												<input type="text" ng-model="ovm.order.order_items[0].thigh_middle_down" name="thigh_middle_down" id="thigh_middle_down"  class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+										<div class="col-xs-6 col-sm-4">
 											<div class="form-group">
-												<label class="control-label" for="customer">Thigh-Middle-Right</label>
+												<label class="control-label" for="customer">Thigh Middle Right</label>
 												<input type="text" ng-model="ovm.order.order_items[0].thigh_middle_right" name="thigh_middle_right" id="thigh_middle_right"  class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+										<div class="col-xs-6 col-sm-4">
 											<div class="form-group">
-												<label class="control-label" for="customer">Thigh-Lower-Down</label>
+												<label class="control-label" for="customer">Thigh Lower Down</label>
 												<input type="text" ng-model="ovm.order.order_items[0].thigh_lower_down" name="thigh_lower_down" id="thigh_lower_down"  class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+										<div class="col-xs-6 col-sm-4">
 											<div class="form-group">
-												<label class="control-label" for="customer">Thigh-Lower-Right</label>
+												<label class="control-label" for="customer">Thigh Lower Right</label>
 												<input type="text" ng-model="ovm.order.order_items[0].thigh_lower_right" name="thigh_lower_right" id="thigh_lower_right"  class="form-control">
 											</div>
 										</div>
 									</div>
-									
-									<div class="row">
-										<div class="col-sm-2">
+									<h3>Outseam</h3>
+		              <div class="row">
+										<div class="col-sm-6">
 											<div class="form-group">
 												<label class="control-label" for="customer">Outseam</label>
 												<input type="text" ng-model="ovm.order.order_items[0].outseam" name="outseam" id="outseam"  class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+									</div>
+									<h3>Knee</h3>
+		              <div class="row">
+										<div class="col-xs-6">
 											<div class="form-group">
-												<label class="control-label" for="customer">Knee-Up</label>
+												<label class="control-label" for="customer">Knee Up</label>
 												<input type="text" ng-model="ovm.order.order_items[0].knee_up" name="knee_up" id="knee_up"  class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+										<div class="col-xs-6">
 											<div class="form-group">
-												<label class="control-label" for="customer">Knee-Right</label>
+												<label class="control-label" for="customer">Knee Right</label>
 												<input type="text" ng-model="ovm.order.order_items[0].knee_right" name="knee_right" id="knee_right"  class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+									</div>
+									<h3>Calf</h3>
+		              <div class="row">
+										<div class="col-xs-6">
 											<div class="form-group">
-												<label class="control-label" for="customer">Calf-Up</label>
+												<label class="control-label" for="customer">Calf Up</label>
 												<input type="text" ng-model="ovm.order.order_items[0].calf_up" name="calf_up" id="calf_up"  class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+										<div class="col-xs-6">
 											<div class="form-group">
-												<label class="control-label" for="customer">Calf-Right</label>
+												<label class="control-label" for="customer">Calf Right</label>
 												<input type="text" ng-model="ovm.order.order_items[0].calf_right" name="calf_right" id="calf_right"  class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+									</div>
+									<h3>Opening</h3>
+		              <div class="row">
+										<div class="col-sm-6">
 											<div class="form-group">
-												<label class="control-label" for="customer">Leg-Opening</label>
+												<label class="control-label" for="customer">Leg Opening / Pant Bottom</label>
 												<input type="text" ng-model="ovm.order.order_items[0].leg_opening" name="leg_opening" id="leg_opening"  class="form-control">
 											</div>
 										</div>
 									</div>
-									<hr>
+									<h3>Additional Info</h3>
 									<div class="row">
-										<div class="col-sm-2">
+										<div class="col-xs-6">
 											<div class="form-group">
 												<label class="control-label" for="customer">Height</label>
 												<input type="text" ng-model="ovm.order.order_items[0].height" name="height" id="height"  class="form-control">
 											</div>
 										</div>
-										<div class="col-sm-2">
+										<div class="col-xs-6">
 											<div class="form-group">
 												<label class="control-label" for="customer">Weight</label>
 												<input type="text" ng-model="ovm.order.order_items[0].weight" name="weight" id="weight"  class="form-control">
