@@ -20,9 +20,9 @@
 			headers: {'Content-Type':'application/json'}
 		};
 
-/*		if($location.$$host == "localhost"){
+		if($location.$$host == "localhost"){
 			config.url = "http://bluedelta.local";
-		}*/
+		}
 
 		var noTokenNecessary = [
 			'login',
