@@ -707,15 +707,15 @@ form.cft-form{
 	&.jean-order-card{
 		.jean-image-order-preview{
 			width:100%;
-			padding-bottom:52.5%;
+			padding-bottom:58.5%;
 			position:relative;
 			overflow: hidden;
 			img{
 				position: absolute;
-				width: 220%;
+				width: 170%;
 				margin: 0;
 				display: block;
-				top: 50%;
+				top: 45%;
 				left: 50%;
 				transform: translate(-44%,-29%) rotate(5deg);
 				-moz-transform: translate(-44%,-29%) rotate(5deg);
@@ -825,9 +825,18 @@ form.cft-form{
 }
 
 .jean-profile-grid{
+	direction: rtl;
+	text-align: left;
 	&>.cft-gi{
 		width:100%;
 		vertical-align: top;
+		
+	}
+	&>.cft-gi.main{
+		direction: ltr;
+	}
+	&>.cft-gi.sidebar{
+		margin-bottom: 40px;
 	}
 	@include at-query($min, 700px){
 		&>.cft-gi.main{
@@ -835,6 +844,7 @@ form.cft-form{
 		}
 		&>.cft-gi.sidebar{
 			width:30%;
+			margin-bottom: 0;
 		}
 	}
 }
@@ -855,6 +865,9 @@ form.cft-form{
 			margin-bottom:5px;
 			text-transform: uppercase;
 			color:$darkGrey;
+			&.order-id {
+				font-weight: bold;
+			}
 		}
 	}
 	input.jean-name{
@@ -1002,7 +1015,11 @@ form.cft-form{
 		@include transform(translateY(-50%));
 	}
 }
-
+//
+.order-errors,.fit-match-errors,.thank-you-message{
+	max-width:600px;
+	margin:auto;
+}
 
 .checkout-form{
   max-width:600px;
@@ -1188,4 +1205,87 @@ form.cft-form{
     position: absolute;
     @include transform(translateY(-50%));
   }
+}
+
+
+/*
+Jean List
+ */
+.jean-list{
+	max-height:0;
+	overflow:hidden;
+	@include transition(all,300ms,ease);
+	&.show{
+		max-height:500px;
+		overflow:auto;
+	}
+	dl{
+		width:100%;
+		max-height: calc(100vh - 264px);
+		dt{
+			padding:10px 15px;
+			padding-right:0;
+			width:40%;
+			display: inline-block;
+			vertical-align: bottom;
+			text-transform: uppercase;
+			color:$blue;
+			border-bottom:1px solid #dcdcdc;
+			font-weight:500;
+			padding-right:30px;
+			&:first-of-type{border-top:1px solid #bac2c5;}
+			&:last-of-type{border-bottom:1px solid #bac2c5;;}
+		}
+		dd{
+			padding:10px 15px;
+			padding-left:0;
+			color:$blue;
+			width:60%;
+			display: inline-block;
+			vertical-align: bottom;
+			border-bottom:1px solid #dcdcdc;
+			&:first-of-type{border-top:1px solid #bac2c5;}
+			&:last-of-type{border-bottom:1px solid #bac2c5;;}
+		}
+	}
+	@include at-query($min, $deskMin){
+		max-height:none;
+	}
+	&.closet{
+		max-height:none;
+		overflow: visible
+	}
+	&.invoice{
+		max-height:none;
+		dl{max-height:none;}
+		dl dt{
+			padding-left:0;
+		}
+	}
+}
+
+
+.cft-g.order-detail-grid{
+	& > .cft-gi:first-child {
+		margin-bottom:15px;
+		img {
+			width: 100%;
+			max-width:250px;
+			margin:auto;
+		}
+	}
+	@include at-query($min, 475px) {
+		& > .cft-gi {
+			vertical-align: top;
+		}
+		& > .cft-gi:first-child {
+			width: 175px;
+			img {
+				width: 100%;
+			}
+		}
+		& > .cft-gi:last-child {
+			width: calc(100% - 175px);
+		}
+	}
 }

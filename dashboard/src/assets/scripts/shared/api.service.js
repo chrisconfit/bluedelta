@@ -36,8 +36,8 @@
 		
 		//Call an API function and handle data
 		var isCustomizer = ($location.$$host=="localhost" && $location.$$port == 4000);
-		var tokenProp = isCustomizer ? "bdAccessToken":"bdDashAccessToken";	
-		
+		var tokenProp = isCustomizer ? "bdAccessToken":"bdDashAccessToken";
+    if($location.$$host=="localhost") tokenProp+="_dev";
 		var call = function(func, data, success, error){
 			
 			accessToken = $window.localStorage.getItem(tokenProp);

@@ -2,27 +2,22 @@
   
   angular
     .module('bdApp')
-    .controller('payCtrl', payCtrl);
-
-    payCtrl.$inject = ['$scope', '$routeParams', 'user', 'api', 'apiData', '$location'];
+    .controller('fmCtrl', fmCtrl);
   
+  fmCtrl.$inject = ['$scope', '$routeParams', 'user', 'api', 'apiData', '$location'];
   
-  
-  
-  function payCtrl ($scope, $routeParams, user, api, apiData, $location) {
-    
+  function fmCtrl ($scope, $routeParams, user, api, apiData, $location) {
     
     var vm = this;
     vm.userLoggedIn = user.isLoggedIn();
     vm.user = user.get();
     vm.user.loaded = !vm.userLoggedIn;
-    vm.orderErr = false;
     vm.checkoutForm = {};
     vm.data = apiData;
     vm.user = user.get();
     vm.add = {};
     vm.formStep=1;
-    vm.paidDate = false;
+    vm.fitMatch = $routeParams.orderDetails.split("-");
     vm.cards = null;
     vm.cardForm = {
       addingCard:false,
@@ -39,21 +34,22 @@
         vm.user = {};
         vm.user.loaded=true;
         vm.userLoggedIn = user.isLoggedIn();
+        
       }, false)
     };
-    
     vm.fire = function(){};
     
-    //After User is init'd//
+    //After User is init'd
     $scope.$watch(function() {
       return vm.user;
     }, function(current, original) {
-      
       //Make sure we've pulled a user...
       if(!vm.user.id) return false;
       //Only run this once..
       if(vm.user.loaded) return false;
+      
       vm.user.loaded = true;
+      
       //Set primary address to shipping address
       if(vm.user.addresses.length){
         for(i=0; i<vm.user.addresses.length; i++){
@@ -80,9 +76,6 @@
         vm.cardForm.loadingCards=false;
       }
     }, true);
-    //After User is init'd//
-    
-    
     
     vm.inputConfigOverrides = {
       cardNumber: {placeholder: ''},
@@ -99,60 +92,38 @@
       }
     ];
     
+    /*
+    $scope.$watch(function() {
+      return vm.add;
+    }, function(current) {
+      console.log(current.id);
+    }, true);
+    */
     
     //Create CC from nonce and place order
     vm.nonceReceived =  function(nonce, err){
       api.call('createMyCreditCard', {'nonce':nonce}, function(card){
-        vm.payInvoice(card.card_id);
+        vm.orderFitMatch(card.card_id);
       });
     };
     
-    
-    
-    vm.payInvoice = function(card){
-      var chargeObject = {
-        "orderId":vm.order.id,
-        "customer_card_id":card,
-        "amount_money":vm.checkoutForm.price,
-        "customer_id":vm.user.square_id
+    vm.orderFitMatch = function(card){
+      var fmObject = {
+        "credit_card_id":card,
+        "shipping_address_id":vm.add.id,
+        "requested_fabric_ids":JSON.stringify(vm.fitMatch)
       };
-      console.log(chargeObject);
-      api.call('ordersCharge', chargeObject, function(){
-        $location.path('/thank-you/order');
+      api.call('createMyFitMatch', fmObject, function(){
+        $location.path('/thank-you/fitmatch');
       });
+      
     };
     
     
-    //Get Order
-    if(vm.userLoggedIn) {
-      vm.orderId = $routeParams.orderDetails;
-      api.call('getMyOrders', $routeParams.orderDetails, function (result) {
-        if (result.price) {
-          vm.order = result;
-          if (result.payment_status_id!==1 && result.transactions){
-            for(var i=0; i<result.transactions.length; i++){
-              if(result.transactions[i].status==="ok") {
-                vm.paidDate = new Date(result.transactions[i].created_at);
-                break;
-              }
-            }
-          }
-          vm.checkoutForm.price = result.price;
-          vm.orderLoaded = true;
-        }
-        else{
-          vm.orderErr = "Sorry, but this order is not ready for payment";
-          vm.orderLoaded=true;
-        }
-      }, function (err) {
-        vm.orderLoaded=true;
-        if (err.status == 404){
-          vm.orderErr = "Sorry, but you don't have an Order #" + $routeParams.orderDetails;
-        }
-      });
-    }
+    
     
     
     
   }
+  
 })();

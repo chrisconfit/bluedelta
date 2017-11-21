@@ -21,7 +21,7 @@
 		
 		//Set up orders
 		vm.orders = [];		
-    api.call('getMyOrders', {}, function(result){
+    api.call('getMyOrders', null, function(result){
 	    vm.orders = result;
     });
     

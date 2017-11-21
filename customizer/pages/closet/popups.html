@@ -4,7 +4,17 @@
 		<div class="popup-content-inner">
 			
 			<div class="cft-g jean-profile-grid">
-				<div class="cft-gi main">
+				<!--
+				--><div class="cft-gi sidebar">
+					<div class="jean-card">
+						<img ng-src="{{vm.displayJean.jean_image_url}}">
+						<div class="box-content">
+							<button ng-click="vm.reOrder(vm.displayOrder.id)" class="btn">Re-Order</button>
+							<button ng-click="vm.copyJean(vm.displayJean)" class="btn">Copy</button>
+						</div>				
+					</div>
+				</div><!--
+				--><div class="cft-gi main">
 					<div class="pop-group">
 						<div ng-init="vm.titleEdit=false" class="jean-profile-data">												
 							<h3 ng-if="!vm.titleEdit">
@@ -19,10 +29,10 @@
 								</div>
 							</div>
 							<div class="order-details">
+								<span class="order-id">Order#: {{vm.displayOrder.id}}</span>
 								<span ng-if="vm.displayOrder.order_status_id">Status: {{vm.data.lookup("order_statuses", "id", vm.displayOrder.order_status_id, "name")}}</span>
 								<span ng-if="vm.displayJean.dob">Estimated Arrival: {{vm.displayJean.dob}}</span>
-								<span>Order#: {{vm.displayOrder.id}}</span>
-								<a ng-if="vm.displayOrder.tracking && vm.displayOrder.order_status_id!=0" target="_blank" href="{{vm.displayOrder.tracking}}">Track Order</a>
+								<a ng-if="vm.displayOrder.tracking && vm.displayOrder.order_status_id!=0" class="btn small" target="_blank" href="{{vm.displayOrder.tracking}}">Track Order</a>
 							</div>
 						</div>
 					</div>
@@ -47,15 +57,6 @@
 						</form>
 					</div>
 		-->			
-				</div><!--
-				--><div class="cft-gi sidebar">
-					<div class="jean-card">
-						<img ng-src="{{vm.displayJean.jean_image_url}}">
-						<div class="box-content">
-							<button ng-click="vm.reOrder(vm.displayOrder.id)" class="btn">Re-Order</button>
-							<button ng-click="vm.copyJean(vm.displayJean)" class="btn">Copy</button>
-						</div>				
-					</div>
 				</div>
 			</div>
 		</div><!--./popup-content-inner-->

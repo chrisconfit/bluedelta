@@ -35,13 +35,14 @@
 		];
 		
 		//Call an API function and handle data
-		var isCustomizer = ($location.$$host=="localhost" && $location.$$port == 4000);
-		var tokenProp = isCustomizer ? "bdAccessToken":"bdDashAccessToken";	
-		
+		var isCustomizer = ($location.$$host=="localhost" && $location.$$port == 4000) || $location.$$host.split('.')[0]=="build";
+		var tokenProp = isCustomizer ? "bdAccessToken":"bdDashAccessToken";
+    if($location.$$host==="localhost") tokenProp+="_dev";
 		var call = function(func, data, success, error){
+			console.log("Token prop"+ tokenProp);
 			
 			accessToken = $window.localStorage.getItem(tokenProp);
-
+      console.log(accessToken);
 			console.log('calling '+func+" with...");
 			console.log(data);
 

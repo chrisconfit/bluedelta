@@ -110,7 +110,7 @@
 			    <h4 ng-if="(vm.orders | filter:{ order_status_id: '!1' } ).length">BDJ Family Member Since <br>{{vm.formatDate((vm.orders | filter:{ order_status_id: '!1' } | limitTo: 1)[0].created_at, "MMM, y")}}</h4>
 			    <div class="box-content">
 				    <span>Jeans Owned: <strong>{{(vm.orders | filter:{ order_status_id: '1' }).length}}</strong></span>
-				    <span>Jeans in Production: <strong>{{(vm.orders | filter:{ order_status_id: '!1' }).length}}</strong></span>
+				    <span>Jeans Coming Soon: <strong>{{(vm.orders | filter:{ order_status_id: '!1' }).length}}</strong></span>
 				    <span>Jeans Saved: <strong>{{(vm.jeans | filter:{ ordered : '!true' }).length}}</strong></span>
 			    </div>
 		    </div>
