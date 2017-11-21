@@ -4,23 +4,20 @@
     .module('bdApp')
     .controller('fmCtrl', fmCtrl);
   
-  fmCtrl.$inject = ['$scope', '$routeParams', 'user', 'api', 'apiData'];
+  fmCtrl.$inject = ['$scope', '$routeParams', 'user', 'api', 'apiData', '$location'];
   
-  
-  
-  function fmCtrl ($scope, $routeParams, user, api, apiData) {
-    
+  function fmCtrl ($scope, $routeParams, user, api, apiData, $location) {
     
     var vm = this;
     vm.userLoggedIn = user.isLoggedIn();
     vm.user = user.get();
     vm.user.loaded = !vm.userLoggedIn;
-    vm.orderErr = false;
     vm.checkoutForm = {};
     vm.data = apiData;
     vm.user = user.get();
     vm.add = {};
     vm.formStep=1;
+    vm.fitMatch = $routeParams.orderDetails.split("-");
     vm.cards = null;
     vm.cardForm = {
       addingCard:false,
@@ -85,6 +82,7 @@
       cvv: {placeholder: ''},
       expirationDate: {placeholder: ''},
     };
+    
     vm.inputStyles = [
       {
         backgroundColor: '#e8edef',
@@ -94,12 +92,13 @@
       }
     ];
     
+    /*
     $scope.$watch(function() {
       return vm.add;
-    }, function(current, original) {
-      console.log("VMadd");
+    }, function(current) {
       console.log(current.id);
     }, true);
+    */
     
     //Create CC from nonce and place order
     vm.nonceReceived =  function(nonce, err){
@@ -109,38 +108,19 @@
     };
     
     vm.orderFitMatch = function(card){
-      console.log("let's order a FM!!!");
       var fmObject = {
         "credit_card_id":card,
         "shipping_address_id":vm.add.id,
         "requested_fabric_ids":JSON.stringify(vm.fitMatch)
       };
       api.call('createMyFitMatch', fmObject, function(){
-        vm.formStep = 2;
+        $location.path('/thank-you/fitmatch');
       });
       
-    }
+    };
     
-    //Fit Match
-    if ($routeParams.orderDetails.substring(0,2) === "fm"){
-      vm.fitMatch = $routeParams.orderDetails.slice(2 ).split("-");
-      
-      
-    }else{
-      //Order
-      
-      vm.orderId = $routeParams.orderDetails;
-      api.call('getMyOrders', $routeParams.orderDetails, function(result){
-        
-        if (result.price){
-          vm.order= result;
-          vm.checkoutForm.price = result.price;
-        }
-        else vm.orderErr = "Sorry, but this order is not ready for payment";
-      }, function(err){
-        if (err.status==404) vm.orderErr = "Sorry, but you don't have an Order #"+$routeParams.orderId;
-      });
-    }
+    
+    
     
     
     

@@ -16,6 +16,11 @@
         controller: 'payCtrl',
         controllerAs: 'vm',
       })
+      .when('/fitmatch/:orderDetails', {
+        templateUrl: '/pages/fitmatch/fitmatch.view.html',
+        controller: 'fmCtrl',
+        controllerAs: 'vm',
+      })
       .when('/thank-you/:type', {
         templateUrl: '/pages/thank-you/thank-you.view.html',
         controller: 'tyCtrl',
@@ -66,10 +71,7 @@
   function run($rootScope, $location, user) {
 	  if (user.isLoggedIn()) user.setup();
     $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
-
-    	
-    	console.log("PTH!!");
-    	console.log($location.path());
+			
 	    var locked = [
 		    '/closet',
 		    '/order'
@@ -79,16 +81,10 @@
 	    	if ($location.path().includes(locked[i]))
 	    		lockedPage = true;
 			}
-      if (lockedPage){
-      	console.log("LOCKED");
-			}else{
-      	console.log("NOT LOCKED");
-			}
-			
-        if (lockedPage && !user.isLoggedIn() ){
-	    	
+   
+			if (lockedPage && !user.isLoggedIn() ){
 				$location.path('/login');
-	  	}
+			}
 	  	/* TODO
 	  	//If there's no jean on the order screen.... redirect to the customizer page.
 	  	if($location.path().indexOf("/order") >= 0 && !Object.keys(jean.data).length){
@@ -98,12 +94,7 @@
 		  
     });
   }
-  
-  
- 
-
 	
-			
 
 	angular.module('bdApp')
     .config(['$routeProvider', '$locationProvider', config])
