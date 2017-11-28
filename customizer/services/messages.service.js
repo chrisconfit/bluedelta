@@ -20,7 +20,7 @@
 		var reset = function(){
 			data.message = "";
 			data.type = "";	
-		}
+		};
 		
 		var get = function(){
 			return data;

@@ -3,15 +3,15 @@
 
   angular
     .module('bdApp')
-    .service('jean', ['$routeParams', '$window', '$q', 'apiData', 'api', jean]);
+    .service('jean', ['$routeParams', '$window', '$q', 'api', jean]);
 
-  function jean($routeParams, $window, $q, apiData, api) {
+  function jean($routeParams, $window, $q, api) {
 
 
 		/*
 		*   JSON Data lookup
 		*/
-		
+		/*
 		var dataLookup = function(dataType, key){
 
 			var data = apiData[dataType];
@@ -23,7 +23,7 @@
 				return data[i];
   		}
 		}
-		
+		*/
 
 		
 		/*
@@ -100,7 +100,9 @@
 		buildJeanData = function(data, copy){
 
 			//Make a copy
+			console.log(copy);
 			if(copy==true){
+				console.log("SETTING UP COPY");
 				delete data.user_id;
 				delete data.id;
 				if(data.name) data.name = "Copy of "+data.name;
@@ -114,13 +116,14 @@
 		
 		//Set up jean data from parameter
 		var setup = function(data, action){
-			var defer = $q.defer();
+			console.log("running setup");
 			
-			//Get our user Id and detrmine whether or not we want to make a copy		
-			var userId = parseInt($window.localStorage.getItem("bdUserId"));
+			var defer = $q.defer();
+			//If we don't have a logged in user, we want to force a copy...
+			var userProp = $window.location.hostname==='localhost' ? "bdUserId_dev" : "bdUserId";
+			var userId = parseInt($window.localStorage.getItem(userProp));
 			var makeCopy = userId ? false : true;
 			makeCopy = action == "copy" ? true : makeCopy;
-			
 			
 			//Set up jean from object data
 			if (data !== null && typeof data === 'object'){ 
@@ -150,11 +153,16 @@
 			}
 
 			//Copy or Edit Jean from Id
+			
 			else if (data !== null && data !== undefined){
-				
+				console.log('ID!!!');
 				//First get Jean
+				console.log(data);
 				api.call('getJean', data, function(result){
-					
+					console.log("GOT JEAN");
+					console.log(result);
+					console.log(result.user_id);
+					console.log(userId);
 					if (result.user_id !== userId) makeCopy = true;
 
 					buildJeanData(result, makeCopy);
@@ -256,7 +264,6 @@
 		};
 		
 		var save = function(){
-			
 			var defer = $q.defer();
 			var jean = this;
 			var jeanData = jean.get();
@@ -276,11 +283,11 @@
 			
 			return defer.promise;
 
-		}
+		};
 		
 			
 		return {
-	    dataLookup: dataLookup,
+	    //dataLookup: api.lookup,
 	    deleter : deleter,
 	    save : save,
 	    get : get,

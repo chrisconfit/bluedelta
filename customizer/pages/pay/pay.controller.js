@@ -4,15 +4,16 @@
     .module('bdApp')
     .controller('payCtrl', payCtrl);
 
-    payCtrl.$inject = ['$scope', '$routeParams', 'user', 'api', 'apiData', '$location'];
+    payCtrl.$inject = ['messages','$scope', '$routeParams', 'user', 'api', 'apiData', '$location'];
   
   
   
   
-  function payCtrl ($scope, $routeParams, user, api, apiData, $location) {
+  function payCtrl (messages, $scope, $routeParams, user, api, apiData, $location) {
     
     
     var vm = this;
+    vm.messages = messages.get();
     vm.userLoggedIn = user.isLoggedIn();
     vm.user = user.get();
     vm.user.loaded = !vm.userLoggedIn;
@@ -30,12 +31,16 @@
     };
     
     vm.authCallback = function(){
+      console.log("AUTH");
+      vm.orderLoaded = false;
       vm.user=user.get();
       vm.userLoggedIn = user.isLoggedIn();
+      vm.initPage();
     };
     
     vm.logout = function(){
       user.logout(function(){
+        vm.orderErr = false;
         vm.user = {};
         vm.user.loaded=true;
         vm.userLoggedIn = user.isLoggedIn();
@@ -121,17 +126,15 @@
         $location.path('/thank-you/order');
       });
     };
-    
-    
-    //Get Order
-    if(vm.userLoggedIn) {
+  
+    vm.initPage = function() {
       vm.orderId = $routeParams.orderDetails;
       api.call('getMyOrders', $routeParams.orderDetails, function (result) {
         if (result.price) {
           vm.order = result;
-          if (result.payment_status_id!==1 && result.transactions){
-            for(var i=0; i<result.transactions.length; i++){
-              if(result.transactions[i].status==="ok") {
+          if (result.payment_status_id !== 1 && result.transactions) {
+            for (var i = 0; i < result.transactions.length; i++) {
+              if (result.transactions[i].status === "ok") {
                 vm.paidDate = new Date(result.transactions[i].created_at);
                 break;
               }
@@ -140,16 +143,22 @@
           vm.checkoutForm.price = result.price;
           vm.orderLoaded = true;
         }
-        else{
+        else {
           vm.orderErr = "Sorry, but this order is not ready for payment";
-          vm.orderLoaded=true;
+          vm.orderLoaded = true;
         }
       }, function (err) {
-        vm.orderLoaded=true;
-        if (err.status == 404){
+        vm.orderLoaded = true;
+        if (err.status == 404) {
           vm.orderErr = "Sorry, but you don't have an Order #" + $routeParams.orderDetails;
         }
       });
+    }
+    //Get Order
+    if(vm.userLoggedIn) {
+      vm.initPage();
+    }else{
+      vm.orderLoaded = true;
     }
     
     

@@ -4,15 +4,16 @@
     .module('bdApp')
     .controller('closetCtrl', closetCtrl);
 
-  closetCtrl.$inject = ['$filter', '$location', '$window', 'jean','popups', '$scope', 'messages', 'loader', 'user', 'api', 'apiData', '$routeParams'];
-  function closetCtrl($filter, $location, $window, jean, popups, $scope, messages, loader, user, api, apiData, $routeParams) {
-	    
+  closetCtrl.$inject = ['$filter', '$location', '$window', 'jean','popups', '$scope', 'messages', 'loader', 'user', 'api', '$routeParams', 'apiData'];
+  function closetCtrl($filter, $location, $window, jean, popups, $scope, messages, loader, user, api, $routeParams, apiData) {
+	  
     var vm = this;   
 		popups.closeAll();
 		vm.popups=popups.get();
-
 		vm.messages=messages.get();
 		vm.data = apiData;
+		console.log("LLLL");
+		console.log(vm.data.lookup('order_statuses', 'id', 5, 'name'));
 		//Set up Jean
 		vm.jeans;
 		api.call('getMyJeans', null, function(results){
@@ -42,10 +43,7 @@
 		vm.changeOrderItemName = function(){
 			var changeOrder = vm.displayOrder.order_items[0].id;
 			var changeName = vm.displayJean.jean_name;
-			api.call('postOrderItem', {id:changeOrder, jean_name:changeName}, function(result){
-				console.log("Changed Name!");
-				console.log(result);
-			});
+			api.call('postOrderItem', {id:changeOrder, jean_name:changeName});
 		}
 		
 		vm.userForm.cancel = function(field){
@@ -151,7 +149,7 @@
 			}
 			
 			return true;	
-		}
+		};
 		
 		
     vm.changePassword = function () {
@@ -161,7 +159,7 @@
 			    id:vm.user.id,
 			    password:vm.passForm.newPass,
 			    old_password:vm.passForm.currentPass
-			  }
+			  };
 				user.update(passwordData, function(result){
 					vm.passForm.clear();
 					messages.set("Password successfully changed.", "success");
@@ -170,34 +168,29 @@
 					messages.set(err.message, "error");
 				});
 		  }
-    };	
+    };
 		
-
-
-
 		vm.reOrder = function(orderId){
-			$location.path('/order/'+orderId+'/copy');
-		}
-		
+			$location.path('/order/'+orderId+'/re-order');
+		};
 
 		vm.copyJean = function(orderItem){
 			dataCode = api.getDataCode(orderItem);
 			jean.setup(dataCode, true);
 			$location.path('/customizer');
-		}
+		};
 		
 		vm.displayJean={};
 		vm.selectJean = function(jean){
 			vm.popups.jeanProfile = true; 
 			vm.displayJean=jean
-		}
+		};
 		
 		vm.selectOrder = function(order){
 			vm.popups.orderProfile = true; 
 			vm.displayOrder=order;
 			vm.displayJean = order.order_items[0];
-		}
-		
+		};
 	
 		function findJeanbyId(jeanId){
 			for (var j=0; j < vm.jeans.length; j++) {
@@ -210,16 +203,11 @@
 				var index = findJeanbyId(jeanId);
 				vm.jeans.splice(index, 1);
 			});
-		}
+		};
 		
 		vm.orderJean = function(jeanId){
 			$location.path('/order/'+jeanId);
-		}
-	
-			
-
-
-	
+		};
 		
 		//Get User
   }

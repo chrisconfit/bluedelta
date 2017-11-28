@@ -5,6 +5,20 @@
 
 
   function config ($routeProvider, $locationProvider) {
+    
+    var apiData = ['api', '$q', function(api, $q){
+      console.log("RESOLVING!!!!");
+      var data = api.getData();
+      if(data.loaded) return data;
+      else{
+        var defer = $q.defer();
+        api.getAppData(function(result){
+          defer.resolve(result);
+        });
+        return defer.promise;
+      }
+    }];
+    
     $routeProvider
       .when('/', {
         templateUrl: '/pages/home/home.view.html',
@@ -15,11 +29,13 @@
         templateUrl: '/pages/pay/pay.view.html',
         controller: 'payCtrl',
         controllerAs: 'vm',
+        resolve:{apiData:apiData}
       })
       .when('/fitmatch/:orderDetails', {
         templateUrl: '/pages/fitmatch/fitmatch.view.html',
         controller: 'fmCtrl',
         controllerAs: 'vm',
+        resolve:{apiData:apiData}
       })
       .when('/thank-you/:type', {
         templateUrl: '/pages/thank-you/thank-you.view.html',
@@ -44,17 +60,20 @@
       .when('/closet', {
         templateUrl: '/pages/closet/closet.view.html',
         controller: 'closetCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve:{apiData:apiData}
       })
-      .when('/order/:jeanId?/:action?', {
+      .when('/order/:dataId?/:action?', {
         templateUrl: '/pages/order/order.view.html',
         controller: 'orderCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve:{apiData:apiData}
       })
       .when('/customizer/:jeanId?/:action?', {
         templateUrl: '/pages/customizer/customizer.view.html',
         controller: 'customizerCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve:{apiData:apiData}
       })
       .when('/admin', {
         templateUrl: '/pages/admin/admin.view.html',
@@ -127,15 +146,20 @@
 				return ret ? ret.replace(/Raw Denim/g, "") : false;
 		  }  
 		});
-		
-		
-		
-		
-		
+  
+  
+  window.onload=function() {
+    var body = document.getElementById('bdApp');
+    angular.bootstrap(angular.element(body), ['bdApp']);
+  }
+		/*
 	
 	// Get Angular's $http module.
 	var initInjector = angular.injector(['ng']);
 	var $http = initInjector.get('$http');
+ 
+  
+	
 	$http.get("https://api.bluedeltajeans.com/api/data").then(function(result){
 
 		result.data.lookup = function(data, key, value, retKey){
@@ -146,6 +170,7 @@
 					return retKey ? dataSet[i][retKey] : dataSet[i]
 			}
 		}
+		
 		angular.module('bdApp').constant('apiData', result.data);
 		var body = document.getElementById('bdApp');
 		angular.bootstrap(angular.element(body), ['bdApp']);		
@@ -153,7 +178,7 @@
 	
 
 	
-
+*/
 		
 		
 	

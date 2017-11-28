@@ -21,13 +21,16 @@
         <login-form callback="vm.authCallback" redirect="NULL"></login-form>
       </div><!--
 			--><div class="cft-gi">
-      <h4>Register</h4>
-      <register-form callback="vm.authCallback" redirect="NULL"></register-form>
+        <h4>Register</h4>
+        <register-form callback="vm.authCallback" redirect="NULL"></register-form>
+      </div>
     </div>
+    <div class="message-block" ng-show="vm.messages.message">
+      <p class="form-messages {{vm.messages.type}}" ng-bind-html="vm.messages.message"></p>
     </div>
   </div>
 
-  <form novalidate class="cft-form checkout-form">
+  <form ng-if="vm.userLoggedIn" novalidate class="cft-form checkout-form">
 
     <!--Fit Match-->
     <div>

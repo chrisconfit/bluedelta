@@ -25,10 +25,3 @@
     
 
 })();
-/*
-	      function($scope) {
-		      $scope.getTemplateUrl = function() {
-			      return '';
-		      }
-		    }
-		    */

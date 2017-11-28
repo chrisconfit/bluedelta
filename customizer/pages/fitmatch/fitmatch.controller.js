@@ -4,17 +4,18 @@
     .module('bdApp')
     .controller('fmCtrl', fmCtrl);
   
-  fmCtrl.$inject = ['$scope', '$routeParams', 'user', 'api', 'apiData', '$location'];
+  fmCtrl.$inject = ['messages','$scope', '$routeParams', 'user', 'api', 'apiData', '$location'];
   
-  function fmCtrl ($scope, $routeParams, user, api, apiData, $location) {
+  function fmCtrl (messages, $scope, $routeParams, user, api, apiData, $location) {
     
     var vm = this;
+    vm.messages=messages.get();
     vm.userLoggedIn = user.isLoggedIn();
+    vm.user={loaded:false};
     vm.user = user.get();
     vm.user.loaded = !vm.userLoggedIn;
     vm.checkoutForm = {};
     vm.data = apiData;
-    vm.user = user.get();
     vm.add = {};
     vm.formStep=1;
     vm.fitMatch = $routeParams.orderDetails.split("-");
@@ -34,7 +35,6 @@
         vm.user = {};
         vm.user.loaded=true;
         vm.userLoggedIn = user.isLoggedIn();
-        
       }, false)
     };
     vm.fire = function(){};
@@ -43,11 +43,17 @@
     $scope.$watch(function() {
       return vm.user;
     }, function(current, original) {
+      console.log("USER CHANGED!!!");
+      console.log(current);
+      console.log(!vm.user.id);
+      //
       //Make sure we've pulled a user...
       if(!vm.user.id) return false;
+      console.log('still running...');
       //Only run this once..
-      if(vm.user.loaded) return false;
+      //if(vm.user.loaded) return false;
       
+      console.log("first run");
       vm.user.loaded = true;
       
       //Set primary address to shipping address
@@ -62,6 +68,9 @@
       
       //Pull Credit Cards
       if(current.square_id){
+        
+        console.log("USER has sqid");
+        //logged in user has sq id.
         vm.cardForm.loadingCards = true;
         api.call('getMyCreditCards', null, function(cards){
           if (cards.length<1){
@@ -71,9 +80,19 @@
           }
           vm.cardForm.loadingCards = false;
         });
-      }else if(current.id && !current.square_id){
+      }
+      else if(current.id && !current.square_id){
+  
+        console.log("USER doesn't sqid");
+        
+        //logged in user does not have sq id.
         vm.cardForm.addingCard=true;
         vm.cardForm.loadingCards=false;
+      }
+      else{
+        console.log("no user");
+        //not logged in?
+        vm.cardForm.loadingCards = false;
       }
     }, true);
     

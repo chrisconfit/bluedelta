@@ -29,11 +29,11 @@
 		      </div>
 	      </div>-->
 	      
-	      <!--Production-->
-	      <div ng-if="(vm.orders | filter:{ order_status_id: '!1' }).length" class="production">
-		      <h3>Coming Soon</h3>
+	      <!--Bespoke-->
+	      <div ng-if="(vm.orders | filter:{ order_type_id: '!3' }).length" class="bespoke">
+		      <h3>Bespoke Jeans</h3>
 		      <div class="cft-g order-grid">
-			      <div ng-repeat="order in vm.orders | filter:{ status: '!complete' }" class="cft-gi">
+			      <div ng-repeat="order in vm.orders | filter:{ order_type_id: '!3'  }" class="cft-gi">
 				      <div class="jean-card jean-order-card">
 					      <div class="jean-image-order-preview">
 						      <img ng-click="vm.selectOrder(order)" ng-src="{{order.order_items[0].jean_image_url}}">
@@ -41,9 +41,9 @@
 								<div class="box-content">
 						     	<h3 ng-click="vm.selectOrder(order)">{{order.order_items[0].jean_name}}</h3>
 									<h5>Status: {{vm.data.lookup("order_statuses", "id", order.order_status_id, "name")}}</h5>
-									<h5>EST ARRIVAL: <b>Sep 18 2017</b></h5>
+									<h5 ng-if="order.due_date">EST ARRIVAL: <b>{{order.due_date}}</b></h5>
 									<div class="jean-list closet">
-										<jean-list fields="['fabric_id','fabric_type', 'top_thread_id', 'bottom_thread_id', 'accent_thread_id',]"
+										<jean-list fields="['fabric_id','fabric_type', 'top_thread_id', 'bottom_thread_id', 'accent_thread_id']"
 										jean="order.order_items[0]"></jean-list>
 									</div>
 								</div>
@@ -52,18 +52,25 @@
 		      </div>
 	      </div>
 	      
-	      <!--Owned-->
-	      <div ng-if="(vm.orders | filter:{ order_status_id: '1'  }).length" class="complete">
-		      <h3>My Blue Delta Jeans</h3>
-		      <div class="cft-g jean-grid">
-			      <div ng-repeat="order in vm.orders | filter:{ status: 'complete' }" class="cft-gi">
-				      <div class="jean-card">
-					      <img ng-click="vm.selectOrder(order)" ng-src="{{order.order_items[0].imageURL}}">
-								<div class="box-content">
-					      	<h4 ng-click="vm.selectJean(jean)">{{order.order_items[0].name}}</h4>
-									<h5>Born: {{order.dob | date : "longDate" : "CST" }}</h5>
+	      <!--Fit Match-->
+	      <div ng-if="(vm.orders | filter:{ order_type_id: '3'  }).length" class="fitmatch">
+		      <h3>My Fit Match Jeans</h3>
+		      <div class="cft-g order-grid">
+			      <div ng-repeat="order in vm.orders | filter:{ order_type_id: '3'  }" class="cft-gi">
+							<div class="jean-card jean-order-card">
+								<div class="jean-image-order-preview">
+									<img ng-click="vm.selectOrder(order)" ng-src="{{order.order_items[0].jean_image_url}}">
 								</div>
-				      </div>
+								<div class="box-content">
+									<h3 ng-click="vm.selectOrder(order)">{{order.order_items[0].jean_name}}</h3>
+									<h5>Status: {{vm.data.lookup("order_statuses", "id", order.order_status_id, "name")}}</h5>
+									<h5>EST ARRIVAL: <b>{{order.due_date}}</b></h5>
+									<div class="jean-list closet">
+										<jean-list fields="['fabric_id','fabric_type', 'top_thread_id', 'bottom_thread_id', 'accent_thread_id']"
+										jean="order.order_items[0]"></jean-list>
+									</div>
+								</div>
+							</div>
 			      </div>
 		      </div>
 	      </div>
@@ -109,8 +116,8 @@
 		    <div class="user-stats" ng-init="famDate = (vm.orders | filter:{ order_status_id: '!1' } | limitTo: 1)[0].created_at">
 			    <h4 ng-if="(vm.orders | filter:{ order_status_id: '!1' } ).length">BDJ Family Member Since <br>{{vm.formatDate((vm.orders | filter:{ order_status_id: '!1' } | limitTo: 1)[0].created_at, "MMM, y")}}</h4>
 			    <div class="box-content">
-				    <span>Jeans Owned: <strong>{{(vm.orders | filter:{ order_status_id: '1' }).length}}</strong></span>
-				    <span>Jeans Coming Soon: <strong>{{(vm.orders | filter:{ order_status_id: '!1' }).length}}</strong></span>
+				    <span>Bespoke Jeans: <strong>{{(vm.orders | filter:{ order_type_id: '!3' }).length}}</strong></span>
+				    <span>Fit Match Jeans: <strong>{{(vm.orders | filter:{ order_type_id: '3' }).length}}</strong></span>
 				    <span>Jeans Saved: <strong>{{(vm.jeans | filter:{ ordered : '!true' }).length}}</strong></span>
 			    </div>
 		    </div>

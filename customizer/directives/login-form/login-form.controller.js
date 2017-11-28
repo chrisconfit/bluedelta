@@ -98,7 +98,7 @@
 					}
 				);
 		  }
-		}
+		};
 		
 		//Forgot password set 1 validation
 		logvm.validateForgot = function(){				
@@ -107,7 +107,7 @@
 				return false;
 			}
 			return true;	
-		}
+		};
 		
 		/* STEP 2 */	
 		logvm.resetPassword = function(){

@@ -196,35 +196,35 @@
 		
 		var openSaveOpts = function(){
 			popups.set('saveOpts',true);
-		}	
+		};
 		
 		var redirectToOrder = function(jean){
 			$location.path('/order/'+jean.id);
-		}	
+		};
 		
 		vm.saveAndOrder = function(){
 			vm.saveCallback = redirectToOrder;
 			vm.runSave();
-		}	
+		};
 		
 		vm.saveAndShowOpts = function(){
 			vm.saveCallback = openSaveOpts;
 			vm.runSave();
-		}	
+		};
 		
     vm.keepEditing = function(){
 			$location.path('/customizer/'+vm.jeanData.id);
-    }
+    };
     
     vm.goToCloset = function(){
 	    $location.path('/closet');
-    }
+    };
     
     vm.startOver = function(){
 	    jean.reset();
 	    vm.jeanData=jean.get();
 	    popups.closeAll();
-    }
+    };
     
     //Check for jean name, run save, and ex callback
 		vm.runSave = function(){

@@ -33,9 +33,12 @@
         <register-form callback="vm.authCallback" redirect="NULL"></register-form>
       </div>
     </div>
+    <div class="message-block" ng-show="vm.messages.message">
+      <p class="form-messages {{vm.messages.type}}" ng-bind-html="vm.messages.message"></p>
+    </div>
   </div>
 
-  <div ng-if="vm.orderLoaded">
+  <div ng-if="vm.orderLoaded && vm.userLoggedIn ">
     <!--Order Errors-->
     <div class="order-errors" ng-if="vm.orderErr">
       <h3>{{vm.orderErr}}</h3>

@@ -2,14 +2,14 @@
 	<div class="popup-content" ng-click="$event.stopPropagation()">
 		<a class="popup-closer" href="" ng-click="vm.popups.orderProfile = false"></a>
 		<div class="popup-content-inner">
-			
 			<div class="cft-g jean-profile-grid">
 				<!--
 				--><div class="cft-gi sidebar">
 					<div class="jean-card">
 						<img ng-src="{{vm.displayJean.jean_image_url}}">
 						<div class="box-content">
-							<button ng-click="vm.reOrder(vm.displayOrder.id)" class="btn">Re-Order</button>
+							<button  ng-if="vm.displayOrder.order_type_id!=3" ng-click="vm.reOrder(vm.displayOrder.id)" class="btn">Re-Order</button>
+							<a ng-if="vm.displayOrder.order_type_id==3" class="btn" href="https://bluedeltajeans.com/fit-match">New Fit Match</a>
 							<button ng-click="vm.copyJean(vm.displayJean)" class="btn">Copy</button>
 						</div>				
 					</div>
@@ -25,13 +25,13 @@
 								<input type="text" ng-model="vm.displayJean.jean_name">
 								<div class="icon-controls">
 									<i ng-click="vm.displayJean.jean_name=vm.oldTitle; vm.titleEdit=false;" class="fa fa-undo"></i>
-									<i ng-click="vm.changeOrderItemName()" class="fa fa-check"></i>
+									<i ng-click="vm.changeOrderItemName(); vm.titleEdit=false;" class="fa fa-check"></i>
 								</div>
 							</div>
 							<div class="order-details">
 								<span class="order-id">Order#: {{vm.displayOrder.id}}</span>
 								<span ng-if="vm.displayOrder.order_status_id">Status: {{vm.data.lookup("order_statuses", "id", vm.displayOrder.order_status_id, "name")}}</span>
-								<span ng-if="vm.displayJean.dob">Estimated Arrival: {{vm.displayJean.dob}}</span>
+								<span ng-if="vm.displayJean.due_date">Estimated Arrival: {{vm.displayJean.due_date}}</span>
 								<a ng-if="vm.displayOrder.tracking && vm.displayOrder.order_status_id!=0" class="btn small" target="_blank" href="{{vm.displayOrder.tracking}}">Track Order</a>
 							</div>
 						</div>

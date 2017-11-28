@@ -3615,15 +3615,16 @@ ul.tailor-list li input {
   margin-bottom: 30px;
 }
 
-.pay-user-loading {
+.pay-user-loading, .cover-screen-loading {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 9999;
   background: #fff;
 }
-.pay-user-loading p {
+.pay-user-loading p, .cover-screen-loading p {
   width: 90%;
   text-align: center;
   margin: auto;

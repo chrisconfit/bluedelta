@@ -20,9 +20,9 @@
 			headers: {'Content-Type':'application/json'}
 		};
 
-/*		if($location.$$host == "localhost"){
+		if($location.$$host == "localhost"){
 			config.url = "http://bluedelta.local";
-		}*/
+		}
 
 		var noTokenNecessary = [
 			'login',
@@ -191,16 +191,19 @@
     }
 		
 	  var createThumb = function(jeanData){
+    	
+    	console.log("CREATING THUMB!!!");
+    	
 	  	var canvas = document.createElement('canvas');
 	  	canvas.width=600;
 	  	canvas.height=600;
 	  	var cntxt = canvas.getContext('2d');	
 	  	var promises = [];
 			var images = [
-				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabrics/g'+jeanData.gender_option_id+'/s2/f'+jeanData.fabric_id+'.jpg',
-				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/tb/'+jeanData.bottom_thread_id+'.png',
-				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/tt/'+jeanData.top_thread_id+'.png',
-				'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/ta/'+jeanData.accent_thread_id+'.png'
+        'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/fabrics/g'+jeanData.gender_option_id+'/s2/f'+jeanData.fabric_id+'.jpg',
+        'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/tb/'+jeanData.bottom_thread_id+'.png',
+        'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/tt/'+jeanData.top_thread_id+'.png',
+        'http://bluedelta-data.s3-website-us-east-1.amazonaws.com/images/components/threads/g'+jeanData.gender_option_id+'/s2/ta/'+jeanData.accent_thread_id+'.png'
 			];
 	
 	    for(var i=0; i<images.length; i++){
@@ -208,7 +211,10 @@
 	    }
 	    
 	    return $q.all(promises).then(
+	    	
+	    	
 	    	function(results) {
+          console.log("ALL PROMISES");
 					searchAndDraw("fabrics", cntxt, results);
 					searchAndDraw("tb", cntxt, results);
 					searchAndDraw("tt", cntxt, results);
@@ -298,7 +304,7 @@
 	  var usersList = function(data){
 			return httpReq("GET", "/api/users", data);
 	  };
-
+		
 		var userGet = function(userId){
 			return httpReq("GET", "/api/users/"+userId);
 		};
@@ -389,7 +395,11 @@
     var fitmatchCharge = function(data){
       return httpReq("POST", "/api/fitmatchrequests/"+data.fitmatchId+"/charge", data);
     };
-		var getAppData = function(){
+  
+    var appData = {};
+    appData.loaded=false;
+    
+		var getAppData = function(callback){
       httpReq("GET", "/api/data").then(function(result){
 				for(key in result.data){
 					if(result.data.hasOwnProperty(key)){
@@ -412,20 +422,21 @@
           {"id":2, "label": "Watch Pocket"},
           {"id":3, "label": "Fake Pocket"}
         ];
-        
+        appData.lookup = function(data, key, value, retKey){
+          var dataSet = this[data];
+          if (!dataSet) return;
+          retKey = retKey || false;
+          for (var i=0; i<dataSet.length; i++){
+            if(dataSet[i][key] == value)
+              return retKey ? dataSet[i][retKey] : dataSet[i]
+          }
+        };
+        appData.loaded=true;
+        if(callback) callback(appData);
 			});
 		};
 
-		var appData = {};
-		appData.lookup = function(data, key, value, retKey){
-			var dataSet = this[data];
-			if (!dataSet) return;
-			retKey = retKey || false;
-			for (var i=0; i<dataSet.length; i++){				
-				if(dataSet[i][key] == value)
-					return retKey ? dataSet[i][retKey] : dataSet[i]
-			}
-		};
+		
 		
     return {
 			getData:function(){ return appData;},

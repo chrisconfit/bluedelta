@@ -23,7 +23,8 @@ angular.module('inspinia')
 				accent_thread_id:1,
 				bottom_thread_id:1,
 				fabric_id:1000,
-        payment_status_id:1
+        payment_status_id:1,
+				jean_name:"My New Jeans"
 			}]
 		};
 	
@@ -32,6 +33,7 @@ angular.module('inspinia')
 		//Add extra data for fit match orders
 		if (orderData && orderData.hasOwnProperty('requested_fabric_ids')){
 			newOrderData.order_type_id = 3;
+      newOrderData.order_items[0].jean_name = "My New Fit Match Jeans";
       newOrderData.shipping_name = orderData.user.first_name+" "+orderData.user.last_name;
       newOrderData.fit_match_id = orderData.id;
       newOrderData.shipping_address_id = orderData.shipping_address_id;
@@ -57,19 +59,15 @@ angular.module('inspinia')
   	};
     
 		//Set up app data...
-		vm.dataLoaded = false;
-		vm.data = api.getData();
+		vm.data={};
     $scope.$watch(angular.bind(this, function () {
       return this.data;
     }), function (newVal) {
-    	if(!newVal) return false;
-    	if(!vm.dataLoaded){
-    		vm.dataLoaded=true;
-    		//After data has been loaded..
-    		buildTimeline();
-			}
+    	console.log("DATA CHANGED!!!");
+    	console.log(newVal);
+			buildTimeline();
     });
-		
+    vm.data = api.getData();
 
 
 		//Edit Jean details...
@@ -414,7 +412,6 @@ angular.module('inspinia')
         if (!groupedLogs[key]) groupedLogs[key] = [];
         groupedLogs[key].push(logs[i]);
       }
-    	console.log(vm.data);
       for (var key in groupedLogs) {
         if (groupedLogs.hasOwnProperty(key)) {
           var entryData = key.split("__");
@@ -450,6 +447,7 @@ angular.module('inspinia')
     }
     
 		function buildTimeline() {
+    	
       if (vm.newOrder) return false;
 			
       //Init timeline with created_at date.
@@ -486,6 +484,7 @@ angular.module('inspinia')
 			    	first_name:vm.user.first_name,
 			    	last_name:vm.user.last_name
 		    	};
+					result.type="comment";
 					vm.timeline.push(result);
 					vm.timelineForm.message = null;
 				}
@@ -548,7 +547,6 @@ angular.module('inspinia')
       closeOnCancel: true 
     };
 		
-		//{"shipping_name":"Chris LeFevre","shipping_phone":"66250210265","shipping_address_id":29,"copy_order_item_id":293,"order_type_id":1}
 		vm.reOrder = function(){
 			
 			SweetAlert.swal(reOrderBox,
@@ -558,11 +556,11 @@ angular.module('inspinia')
 							"shipping_name":vm.order.shipping_name,
 							"shipping_phone":vm.order.shipping_phone,
 							"shipping_address_id":vm.order.shipping_address_id,
-							"copy_order_item_id":vm.order.order_items[0].id,
+							"reorder_item_id":vm.order.order_items[0].id,
 							"order_type_id":vm.order.order_type_id,
 							"user_id":vm.orderUser.id,
-							"comment":"Order Copied from order #"+vm.order.id
-						}
+							"comment":"Reordered from order #"+vm.order.id
+						};
 						
 						vm.saveOrder(function(){
 							
@@ -615,6 +613,7 @@ angular.module('inspinia')
 				
 				//Save new order...
 				if (vm.newOrder){
+					jeanData.name = jeanData.jean_name;
 					var data = {userId:vm.orderUser.id, jean:jeanData};
 					
 					//1. Create jean

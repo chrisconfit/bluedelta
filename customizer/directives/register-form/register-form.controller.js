@@ -47,7 +47,8 @@
 			}
 			
 			if (!validatePassword(regvm.credentials.password)){
-				messages.set("A valid password must: <ul><li>Be between 6 and 50 characters</li><li>Contain at least one number</li><li>Contain at least one uppercase letter</li><li>Contain at least one lowercase letter</li><li>Contain at least one special character (\"!,@,#,$,%,^,&, or *\")</li>");	
+				messages.set("A valid password must: <ul><li>Be between 6 and 50 characters</li><li>Contain at least one number</li><li>Contain at least one uppercase letter</li><li>Contain at least one lowercase letter</li><li>Contain at least one special character (\"!,@,#,$,%,^,&, or *\")</li>");
+				return false;
 			}
 			
 			if (regvm.credentials.password !== regvm.credentials.passwordConfirm){
@@ -69,8 +70,11 @@
 		//Register User
     regvm.registerUser = function () {
 	    messages.reset();
-	    if (regvm.validateRegistrationForm()){
-		    user.register(regvm.credentials.email, regvm.credentials.password, regvm.credentials.first_name, regvm.credentials.last_name, function(result){
+	    var valid = regvm.validateRegistrationForm();
+	    console.log(valid);
+	    if(!valid) return false;
+	    else{
+		    user.register(regvm.credentials.email, regvm.credentials.password, regvm.credentials.first_name, regvm.credentials.last_name, function(){
 					if ($scope.callback) $scope.callback(regvm.credentials);
 					if ($scope.redirect) $location.path($scope.redirect);
 					if (!$scope.callback && !$scope.redirect)	$location.path('/closet');    

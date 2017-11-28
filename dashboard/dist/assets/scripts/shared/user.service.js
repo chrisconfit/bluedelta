@@ -10,8 +10,11 @@
 
 		var isCustomizer = ($location.$$host=="localhost" && $location.$$port == 4000) || $location.$$host.split('.')[0]=="build";
 		var userRoleProp = isCustomizer ? "bdUserRole" : "bdDashUserRole";
-		var tokenProp = isCustomizer ? "bdAccessToken":"bdDashAccessToken";	
+		if($location.$$host=="localhost") userRoleProp += "_dev";
+		var tokenProp = isCustomizer ? "bdAccessToken":"bdDashAccessToken";
+    if($location.$$host=="localhost") tokenProp += "_dev";
 		var idProp = isCustomizer ? "bdUserId":"bdDashUserId";
+    if($location.$$host=="localhost") idProp += "_dev";
 		var user = {};
 
 
@@ -43,6 +46,7 @@
 			api.call('getCurrentUser', {}, function(userDetails){
 				console.log("get current user");
 				console.log(userDetails);
+				console.log("setting "+userRoleProp);
 				$window.localStorage.setItem(userRoleProp, userDetails.role_id);
 				set(userDetails);
 				if (callback) callback(userDetails);
@@ -52,6 +56,7 @@
 		function authCallback(response, callback){
 			console.log("Auth callback");
 			console.log(response);
+			console.log("setting token to "+tokenProp);
 			$window.localStorage.setItem(tokenProp, response.access_token);
 			setup(function(userData){	
 				$window.localStorage.setItem(userRoleProp, userData.role_id);		

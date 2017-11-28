@@ -50,7 +50,7 @@
 				    <input type="text" class="form-control" id="jean-name" ng-model="vm.newJeanName" style="">
 				    <label for="jean-name">Jean Name</label>
 				  </div>
-					<btn ng-click="vm.jean.name = vm.newJeanName; vm.runSave()" class="btn">Save</btn>
+					<btn ng-click="vm.jean.name = vm.newJeanName; alert(vm.jean.name); vm.runSave()" class="btn">Save</btn>
 					<btn class="btn btn-secondary" ng-click="vm.popups.namer=false">Cancel</btn> 
 				</form>
 			</div><!--./popup-content-inner-->

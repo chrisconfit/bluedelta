@@ -2,7 +2,7 @@
 
   angular
     .module('bdApp')
-    .directive('jeanList', ['jean', 'apiData', function(jean, apiData) {
+    .directive('jeanList', ['jean', 'api', function(jean, api) {
     	
 			return {
 	    	
@@ -15,9 +15,9 @@
 	      
 	      link: function($scope){
 					
-					$scope.dataBank = apiData;
+					$scope.data = api.getData();
 					$scope.jean = $scope.jean || jean.get();
-				
+					
 					var defaultFields = [
 						'fabric_id',
 						'fabric_type',
@@ -37,7 +37,8 @@
 							'bottom_thread_id' : 'Bottom Thread',
 							'gender_option_id' : 'Gender',
 							'style_option_id' : 'Style'
-						}
+						};
+						
 					  return fieldLabels[field]; // otherwise it won't be within the results
 					};
 					
@@ -48,13 +49,13 @@
 						
 						//Special handling for fabric_type
 						if (field.indexOf('fabric_type') > -1){
-							for (d=0; d<apiData.fabrics.length; d++){
-								if (apiData.fabrics[d].id == $scope.jean.fabric_id){
-									return apiData.fabrics[d].fabric_type;
+							for (d=0; d<$scope.data.fabrics.length; d++){
+								if ($scope.data.fabrics[d].id == $scope.jean.fabric_id){
+									return $scope.data.fabrics[d].fabric_type;
 								}
 							}
 						}
-							
+						
 						//Fields on Jean that are not IDs
 						if (field.indexOf('id') < 0){
 							return $scope.jean[field];
@@ -68,23 +69,15 @@
 							'bottom_thread_id' : 'threads',
 							'gender_option_id' : 'gender_options',
 							'style_option_id' : 'style_options'
-						}
-						
-						
-						var key = dataMap[field];
-						var value = $scope.jean[field];
-						var data = apiData[key];
-												
-						for (d=0; d<data.length; d++){
-							//Quick fix for genders...
-							if (data[d].gender){
-								 data[d].name = data[d].gender;
-							}
-							if (data[d].id == value){
-							 return data[d].name;
-							 }
-						}
+						};
+            
+            var specialLabels = {
+            	'gender_option_id':'gender'
+						};
 
+						var label = specialLabels[field] || "name";
+      
+						return $scope.data.lookup(dataMap[field], "id", $scope.jean[field], label);
 												
 					};
 					
