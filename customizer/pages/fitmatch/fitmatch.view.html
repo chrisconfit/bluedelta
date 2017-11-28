@@ -35,15 +35,14 @@
     <!--Fit Match-->
     <div>
       <h1>{{vm.user.first_name}} {{vm.user.last_name}}'s Fit Match Package</h1>
-      <p>Your fit match package will include the following fabrics:</p>
+      <p>Includes the following fabrics:</p>
       <ul class="fm-fabric-list">
         <li ng-repeat="id in vm.fitMatch">
           <img ng-src="https://images.bluedeltajeans.com/images/components/fabrics/thumb/{{id}}.jpg">
           {{vm.data.lookup("fabrics", "id", id, "name")}}</li>
       </ul>
-      <a href="" class="btn grey small">Edit Fabrics</a>
-      <p class="payment-instruction">Enter your shipping and payment details below. As long as you return the package within 30 days you will not be charged.</p>
-      <hr>
+      <a href="https://bluedeltajeans.com/fit-match/" class="btn grey small">Edit Fabrics</a>
+      <p class="payment-instruction">Enter your shipping and payment details below</p>
       <div class="shipping-addresses">
         <h3>Shipping Address</h3>
         <address-choice address-object="vm.add" user="vm.user"></address-choice>
@@ -55,6 +54,7 @@
     <!--Payment-->
     <div class="cc-info-box">
       <h3>Credit Card Information</h3>
+      <p class="disclaimer">We require a valid credit or debit card for your order. No worries - you will not be charged unless you keep the package for longer than 30 days.</p>
       <ul ng-show="!vm.cardForm.addingCard" class="card-list">
         <li ng-if="vm.cardForm.loadingCards">Getting Credit Card Information...</li>
         <li ng-repeat="cc in vm.cards">
@@ -76,10 +76,13 @@
 
       <a href="" ng-if="!vm.cardForm.loadingCards" ng-click="vm.cardForm.addingCard = !vm.cardForm.addingCard">
         <span ng-if="!vm.cardForm.addingCard" class="edit-existing">Add New Card</span>
-        <span ng-if="vm.cardForm.addingCard && vm.cards.length">Use Existing Card</span>
+        <span ng-if="vm.cardForm.addingCard && vm.cards.length" class="edit-existing">Use Existing Card</span>
       </a>
+      
+
     </div>
     <hr>
+    
     <input type="submit" ng-if="!vm.cardForm.addingCard" ng-class="{disabled:!vm.credit_card_id}" class="btn" ng-click="vm.orderFitMatch(vm.credit_card_id)" value="Submit">
     <input type="submit" ng-if="vm.cardForm.addingCard" class="btn" ng-click="vm.fire()" value="Submit">
   </form>

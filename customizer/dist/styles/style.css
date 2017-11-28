@@ -1008,10 +1008,10 @@ form.cft-form button.btn, form.cft-form button.btn-secondary {
 }
 
 .hiw-popup-grid {
-  margin-left: -115px;
+  margin-left: -50px;
 }
 .hiw-popup-grid > .cft-gi {
-  padding-left: 115px;
+  padding-left: 50px;
   width: 100%;
   position: relative;
   margin-bottom: 20px;
@@ -1036,24 +1036,36 @@ form.cft-form button.btn, form.cft-form button.btn-secondary {
   line-height: 2.8rem;
   color: #004963;
 }
-.hiw-popup-grid > .cft-gi:first-child {
-  margin-bottom: 80px;
+.hiw-popup-grid > .cft-gi .option-list li {
+  list-style: none;
+  margin-bottom: 26px;
+  font-size: 18px;
+  line-height: 20px;
+  font-size: 1.8rem;
+  line-height: 2rem;
+  font-weight: 500;
+  position: relative;
+  padding-left: 40px;
 }
-.hiw-popup-grid > .cft-gi:first-child:after {
-  content: "OR";
+.hiw-popup-grid > .cft-gi .option-list li:before {
+  content: "\f058";
+  font-family: FontAwesome;
   display: block;
   position: absolute;
   left: 0;
-  right: 0;
-  bottom: -56px;
-  padding-left: 113px;
-  font-weight: 500;
-  text-align: center;
-  color: #004964;
-  font-size: 24px;
-  line-height: 32px;
-  font-size: 2.4rem;
-  line-height: 3.2rem;
+  font-size: 30px;
+  line-height: 30px;
+  font-size: 3rem;
+  line-height: 3rem;
+  top: -2px;
+  color: #49da86;
+}
+.hiw-popup-grid > .cft-gi .option-list li.disabled {
+  color: #aaaaaa;
+}
+.hiw-popup-grid > .cft-gi .option-list li.disabled:before {
+  content: "\f057";
+  color: #aaaaaa;
 }
 @media screen and (min-width: 800px) {
   .hiw-popup-grid > .cft-gi {
@@ -1067,15 +1079,6 @@ form.cft-form button.btn, form.cft-form button.btn-secondary {
   }
   .hiw-popup-grid > .cft-gi:first-child {
     margin-bottom: 0;
-  }
-  .hiw-popup-grid > .cft-gi:first-child:after {
-    bottom: auto;
-    top: 50%;
-    right: -82px;
-    left: auto;
-    width: 50px;
-    display: inline-block;
-    padding: 0;
   }
 }
 
@@ -3529,6 +3532,13 @@ ul.tailor-list li input {
 
 .payment-instruction {
   margin-top: 20px;
+  background: #e8edef;
+  padding: 8px;
+  margin-top: 40px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #024863;
+  font-weight: 500;
 }
 
 .edit-existing {

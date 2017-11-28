@@ -547,9 +547,9 @@ form.cft-form{
 }
 
 .hiw-popup-grid{
-	margin-left:-115px;
+	margin-left:-50px;
 	&>.cft-gi{
-		padding-left:115px;
+		padding-left:50px;
 		width:100%;
 		position: relative;
 		margin-bottom: 20px;
@@ -567,21 +567,33 @@ form.cft-form{
 			@include font-size(24, 28);
 			color: #004963;
 		}
-		&:first-child{
-			margin-bottom:80px;
-			&:after{
-				content:"OR";
-				display:block;
-				position:absolute;
-				left:0;
-				right:0;
-				bottom:-56px;
-				padding-left:113px;
-				font-weight:500;
-				text-align: center;
-				color:$blue;
-				@include font-size(24,32);
-			}
+		.option-list {
+	    li {
+		    list-style: none;
+		    margin-bottom: 26px;
+		    @include font-size (18,20);
+		    font-weight: 500;
+		    position: relative;
+		    padding-left: 40px;
+		    &:before {
+			    content: "\f058";
+			    font-family: FontAwesome;
+				  display: block;
+				  position: absolute;
+				  left: 0;
+				  @include font-size (30,30);
+				  top: -2px;
+				  color: #49da86;
+				  
+		    }
+		    &.disabled {
+			    color: #aaaaaa;
+			    &:before {
+				    content: "\f057";
+				    color: #aaaaaa;
+				  }
+		    }
+	    }
 		}
 		@include at-query($min, $deskMin){
 			.box-title{
@@ -590,15 +602,6 @@ form.cft-form{
 			width:50%;
 			&:first-child{
 				margin-bottom:0;
-				&:after{
-					bottom:auto;
-					top:50%;
-					right: -82px;
-					left: auto;
-					width: 50px;
-					display: inline-block;
-					padding: 0;
-				}
 			}
 		}
 	}
@@ -1100,6 +1103,13 @@ form.cft-form{
 }
 .payment-instruction {
 	margin-top: 20px;
+	background: #e8edef;
+  padding: 8px;
+  margin-top: 40px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #024863;
+  font-weight: 500;
 }
 
 .edit-existing {
