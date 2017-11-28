@@ -10,7 +10,7 @@
 						<div class="box-content">
 							<button  ng-if="vm.displayOrder.order_type_id!=3" ng-click="vm.reOrder(vm.displayOrder.id)" class="btn">Re-Order</button>
 							<a ng-if="vm.displayOrder.order_type_id==3" class="btn" href="https://bluedeltajeans.com/fit-match">New Fit Match</a>
-							<button ng-click="vm.copyJean(vm.displayJean)" class="btn">Copy</button>
+							<button ng-if="vm.displayOrder.order_type_id!=3" ng-click="vm.copyJean(vm.displayJean)" class="btn">Copy</button>
 						</div>				
 					</div>
 				</div><!--
@@ -43,7 +43,7 @@
 						</div>
 					</div>
 					<div class="pop-group">
-						<p>Contact us for any questions about your order or alterations</p>
+						<p>Contact us for any questions about your order <span ng-if="vm.displayOrder.order_type_id!=3">or alterations</span></p>
 						<a href="mailto:info@bluedeltajeans.com?&subject=Inquiry%20regarding%20Order#%20{{vm.displayOrder.id}}" class="btn">Contact</a>
 					</div>
 <!--

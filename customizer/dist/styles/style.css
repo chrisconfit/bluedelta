@@ -2509,6 +2509,9 @@ div[style-chooser] .cft-g.chooser-grid#gender-chooser > .cft-gi, gender-chooser 
     margin-bottom: 45px;
   }
 }
+.popup-window .popup-content.fabric-popup .popup-content-inner .fabric-description {
+  text-align: center;
+}
 .popup-window .popup-content.fabric-popup .popup-content-inner .fabric-preveiw {
   bottom: 0;
   position: absolute;

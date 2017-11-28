@@ -28,7 +28,7 @@
 			<a class="popup-closer" href="" ng-click="vm.popups.infoPop = false"></a>
 			<div class="popup-content-inner">
 					<h3 class="popup-title">{{vm.activeItem.name}}</h3>
-					<h4 class="popup-sub-title">{{activeItem.materials}}</h4>
+					<h4 class="popup-sub-title">{{vm.activeItem.materials}}</h4>
 					<h4 class="popup-sub-title">{{vm.activeItem.supplier}}</h4>
 					<p class="fabric-description">{{vm.activeItem.description}}</p>
 					<div class="fabric-preveiw" 
@@ -152,7 +152,7 @@
 	</div>
 	
 	<!--Rinsed Denim Weight Popup-->
-	<div ng-show="vm.popups.rinsedDenim"	ng-click="vm.popups.rinsedDenim = false" class="popup-window">
+	<!--<div ng-show="vm.popups.rinsedDenim"	ng-click="vm.popups.rinsedDenim = false" class="popup-window">
 		<div class="popup-content denim-popup" ng-click="$event.stopPropagation()">
 			<a class="popup-closer" href="" ng-click="vm.popups.rinsedDenim = false"></a>
 			<div class="popup-content-inner">
@@ -162,8 +162,8 @@
 					</p>
 				</div>
 			</div><!--./popup-content-inner-->
-		</div>
-	</div>
+		<!--</div>
+	</div>-->
 
 
 <!--Raw Denim Weight Popup-->
