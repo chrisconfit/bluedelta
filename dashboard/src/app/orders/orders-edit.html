@@ -86,7 +86,7 @@
                   </p>
 
                   <div ng-if="ovm.order.payment_status_id==1 && ovm.order.price && ovm.order.price!='Please enter a valid price'">
-                    <a style="margin-bottom:5px" href="#" class="btn btn-flat btn-primary"><b>Send Invoice</b></a>
+                    <a style="margin-bottom:5px" href="#" ng-click="ovm.sendInvoice()" class="btn btn-flat btn-primary"><b>Send Invoice</b></a>
                     <a style="margin-bottom:5px" href="#" ng-click="ovm.keyinPayment()" class="btn btn-flat btn-primary btn-success"><b>Key In Payment</b></a>
                     <a style="margin-bottom:5px" class="btn btn-primary btn-success" ng-if="ovm.squareLink" ng-href="{{ovm.squareLink}}">Swipe Card</a>
                     <a style="margin-bottom:5px" href="#" ng-click="ovm.compOrder()" class="btn btn-flat btn-warning"><b>Comp Order</b></a>
@@ -310,6 +310,12 @@
 										ng-options="type.id as type.name for type in ovm.data.order_types">
 	                	</select>
 		              </div>
+									<div ng-if="ovm.order.order_type_id==2	"class="form-group">
+										<label>Tailor Location</label>
+										<select class="form-control select2" ng-model="ovm.order.tailor_id" style="width: 100%;"
+														ng-options="t.id as t.city+', '+t.state for t in ovm.data.tailors">
+										</select>
+									</div>
 	                <div class="form-group">
 		                <label>Status</label>
 		                <select class="form-control select2" 

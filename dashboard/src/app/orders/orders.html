@@ -63,6 +63,15 @@
 							</div>
 							<div class="col-sm-3">
 								<div class="form-group">
+									<label>Rep</label>
+									<select class="form-control" ng-options="rep.id as rep.name for rep in ovm.data.reps"
+													style="width: 100%;" ng-model="ovm.filters.rep_id">
+										<option value="">All</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
 							    <label>Results per page</label>
 							    <select  ng-options="o as o for o in [1,3,10,25,50,100]" class="form-control" 
 								  style="width: 100%;" ng-model="ovm.filters.results_per_page">

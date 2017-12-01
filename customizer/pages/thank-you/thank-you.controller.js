@@ -15,5 +15,15 @@
     vm.type=$routeParams.type;
     vm.userLoggedIn = user.isLoggedIn();
     vm.user = user.get();
+  
+    vm.logout = function(){
+      user.logout(function(){
+        vm.orderErr = false;
+        vm.user = {};
+        vm.user.loaded=true;
+        vm.userLoggedIn = user.isLoggedIn();
+        $location.path('/login');
+      }, false)
+    };
   }
 })();

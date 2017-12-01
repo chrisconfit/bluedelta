@@ -25,7 +25,7 @@
 	
 	<!--Mobile Helper-->
 	<div ng-init="vm.showMenu = false" class="builder__mobile-helper">
-		<social-actions class="helper" jean="vm.jeanData" display="vm.displaySocialHelper && vm.showMenu"></social-actions>
+		<social-actions class="helper" uploaded="vm.shareImageUploaded" jean="vm.jeanData" display="vm.displaySocialHelper && vm.showMenu"></social-actions>
 		<a ng-click="vm.showMenu=!vm.showMenu" ng-class="(vm.showMenu ? 'closer' : '')" class="menu-icon">
 			<span class="bars">
 		</a>
@@ -36,12 +36,12 @@
 				</a>
 			</li>
 			<li>
-				<a href="" ng-click="vm.displaySocialHelper=!vm.displaySocialHelper" >
+				<a href="" ng-click="vm.share('displaySocialHelper')" >
 					<i class="fa fa-share" aria-hidden="true"></i>
 				</a>
 			</li>
 			<li>
-				<a href="">
+				<a href="" ng-click="vm.saveAndShowOpts()">
 					<i class="fa fa-floppy-o"></i>
 				</a>
 			</li>

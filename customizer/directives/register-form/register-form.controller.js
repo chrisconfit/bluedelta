@@ -31,15 +31,20 @@
 				//console.log(regvm.credentials.password.search(/[A-Z]/) > -1);
 				
 				//RE to test all
-				var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,50}$/;
-				return re.test(password);
+				//var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,50}$/;
+			
+				return (
+					regvm.credentials.password.length > 5 &&
+					regvm.credentials.password.length < 51 &&
+					regvm.credentials.password.search(/\d/)>-1 &&
+        	regvm.credentials.password.match(/[a-z]/i)
+				);
 			}			
 								
 			function validateEmail(email) {
 		    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		    return re.test(email);
 			}
-
 			
 			if (!regvm.credentials.email || !regvm.credentials.first_name || !regvm.credentials.last_name || !regvm.credentials.password || !regvm.credentials.passwordConfirm){
 				messages.set("All fields are required", "error");
@@ -47,7 +52,7 @@
 			}
 			
 			if (!validatePassword(regvm.credentials.password)){
-				messages.set("A valid password must: <ul><li>Be between 6 and 50 characters</li><li>Contain at least one number</li><li>Contain at least one uppercase letter</li><li>Contain at least one lowercase letter</li><li>Contain at least one special character (\"!,@,#,$,%,^,&, or *\")</li>");
+				messages.set("A valid password must: <ul><li>Be between 6 and 50 characters</li><li>Contain at least one number</li><li>Contain at least one letter</li>");
 				return false;
 			}
 			

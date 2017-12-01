@@ -46,7 +46,7 @@
       <div class="shipping-addresses">
         <h3>Shipping Address</h3>
         <address-choice address-object="vm.add" user="vm.user"></address-choice>
-        <input type="hidden" ng-model="vm.add.id" name="shipping_address" id="shippping_address">
+        <input type="hidden" ng-model="vm.add.id" required name="shipping_address" id="shippping_address">
       </div>
     </div>
     <hr>
@@ -82,8 +82,8 @@
 
     </div>
     <hr>
-    
+    <p ng-if="vm.fit_match_error" class="form-messages error">{{vm.fit_match_error}}</p>
     <input type="submit" ng-if="!vm.cardForm.addingCard" ng-class="{disabled:!vm.credit_card_id}" class="btn" ng-click="vm.orderFitMatch(vm.credit_card_id)" value="Submit">
-    <input type="submit" ng-if="vm.cardForm.addingCard" class="btn" ng-click="vm.fire()" value="Submit">
+    <input type="submit" ng-if="vm.cardForm.addingCard" class="btn" ng-click="vm.addCard()" value="Submit">
   </form>
 </div><!--./page-container

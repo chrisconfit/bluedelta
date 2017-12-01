@@ -73,6 +73,7 @@
 			  <li class="how-it-works" i><a ng-click="popups.hiw = !popups.hiw; navvm.mobileMenu=false"href="#">How it Works</a></li>
 			  
 			  <!--Not Logged In-->
+				<li class="closet" ng-if="!navvm.isLoggedIn"><a href="login">Closet</a></li>
 				<li class="sign-in" ng-if="!navvm.isLoggedIn"><a class="btn sign-in" href="login">Sign in</a></li>
 				<!--<li class="sign-in" ng-if="!navvm.isLoggedIn"><a class="btn register" href="register">Register</a></li>-->
 				

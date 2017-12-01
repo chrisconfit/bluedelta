@@ -3,9 +3,9 @@
 
   angular
     .module('bdApp')
-    .service('jean', ['$routeParams', '$window', '$q', 'api', jean]);
+    .service('jean', ['$routeParams', '$window', '$q', 'api', '$http', jean]);
 
-  function jean($routeParams, $window, $q, api) {
+  function jean($routeParams, $window, $q, api, $http) {
 
 
 		/*
@@ -100,9 +100,7 @@
 		buildJeanData = function(data, copy){
 
 			//Make a copy
-			console.log(copy);
 			if(copy==true){
-				console.log("SETTING UP COPY");
 				delete data.user_id;
 				delete data.id;
 				if(data.name) data.name = "Copy of "+data.name;
@@ -116,7 +114,6 @@
 		
 		//Set up jean data from parameter
 		var setup = function(data, action){
-			console.log("running setup");
 			
 			var defer = $q.defer();
 			//If we don't have a logged in user, we want to force a copy...
@@ -126,9 +123,7 @@
 			makeCopy = action == "copy" ? true : makeCopy;
 			
 			//Set up jean from object data
-			if (data !== null && typeof data === 'object'){ 
-				
-				console.log("working from object data!");
+			if (data !== null && typeof data === 'object'){
 				
 				if (data.user_id && data.user_id !== userId) delete data.id;
 				buildJeanData(data, makeCopy);
@@ -137,8 +132,6 @@
 			
 			//Copy jean from data URL
 			else if (data !== null && data !== undefined && isNaN(data)){
-				console.log("THIS IS A DATACODE");
-				console.log(data);
 				var jeanObj = {};
 				dataArr = data.split('-');
 				for(var i=0; i<dataArr.length; i++){
@@ -146,8 +139,6 @@
 					var key = parseURLkey(d[0]);
 					jeanObj[key]=d[1];
 				}
-				console.log('jeanObj');
-				console.log(jeanObj);
 				buildJeanData(jeanObj, true);
 				defer.resolve(jeanData);
 			}
@@ -155,14 +146,8 @@
 			//Copy or Edit Jean from Id
 			
 			else if (data !== null && data !== undefined){
-				console.log('ID!!!');
 				//First get Jean
-				console.log(data);
 				api.call('getJean', data, function(result){
-					console.log("GOT JEAN");
-					console.log(result);
-					console.log(result.user_id);
-					console.log(userId);
 					if (result.user_id !== userId) makeCopy = true;
 
 					buildJeanData(result, makeCopy);
@@ -263,27 +248,56 @@
 			});
 		};
 		
+		
+		
+		
+		//Test jean for existing image in s3
+		var testJeanForExistingImage = function(jeanData, dataCode, callback, errCallback){
+			console.log("testing for ex...");
+      var filename = dataCode+".jpg";
+      var imageUrl = "https://s3.amazonaws.com/bluedelta-data/jeans/"+filename;
+			
+      console.log(imageUrl);
+      //Thumbnail already exists..
+      $http.get(imageUrl)
+        .success(function(result){
+        	console.log("IT EXISTS!!!");
+          //We got the image... handle both orders and jeans... just to be safe
+          jeanData.image_url = imageUrl;
+          jeanData.jean_image_url = imageUrl;
+          if (callback) callback(jeanData);
+        })
+        
+        //Need to create a new Thumbnail
+        .error(function(err, code){
+        	console.log("ERROR>.. create an image");
+          //There was an error...
+          api.createThumb(jeanData).then(function (blob) {
+            jeanData.image = {data:blob, filename:filename};
+            if (callback) callback(jeanData)
+          }, function(err){
+          	if(errCallback) errCallback(err);
+					});
+        });
+		};
+		
+		
+		
 		var save = function(){
-			var defer = $q.defer();
 			var jean = this;
 			var jeanData = jean.get();
-			var filename = api.getDataCode(jeanData);
-			filename += ".jpg";
-			jeanData.image = {filename:filename};
-			api.createThumb(jeanData).then(function(blob){
-				jeanData.image.data = blob;
-				api.call('createMyJeans', jeanData, function(result){
-					defer.resolve(result);
-				}, function(err){
-					defer.reject(err);
-				});
-			}, function(err){
-				defer.reject(err);
+      var defer = $q.defer();
+      var dataCode = api.getDataCode(jeanData);
+      testJeanForExistingImage(jeanData, dataCode, function(jeanData){
+        api.call('createMyJeans', jeanData, function(result){
+          defer.resolve(result);
+        }, function(err){
+          defer.reject(err);
+        });
 			});
-			
-			return defer.promise;
-
+      return defer.promise;
 		};
+		
 		
 			
 		return {
@@ -295,6 +309,7 @@
 	    setup : setup,
 	    reset : reset,
       set : set,
+      testJeanForExistingImage:testJeanForExistingImage,
       createNew :createNew,
       getDataCode: getDataCode
      }

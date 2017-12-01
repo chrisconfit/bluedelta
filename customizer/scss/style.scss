@@ -724,6 +724,13 @@ form.cft-form{
 				-moz-transform: translate(-44%,-29%) rotate(5deg);
 				-o-transform: translate(-44%,-29%) rotate(5deg);
 				-webkit-transform: translate(-44%,-29%) rotate(5deg);
+				&[src*="default"] {
+					width:100%;
+					transform: translate(-50%,-32%) rotate(0deg);
+					-moz-transform: translate(-50%,-32%) rotate(0deg);
+					-o-transform: translate(-50%,-32%) rotate(0deg);
+					-webkit-transform: translate(-50%,-32%) rotate(0deg);
+				}
 			}
 		}
 		
@@ -1299,4 +1306,8 @@ Jean List
 			width: calc(100% - 175px);
 		}
 	}
+}
+
+.text-danger{
+	color:#d9534f;
 }

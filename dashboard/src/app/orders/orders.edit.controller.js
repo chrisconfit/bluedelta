@@ -630,7 +630,7 @@ angular.module('inspinia')
 						orderData.user_id = vm.orderUser.id,
 						orderData.shipping_name = vm.orderUser.first_name+" "+vm.orderUser.last_name,
 						orderData.shipping_address_id = vm.order.shipping_address_id,
-						orderData.jean_id = newJean.id
+						orderData.jean_id = newJean.id;
 						
 						api.call('ordersPost', orderData, function(newOrder){
 							$state.transitionTo('orders.edit', {orderId:newOrder.id});
@@ -645,8 +645,12 @@ angular.module('inspinia')
 					api.call('ordersPost', vm.order, function(result){
 						toaster.clear(savingToast);
 						toaster.success('Saved Order!');
-						if (callback)callback();						
-						vm.order.order_items[0] = result.order_items[0];
+            vm.EditMode=false;
+						vm.order=result;
+						console.log(result);
+						vm.timeline=null;
+            buildTimeline();
+            if (callback)callback();
 					}, function(err){
 						toaster.clear(savingToast);
 						toaster.pop({
@@ -682,4 +686,13 @@ angular.module('inspinia')
 	var timestamp = Math.floor(Date.now() / 1000);
   vm.squareLink = iOS ? "square-commerce-v1://payment/create?data=" + encodeURIComponent(JSON.stringify(dataParameter)) +"&time="+timestamp : false;
 
+  
+  vm.sendInvoice = function(){
+    api.call('sendInvoice', vm.order.id, function(){
+      SweetAlert.swal("Your Invoice has been sent!", "An invoice has been sent to "+vm.orderUser.email, "success");
+		});
+  };
+  
+  
+  
 }]);

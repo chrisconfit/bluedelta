@@ -21,8 +21,7 @@
 	    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	    return re.test(email);
 		}
-	
-	
+		
 		
     /*
     *
@@ -69,12 +68,13 @@
 		*/
 		
 		function validatePassword(password){
-			var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,50}$/;
-			return re.test(password);
-		}				
+			//var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,50}$/;
+			//return re.test(password);
+    	return password.length > 5 && password.length < 51 && password.search(/\d/)>-1 &&  password.search(/[a-z]/i);
+  	}
 
 		logvm.forgotPassword = false;
-		logvm.forgotPassword2 = false;		
+		logvm.forgotPassword2 = false;
 		if($location.path()=="/customer-register/"){
 			logvm.forgotPassword = true;			
 			logvm.customerReset = true;
@@ -93,7 +93,7 @@
 				user.getResetToken(logvm.credentials.loginEmail, 
 					function(result){ logvm.forgotPassword2 = true; },
 					function(err){
-						err.message = err.message == "Username/client id combination not found" ? "We don't have an account registered for that emial" : err.message;
+						err.message = err.message == "Username/client id combination not found" ? "We don't have an account registered for that email" : err.message;
 						messages.set(err.message,"error");
 					}
 				);
@@ -119,7 +119,8 @@
 					"password":logvm.credentials.newPassword
 				}		    
 		    user.resetPassword(data, 
-					function(result){ 
+					function(result){
+		    		console.log(result);
 						messages.set("Password reset successfully. Try logging in.", "success");
 						logvm.forgotPassword = false;
 						logvm.forgotPassword2 = false;
@@ -144,7 +145,7 @@
 			}
 
 			if (!validatePassword(logvm.credentials.newPassword)){
-				messages.set("A valid password must: <ul><li>Be between 6 and 50 characters</li><li>Contain at least one number</li><li>Contain at least one uppercase letter</li><li>Contain at least one lowercase letter</li><li>Contain at least one special character (\"!,@,#,$,%,^,&, or *\")</li>");	
+        messages.set("A valid password must: <ul><li>Be between 6 and 50 characters</li><li>Contain at least one number</li><li>Contain at least one letter</li>");
 			}
 
 			if (logvm.credentials.newPassword !== logvm.credentials.newPasswordConfirm){

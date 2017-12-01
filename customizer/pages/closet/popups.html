@@ -8,9 +8,25 @@
 					<div class="jean-card">
 						<img ng-src="{{vm.displayJean.jean_image_url}}">
 						<div class="box-content">
-							<button  ng-if="vm.displayOrder.order_type_id!=3" ng-click="vm.reOrder(vm.displayOrder.id)" class="btn">Re-Order</button>
+
+							<!--Pay/Receipt-->
+							<button  ng-if="vm.displayOrder.payment_status_id != 3 && vm.displayOrder.price"
+							ng-click="vm.payInvoice(vm.displayOrder.id)" class="btn">
+								<span ng-if="vm.displayOrder.payment_status_id == 1">Pay Invoice</span>
+								<span ng-if="vm.displayOrder.payment_status_id == 2">See Receipt</span>
+							</button>
+
+							<!--New FM-->
 							<a ng-if="vm.displayOrder.order_type_id==3" class="btn" href="https://bluedeltajeans.com/fit-match">New Fit Match</a>
+
+							<!--Re Order-->
+							<button  ng-if="vm.displayOrder.order_type_id!=3 && vm.displayOrder.order_status_id < 5 && vm.displayOrder.price"
+											 ng-click="vm.reOrder(vm.displayOrder)" class="btn">Re-Order</button>
+							<p ng-if="vm.displayOrder.order_type_id!=3 && vm.displayOrder.order_status_id < 5 && vm.displayOrder.price" class="closet-instruction">Purchase an exact replica of your jean.</p>
+
+							<!--Copy-->
 							<button ng-if="vm.displayOrder.order_type_id!=3" ng-click="vm.copyJean(vm.displayJean)" class="btn">Copy</button>
+							<p ng-if="vm.displayOrder.order_type_id!=3" class="closet-instruction">Use this pattern as the starting point for a new jean.</p>
 						</div>				
 					</div>
 				</div><!--
@@ -109,7 +125,8 @@
 					<div class="jean-card">
 						<img ng-src="/images/thumbnails/{{vm.displayJean.data.id}}.jpg">
 						<div class="box-content">
-							<button ng-click="vm.reOrder(vm.displayOrder.id)" class="btn">Re-Order</button>
+							<button ng-if="vm.displayOrder.order_status_id < 5 && vm.displayOrder.price"
+								ng-click="vm.reOrder(vm.displayOrder.id)" class="btn">Re-Order</button>
 							<button ng-click="vm.copyJean(vm.displayJean)" class="btn">Copy</button>
 						</div>				
 					</div>

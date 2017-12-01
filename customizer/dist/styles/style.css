@@ -1285,6 +1285,19 @@ h1.page-title {
   }
 }
 
+.button-list a.btn, .button-list a.btn-secondary {
+  display: block;
+}
+.button-list a.btn:not(last-of-type), .button-list a.btn-secondary:not(last-of-type) {
+  margin-bottom: 5px;
+}
+@media screen and (min-width: 600px) {
+  .button-list a.btn, .button-list a.btn-secondary {
+    display: inline-block;
+    margin-right: 5px;
+  }
+}
+
 .button-container {
   overflow: hidden;
   position: absolute;
@@ -2696,6 +2709,52 @@ a.overview-trigger i {
   margin: 0;
 }
 
+p.share-loading {
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  font-size: 14px;
+  letter-spacing: .5px;
+  font-weight: 700;
+}
+
+.builder__mobile-helper p.share-loading {
+  background: #41778b;
+  display: block;
+  width: 103px;
+  position: absolute;
+  top: 4px;
+  right: -40px;
+  padding: 3px;
+}
+
+.disclaimer {
+  margin: 20px auto;
+  background: rgba(65, 119, 139, 0.1);
+  border: 1px solid #41778b;
+  color: #41778b;
+  padding: 20px;
+}
+.disclaimer a {
+  font-weight: 700;
+}
+
+.closet-instruction {
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 16px;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  color: #363839;
+}
+.closet-instruction:last-child {
+  margin-bottom: 0;
+}
+
+.box-content {
+  direction: ltr;
+}
+
 h1 .sub-title {
   text-transform: none;
   letter-spacing: 0;
@@ -3135,6 +3194,13 @@ ul.tailor-list li input {
   -moz-transform: translate(-44%, -29%) rotate(5deg);
   -o-transform: translate(-44%, -29%) rotate(5deg);
   -webkit-transform: translate(-44%, -29%) rotate(5deg);
+}
+.jean-card.jean-order-card .jean-image-order-preview img[src*="default"] {
+  width: 100%;
+  transform: translate(-50%, -32%) rotate(0deg);
+  -moz-transform: translate(-50%, -32%) rotate(0deg);
+  -o-transform: translate(-50%, -32%) rotate(0deg);
+  -webkit-transform: translate(-50%, -32%) rotate(0deg);
 }
 .jean-card.jean-order-card .jean-list dl dt {
   padding-left: 0;
@@ -3746,4 +3812,8 @@ Jean List
   .cft-g.order-detail-grid > .cft-gi:last-child {
     width: calc(100% - 175px);
   }
+}
+
+.text-danger {
+  color: #d9534f;
 }

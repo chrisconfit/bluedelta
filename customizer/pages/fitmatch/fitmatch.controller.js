@@ -35,6 +35,7 @@
         vm.user = {};
         vm.user.loaded=true;
         vm.userLoggedIn = user.isLoggedIn();
+        vm.add = {};
       }, false)
     };
     vm.fire = function(){};
@@ -43,22 +44,16 @@
     $scope.$watch(function() {
       return vm.user;
     }, function(current, original) {
-      console.log("USER CHANGED!!!");
-      console.log(current);
-      console.log(!vm.user.id);
-      //
       //Make sure we've pulled a user...
       if(!vm.user.id) return false;
-      console.log('still running...');
+      
       //Only run this once..
       //if(vm.user.loaded) return false;
-      
-      console.log("first run");
       vm.user.loaded = true;
       
       //Set primary address to shipping address
       if(vm.user.addresses.length){
-        for(i=0; i<vm.user.addresses.length; i++){
+        for(var i=0; i<vm.user.addresses.length; i++){
           if(vm.user.addresses[i].primary){
             vm.add = vm.user.addresses[i];
             break;
@@ -68,8 +63,6 @@
       
       //Pull Credit Cards
       if(current.square_id){
-        
-        console.log("USER has sqid");
         //logged in user has sq id.
         vm.cardForm.loadingCards = true;
         api.call('getMyCreditCards', null, function(cards){
@@ -127,6 +120,7 @@
     };
     
     vm.orderFitMatch = function(card){
+      if(!vm.validateFitMatch()) return false;
       var fmObject = {
         "credit_card_id":card,
         "shipping_address_id":vm.add.id,
@@ -138,10 +132,21 @@
       
     };
     
+    vm.fit_match_error = false;
+    vm.validateFitMatch = function(){
+      vm.fit_match_error = false;
+      if(!vm.add.id) {
+        vm.fit_match_error = "Please provide a shipping address";
+        return false;
+      }
+      
+      return true;
+    };
     
     
-    
-    
+    vm.addCard = function(){
+      if (vm.validateFitMatch()) vm.fire();
+    };
     
   }
   
