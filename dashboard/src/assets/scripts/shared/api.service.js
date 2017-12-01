@@ -20,9 +20,9 @@
 			headers: {'Content-Type':'application/json'}
 		};
 
-/*		if($location.$$host == "localhost"){
+	if($location.$$host == "localhost"){
 			config.url = "http://bluedelta.local";
-		}*/
+		}
 
 		var noTokenNecessary = [
 			'login',
@@ -155,6 +155,8 @@
 		}
 		
 		getDataCode = function(jeanData){
+	  	console.log("GETTING DC for...");
+	  	console.log(jeanData);
 			var url = "";			
 			for (var property in jeanData) {
 			  if (jeanData.hasOwnProperty(property)) {
@@ -396,6 +398,10 @@
       return httpReq("POST", "/api/fitmatchrequests/"+data.fitmatchId+"/charge", data);
     };
   
+		var sendInvoice = function(orderId){
+			return httpReq("POST", "/api/orders/"+orderId+"/invoice");
+		};
+		
     var appData = {};
     appData.loaded=false;
     
@@ -486,7 +492,8 @@
       fitmatchGet:fitmatchGet,
       fitmatchDelete:fitmatchDelete,
       fitmatchPost:fitmatchPost,
-      fitmatchCharge:fitmatchCharge
+      fitmatchCharge:fitmatchCharge,
+      sendInvoice:sendInvoice
     };
     
   }

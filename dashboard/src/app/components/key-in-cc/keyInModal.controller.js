@@ -11,9 +11,6 @@ angular.module('inspinia')
     *
     */
     
-    console.log("OORDER DATA");
-    console.log(orderData);
-    
     var chargeAmount = orderData.order ? orderData.order.price : 50;
     $scope.isFM = !orderData.order;
     $scope.isNewFM = $scope.isFM && (!orderData.fitmatch.id);
@@ -77,6 +74,7 @@ angular.module('inspinia')
       
       if(orderData.order) {
         orderData.order.payment_status_id = details.order.payment_status_id;
+        if(orderData.order.order_status_id==5) orderData.order.order_status_id==4;
         var paymentProcessedBox = {
           title: "Payment has been processed",
           text: "The customer's payment has been posted.",

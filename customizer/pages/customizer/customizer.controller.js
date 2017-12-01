@@ -4,8 +4,8 @@
     .module('bdApp')
     .controller('customizerCtrl', customizerCtrl);
 
-  customizerCtrl.$inject = ['api', 'user', '$q','$filter','$timeout','$location', '$window', '$routeParams', 'jean', '$scope', 'popups', 'messages', 'loader', 'apiData'];
-  function customizerCtrl(api, user, $q, $filter, $timeout, $location, $window, $routeParams, jean, $scope, popups, messages, loader, apiData) {
+  customizerCtrl.$inject = ['api', 'user','$filter','$location', '$routeParams', 'jean', '$scope', 'popups', 'messages', 'loader', 'apiData'];
+  function customizerCtrl(api, user, $filter, $location, $routeParams, jean, $scope, popups, messages, loader, apiData) {
 		
     var vm = this
 		
@@ -31,6 +31,9 @@
 			$scope.$watch(function() {
 				return vm.jeanData;
 			}, function(current, original) {
+				vm.shareImageUploaded=false;
+				vm.displaySocial=false;
+        vm.displaySocialHelper=false;
 				vm.updateActiveItem();
 			}, true);
 			
@@ -211,9 +214,13 @@
 			vm.saveCallback = openSaveOpts;
 			vm.runSave();
 		};
-		
+	
     vm.keepEditing = function(){
-			$location.path('/customizer/'+vm.jeanData.id);
+    	console.log("KEEP ED..");
+    	console.log(vm.jeanData.id);
+    	console.log(parseInt($routeParams.jeanId));
+			if(parseInt($routeParams.jeanId) !== vm.jeanData.id) $location.path('/customizer/'+vm.jeanData.id);
+			else popups.closeAll();
     };
     
     vm.goToCloset = function(){
@@ -283,7 +290,36 @@
     //Set default auth callback  
     vm.registerCallback = function(details){
 	  }
-    
+   
+	  vm.shareImageUploaded=false;
+	  vm.displaySocial=false;
+    vm.displaySocialHelper=false;
+    vm.share = function(display){
+    	console.log("here it is");
+    	console.log(display);
+    	if(vm[display]==true){
+    		vm[dispaly]=false;
+			}else {
+        vm[display] = true;
+        var dataCode = api.getDataCode(vm.jeanData);
+        var jeanData = angular.copy(vm.jeanData);
+        delete jeanData.image;
+        delete jeanData.image_url;
+        jean.testJeanForExistingImage(jeanData, dataCode, function (jeanData) {
+          //Image doesn't exist.. create and upload
+          if (!jeanData.image_url) {
+            api.call('uploadJeanThumb', jeanData.image, function (result) {
+              console.log("Image has been uploaded: " + result.url);
+              vm.shareImageUploaded = true;
+            })
+          }
+          //Image already exists... run share
+          else {
+            vm.shareImageUploaded = true;
+          }
+        });
+      }
+		}
     
 
 

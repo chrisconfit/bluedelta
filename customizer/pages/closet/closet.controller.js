@@ -24,11 +24,50 @@
 		vm.orders = [];		
     api.call('getMyOrders', null, function(result){
 	    vm.orders = result;
+	    
+	    for(var i=0; i<vm.orders.length; i++){
+	    	vm.checkUrl(vm.orders[i]);
+			}
     });
+  
+  
+    //For images... if we have the default images saved, see if a thumbnail exists for the jean... if not, try and create it.
+    vm.checkUrl = function(order){
+      console.log("CHECKING URL!!!");
+      var image_url = order.order_items[0].jean_image_url;
+    
+      //image_url does not contain "default"... It's a good URL, let's use it.
+      if ((image_url).indexOf('default.jpg') < 0){
+        return order.order_items[0].jean_image_url;
+      }
+    
+      //image_url is set to the default. Let's build a data url and try to get a thumb.
+      else{
+        var data_code = api.getDataCode(order.order_items[0]);
+        jean.testJeanForExistingImage(order.order_items[0], data_code, function(jeanData){
+        	
+        	console.log("TEST FOR EXSIST RESULT");
+        	console.log(jeanData);
+        	console.log(order);
+        	
+					if (jeanData.image && jeanData.image.data) {
+            api.call('uploadJeanThumb', order.order_items[0].image, function (result) {
+              order.order_items[0].jean_image_url = result.url + "?tested=true";
+              //save the order
+              api.call('updateMyOrder', order);
+            });
+          }else{
+            order.order_items[0].jean_image_url = jeanData.jean_image_url + "?tested=true";
+            //save the order
+            api.call('updateMyOrder', order);
+					}
+        });
+      }
+    };
     
 		vm.onload=function(){
-			$scope.vm = vm;	
-		}
+			$scope.vm = vm;
+		};
 		
 		//Edit User
 		vm.userForm = {};
@@ -170,8 +209,31 @@
 		  }
     };
 		
+    /*
 		vm.reOrder = function(orderId){
 			$location.path('/order/'+orderId+'/re-order');
+		};
+		*/
+    vm.reOrder = function(reOrder){
+      var orderCreateObj = {
+      	price:reOrder.price,
+				shipping_phone:reOrder.shipping_phone,
+				shipping_name:reOrder.shipping_name,
+				shipping_address_id:reOrder.shipping_address_id,
+				user_id:reOrder.user_id,
+				vendor_id:reOrder.vendor_id,
+				rep_id:reOrder.rep_id
+			};
+			
+			orderCreateObj.payment_status_id=1;
+      orderCreateObj.order_status_id=5;
+      orderCreateObj.order_type_id=5;
+      orderCreateObj.reorder_item_id = reOrder.order_items[0].id;
+  
+      api.call('placeMyOrder', orderCreateObj, function(newOrder){
+      	$location.path('/pay/'+newOrder.id);
+      });
+      
 		};
 
 		vm.copyJean = function(orderItem){
@@ -208,11 +270,18 @@
 		vm.orderJean = function(jeanId){
 			$location.path('/order/'+jeanId);
 		};
-		
+  
+    vm.payInvoice = function(orderId){
+      $location.path('/pay/'+orderId);
+		};
 		//Get User
+		
+		
+	
+  
+  
   }
   
-
 
 
 })();

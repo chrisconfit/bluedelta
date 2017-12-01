@@ -103,7 +103,7 @@
 			$location.path('/customizer'); 
 		};
 		vm.placeOrder = function() {
-			vm.orderErr = false;
+			vm.orderFormErr = false;
 			if(!vm.orderCreateObj.shipping_name)
 				vm.orderFormErr = "Please enter a shipping name."
       if(!vm.orderCreateObj.shipping_phone)

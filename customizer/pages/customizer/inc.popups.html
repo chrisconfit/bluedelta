@@ -58,9 +58,9 @@
 	</div>
 	
 	<!--Save Opts Popup-->
-	<div ng-show="vm.popups.saveOpts"	ng-click="vm.popups.saveOpts = false" class="popup-window">
+	<div ng-show="vm.popups.saveOpts"	ng-click="vm.keepEditing();" class="popup-window">
 		<div class="popup-content saved-popup" ng-click="$event.stopPropagation()">
-			<a class="popup-closer" href="" ng-click="vm.popups.saveOpts = false"></a>
+			<a class="popup-closer" href="" ng-click="vm.keepEditing();"></a>
 			<div class="popup-content-inner">
 				<div ng-if="vm.jean.name">
 					<h3 class="popup-title">Your Jean has been saved!</h3>

@@ -106,21 +106,21 @@
           <span ng-if="vm.order.payment_status_id!=1 && vm.paidDate">Paid {{vm.paidDate | date:"shortDate"}}:</span>
           <span class="total-price">${{vm.checkoutForm.price}}</span></h3>
         <input type="hidden" ng-model="vm.checkoutForm.price">
-
         <div ng-if="vm.order.payment_status_id==1" class="input-containers">
-          <input type="submit" ng-if="!vm.cardForm.addingCard" ng-class="{disabled:!vm.credit_card_id}" class="btn" ng-click="vm.payInvoice(vm.credit_card_id)" value="Pay Invoice">
+
+          <div ng-if="vm.order.order_type_id==5 " class="disclaimer" ng-init="vm.agreed=false">
+            <p>This Jean will be an exact replica of your previous jean, in terms of measurements and all customization options. If you would like to change the jean in anyway, create a new jean in the <a href="/customizer">builder</a>, or copy a jean from your <a href="/closet">closet</a>.</p>
+            <a ng-class="{checked:vm.agreed}"
+               ng-click="vm.agreed=!vm.agreed" class="small check-box"></a> <strong ng-click="vm.agreed=!vm.agreed">I understand</strong>
+          </div>
+
+          <input type="submit" ng-if="!vm.cardForm.addingCard" ng-class="{disabled:!vm.credit_card_id || vm.order.order_type_id==5 && !vm.agreed}" class="btn" ng-click="vm.payInvoice(vm.credit_card_id)" value="Pay Invoice">
           <input type="submit" ng-if="vm.cardForm.addingCard" class="btn" ng-click="vm.fire()" value="Pay Invoice">
         </div>
 
       </form>
     </div>
 
-    <div ng-if="vm.formStep == 2 && vm.userLoggedIn">
-      <div class="container thin">
-        <h2>Thanks for your payment!</h2>
-        <p>You will receive confirmation via email shortly. Now that you've paid you can always come back to this page to view your receipt.</p>
-      </div>
-    </div>
   </div>
 
 

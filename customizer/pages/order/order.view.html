@@ -55,7 +55,7 @@
 								<p>Get fitted at our flagship store in Oxford, MS, or choose one of the many cities that our partner tailors operate in. We'll be in touch to discuss your customization options and set a shipping date</p>
 								<div class="check-list">
 									<ul class="tailor-list">
-										<li ng-repeat="check in vm.tailors | orderBy : 'location'" ng-init="type=check.city=='Oxford'?1:2"
+										<li ng-repeat="check in vm.tailors | orderBy : 'city'" ng-init="type=check.city=='Oxford'?1:2"
 												ng-click="vm.chooseOrderType(type);
 												vm.orderCreateObj.tailor_id==check.id ? vm.orderCreateObj.tailor_id=null : vm.orderCreateObj.tailor_id=check.id">
 											<a class="check-box small" ng-class="{checked:vm.orderCreateObj.tailor_id==check.id}"></a>

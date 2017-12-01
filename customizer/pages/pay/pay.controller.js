@@ -132,7 +132,11 @@
       api.call('getMyOrders', $routeParams.orderDetails, function (result) {
         if (result.price) {
           vm.order = result;
-          if (result.payment_status_id !== 1 && result.transactions) {
+          if (result.payment_status_id==3){
+            vm.orderErr = "This order has been comped";
+            vm.orderLoaded = true;
+          }
+          else if(result.payment_status_id !== 1 && result.transactions) {
             for (var i = 0; i < result.transactions.length; i++) {
               if (result.transactions[i].status === "ok") {
                 vm.paidDate = new Date(result.transactions[i].created_at);

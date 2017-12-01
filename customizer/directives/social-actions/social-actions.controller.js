@@ -2,61 +2,65 @@
 
   angular
     .module('bdApp')
-    .controller('socialCtrl', socialCtrl)
+    .controller('socialCtrl', socialCtrl);
 	
-		socialCtrl.$inject = ['$scope', 'popups', 'api'];
-
-		
-		function socialCtrl($scope, popups, api) {
+		socialCtrl.$inject = ['$scope', 'popups', 'api', 'jean'];
+	
+		function socialCtrl($scope, popups, api, jean) {
 	
 			var sovm = this;
 			sovm.jean = $scope.jean;
+			sovm.shareImageUploaded =  $scope.shareImageUploaded;
 			
 			sovm.jeanToUrl = function(){
-				var url = document.location.origin+"/customizer/";
-				url += sovm.jean.id ? sovm.jean.id : api.getDataCode(sovm.jean);
-				url += "/copy";
+				var url = "http://share.bluedeltajeans.com/";
+				url += api.getDataCode($scope.jean);
 				return url;
-			}
+			};
 			
 			var sharingUrls = {};
 			
-			var socialTitle = "Check out my custom jeans built with Blue Delta!";
-			var socialDescription = "Cras justo odio, dapibus ac facilisis in, egestas eget quam.";
+			var socialTitle = "Custom Jeans by Blue Delta";
+			var socialDescription = "Check out the jeans I made at the Blue Delta Jean Builder";
 
 			//Facebook sharing URL
-			sharingUrls.facebook = function(url, image){
+			sharingUrls.facebook = function(url){
 				if (!url) return false;
-				var baseString = 'https://www.facebook.com/sharer/sharer.php?u='+url+'&description='+socialDescription+'&title='+socialTitle;
-				if (image) baseString += '&images='+urlencode(image);
+				var baseString = 'https://www.facebook.com/sharer/sharer.php?u='+url;
 				return baseString;
-			}
+			};
 			
 			//Twitter sharing URL
 			sharingUrls.twitter = function(url){
 				if (!url) return false;
 				return 'http://twitter.com/home?status='+socialTitle+'-'+url;
-			}
+			};
 			
 			//Email sharing URL
 			sharingUrls.email = function(url){
 				return "mailto:?&subject="+socialTitle+"&body="+socialDescription+" - "+url;
-			}
+			};
 			
 			//Pinterest sharing URL
-			sharingUrls.pinterest = function (url, image){
-				if(url || image) return false;
-				return 'https://pinterest.com/pin/create/button/?url='+url+'&media='+image+'&description='+socialTitle+'%0A'+socialDescription;	
-			}
-
+			sharingUrls.pinterest = function (url){
+				if(!url) return false;
+				return 'https://www.pinterest.com/pin/find/?description=sharing&url='+url+'&description='+socialTitle+'%0A'+socialDescription;
+			};
+      
+      
+      function runShare(social, shareUrl){
+        var url = sharingUrls[social](shareUrl);
+        if (url !== false) {
+          if (social == 'email') window.open(url, '_self');
+          else window.open(url, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+        }
+        else console.log("Error builiding social URL");
+        return false;
+      }
+			
 			sovm.share = function(social){
-				var url = sharingUrls[social](sovm.jeanToUrl());
-				if (url !== false){
-					if (social=='email') window.open(url, '_self');
-					else window.open(url, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
-				}
-				else console.log("Error builiding social URL");
-				return false;
+        var shareUrl = sovm.jeanToUrl();
+        runShare(social, shareUrl);
 			};
 		
 		}	

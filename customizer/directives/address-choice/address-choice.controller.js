@@ -102,17 +102,25 @@
 					address.primary=1;
 				}
 			});
-		}
+		};
 		
 		//Save Form
 		$scope.save = function(){
 			var newAdd = $scope.model.id ? false : true;
+			console.log($scope.model);
+			if(newAdd) {
+        $scope.model.primary = 1;
+        for (a = 0; a < $scope.user.addresses.length; a++) {
+          var add = $scope.user.addresses[a];
+          add.primary = 0;
+        }
+      }
 			api.call('postMyAddress', $scope.model, function(result){	
 				if (newAdd)	$scope.user.addresses.push(result);
 				$scope.active = false;
-				$scope.model = {};	
+				$scope.model = {};
 			});
-		}
+		};
 		
 		
 		//US States

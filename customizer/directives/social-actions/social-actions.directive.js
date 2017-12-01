@@ -12,7 +12,8 @@
 	      scope : {
 	        jean : '=',
 	        display: '=',
-	        savefunc:'='
+	        savefunc:'=',
+					uploaded:'='
 	      },
 	      controller: 'socialCtrl as sovm',
 
