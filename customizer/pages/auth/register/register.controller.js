@@ -13,7 +13,7 @@
     vm.formStep=1;
     		
 /*    					
-		//Confirm User with Registration Code				
+		//ConfirmUser with Registration Code
     vm.confirmUser = function() {
 			vm.resetMessage();
 			aws.confirmRegisteredUnauthenticatedUser(vm.credentials.email, vm.credentials.code).then(

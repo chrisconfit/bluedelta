@@ -10,7 +10,7 @@
 	  
 	  api.getAppData();
 		
-		//Set up user if already logged in
+		///Set up user if already logged in
 		if (user.getToken()){
 			user.setup();
 		}

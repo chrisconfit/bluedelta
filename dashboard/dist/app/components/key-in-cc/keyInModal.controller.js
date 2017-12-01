@@ -140,8 +140,8 @@ angular.module('inspinia')
             function (result) {
               chargeData.customer_id = result.customer_id;
               chargeData.customer_card_id = result.card_id;//Charge with newly created ccid...
-              chargeData.customer_card_id = 'fake-customer-card-id-ok';//Sandbox...
-              //TODO: REMOVE SANDBOX....
+              //chargeData.customer_card_id = 'fake-customer-card-id-ok';//Sandbox...
+              
               if ($scope.cardForm.chargeCard) runCharge(chargeData);
             }, handleCCErr
           );
@@ -151,7 +151,7 @@ angular.module('inspinia')
         else {
           //Charge with nonce...
           chargeData.card_nonce = ccCode;
-          chargeData.card_nonce = 'fake-card-nonce-ok';//Sandbox...
+          //chargeData.card_nonce = 'fake-card-nonce-ok';//Sandbox...
           runCharge(chargeData);
         }
       }
@@ -160,7 +160,7 @@ angular.module('inspinia')
       else {
         chargeData.customer_card_id = ccCode;
         chargeData.customer_id  = orderData.user.square_id;
-        chargeData.customer_card_id = 'fake-customer-card-id-ok';//Sandbox...
+        //chargeData.customer_card_id = 'fake-customer-card-id-ok';//Sandbox...
         runCharge(chargeData);
       }
   
@@ -211,7 +211,7 @@ angular.module('inspinia')
         credit_card_id:ccCode
       };
       
-      //Check to make sure we're not creating a new fitmatch
+      //Check to make sure we're not creating a new fitmatch.
       if (orderData[$scope.orderType].id) {
         api.call('fitmatchPost', saveData, function () {
           $uibModalInstance.close();

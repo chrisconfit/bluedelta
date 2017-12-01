@@ -37,11 +37,11 @@
 
               var sandboxId ="sandbox-sq0idp-Ix0BKq70y9xTbYuMuBPZkQ";
               var applicationId = 'sq0idp-Ix0BKq70y9xTbYuMuBPZkQ'; // <-- Add your application's ID here
-              applicationId = sandboxId; //Comment out to go live
+              //applicationId = sandboxId; //Comment out to go live..
 
               var sandboxLocation = 'CBASEN9Li-GLHOlc4cpGQaL58MogAQ';
               var locationId = '9PZNFDJTA6SQ4';
-              locationId = sandboxLocation;
+              //locationId = sandboxLocation; //Comment out to go live
 
               $scope.requestCardNonce = function() {
                 $scope.errors ={};
@@ -52,11 +52,10 @@
                 $scope.externalControl = $scope.requestCardNonce;
               }
 
-
                 // Credit card payments are always supported, but the Web Apple Pay
                 // button should only display if Apple Pay is supported for this
                 // domain. Apple Pay support is determined by the SqPaymentForm library
-                // when the page loads. You do not need to modify this function.
+                // when the page loads. You do not need to modify this function..
                 $scope.methodsSupported = function (methods) {
                   if (methods.applePay === true) {
                     // Show apple pay button

@@ -19,11 +19,11 @@
 			url :  "https://api.bluedeltajeans.com",
 			headers: {'Content-Type':'application/json'}
 		};
-
+/*
 	if($location.$$host == "localhost"){
 			config.url = "http://bluedelta.local";
 		}
-
+*/
 		var noTokenNecessary = [
 			'login',
 			'register',
@@ -31,10 +31,11 @@
 			'resetPassword',
 			'forgotPassword',
 			'getJean',
-        'swipeCallback'
+			'uploadJeanThumb',
+			'swipeCallback'
 		];
 		
-		//Call an API function and handle data
+		//Call an API function and handle data.
 		var isCustomizer = ($location.$$host=="localhost" && $location.$$port == 4000) || $location.$$host.split('.')[0]=="build";
 		var tokenProp = isCustomizer ? "bdAccessToken":"bdDashAccessToken";
     if($location.$$host==="localhost") tokenProp+="_dev";
@@ -155,8 +156,6 @@
 		}
 		
 		getDataCode = function(jeanData){
-	  	console.log("GETTING DC for...");
-	  	console.log(jeanData);
 			var url = "";			
 			for (var property in jeanData) {
 			  if (jeanData.hasOwnProperty(property)) {
@@ -194,9 +193,7 @@
 		
 	  var createThumb = function(jeanData){
     	
-    	console.log("CREATING THUMB!!!");
-    	
-	  	var canvas = document.createElement('canvas');
+    	var canvas = document.createElement('canvas');
 	  	canvas.width=600;
 	  	canvas.height=600;
 	  	var cntxt = canvas.getContext('2d');	
@@ -211,12 +208,10 @@
 	    for(var i=0; i<images.length; i++){
 	      promises.push(loadImage(images[i], cntxt));
 	    }
-	    
 	    return $q.all(promises).then(
-	    	
-	    	
 	    	function(results) {
-          console.log("ALL PROMISES");
+	    		console.log("IMAGES RESULTS!!!");
+	    		console.log(results);
 					searchAndDraw("fabrics", cntxt, results);
 					searchAndDraw("tb", cntxt, results);
 					searchAndDraw("tt", cntxt, results);
@@ -230,7 +225,9 @@
 	    );	
 		};
 		
-		
+		var uploadJeanThumb = function(data){
+      return httpReq("POST", "/api/thumbnail", data);
+		};
 		
 	  
 
@@ -251,7 +248,9 @@
 		};
 		
 		var createMyJeans = function(data){
-		  return httpReq("POST", "/api/users/current/jeans", data);
+      var path = "/api/users/current/jeans";
+      if (data.id) path +="/"+data.id;
+		  return httpReq("POST", path, data);
 	  };
 		
 		var getCurrentUser = function(){
@@ -282,6 +281,11 @@
 		var placeMyOrder = function(orderCreateObj){
 			return httpReq("POST", "/api/users/current/orders", orderCreateObj);
 		};
+  
+    var updateMyOrder = function(orderCreateObj){
+    	if(!orderCreateObj.id) return false;
+      return httpReq("POST", "/api/users/current/orders/"+orderCreateObj.id, orderCreateObj);
+    };
 
     var getMyCreditCards = function(){
       return httpReq("GET", "/api/users/current/cc");
@@ -452,6 +456,7 @@
 			register: register,
 			getResetToken:getResetToken,
 			resetPassword:resetPassword,
+      uploadJeanThumb:uploadJeanThumb,
 
 			getJean:getJean,
 			createThumb:createThumb,
@@ -466,9 +471,11 @@
 			deleteMyJean:deleteMyJean,
 			deleteMyAddress: deleteMyAddress,
 			placeMyOrder: placeMyOrder,
+      updateMyOrder:updateMyOrder,
       getMyCreditCards:getMyCreditCards,
 			createMyCreditCard:createMyCreditCard,
       createMyFitMatch:createMyFitMatch,
+			
 
 			postOrderItem:postOrderItem,
 			usersList:usersList,
