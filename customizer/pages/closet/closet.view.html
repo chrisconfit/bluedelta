@@ -78,8 +78,12 @@
 	      </div>
 	      
 	      <!--No Jeans-->
-	      <div ng-if="vm.data.jeansList.length == 0" class="no-jeans">
-				  <p>There are no jeans in your closet. <a href="/customizer">Create your first pair!</a></p>
+	      <div class="no-jeans"
+				ng-if="(vm.orders | filter:{ order_type_id: '!3' }).length == 0 &&
+				(vm.jeans | filter:{ ordered : '!true' }).length==0 &&
+				(vm.orders | filter:{ order_type_id: '3'  }).length == 0">
+				  <h3>You don't have any Blue Delta Jeans yet. Why don't you <a href="/customizer">Build Some?</a></h3>
+					<p>If you have ordered jeans in the past and do not see them in your closet, please <a href="mailto:info@bluedeltajeans.com">contact us</a></p>
 	      </div>
 	      
       </div><!--/.jean-closet-->

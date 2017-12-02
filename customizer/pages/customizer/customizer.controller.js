@@ -27,7 +27,8 @@
 		if ($routeParams.action) action = $routeParams.action;
 		
 		jean.setup(jeanId, action).then(function(result){
-			vm.jeanData=jean.get();			
+			vm.jeanData=jean.get();
+			
 			$scope.$watch(function() {
 				return vm.jeanData;
 			}, function(current, original) {
@@ -181,8 +182,9 @@
 			//As long as we're not on the "Overview" Step, update active item...
 			if (step+1 != vm.panel.length) vm.updateActiveItem();
 		}
-		
-
+  
+    //Working with data url...
+    if (jeanId.indexOf(':')>-1) vm.panelStep = 2;
 		
 		/*
 		*
