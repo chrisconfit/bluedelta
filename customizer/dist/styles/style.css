@@ -610,6 +610,12 @@ body {
   line-height: 22px;
   font-size: 1.8rem;
   line-height: 2.2rem;
+  padding: 18px;
+}
+@media screen and (min-width: 800px) {
+  .main-navigation nav.nav-right .btn.logout, .main-navigation nav.nav-right .logout.btn-secondary, .main-navigation nav.nav-right .btn.sign-in, .main-navigation nav.nav-right .sign-in.btn-secondary {
+    padding: 8px 26px;
+  }
 }
 .main-navigation nav.nav-right .btn.logout:hover, .main-navigation nav.nav-right .logout.btn-secondary:hover, .main-navigation nav.nav-right .btn.sign-in:hover, .main-navigation nav.nav-right .sign-in.btn-secondary:hover {
   background: #2b687e;
@@ -659,7 +665,7 @@ body {
   }
 }
 .hero h1 {
-  padding-top: 150px;
+  padding-top: 100px;
   color: #fff;
   font-size: 40px;
   line-height: 45px;
@@ -674,6 +680,7 @@ body {
     line-height: 60px;
     font-size: 5rem;
     line-height: 6rem;
+    padding-top: 150px;
   }
 }
 .hero h3 {
@@ -711,18 +718,23 @@ body {
 }
 .intro-text .callouts a {
   background: #004964;
-  padding: 20px;
-  font-size: 25px;
-  line-height: 35px;
-  font-size: 2.5rem;
-  line-height: 3.5rem;
-  display: block;
+  display: inline-block;
+  padding: 15px;
+  font-size: 20px;
+  line-height: 25px;
+  font-size: 2rem;
+  line-height: 2.5rem;
   width: 48%;
-  min-width: 260px;
   margin: 0 auto 20px;
 }
 .intro-text .callouts a:hover {
   background: #2b687e;
+}
+@media screen and (min-width: 550px) {
+  .intro-text .callouts a {
+    padding: 20px;
+    display: block;
+  }
 }
 @media screen and (min-width: 650px) {
   .intro-text .callouts a {
@@ -730,6 +742,7 @@ body {
     line-height: 35px;
     font-size: 3rem;
     line-height: 3.5rem;
+    min-width: 260px;
   }
 }
 .intro-text .callouts a.secondary {
@@ -3033,7 +3046,7 @@ ul.tailor-list {
     column-gap: 20px;
   }
 }
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 1100px) {
   ul.tailor-list {
     -moz-column-count: 4;
     -moz-column-gap: 20px;
@@ -3078,6 +3091,14 @@ ul.tailor-list li input {
   text-transform: capitalize;
   font-weight: 700;
   color: #004964;
+}
+
+.order-button {
+  margin-bottom: 40px;
+}
+
+.jean-list.order {
+  max-height: none;
 }
 
 .form-messages {
@@ -3409,6 +3430,11 @@ ul.tailor-list li input {
 }
 .user-form .empty-value-button {
   color: #004964;
+}
+
+.change-password {
+  background: #26b375;
+  margin-bottom: 10px;
 }
 
 .add-form span.add-line {
