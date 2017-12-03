@@ -190,6 +190,10 @@ body{
 			.btn.logout, .btn.sign-in{
 				background:tint($blue, 25%);
 				@include font-size(18, 22);
+				padding: 18px;
+				@include at-query($min, $deskMin){
+				  padding: 8px 26px;
+				}
 				&:hover{
 					background: tint($blue, 17%);
 				}
@@ -249,13 +253,14 @@ body{
   text-align: center;
   color: #ffffff;
 	h1{
-		padding-top: 150px;
+		padding-top: 100px;
 		color:#fff;
 		@include font-size(40,45);
 		text-transform: uppercase;
 		text-align: center;
     @include at-query($min, 650px){
 			@include font-size(50,60);
+			padding-top: 150px;
 		}
 	}
 	h3 {
@@ -281,17 +286,21 @@ body{
 		margin:30px auto;
 		a{
 			background:$blue;
+			display:inline-block;
 			&:hover{
 				background: tint($blue, 17%);
 			}
-			padding:20px;
-			@include font-size(25, 35);
+			padding:15px;
+			@include font-size(20, 25);
+			@include at-query($min, 550px){
+				padding:20px;
+				display:block;
+			}
 			@include at-query($min, 650px){
 			  @include font-size(30, 35);
+			  min-width: 260px;
 			}
-			display:block;
 			width:48%;
-			min-width: 260px;
 			margin: 0 auto 20px;
 			&.secondary{
 					background:#acacac;
@@ -919,6 +928,11 @@ form.cft-form{
 	.empty-value-button{
 		color:$blue;
 	}
+}
+
+.change-password {
+	background: #26b375;
+	margin-bottom: 10px; 
 }
 
 .add-form{

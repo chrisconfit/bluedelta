@@ -222,7 +222,7 @@ ul.tailor-list{
 		column-count: 2;
 		column-gap: 20px;
 	}
-	@include at-query($min, 750px){
+	@include at-query($min, 1100px){
 		-moz-column-count: 4;
 		-moz-column-gap: 20px;
 		-webkit-column-count: 4;
@@ -267,4 +267,12 @@ ul.tailor-list{
 			}	
 		}
 	}
+}
+
+.order-button {
+	margin-bottom: 40px;
+}
+
+.jean-list.order {
+	max-height: none;
 }

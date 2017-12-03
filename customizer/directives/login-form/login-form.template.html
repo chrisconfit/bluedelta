@@ -37,11 +37,11 @@
   </div>
   
   <div ng-if="logvm.forgotPassword" class="forgot-actions">
+	  <button type="submit" ng-if="logvm.forgotPassword2" ng-click="logvm.resetPassword()" class="btn btn-default change-password">Change Password</button>
 	  <button type="submit" ng-click="logvm.getResetToken()" class="btn btn-default">
 	  	<span ng-if="!logvm.forgotPassword2">Get</span>
 	  	<span ng-if="logvm.forgotPassword2">Resend</span> Verification Code
 	  </button>
-	  <button type="submit" ng-if="logvm.forgotPassword2" ng-click="logvm.resetPassword()" class="btn btn-default">Change Password</button>
 	  <a ng-if="!logvm.customerReset" ng-click="logvm.forgotPassword=false;"href="">Remembered your password?</a>
   </div>
   
