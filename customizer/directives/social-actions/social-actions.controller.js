@@ -30,10 +30,10 @@
 				return baseString;
 			};
 			
-			//Twitter sharing URL
+			//Twitter sharing URL/
 			sharingUrls.twitter = function(url){
 				if (!url) return false;
-				return 'http://twitter.com/home?status='+socialTitle+'-'+url;
+				return 'https://twitter.com/intent/tweet?text='+socialTitle+'&source=webclient&url='+url;
 			};
 			
 			//Email sharing URL

@@ -7,7 +7,6 @@
   function config ($routeProvider, $locationProvider) {
     
     var apiData = ['api', '$q', function(api, $q){
-      console.log("RESOLVING!!!!");
       var data = api.getData();
       if(data.loaded) return data;
       else{

@@ -4,8 +4,8 @@
     .module('bdApp')
     .controller('customizerCtrl', customizerCtrl);
 
-  customizerCtrl.$inject = ['api', 'user','$filter','$location', '$routeParams', 'jean', '$scope', 'popups', 'messages', 'loader', 'apiData'];
-  function customizerCtrl(api, user, $filter, $location, $routeParams, jean, $scope, popups, messages, loader, apiData) {
+  customizerCtrl.$inject = ['api', 'user','$filter','$location', '$routeParams', 'jean', '$scope', 'popups', 'messages', 'loader', 'apiData', '$window'];
+  function customizerCtrl(api, user, $filter, $location, $routeParams, jean, $scope, popups, messages, loader, apiData, $window) {
 		
     var vm = this
 		
@@ -184,12 +184,12 @@
 		}
   
     //Working with data url...
-    if (jeanId.indexOf(':')>-1) vm.panelStep = 2;
+    if (jeanId && jeanId.indexOf(':')>-1 && $window.innerWidth < 800) vm.panelStep = 2;
 		
 		/*
 		*
 		* Control Panel actions
-		*
+		**
 		*/
 	
 		
