@@ -53,9 +53,9 @@ angular.module('inspinia')
       };
 
       vm.fmRemove = function(fmId){
-        for(var i=0; i<vm.fitmatchrequests.length; i++){
-          if (vm.fitmatchrequests[i].id === orderId){
-            vm.fitmatchrequests.splice(i, 1);
+        for(var i=0; i<vm.fitmatchreqs.length; i++){
+          if (vm.fitmatchreqs[i].id === fmId){
+            vm.fitmatchreqs.splice(i, 1);
             return;
           }
         }

@@ -665,9 +665,19 @@ angular.module('inspinia')
 
 	
 		}//.saveOrder()...
-	
-	
-
+  
+  
+    vm.fabric_list_item_name = function(fabric_id){
+      var name = vm.data.lookup("fabrics", "id", fabric_id, "name");
+      var id = vm.data.lookup("fabrics", "id", fabric_id, "display_id");
+      var ret = "";
+      if(vm.data.lookup("fabrics", "id", fabric_id, "deleted_at"))
+        ret+="(deleted) ";
+      ret+=name;
+      if (id) ret+=" - "+id;
+      return ret;
+    };
+    
 	var dataParameter = {
 		"amount_money": {
 			"amount" : "100",

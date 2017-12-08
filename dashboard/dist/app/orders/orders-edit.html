@@ -61,8 +61,8 @@
 	                <a ng-if="!ovm.order.address" ng-click="ovm.editAddress('Shipping', 'fa-truck')" href="">Add Address</a>
 
 									<!--Address Validation-->
-	                <input type="hidden" ng-model="ovm.order.shipping_address_id" name="shipping_address_id" required>
-	                <br ng-if="f.orderForm.submitted && f.orderForm.shipping_address_id.$error.required" >
+	                <input type="hidden" ng-model="ovm.order.shipping_address_id" name="shipping_address_id" ng-required="ovm.newOrder">
+	                <br ng-if="ovm.newOrder && f.orderForm.submitted && f.orderForm.shipping_address_id.$error.required" >
 	                <small ng-show="f.orderForm.submitted && f.orderForm.shipping_address_id.$error.required" class="text-danger">Please Choose a Shipping Address</small>
 
 	              </li>
@@ -145,7 +145,10 @@
 		                  </span>
 											<select class="form-control  pull-right" 
 												ng-if="ovm.EditMode" 
-												ng-options="fabric.id as fabric.id+' - '+fabric.name for fabric in ovm.data.fabrics" 	
+												ng-options="fabric.id as ovm.fabric_list_item_name(fabric.id)
+															group by fabric.fabric_type
+															for fabric in
+												ovm.data.fabrics | orderBy:['-deleted_at','fabric_type']"
 												ng-model="ovm.order.order_items[0].fabric_id">
 											</select>
 		                </li>

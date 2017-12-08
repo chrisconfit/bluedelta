@@ -55,7 +55,7 @@
 		
 		function authCallback(response, callback){
 			//console.log("Auth callback");
-			//console.log(response);
+			//console.log(response);//
 			//console.log("setting token to "+tokenProp);
 			$window.localStorage.setItem(tokenProp, response.access_token);
 			setup(function(userData){	
