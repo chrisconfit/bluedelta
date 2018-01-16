@@ -86,13 +86,14 @@
 				var dataKey = method=="POST" ? "data":"params"
 				httpConfig[dataKey] = data;
 			}
+			console.log("no more double reqs");
 		  return $http(httpConfig);
 		}
 		
 		
 
 		/*
-		* AUTH
+		*  AUTH
 		*/
 		
 		var login = function(data){

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('inspinia')
-    .controller('FitMatchController', ['$filter','$scope', 'SweetAlert', 'user', 'api', '$stateParams', function ($filter, $scope, SweetAlert, user, api, $stateParams) {
+    .controller('FitMatchController', ['$location', '$filter','$scope', 'SweetAlert', 'user', 'api', '$stateParams', function ($location, $filter, $scope, SweetAlert, user, api, $stateParams) {
 
       var vm = this;
       vm.data = api.getData();
@@ -124,16 +124,56 @@ angular.module('inspinia')
 
       //Init users
       vm.fitmatchreqs = [];
-      vm.filters = {
+  
+      vm.defaultFilters = {
         "results_per_page" : 25,
         "page": 1,
         "orderby":"created_at",
         "order":"DESC",
         "fm_status" :"All"
       };
-
-      if($stateParams.user_id) vm.filters.user_id=$stateParams.user_id;
-
+  
+      vm.filters = angular.copy(vm.defaultFilters);
+      queryToFilters();
+  
+      if(Object.keys($location.search()).length){
+        pullFitMatchRequests(vm.filters);
+      }else{
+        $location.search(vm.filters);
+      }
+  
+      //if($stateParams.user_id) vm.filters.user_id=$stateParams.user_id;
+      function queryToFilters() {
+        var queryFilters = $location.search();
+        //Add filters to vm.filters from url
+        for (var filter in queryFilters) {
+          if (queryFilters.hasOwnProperty(filter)) {
+            var value = queryFilters[filter];
+            value = !isNaN(value) ?  parseInt(value) : value;
+            vm.filters[filter] = value;
+          }
+        }
+        //Clean up removed filters
+    
+        for (var filter in vm.filters) {
+          if (vm.filters.hasOwnProperty(filter)) {
+            if(!queryFilters[filter]){
+          
+              if(vm.defaultFilters[filter]) vm.filters[filter] = angular.copy(vm.defaultFilters[filter]);
+              else delete vm.filters[filter];
+            }
+        
+          }
+        }
+      }
+  
+  
+      $scope.$on('$locationChangeSuccess', function(a,oldUrl, newUrl) {
+        queryToFilters();
+        vm.fitmatchreqs = [];
+        pullFitMatchRequests(vm.filters);
+      });
+      
 
       $scope.$watch(angular.bind(this, function () {
         return this.filters.id;
@@ -168,10 +208,10 @@ angular.module('inspinia')
         for (var i=0; i<vm.filters.length; i++){
           if (vm.filters[i] == "") delete vm.filters[i];
         }
-        pullFitMatchRequests(vm.filters);
+        $location.search(vm.filters);
+        //pullFitMatchRequests(vm.filters);
       }
-
-      pullFitMatchRequests(vm.filters);
+      
 
       vm.formatDate = function(date){
         var date = new Date(date);
@@ -181,7 +221,8 @@ angular.module('inspinia')
       vm.changePage = function(page){
         vm.filters.page=parseInt(page);
         vm.fitmatchreqs=[];
-        pullFitMatchRequests(vm.filters);
+        $location.search(vm.filters);
+        //pullFitMatchRequests(vm.filters);
       }
 
 

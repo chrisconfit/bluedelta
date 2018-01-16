@@ -61,6 +61,8 @@
         }
       }
       
+      if(vm.user.phone) vm.shipping_phone = vm.user.phone;
+      
       //Pull Credit Cards
       if(current.square_id){
         //logged in user has sq id.
@@ -118,12 +120,15 @@
         vm.orderFitMatch(card.card_id);
       });
     };
-    
+    vm.ordering=false;
     vm.orderFitMatch = function(card){
+      if (vm.ordering) return false;
+      vm.ordering=true;
       if(!vm.validateFitMatch()) return false;
       var fmObject = {
         "credit_card_id":card,
         "shipping_address_id":vm.add.id,
+        "shipping_phone":vm.shipping_phone,
         "requested_fabric_ids":JSON.stringify(vm.fitMatch)
       };
       api.call('createMyFitMatch', fmObject, function(){
@@ -131,12 +136,23 @@
       });
       
     };
+    vm.truncateBrand =function(brand){
+      if(brand == "AMERICAN_EXPRESS") truncated =  "AMEX";
+      else if(brand == "DISCOVER") truncated =  "DISC";
+      else if(brand == "MASTERCARD") truncated =  "MSTR";
+      else truncated = brand;
+      return truncated;
+    };
     
     vm.fit_match_error = false;
     vm.validateFitMatch = function(){
       vm.fit_match_error = false;
       if(!vm.add.id) {
         vm.fit_match_error = "Please provide a shipping address";
+        return false;
+      }
+      if(!vm.shipping_phone) {
+        vm.fit_match_error = "Please provide a phone number";
         return false;
       }
       

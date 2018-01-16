@@ -37,6 +37,7 @@ angular.module('inspinia')
       newOrderData.shipping_name = orderData.user.first_name+" "+orderData.user.last_name;
       newOrderData.fit_match_id = orderData.id;
       newOrderData.shipping_address_id = orderData.shipping_address_id;
+      newOrderData.shipping_phone=orderData.shipping_phone;
       newOrderData.address = orderData.address;
       newOrderData.comment = "Order created from Fit Match #"+$state.params.fitMatchId;
 		}
@@ -117,6 +118,15 @@ angular.module('inspinia')
 				vm.order.dob = d;
 			}
 		});
+  
+    $scope.$watch(angular.bind(this, function () {
+      return this.orderUser;
+    }), function (newVal, oldVal) {
+     	if(!vm.newOrder) return false;
+      if(newVal && !oldVal || newVal.id && newVal.id !== oldVal.id){
+         vm.order.shipping_phone = newVal.phone;
+			}
+    });
 		
 		
 		/*										    				*\

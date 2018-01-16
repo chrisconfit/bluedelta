@@ -14,7 +14,7 @@ angular.module('inspinia')
       closeOnConfirm: false,
       closeOnCancel: true 
     };
-    
+  	
     
 		vm.deleteUser = function(userId){
 			SweetAlert.swal(deleteUserBox,
@@ -92,7 +92,7 @@ angular.module('inspinia')
 	    vm.filters.orderby=col;
 	    vm.filters.order = direction;
 			vm.newQuery();
-    }
+    };
         
     vm.newQuery = function(){
 	    vm.pagination.total=0;
@@ -102,7 +102,7 @@ angular.module('inspinia')
 		    if (vm.filters[i] == "") delete vm.filters[i];
 	    }
 	    pullUsers(vm.filters);
-    }
+    };
 
 
 		

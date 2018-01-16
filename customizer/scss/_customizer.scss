@@ -800,7 +800,7 @@ h1.page-title{
 			display:block;
 			height:320px;
 			overflow:auto;
-			&::-webkit-scrollbar {display: none;}
+			//&::-webkit-scrollbar {display: none;}
 		}
 		.chooser-select{
 			top:15px;
@@ -815,7 +815,7 @@ h1.page-title{
 	}
 }
 
-//Chooser Grid
+//Chooser  Grid
 .cft-g.chooser-grid{
 	margin-left:0;
 	padding: 5px calc(50% - 40px) 20px;

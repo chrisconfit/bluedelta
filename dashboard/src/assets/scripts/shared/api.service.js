@@ -40,12 +40,12 @@
 		var tokenProp = isCustomizer ? "bdAccessToken":"bdDashAccessToken";
     if($location.$$host==="localhost") tokenProp+="_dev";
 		var call = function(func, data, success, error){
-			console.log("Token prop"+ tokenProp);
 			
 			accessToken = $window.localStorage.getItem(tokenProp);
-      console.log(accessToken);
-			console.log('calling '+func+" with...");
-			console.log(data);
+      //console.log(accessToken);
+      //console.log("Token prop"+ tokenProp);
+			//console.log('calling '+func+" with...");
+			//console.log(data);
 
 			if (noTokenNecessary.indexOf(func) < 0 && !accessToken){
 				var message = "Request being made with no access token.";
@@ -57,8 +57,8 @@
 
 			this[func](data)
 			.success(function(result){
-				console.log(func+" was a success:");
-				console.log(result);
+				//console.log(func+" was a success:");
+				//console.log(result);
 				if (success) success(result);
 				$rootScope.$$phase || $rootScope.$apply();
 			})
@@ -92,7 +92,7 @@
 		
 
 		/*
-		* AUTH
+		*  AUTH
 		*/
 		
 		var login = function(data){

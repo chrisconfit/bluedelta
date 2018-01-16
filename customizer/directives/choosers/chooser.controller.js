@@ -71,13 +71,14 @@
 						//Get the data id 
 						var dataId = chvm.jeanData[$scope.step.jeanKey];
 						var elementId = $scope.step.jeanKey+"_"+dataId;
-                        elementId = elementId.replace("_option_id", "");
+						elementId = elementId.replace("_option_id", "");
 						var activeElement = angular.element(document.querySelector('#'+elementId));
 						chvm.selectorCoords.top = activeElement.prop('offsetTop');
 						chvm.selectorCoords.left = activeElement.prop('offsetLeft');
-							
+						
+						
 						var selector = angular.element(document.querySelector("#"+$scope.step.jeanKey+"-selector"));
-						selector.css({'top':chvm.selectorCoords.top+'px', 'left':chvm.selectorCoords.left+'px'});
+						selector.css({'top':chvm.selectorCoords.top+'px', 'left':chvm.selectorCoords.left+'px', 'width':activeElement.prop('width')+'px', 'height':activeElement.prop('height')+'px',});
 						
 						//Mobile Choosers
 						if ($window.innerWidth < chvm.breakPoint){
@@ -109,9 +110,14 @@
 				var top = angular.element($event.target).prop('offsetTop');
 				var left = angular.element($event.target).prop('offsetLeft');
 				var text = angular.element(document.querySelectorAll('#item-title'));
-
+        var width = angular.element($event.target)[0].clientWidth;
+        var height = angular.element($event.target)[0].clientHeight;
+        
+        //Test logging
+        ////console.log(width,height,left,top);
+        
 				text.css({'right':'-400px', 'opacity':0});
-				selector.css({'top':top+'px', 'left':left+'px'});
+				selector.css({'top':top+'px', 'left':left+'px', 'width':width+"px", 'height':height+"px"});
 				
 				chvm.selectorCoords = {"top":top,"left":left};
 				if ($window.innerWidth < chvm.breakPoint) scrollToLeft(chooser, left, 200);

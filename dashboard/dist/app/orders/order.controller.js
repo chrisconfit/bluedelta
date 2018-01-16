@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('OrdersController', ['$filter','$scope', 'SweetAlert', 'user', 'api', '$stateParams', function ($filter, $scope, SweetAlert, user, api, $stateParams) {
+  .controller('OrdersController', ['$location', '$filter','$scope', 'SweetAlert', 'user', 'api', '$stateParams', function ($location, $filter, $scope, SweetAlert, user, api, $stateParams) {
 
     var vm = this;
     vm.data = api.getData();
     vm.user = user.get(true);
-		console.log(vm.data);
+    
     function serializeFilters(obj){
 	    var result = [];
 			for (var property in obj)
@@ -108,29 +108,79 @@ angular.module('inspinia')
 		};
 		
 		
+		
 		function pullOrders(filters, callback){
 			api.call('ordersList', filters, function(result){
 				if (vm.pagination.total == 0 ) vm.pagination.total = Math.ceil(parseInt(result.total)/vm.filters.results_per_page);
+				console.log("result....");
+				console.log(result);
+				
 				vm.pagination.current = parseInt(result.page);
 				vm.orders.push.apply(vm.orders, result.results);
-				vm.pagination.loaded++;	
+				vm.pagination.loaded++;
+				vm.filters.page = result.page;
+				$location.search(vm.filters);
 				if (callback) callback();
 			});
 		}
 		
 		//Init users
 		vm.orders = [];
-		vm.filters = {
+		vm.defaultFilters = {
 			"results_per_page" : 25,
 			"page": 1, 
 			"orderby":"created_at",
 			"order":"DESC",
 		};
 		
-		if($stateParams.user_id) vm.filters.user_id=$stateParams.user_id;
+		vm.filters = angular.copy(vm.defaultFilters);
+		console.log($location.search());
+    queryToFilters();
+    
+    if(Object.keys($location.search()).length){
+      pullOrders(vm.filters);
+		}else{
+      $location.search(vm.filters);
+		}
 		
+		function queryToFilters() {
+      console.log("QF");
+      var queryFilters = $location.search();
+      console.log(queryFilters);
+			//Add filters to vm.filters from url
+      for (var filter in queryFilters) {
+        if (queryFilters.hasOwnProperty(filter)) {
+        	var value = queryFilters[filter];
+          value = !isNaN(value) ?  parseInt(value) : value;
+          vm.filters[filter] = value;
+        }
+      }
+      //Clean up removed filters
+			
+      for (var filter in vm.filters) {
+        if (vm.filters.hasOwnProperty(filter)) {
+        	if(!queryFilters[filter]){
+        		
+        		if(vm.defaultFilters[filter]) vm.filters[filter] = angular.copy(vm.defaultFilters[filter]);
+        		else delete vm.filters[filter];
+					}
+        
+        }
+      }
+    }
+    
 		
-		$scope.$watch(angular.bind(this, function () {
+
+  
+    $scope.$on('$locationChangeSuccess', function(a,oldUrl, newUrl) {
+    	console.log("CHANGE SUCC");
+    	console.log(oldUrl, newUrl);
+			queryToFilters();
+    	vm.orders = [];
+      pullOrders(vm.filters);
+    });
+    
+    $scope.$watch(angular.bind(this, function () {
 		  return this.filters.id;
 		}), function (newVal) {
 			if (newVal =="") delete vm.filters.id;
@@ -138,6 +188,7 @@ angular.module('inspinia')
 			var arr = Array.isArray(newVal) ? newVal : newVal.split(',');
 			vm.filters.id=arr;
 		});
+		
 		
 		//Date range filter setter
 		vm.dateRange = {startDate: null, endDate: null}
@@ -164,10 +215,11 @@ angular.module('inspinia')
 	    for (var i=0; i<vm.filters.length; i++){
 		    if (vm.filters[i] == "") delete vm.filters[i];
 	    }
-	    pullOrders(vm.filters);
+	    $location.search(vm.filters);
+	    //pullOrders(vm.filters);
     };
-
-		pullOrders(vm.filters);   
+  
+    
 					
 		vm.formatDate = function(date){
 			return $filter('date')(new Date(date), "MM/dd/yyyy");
@@ -176,7 +228,7 @@ angular.module('inspinia')
 		vm.changePage = function(page){
 			vm.filters.page=parseInt(page);
 			vm.orders=[];
-			pullOrders(vm.filters);
+			$location.search(vm.filters);
 		};
 		
 		vm.pagination = {

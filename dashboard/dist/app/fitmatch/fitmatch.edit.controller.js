@@ -97,7 +97,17 @@ angular.module('inspinia')
           }
         });
       };
-
+  
+  
+      $scope.$watch(angular.bind(this, function () {
+        return this.fmData.user;
+      }), function (newVal, oldVal) {
+        if(!vm.newFM) return false;
+        if(newVal && !oldVal || newVal.id && newVal.id !== oldVal.id){
+          vm.fmData.shipping_phone = newVal.phone;
+        }
+      });
+      
       function getPrimaryAddress(addresses){
         if(!addresses || !addresses.length) return false;
         for (var i=0; i<addresses.length; i++) {

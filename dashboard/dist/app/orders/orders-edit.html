@@ -66,6 +66,12 @@
 	                <small ng-show="f.orderForm.submitted && f.orderForm.shipping_address_id.$error.required" class="text-danger">Please Choose a Shipping Address</small>
 
 	              </li>
+								<li class="list-group-item clearfix">
+                  <div class="form-group">
+		                <label>Shipping Phone Number:</label>
+										<input type="text" class="form-control" style="width: 100%;" ng-model="ovm.order.shipping_phone" aria-invalid="false">
+		              </div>
+								</li>
 	              <!--<li class="list-group-item clearfix">
 	                <p><b>Billing Address</b><a class="pull-right fa fa-edit" ng-click="ovm.editAddress('Billing', 'fa-list')" href="#"></a></p>
 	                <p ng-if="ovm.billingSameAsShipping()">Same as Shipping Address</p>

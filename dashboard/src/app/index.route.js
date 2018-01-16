@@ -225,10 +225,11 @@
       })
 
       .state('orders.list', {
-        url: "/list?:user_id",
+        url: "/list?user_id",
         templateUrl: "app/orders/orders.html",
         authenticate: true,
         controller: "OrdersController as ovm",
+        reloadOnSearch: false
       })
 
       .state('orders.edit', {

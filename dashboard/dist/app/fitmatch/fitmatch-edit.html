@@ -66,9 +66,16 @@
                   <br ng-if="f.fmForm.submitted && f.fmForm.shipping_address_id.$error.required" >
                   <small ng-show="f.fmForm.submitted && f.fmForm.shipping_address_id.$error.required" class="text-danger">Please Choose a Shipping Address</small>
                 </li>
-
-
+                <li class="list-group-item clearfix">
+                  <div class="form-group">
+		                <label>Shipping Phone Number:</label>
+										<input type="text" class="form-control" style="width: 100%;" ng-model="vm.fmData.shipping_phone" aria-invalid="false">
+		              </div>
+								</li>
+              </ul>
                 <!--Payment Info-->
+
+
                 <p class="list-group-item clearfix">
                   <p><b>Payment Info</b></p>
                   <!--Primary Card Information-->

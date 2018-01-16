@@ -1967,9 +1967,6 @@ h1.page-title {
     height: 320px;
     overflow: auto;
   }
-  .chooser chooser::-webkit-scrollbar, .chooser fabric-chooser::-webkit-scrollbar, .fabric-chooser chooser::-webkit-scrollbar, .fabric-chooser fabric-chooser::-webkit-scrollbar, .style-chooser chooser::-webkit-scrollbar, .style-chooser fabric-chooser::-webkit-scrollbar, .gender-chooser chooser::-webkit-scrollbar, .gender-chooser fabric-chooser::-webkit-scrollbar {
-    display: none;
-  }
   .chooser .chooser-select, .fabric-chooser .chooser-select, .style-chooser .chooser-select, .gender-chooser .chooser-select {
     top: 15px;
     left: 30px;

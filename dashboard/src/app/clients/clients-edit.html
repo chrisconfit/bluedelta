@@ -3,7 +3,7 @@
 
 	<div id="form-control-buttons" class="pull-right" style="margin-top:20px;">
 		<button ng-click="cvm.saveUser()" class="btn btn-primary btn-success"><span ng-if="!cvm.newUser">Save</span><span ng-if="cvm.newUser">Create</span></button>&nbsp;&nbsp;
-		<button ng-if="!cvm.newUser" ui-sref="orders.list({user_id:cvm.userData.id})" class="btn btn-primary btn-flat">View Client's Orders</button>&nbsp;&nbsp;
+		<button ng-if="!cvm.newUser" ng-click="cvm.viewUserOrders(cvm.userData.id)" class="btn btn-primary btn-flat">View Client's Orders</button>&nbsp;&nbsp;
 	</div>
 
 	<div class="row wrapper border-bottom white-bg page-heading">

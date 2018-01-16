@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('ClientsEditController',  ['user', '$uibModal', 'userData', '$scope', 'api', 'SweetAlert', 'toaster', '$state',
-  function (user, $uibModal, userData, $scope, api, SweetAlert, toaster, $state) {
+  .controller('ClientsEditController',  ['user', '$uibModal', 'userData', '$scope', 'api', 'SweetAlert', 'toaster', '$state', '$location',
+  function (user, $uibModal, userData, $scope, api, SweetAlert, toaster, $state, $location) {
     
     var vm = this;
     
@@ -428,6 +428,11 @@ angular.module('inspinia')
 			  "abbreviation": "WY"
 			}
 		]
-		
+  
+  
+    vm.viewUserOrders = function(id){
+			$location.url('/orders/list?user_id='+id);
+      //$state.go('orders.list', {user_id:id, results_per_page:10});
+    };
 		
   }]);
