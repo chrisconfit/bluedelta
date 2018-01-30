@@ -27,6 +27,7 @@
 		<div class="popup-content fabric-popup" ng-click="$event.stopPropagation()">
 			<a class="popup-closer" href="" ng-click="vm.popups.infoPop = false"></a>
 			<div class="popup-content-inner">
+				<div class="fabric-popup-inner-scroll">
 					<h3 class="popup-title">{{vm.activeItem.name}}</h3>
 					<h4 class="popup-sub-title">{{vm.activeItem.materials}}</h4>
 					<h4 class="popup-sub-title">{{vm.activeItem.supplier}}</h4>
@@ -34,6 +35,7 @@
 					<div class="fabric-preveiw" 
 					style="background: url(https://s3.amazonaws.com/bluedelta-data/images/components/fabrics/preview/preview_{{vm.jeanData.fabric_id}}.jpg) no-repeat center center; 
 					-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;"></div>
+				</div>
 			</div><!--./popup-content-inner-->
 		</div>
 	</div>

@@ -2511,7 +2511,26 @@ div[style-chooser] .cft-g.chooser-grid#gender-chooser > .cft-gi, gender-chooser 
 }
 
 .popup-window .popup-content.fabric-popup .popup-content-inner {
+  padding: 0;
+}
+.popup-window .popup-content.fabric-popup .popup-content-inner .fabric-popup-inner-scroll {
+  position: relative;
+  padding: 30px 20px;
   padding-bottom: 190px;
+}
+@media screen and (min-width: 650px) {
+  .popup-window .popup-content.fabric-popup .popup-content-inner .fabric-popup-inner-scroll {
+    padding: 40px 60px;
+    padding-bottom: 190px;
+  }
+}
+@media screen and (min-width: 800px) {
+  .popup-window .popup-content.fabric-popup .popup-content-inner .fabric-popup-inner-scroll {
+    padding-bottom: 485px;
+  }
+  .popup-window .popup-content.fabric-popup .popup-content-inner .fabric-popup-inner-scroll .fabric-preveiw {
+    height: 445px;
+  }
 }
 .popup-window .popup-content.fabric-popup .popup-content-inner h3.popup-title {
   margin-bottom: 10px;
@@ -2541,14 +2560,6 @@ div[style-chooser] .cft-g.chooser-grid#gender-chooser > .cft-gi, gender-chooser 
   left: 0;
   width: 100%;
   height: 150px;
-}
-@media screen and (min-width: 800px) {
-  .popup-window .popup-content.fabric-popup .popup-content-inner {
-    padding-bottom: 485px;
-  }
-  .popup-window .popup-content.fabric-popup .popup-content-inner .fabric-preveiw {
-    height: 445px;
-  }
 }
 
 a.overview-trigger {
@@ -2980,20 +2991,20 @@ h1 .sub-title {
 .check-box::before {
   top: 21.6px;
   left: 14.01px;
-  -moz-transform: rotate(-135deg);
-  -o-transform: rotate(-135deg);
-  -ms-transform: rotate(-135deg);
-  -webkit-transform: rotate(-135deg);
-  transform: rotate(-135deg);
+  -moz-transform: rotate(-135deg) translate3d(0, 0, 0);
+  -o-transform: rotate(-135deg) translate3d(0, 0, 0);
+  -ms-transform: rotate(-135deg) translate3d(0, 0, 0);
+  -webkit-transform: rotate(-135deg) translate3d(0, 0, 0);
+  transform: rotate(-135deg) translate3d(0, 0, 0);
 }
 .check-box::after {
   top: 11.1px;
   left: 3px;
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg) translate3d(0, 0, 0);
+  -o-transform: rotate(-45deg) translate3d(0, 0, 0);
+  -ms-transform: rotate(-45deg) translate3d(0, 0, 0);
+  -webkit-transform: rotate(-45deg) translate3d(0, 0, 0);
+  transform: rotate(-45deg) translate3d(0, 0, 0);
 }
 
 .check-box.checked::after {

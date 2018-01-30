@@ -172,13 +172,13 @@ $duration: .4s;
   &::before {
     top:$checkbox-height * .72;
     left: $checkbox-height * .467;
-    @include transform(rotate(-135deg));
+    @include transform(rotate(-135deg) translate3d(0, 0, 0));
   }
 
   &::after {
     top: $checkbox-height * .37;
     left: $checkbox-height * .1;
-    @include transform(rotate(-45deg));
+    @include transform(rotate(-45deg) translate3d(0, 0, 0));
   }
 }
 
