@@ -167,4 +167,24 @@ gulp.task("deploy", function() {
 	}, {
 	  maxRetries: 5
 	}));
-});    
+});
+
+gulp.task("deploy:dev", function() {
+    var dist = [
+        '!./private/**',
+        '!./node_modules/**',
+        '!./bower_components/**',
+        '!./.sass-cache/**',
+        '!./scss/**',
+        '!./vendor/**',
+        './**',
+    ];
+    gulp.src(dist)
+        .pipe(s3({
+            Bucket: 'bdbuild.devclients.com', //  Required
+            ACL:    'public-read'       //  Needs to be user-defined
+        }, {
+            maxRetries: 5
+        }));
+});
+
